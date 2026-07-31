@@ -1,0 +1,29 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+.uv-cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.ipynb_checkpoints/
+
+# Model weights and caches are reproducible from the config; never commit them.
+models/
+hf_cache/
+*.safetensors
+*.gguf
+*.bin
+
+# Raw run outputs. Keep small reviewed summaries and figures in Git.
+results/raw/
+results/**/*.pt
+results/**/*.npz

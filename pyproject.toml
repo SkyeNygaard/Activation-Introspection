@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "activation-introspection"
+version = "0.1.0"
+description = "Can a language model report hidden interventions on its own activations?"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Skye Nygaard" }]
+dependencies = [
+  "torch>=2.6,<3",
+  "transformers>=4.49,<5",
+  "accelerate>=1.4,<2",
+  "safetensors>=0.5,<1",
+  "numpy>=2.2,<3",
+  "pydantic>=2.10,<3",
+  "typer>=0.15,<1",
+  "rich>=13.9,<15",
+]
+
+[dependency-groups]
+dev = [
+  "mypy>=1.14,<2",
+  "pytest>=8.3,<10",
+  "ruff>=0.11,<1",
+]
+analysis = [
+  "ipykernel>=6.29,<8",
+  "jupyterlab>=4.3,<5",
+  "matplotlib>=3.10,<4",
+  "pandas>=2.2,<4",
+  "scikit-learn>=1.6,<2",
+  "seaborn>=0.13,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/introspect"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# .uv-cache and hf_cache hold extracted packages and model weights. Ruff does not
+# exclude them by default, and `ruff format .` will rewrite thousands of cached
+# library files if you let it.
+extend-exclude = [".uv-cache", ".venv", "hf_cache"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "RUF", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["transformers.*", "torch.*"]
+ignore_missing_imports = true
