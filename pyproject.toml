@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "adaptive-monitor-sandbox"
+version = "0.1.0"
+description = "A persistent-state agent environment where the attacker adapts to what the monitor blocks"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Skye Nygaard" }]
+dependencies = [
+  "pydantic>=2.10,<3",
+  "typer>=0.15,<1",
+  "rich>=13.9,<15",
+  "numpy>=2.2,<3",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.45,<1"]
+
+[dependency-groups]
+dev = [
+  "mypy>=1.14,<2",
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.11,<1",
+]
+analysis = [
+  "ipykernel>=6.29,<8",
+  "jupyterlab>=4.3,<5",
+  "matplotlib>=3.10,<4",
+  "pandas>=2.2,<4",
+  "scikit-learn>=1.6,<2",
+]
+
+[project.scripts]
+sandbox = "sandbox.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sandbox"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["sandbox"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# .uv-cache holds extracted third-party packages. Ruff does not exclude it by
+# default, and `ruff format .` will happily rewrite several thousand cached
+# library files if you let it.
+extend-exclude = [".uv-cache", ".venv"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "RUF", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+plugins = ["pydantic.mypy"]
