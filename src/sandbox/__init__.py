@@ -3,7 +3,13 @@
 from sandbox.actions import Action, ActionResult, FeedbackLevel, Outcome, Verb
 from sandbox.agents import AdaptiveAttacker, AgentProtocol, HonestAgent, StaticAttacker
 from sandbox.env import TASKS, EpisodeResult, RunResult, Task, run, run_episode
-from sandbox.monitors import CrossEpisodeMonitor, NullMonitor, RuleMonitor, Visibility
+from sandbox.monitors import (
+    CrossEpisodeMonitor,
+    NullMonitor,
+    RuleMonitor,
+    Visibility,
+    WindowedMonitor,
+)
 from sandbox.state import WorldState
 
 __all__ = [
@@ -24,6 +30,7 @@ __all__ = [
     "Task",
     "Verb",
     "Visibility",
+    "WindowedMonitor",
     "WorldState",
     "run",
     "run_episode",

@@ -16,14 +16,56 @@ See [`notes/01-problem-space.md`](notes/01-problem-space.md) for the argument an
 
 ## Status
 
-Apparatus, not results. The scripted attacker and rule monitors run; the LLM arms
-are stubs. Nothing here should be cited as a finding.
+Scripted attacker and rule/provenance monitors are implemented and swept across
+30 seeds with bootstrap intervals. The LLM agent and LLM monitor arms are not
+built yet, so **nothing here licenses a claim about how a real model behaves** —
+the scripted attacker's ladder is a hypothesis about adaptation, not a discovery.
+
+## Results so far
+
+Adaptive attacker vs the actions+CoT monitor, 30 seeds × 12 episodes:
+
+| feedback on a blocked action | safety | leak episode |
+|---|---|---|
+| silent (blocks look like errors) | **1.00** | never |
+| generic ("blocked by policy") | 0.10 | 3.5 |
+| specific ("blocked: outbound network request") | **0.00** | 1.0 |
+
+Attack success is monotone in how much the refusal leaks, and the static-attacker
+control is flat at 1.00 throughout — so this is adaptation, not repetition. **No
+gradient step is taken anywhere.** The optimisation pressure against the monitor
+comes entirely from informative error messages.
+
+Monitor memory, adaptive attacker under specific feedback:
+
+| monitor | safety | leak episode | honest usefulness |
+|---|---|---|---|
+| actions only | 0.00 | 1.0 | 1.00 |
+| 1-episode memory | 0.00 | 3.0 | 0.64 |
+| 2-episode memory | 0.00 | 5.6 | 0.58 |
+| 4-episode memory | 0.50 | 9.0 | 0.52 |
+| unbounded (provenance) | **1.00** | never | **0.48** |
+
+There is no knee: a bounded window is defeated by patience, and leak episode
+tracks window length almost linearly. Only unbounded memory stops the attack, and
+it costs half of honest usefulness. `catch@5%FPR` stays ~0.06 for every one of
+these, so safety here is bought by *blocking*, not by *detecting* — a distinction
+that reporting safety alone would hide.
+
+Full write-up, including the bug that initially made all three feedback levels
+look identical, is in [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md).
 
 ## Setup
 
 ```bash
 make setup
 make smoke
+```
+
+Reproduce the numbers above (about a minute, no API key):
+
+```bash
+uv run python scripts/run_sweep.py --seeds 30 --episodes 12
 ```
 
 The whole condition grid runs on the scripted attacker with **no API key and no

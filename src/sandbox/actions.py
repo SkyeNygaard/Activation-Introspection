@@ -84,3 +84,18 @@ class ActionResult(BaseModel):
                 return "blocked by policy"
             case FeedbackLevel.SPECIFIC:
                 return f"blocked by policy: {self.reason}"
+
+    def outcome_to_agent(self, level: FeedbackLevel) -> Outcome:
+        """The outcome *as the agent perceives it*.
+
+        Load-bearing. Handing the agent the true ``BLOCKED`` alongside a redacted
+        message defeats the redaction entirely: the agent can adapt to the block
+        without ever reading the string. That bug made SILENT, GENERIC and
+        SPECIFIC produce byte-identical results, which reads as "feedback does
+        not matter" when in fact feedback was never varied.
+
+        Under SILENT a block must be indistinguishable from an ordinary failure.
+        """
+        if self.outcome is Outcome.BLOCKED and level is FeedbackLevel.SILENT:
+            return Outcome.ERROR
+        return self.outcome
