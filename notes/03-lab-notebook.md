@@ -377,3 +377,95 @@ language the steering vector was not built in.
 1. Cross-lingual self-report, to get an honest denominator for the dissociation.
 2. Transfer probe across the scale ladder: does the dissociation narrow with size?
    That is the question the whole line is for.
+
+---
+
+## 2026-08-01 (later still) — Power. The underpowered version was wrong.
+
+### What was wrong
+
+The transfer probe above ran at n_train=48 (6 examples per class over an 896-dim
+residual, sample:dimension = 0.007) and n_test=80 (95% CI half-width ±0.110 at
+p=0.5). Its null shuffled *test* labels, which only asks "is this above chance",
+not the stronger "can this pipeline manufacture signal from noise at this sample
+size".
+
+Fixes: 40 natural templates (n_train=320, 40/class), n_test=400 (±0.049),
+**GroupKFold on template id** so the within-natural estimate must generalise to
+sentence frames never seen in training, and a **permuted-label null** that
+retrains the whole pipeline on shuffled training labels, averaged over 5
+permutations (null n=2000).
+
+### It changed the answer
+
+`Qwen2.5-0.5B-Instruct`, injection L9, α=0.2, 8 concepts:
+
+| probe layer | train (in-sample) | within-natural (grouped) | **transfer** | permuted null | self-report |
+|---|---|---|---|---|---|
+| 11 | 1.000 | 0.650 [0.597, 0.703] | **0.125 [0.095, 0.158]** | 0.150 [0.135, 0.166] | 0.125 |
+| 16 | 1.000 | 0.700 [0.650, 0.750] | **0.700 [0.655, 0.745]** | 0.155 [0.140, 0.171] | 0.125 |
+| 23 | 1.000 | 1.000 | 1.000 [1.000, 1.000] | 0.100 [0.087, 0.113] | 0.125 |
+
+**Layer 11 flipped.** Underpowered it read 0.200 against a 0.150 null — I would
+have written up "partial transfer at early layers". Properly powered it is
+**0.125 against a 0.150 null**: at or below chance. There is no transfer two
+layers after the injection.
+
+That is the whole reason to run the permuted null and the larger n. The
+qualitative conclusion changed, not just the error bar.
+
+### What the properly powered result says
+
+The injected state does not start out resembling the model's own representation
+of the concept; it *becomes* one with depth. Transfer is at null at L11, reaches
+the probe's own within-natural ceiling at L16 (0.700 vs 0.700 — the injected
+states are as decodable as genuinely reading about the concept), and is complete
+by L23.
+
+The in-sample/grouped-CV split is worth keeping visible: train accuracy is 1.000
+at every layer while grouped CV is 0.650–0.700 at L11 and L16. The probe *is*
+overfitting; grouped CV is what makes the number mean anything. At L23 they
+coincide at 1.000, i.e. the concepts are genuinely linearly separable there.
+
+### The caveat I would put in any writeup
+
+**L23 is nearly output space.** At the final layer, "ocean" natural text and an
+"ocean" injection both point toward ocean tokens, so transfer=1.000 there is
+close to the token-promotion confound in another guise. It should not be the
+headline.
+
+**L16 is the load-bearing number**: mid-depth, well away from the unembedding,
+transfer (0.700) matches the probe's own ceiling (0.700) against a 0.155 null,
+while the model self-reports at chance. That is the honest statement of the
+dissociation.
+
+And the denominator is still contaminated — self-report is digit-indexed forced
+choice, which this model fails independently. So "0.700 vs 0.125" overstates the
+access gap by an unknown amount. The design is sound; the self-report instrument
+is not, and fixing it is the next job.
+
+### Scale ladder, both models (n=96 per model per arm, ±0.10)
+
+| | 0.5B | 1.5B |
+|---|---|---|
+| detection AUROC, concept | 0.408 [0.324, 0.491] | 0.656 [0.582, 0.733] |
+| detection AUROC, **shuffled null** | 0.490 [0.408, 0.582] | **0.740 [0.667, 0.812]** |
+| identification (digit) | 0.094 [0.042, 0.156] | 0.167 [0.094, 0.240] |
+| observer | 0.177 [0.104, 0.260] | 0.396 [0.302, 0.500] |
+| gap, paired | −0.083 [−0.167, 0.000] | **−0.229 [−0.344, −0.125]** |
+| token promotion | 0.990 | 1.000 |
+
+At 1.5B the **null arm detects better than the concept arm** (0.740 vs 0.656).
+Detection is tracking perturbation, not content — an independent replication of
+the published global-logit-shift result, reached with a matched-norm shuffled
+control instead of their factually-false-questions control. The validity gate
+marks these cells INVALID automatically.
+
+The scale trend is the interesting part: from 0.5B to 1.5B the **observer** more
+than doubles (0.177 → 0.396) while the introspector barely moves (0.094 → 0.167),
+so the gap gets *more* negative. Behavioural inference scales with capability;
+introspective report does not, at these sizes.
+
+n=96 per cell gives ±0.10, which is enough for the sign of these effects but not
+for fine comparisons. The 1.5B gap CI excludes zero comfortably; the 0.5B one
+touches it.

@@ -79,7 +79,7 @@ from dataclasses import dataclass
 import numpy as np
 import torch
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import GroupKFold, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 
 from introspect.concepts import ConceptVector
@@ -248,6 +248,14 @@ def run_probe(
 
 # -- transfer probe: the only design that escapes the trap ---------------------
 
+# Natural sentences mentioning each concept. Deliberately many and varied.
+#
+# Power: a logistic probe over an 896-dim residual needs far more than a handful
+# of examples per class or it separates any labelling by overfitting. At 6 per
+# class (the first version of this experiment) the sample-to-dimension ratio was
+# 0.007 and the within-natural estimate was worthless. 40 templates gives 40 per
+# class, and the probe is scored with GroupKFold on template id so it must
+# generalise to sentence frames it never saw.
 NATURAL_TEMPLATES = [
     "The documentary explored how {concept} shapes daily life in the region.",
     "She wrote three pages about {concept} before dinner.",
@@ -255,13 +263,47 @@ NATURAL_TEMPLATES = [
     "There was a long article on {concept} in the weekend paper.",
     "He kept returning to the subject of {concept} all evening.",
     "A short lecture introduced the history of {concept}.",
+    "Nobody in the room had strong opinions about {concept}.",
+    "The exhibition devoted an entire wing to {concept}.",
+    "Her thesis argued that {concept} had been badly misunderstood.",
+    "They argued about {concept} until the restaurant closed.",
+    "The podcast episode on {concept} ran for two hours.",
+    "I had never given much thought to {concept} before that trip.",
+    "The committee's report barely mentioned {concept}.",
+    "Children in the village learn about {concept} early.",
+    "A grainy photograph of {concept} hung above the desk.",
+    "Funding for research into {concept} was cut last year.",
+    "The novel opens with a description of {concept}.",
+    "Local traditions around {concept} go back centuries.",
+    "He collected books about {concept} obsessively.",
+    "The museum guide explained the significance of {concept}.",
+    "Weather permitting, we will look at {concept} tomorrow.",
+    "Her grandmother told stories involving {concept}.",
+    "The magazine ran a cover feature on {concept}.",
+    "Students find {concept} harder than the syllabus suggests.",
+    "An old map marked the location of {concept}.",
+    "The professor's specialism was the economics of {concept}.",
+    "Conversations kept drifting back toward {concept}.",
+    "A documentary crew spent a month filming {concept}.",
+    "The archive holds several manuscripts describing {concept}.",
+    "Nothing in the briefing prepared them for {concept}.",
+    "They named the boat after {concept}.",
+    "The lecture hall emptied before he finished on {concept}.",
+    "Few industries are as dependent on {concept}.",
+    "A grant proposal on {concept} was submitted in March.",
+    "The painting is widely read as a study of {concept}.",
+    "Regulations covering {concept} changed in the spring.",
+    "His childhood was full of {concept}.",
+    "The catalogue lists forty entries under {concept}.",
+    "Visitors are often surprised by {concept}.",
+    "The final chapter returns to {concept}.",
 ]
 
 
 @torch.no_grad()
 def collect_natural(
     model: LoadedModel, concepts: Sequence[str], layer: int
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Activations from ordinary text mentioning each concept. No injection.
 
     This is the training distribution for the transfer probe. Nothing here has
@@ -270,14 +312,16 @@ def collect_natural(
     """
     feats: list[np.ndarray] = []
     labels: list[int] = []
+    groups: list[int] = []  # template id, so CV can hold out whole sentence frames
     for idx, name in enumerate(concepts):
-        for template in NATURAL_TEMPLATES:
+        for t_id, template in enumerate(NATURAL_TEMPLATES):
             ids = model.encode(template.format(concept=name))
             with capture(model, [layer]) as store:
                 model.forward_logits(ids)
             feats.append(store.last_token(layer)[0].numpy())
             labels.append(idx)
-    return np.stack(feats), np.array(labels)
+            groups.append(t_id)
+    return np.stack(feats), np.array(labels), np.array(groups)
 
 
 @dataclass
@@ -287,8 +331,13 @@ class TransferResult:
     n_test: int
     n_classes: int
     transfer_acc: Estimate  # natural-trained probe, tested on injected trials
-    transfer_acc_shuffled: Estimate
-    within_natural_acc: Estimate  # does the probe work at all on its own domain?
+    # THE null: retrain on permuted *training* labels, then test on injected.
+    # Shuffling test labels only asks "is this above chance"; permuting the
+    # training labels asks the stronger question "can this pipeline manufacture
+    # apparent signal from noise at this sample size?"
+    transfer_acc_permuted: Estimate
+    within_natural_acc: Estimate  # grouped CV: unseen sentence frames
+    train_acc: Estimate  # in-sample; large gap vs within_natural means overfitting
     self_report_acc: Estimate
 
     @property
@@ -296,17 +345,28 @@ class TransferResult:
         return 1.0 / self.n_classes
 
     @property
+    def overfit_gap(self) -> float:
+        return self.train_acc.value - self.within_natural_acc.value
+
+    @property
     def verdict(self) -> str:
+        if self.transfer_acc.lo <= self.transfer_acc_permuted.hi:
+            return (
+                f"Transfer ({self.transfer_acc}) does not exceed the permuted-label "
+                f"null ({self.transfer_acc_permuted}). At this sample size the "
+                f"pipeline can manufacture the effect from noise; the result is not "
+                f"interpretable."
+            )
         if self.within_natural_acc.lo < 2 * self.chance:
             return (
                 f"The probe cannot separate these concepts even in natural text "
                 f"({self.within_natural_acc}); nothing downstream is interpretable."
             )
-        if self.transfer_acc.lo <= self.transfer_acc_shuffled.hi:
+        if self.transfer_acc.lo <= self.transfer_acc_permuted.hi:
             return (
                 f"A probe that reads natural concept representations at "
                 f"{self.within_natural_acc.value:.2f} does NOT transfer to injected "
-                f"trials ({self.transfer_acc} vs null {self.transfer_acc_shuffled}). "
+                f"trials ({self.transfer_acc} vs null {self.transfer_acc_permuted}). "
                 f"The injection does not put the model into a state resembling its own "
                 f"representation of the concept -- so there is no concept-like content "
                 f"for introspection to report, and self-report at "
@@ -314,11 +374,27 @@ class TransferResult:
             )
         return (
             f"A natural-text probe transfers to injected trials at {self.transfer_acc} "
-            f"(null {self.transfer_acc_shuffled}) while the model reports at "
+            f"(null {self.transfer_acc_permuted}) while the model reports at "
             f"{self.self_report_acc.value:.2f} (chance {self.chance:.3f}). The injection "
             f"induces a genuinely concept-like state that the model does not verbalize: "
             f"headroom for verbalization training."
         )
+
+
+def fit_probe_grouped(x: np.ndarray, y: np.ndarray, groups: np.ndarray) -> list[bool]:
+    """CV that holds out whole sentence templates.
+
+    Plain k-fold would let the probe see the same sentence frame with a different
+    concept in both train and test, which inflates the estimate. Grouping by
+    template forces generalisation to frames it has never seen.
+    """
+    out = np.zeros(len(y), dtype=bool)
+    cv = GroupKFold(n_splits=min(5, len(np.unique(groups))))
+    for train, test in cv.split(x, y, groups):
+        scaler = StandardScaler().fit(x[train])
+        clf = LogisticRegression(max_iter=3000).fit(scaler.transform(x[train]), y[train])
+        out[test] = clf.predict(scaler.transform(x[test])) == y[test]
+    return list(out)
 
 
 def run_transfer_probe(
@@ -338,19 +414,27 @@ def run_transfer_probe(
     representation space that genuinely thinking about the concept does.
     """
     concepts = sorted(bank)
-    x_nat, y_nat = collect_natural(model, concepts, probe_layer)
+    x_nat, y_nat, g_nat = collect_natural(model, concepts, probe_layer)
     _, x_inj, y_inj, self_report = collect(
         model, bank, inject_layer, probe_layer, strength, seeds=seeds
     )
 
     scaler = StandardScaler().fit(x_nat)
-    clf = LogisticRegression(max_iter=2000).fit(scaler.transform(x_nat), y_nat)
-    transfer = list(clf.predict(scaler.transform(x_inj)) == y_inj)
+    xs_nat, xs_inj = scaler.transform(x_nat), scaler.transform(x_inj)
 
+    clf = LogisticRegression(max_iter=3000).fit(xs_nat, y_nat)
+    transfer = list(clf.predict(xs_inj) == y_inj)
+    train_correct = list(clf.predict(xs_nat) == y_nat)
+
+    # Permuted-label null: retrain the whole pipeline on shuffled training
+    # labels and test on injected trials. Averaged over several permutations so
+    # the null is itself estimated rather than being one draw.
     rng = np.random.default_rng(0)
-    y_shuf = y_inj.copy()
-    rng.shuffle(y_shuf)
-    transfer_null = list(clf.predict(scaler.transform(x_inj)) == y_shuf)
+    permuted: list[bool] = []
+    for _ in range(5):
+        y_perm = rng.permutation(y_nat)
+        null_clf = LogisticRegression(max_iter=3000).fit(xs_nat, y_perm)
+        permuted.extend(list(null_clf.predict(xs_inj) == y_inj))
 
     return TransferResult(
         layer=probe_layer,
@@ -358,7 +442,8 @@ def run_transfer_probe(
         n_test=len(y_inj),
         n_classes=len(concepts),
         transfer_acc=accuracy(transfer),
-        transfer_acc_shuffled=accuracy(transfer_null),
-        within_natural_acc=accuracy(fit_probe(x_nat, y_nat, n_splits=3)),
+        transfer_acc_permuted=accuracy(permuted),
+        within_natural_acc=accuracy(fit_probe_grouped(x_nat, y_nat, g_nat)),
+        train_acc=accuracy(train_correct),
         self_report_acc=accuracy(self_report),
     )
