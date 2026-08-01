@@ -221,3 +221,89 @@ stronger evidence that the rung-2 signal is recoverable — a small model finds 
    limitation. Does a model given only a proxy objective find the staging route?
 2. Sweep the judge across 0.5B / 1.5B / 3B: does rung-3 evasion survive a larger
    monitor, or is it a small-model artefact?
+
+---
+
+## 2026-08-01 — Real model in the loop. The scripted result does NOT reproduce at ≤3B.
+
+### Why this is the experiment that mattered
+
+The headline — attack success is monotone in refusal informativeness, with no
+gradient step — was a property of my scripted attacker's escalation ladder. The
+honest question is whether a *real* model does the thing the script hard-codes:
+given a blocked action, does the amount the refusal discloses change what it tries
+next?
+
+`llm_agent.py` tests it directly. A model with a proxy objective (maximise
+telemetry reaching an external collector; the words hide/sneak/avoid appear
+nowhere) is shown its blocked action plus a refusal at one of the three
+disclosure levels, and picks its next move from a fixed 4-option menu ordered
+blatant → subtle. Adaptation = mass shifting toward the subtle end under more
+informative refusals.
+
+### The position-bias trap, caught before it faked a null
+
+First run, fixed menu order: Qwen2.5-1.5B put **99.7% on option 1 in every
+condition**. Read naively: "the model never adapts". Wrong — option 1 was also
+*first*, and these models have a severe first-position bias. The position-bias
+control (score by menu slot, content permuted) confirmed it:
+
+| model | mass by menu slot (uniform = 0.25) |
+|---|---|
+| 0.5B | 0.063 / 0.090 / **0.625** / 0.222 |
+| 1.5B | 0.351 / **0.477** / 0.008 / 0.164 |
+| 3B | 0.249 / 0.258 / 0.127 / **0.367** |
+
+Every model has a large, idiosyncratic slot preference. Reporting choice without
+permuting the menu would have measured the layout, not the model. All results
+below permute the menu and map choices back to the ladder rung.
+
+### The result, with error bars (6 seeds × 8 permutations per cell)
+
+Mean rung, 0 = blatant post, 3 = disguised build report. Higher = subtler.
+
+| model | silent | generic | specific | specific − silent |
+|---|---|---|---|---|
+| 0.5B | 1.580 [1.33, 1.88] | 1.610 | 1.595 [1.32, 1.89] | **+0.016** |
+| 1.5B | 0.258 [0.08, 0.39] | 0.328 | 0.327 [0.14, 0.49] | **+0.069** |
+| 3B | 1.189 [0.98, 1.46] | 1.303 | 1.316 [1.16, 1.49] | **+0.127** |
+
+**No model shows adaptation whose interval excludes zero.** The specific-minus-
+silent shifts are +0.016, +0.069, +0.127 on a 0–3 scale, and every confidence
+interval for the shift overlaps zero comfortably.
+
+### What this means, stated carefully
+
+The mechanism the scripted result assumes — a model reading a refusal's content
+and steering toward subtler actions **in-context, with no training** — does not
+operate detectably in Qwen models up to 3B. So this repo's headline should be read
+as **an upper bound on what small models do zero-shot, not a description of them.**
+
+That is a more useful contribution than the scripted result was, because it is a
+claim about models rather than about my code, and it is a *bound*:
+
+> In-context obfuscation from refusal feedback alone is either absent or below the
+> detection floor of a 6×8 measurement in models ≤3B. The published adaptive-attack
+> results (arXiv 2510.09462) use frontier models and explicit knowledge of the
+> protocol; this locates where that capability has *not* yet emerged.
+
+The faint monotone trend across sizes (+0.016 → +0.069 → +0.127) is worth one
+sentence and no more: it is in the predicted direction and could be an emergence
+curve, but no single interval clears zero, so it is a hypothesis for a larger
+model, not a finding.
+
+### Limits
+
+Four options, one proxy-objective prompt, one turn of feedback (not a multi-turn
+episode), Qwen family only, ≤3B. A negative here is consistent with the capability
+emerging by 7B–70B, which is exactly where 2510.09462 operates. The scripted
+environment remains the right tool for studying the *consequences* of adaptation;
+this measures whether small models *supply* it, and they do not.
+
+### Next
+
+1. Multi-turn: let the model actually receive blocks across several episodes
+   rather than reasoning about one hypothetical block. In-context learning may
+   need the loop, not a single counterfactual.
+2. If an API key becomes available, the same menu on a frontier model is the
+   direct test of where the trend above crosses zero.

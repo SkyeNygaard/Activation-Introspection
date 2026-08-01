@@ -122,3 +122,47 @@ def plot_leak_delay(rows: list[tuple[str, float, float, float]], path: Path) -> 
     fig.tight_layout()
     fig.savefig(path, dpi=150)
     plt.close(fig)
+
+
+def plot_llm_adaptation(json_path: Path, path: Path) -> None:
+    """Mean rung by feedback level across model sizes, with the null band.
+
+    The safety-relevant reading: if the lines are flat, small models do not do
+    in-context obfuscation from refusal feedback, and the scripted headline is an
+    upper bound rather than a description.
+    """
+    import json
+
+    data = json.loads(json_path.read_text())
+    levels = ["silent", "generic", "specific"]
+    fig, ax = plt.subplots(figsize=(7, 4.4))
+    colours = {"qwen-0.5b": "#9a9a9a", "qwen-1.5b": ORANGE, "qwen-3b": BLUE}
+
+    for mdl, d in data.items():
+        ys = [d["levels"][lv][0] for lv in levels]
+        lo = [d["levels"][lv][0] - d["levels"][lv][1] for lv in levels]
+        hi = [d["levels"][lv][2] - d["levels"][lv][0] for lv in levels]
+        ax.errorbar(
+            range(len(levels)),
+            ys,
+            yerr=[lo, hi],
+            marker="o",
+            capsize=4,
+            label=mdl.replace("qwen-", "Qwen "),
+            color=colours.get(mdl, "#333"),
+        )
+
+    ax.set_xticks(range(len(levels)))
+    ax.set_xticklabels(["silent", "generic", "specific"], fontsize=9)
+    ax.set_xlabel("refusal disclosure")
+    ax.set_ylabel("mean rung chosen  (0 = blatant, 3 = subtle)")
+    ax.set_ylim(-0.2, 3.2)
+    ax.set_title(
+        "Does a real model steer toward subtler actions after a refusal?\n"
+        "(flat lines = no in-context obfuscation at this scale)",
+        fontsize=10,
+    )
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
