@@ -19,14 +19,61 @@ pre-registered conditions.
 
 ## Status
 
-Apparatus, not results. The intervention primitives are tested; the experiments
-in the plan have not been run yet. Nothing in this repo should be cited as a
-finding.
+Full pipeline implemented and running: concept banks, interventions, both
+elicitation modes, the observer arm, bootstrap intervals, and a scale ladder.
+Sweep results are being collected; treat any number currently in `results/` as
+preliminary until it appears in [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md).
+
+## The design
+
+Six arms per cell, all run in one function so they cannot acquire separate
+prompts, seeds, or bugs:
+
+| arm | rules out |
+|---|---|
+| `clean` | response bias — the model saying YES regardless |
+| `concept` | — |
+| `shuffled` | "any perturbation triggers a report" (matched norm, permuted coords) |
+| `random` | same, looser null |
+| observer on `concept` | **behavioural inference** — a clean model reading only the output |
+| observer on `shuffled` | observer-side bias |
+
+The observer is the *same weights* with a fresh context, which holds capability
+fixed and varies only whether the answer can draw on internal state. A stronger
+observer would confound "no privileged access" with "better at the task".
+
+Two gates decide whether a cell is interpretable at all, and `analysis.py` marks
+a cell INVALID if either fails: the shuffled control must not detect above
+chance, and the behavioural effect must be non-zero.
+
+**The pre-verbalization arm is the detection score.** It is read at the first
+generated position of a fresh context, so the model has emitted no task text and
+behavioural inference has nothing to work from. There is deliberately no observer
+comparison there — an observer would have nothing to read, which is the point.
 
 ## Setup
 
 ```bash
 make setup
+```
+
+Run the pipeline:
+
+```bash
+uv run python scripts/run_sweep.py --model qwen-1.5b --seeds 5
+```
+
+Scale ladder (loads and frees one model at a time — holding two resident is what
+pushes a 24 GB machine into swap):
+
+```bash
+uv run python scripts/run_ladder.py --models qwen-0.5b,qwen-1.5b,qwen-3b
+```
+
+Re-analyse a saved sweep without touching a model:
+
+```bash
+uv run python scripts/analyze.py results/ladder.jsonl
 ```
 
 Python 3.12 via `uv`. Weights download into `./hf_cache` on first run so the
