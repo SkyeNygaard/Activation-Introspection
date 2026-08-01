@@ -181,3 +181,99 @@ the answer format" are the same number.
   does shift with layer, so a fixed α across a layer sweep confounds layer with
   damage — as suspected in the previous entry. Per-layer α calibration to
   constant KL is now required, not optional.
+
+---
+
+## 2026-08-01 — The word-scored metric was circular. Control added.
+
+Fixing the digit-format tax from the previous entry produced a spectacular
+result, and the spectacular result was an artifact. This entry is the whole
+story, because the artifact is the interesting part.
+
+### What it looked like
+
+Scoring identification over the concept *words* instead of digit indices, on
+`Qwen2.5-0.5B-Instruct` at L14, α=0.2, 8 concepts × 3 seeds:
+
+| metric | accuracy (chance 0.125) |
+|---|---|
+| word-scored identification | **1.000** |
+| digit-scored identification | 0.125 |
+| observer, word-scored | 0.500 |
+
+Perfect 8-way identification from a 0.5B model, with a huge positive gap over the
+observer. Taken at face value: strong evidence of privileged access, at a scale
+nobody expects it.
+
+### What it actually was
+
+Concept vectors here are contrast directions — built as the difference in
+residual stream between prompts containing the concept and matched prompts that
+do not. Such a direction *is*, approximately, the direction that raises the
+concept's own token. Injecting it raises P(" ocean") mechanically, whether or not
+the model has any access to its own state.
+
+So scoring the concept words while injected can recover the answer with no
+introspection at all. It reads the steering vector's construction back out.
+
+**The control.** Score the same option words after a neutral prompt that asks
+**no question**:
+
+| | accuracy |
+|---|---|
+| word-scored identification, question asked | 1.000 |
+| **token promotion, no question asked** | **1.000** |
+| token promotion on the shuffled control | 0.167 |
+
+Asking the question adds exactly nothing. And the shuffled arm sits at chance, so
+the control is specific to the real concept direction rather than trivially
+returning true — the promotion effect is real, and it is the entire result.
+
+`token_promotion_correct` is now a recorded field, and `analysis.headline`
+refuses to report a word-scored gap at all when it fires.
+
+### Standing conclusion at 0.5B
+
+No evidence of introspective access, on the metric that survives its controls:
+
+- digit-scored identification **0.125**, exactly chance
+- detection AUROC **0.446** [0.403, 0.489], below chance, with the shuffled null
+  at 0.484 [0.436, 0.529]
+- paired gap **−0.072** [−0.117, −0.031] — the observer does *better*
+- the one metric showing a positive effect is circular
+
+### The generalisable point
+
+This is the second time in this repo that a measurement failed in the direction
+of the hypothesis, and both times the failure was silent. The pattern:
+
+> If the elicitation is scored on tokens the intervention directly promotes, the
+> experiment cannot distinguish introspection from the steering vector's own
+> construction.
+
+That is not specific to my setup. It applies to any concept-injection study that
+asks the model to *name* the injected concept and scores the name — which is the
+natural and common design. The cheap fix is one extra forward pass per trial: ask
+nothing, score the same options, and report it beside the headline.
+
+Three ways to get a non-circular identification metric, in rough order of cost:
+
+1. **Digit or letter indices** — no lexical overlap with the injected direction.
+   Cheap, but taxes format-following (0.5B pays that tax heavily).
+2. **Paraphrase options** — "a large body of salt water" rather than "ocean".
+   Reduces but does not eliminate promotion, since the description shares
+   vocabulary with the concept.
+3. **Cross-lingual options** — score the concept in a language the vector was not
+   built in. Cleanest separation; untested here.
+
+The honest summary of this artifact for a writeup: *the effect size of the
+confound (1.000) is larger than any plausible real effect, so a study that omits
+this control is not weak evidence of introspection — it is no evidence at all.*
+
+### Next
+
+1. Finish the 0.5B → 1.5B ladder with the control recorded throughout.
+2. Matched-KL comparison on the digit-scored arm, which is the only comparison
+   both non-circular and not confounded by injection damage.
+3. Paraphrase and cross-lingual option sets, to recover format-tax-free
+   identification without reintroducing circularity.

@@ -69,8 +69,20 @@ class Trial:
     # Same question, scored over the concept *words* rather than digit indices.
     # Answering "3" requires mapping a concept to a position in a list, which
     # small models fail independently of whether they hold the concept at all.
+    #
+    # WARNING: circular unless token_promotion_correct is at chance. See below.
     identify_word_correct: bool = False
     identify_word_prediction: str = ""
+    # The control that decides whether identify_word_correct means anything.
+    #
+    # Concept vectors are built as contrast directions that raise the concept's
+    # own token. Injecting one therefore raises P("ocean") mechanically, so
+    # scoring the concept words *while injected* can recover the answer with no
+    # introspection at all -- it reads the steering vector's construction back
+    # out. This field scores the same words after a neutral prompt with **no
+    # question asked**. If it is near 1.0, word-scored identification is
+    # measuring token promotion and must not be reported.
+    token_promotion_correct: bool = False
     free_form: str = ""
     free_form_correct: bool = False
 
@@ -210,11 +222,17 @@ def run_cell(
         #     word->digit indirection. On Qwen2.5-0.5B the digit version scored
         #     0.05 while free-form scored 0.33, which means the digit version was
         #     partly measuring format-following rather than access to content.
-        word_choice = score_choices(
-            model, word_prompt, [f" {o}" for o in options], interventions=ivs
-        )
+        word_options = [f" {o}" for o in options]
+        word_choice = score_choices(model, word_prompt, word_options, interventions=ivs)
         trial.identify_word_prediction = options[word_choice.argmax]
         trial.identify_word_correct = word_choice.argmax == correct_index
+
+        # 3c. Token-promotion control -- the arm that decides whether 3b means
+        #     anything. Same options, same injection, but a neutral prompt that
+        #     asks no question at all. Any accuracy here is the steering vector
+        #     mechanically raising its own concept's token, not an answer.
+        promo = score_choices(model, task_prompt, word_options, interventions=ivs)
+        trial.token_promotion_correct = promo.argmax == correct_index
 
         # 4. Free-form, where confabulation is visible.
         trial.free_form = generate(

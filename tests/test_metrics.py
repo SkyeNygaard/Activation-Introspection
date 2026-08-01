@@ -130,3 +130,57 @@ def test_free_form_grading_accepts_synonyms_and_rejects_others() -> None:
 def test_free_form_grading_handles_unknown_targets() -> None:
     assert grade_free_form("penguin", "penguin")
     assert not grade_free_form("walrus", "penguin")
+
+
+# -- the circularity gate -----------------------------------------------------
+
+
+def _summary(promotion: list[bool], **kw: object) -> object:
+    """Build a CellSummary with only the fields the gate reads."""
+    from introspect.analysis import CellSummary
+
+    flat = accuracy([True, False])
+    return CellSummary(
+        model="m",
+        layer=0,
+        strength=0.1,
+        n=len(promotion),
+        behavioural_kl=accuracy([True]),
+        detection_auroc=flat,
+        detection_auroc_null=flat,
+        identify_acc=flat,
+        identify_acc_null=flat,
+        observer_acc=flat,
+        gap=flat,
+        identify_word_acc=flat,
+        observer_word_acc=flat,
+        gap_word=flat,
+        token_promotion_acc=accuracy(promotion),
+        free_form_acc=flat,
+    )
+
+
+def test_circularity_gate_fires_when_promotion_alone_identifies() -> None:
+    """The measured failure: word scoring hit 1.000 with no question asked.
+
+    Concept vectors are contrast directions that raise the concept's own token,
+    so injecting one raises P(" ocean") mechanically. Scoring the concept words
+    under injection then recovers the answer with zero introspection.
+    """
+    circular = _summary([True] * 24)
+    assert circular.word_scoring_circular  # type: ignore[attr-defined]
+
+
+def test_circularity_gate_stays_quiet_at_chance_promotion() -> None:
+    """The shuffled control measured 0.167, near the 0.125 chance level."""
+    clean = _summary([True] * 4 + [False] * 20)  # 0.167
+    assert not clean.word_scoring_circular  # type: ignore[attr-defined]
+
+
+def test_headline_refuses_to_report_a_circular_gap() -> None:
+    """A 1.000 word-scored gap must not be published when the control fires."""
+    from introspect.analysis import headline
+
+    circular = _summary([True] * 24)
+    text = headline([circular], word_scored=True)  # type: ignore[list-item]
+    assert "CIRCULAR" in text

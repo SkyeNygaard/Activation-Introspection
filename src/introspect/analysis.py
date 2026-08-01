@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from introspect.experiment import Trial, TrialSet
 from introspect.metrics import Estimate, accuracy, bootstrap, bootstrap_auroc, paired_difference
 
+CHANCE_IDENTIFY = 1 / 8
+
 
 @dataclass
 class CellSummary:
@@ -30,7 +32,22 @@ class CellSummary:
     identify_word_acc: Estimate
     observer_word_acc: Estimate
     gap_word: Estimate
+    # Accuracy of picking the injected concept when NO question was asked.
+    # Anything above chance here is the steering vector promoting its own token.
+    token_promotion_acc: Estimate
     free_form_acc: Estimate
+
+    @property
+    def word_scoring_circular(self) -> bool:
+        """Is the word-scored arm reading the steering vector back out?
+
+        Concept vectors are contrast directions that raise the concept's own
+        token, so injecting one raises P("ocean") whether or not the model has
+        any access to its state. When that promotion alone identifies the
+        concept, word-scored identification is circular and must not be
+        reported.
+        """
+        return self.token_promotion_acc.lo > 2 * CHANCE_IDENTIFY
 
     @property
     def valid(self) -> bool:
@@ -108,6 +125,7 @@ def summarize_cell(ts: TrialSet, model: str, layer: int, strength: float) -> Cel
             [float(t.identify_word_correct) for t in concept],
             [float(t.observer_word_correct) for t in concept],
         ),
+        token_promotion_acc=accuracy([t.token_promotion_correct for t in concept]),
         free_form_acc=accuracy([t.free_form_correct for t in concept]),
     )
 
@@ -117,7 +135,94 @@ def summarize_all(ts: TrialSet) -> list[CellSummary]:
     return [summarize_cell(ts, m, layer, s) for m, layer, s in cells]
 
 
-def headline(summaries: list[CellSummary]) -> str:
+@dataclass
+class KLBin:
+    """Trials grouped by behavioural effect rather than by injection strength."""
+
+    lo: float
+    hi: float
+    n: int
+    identify: Estimate
+    observer: Estimate
+    gap: Estimate
+    detection_auroc: Estimate
+
+    def row(self) -> str:
+        return (
+            f"KL [{self.lo:.3f}, {self.hi:.3f})  n={self.n:<4} "
+            f"id={self.identify.value:.3f}  obs={self.observer.value:.3f}  "
+            f"gap={self.gap.value:+.3f} [{self.gap.lo:+.3f}, {self.gap.hi:+.3f}]"
+        )
+
+
+def has_word_scores(ts: TrialSet) -> bool:
+    """Was this TrialSet produced after word-scored identification was added?
+
+    Legacy JSONL lacks the field, so it deserialises to False everywhere. Without
+    this check a word-scored analysis of an old file reports accuracy 0.000 for
+    both arms and a gap of exactly zero -- which looks like a clean null result
+    and is actually a missing column.
+    """
+    return any(t.identify_word_correct or t.observer_word_correct for t in ts.trials)
+
+
+def matched_kl_bins(
+    ts: TrialSet, *, model: str | None = None, n_bins: int = 4, word_scored: bool | None = None
+) -> list[KLBin]:
+    """Compare introspector and observer *within* bands of equal behavioural effect.
+
+    This is the load-bearing comparison, and the reason is asymmetry. The
+    injection that produces the behavioural signal the observer reads is the same
+    injection that degrades the introspector's ability to answer at all. The
+    observer reads a transcript using an undamaged model, so it enjoys an
+    advantage that grows with injection strength -- which biases the raw gap
+    against introspection.
+
+    Binning on KL holds the observer's information roughly fixed. Within a bin,
+    both arms face the same amount of visible drift, so a difference between them
+    is not explained by "the observer had more to look at".
+
+    Under the behavioural-inference hypothesis, report accuracy is a function of
+    KL and nothing else, so the gap should be flat and centred on zero across
+    bins. A gap that *grows* at matched KL is the signature the hypothesis cannot
+    produce.
+    """
+    trials = [t for t in ts.trials if t.arm == "concept" and (model is None or t.model == model)]
+    if not trials:
+        return []
+    if word_scored is None:
+        word_scored = has_word_scores(ts)
+
+    def intro(t: Trial) -> float:
+        return float(t.identify_word_correct if word_scored else t.identify_correct)
+
+    def obs(t: Trial) -> float:
+        return float(t.observer_word_correct if word_scored else t.observer_correct)
+
+    ordered = sorted(trials, key=lambda t: t.behavioural_kl)
+    size = max(len(ordered) // n_bins, 1)
+    out: list[KLBin] = []
+    for i in range(0, len(ordered), size):
+        chunk = ordered[i : i + size]
+        if len(chunk) < 2:
+            continue
+        a = [intro(t) for t in chunk]
+        b = [obs(t) for t in chunk]
+        out.append(
+            KLBin(
+                lo=chunk[0].behavioural_kl,
+                hi=chunk[-1].behavioural_kl,
+                n=len(chunk),
+                identify=bootstrap(a),
+                observer=bootstrap(b),
+                gap=paired_difference(a, b),
+                detection_auroc=bootstrap([t.detection_score for t in chunk]),
+            )
+        )
+    return out
+
+
+def headline(summaries: list[CellSummary], *, word_scored: bool = True) -> str:
     """The one-paragraph verdict, stated conservatively.
 
     Deliberately refuses to report a positive unless the null arms behave. A gap
@@ -128,15 +233,26 @@ def headline(summaries: list[CellSummary]) -> str:
     if not valid:
         return "No interpretable cells: every cell failed a null-arm or behavioural-effect gate."
 
-    best = max(valid, key=lambda s: s.gap_word.value)
-    if best.gap_word.lo > 0:
+    def gap_of(s: CellSummary) -> Estimate:
+        return s.gap_word if word_scored else s.gap
+
+    if word_scored and any(s.word_scoring_circular for s in valid):
+        return (
+            "Word-scored identification is CIRCULAR in this run: the token-promotion "
+            "control identifies the injected concept with no question asked, so the "
+            "steering vector is raising its own token rather than the model reporting "
+            "anything. Use the digit-scored columns."
+        )
+
+    best = max(valid, key=lambda s: gap_of(s).value)
+    if gap_of(best).lo > 0:
         return (
             f"Introspector exceeds observer at L{best.layer} a={best.strength}: "
-            f"word-scored gap {best.gap_word} excludes zero. "
+            f"gap {gap_of(best)} excludes zero. "
             f"Consistent with privileged access at this cell."
         )
     return (
         f"No cell shows a positive introspector-observer gap excluding zero "
-        f"(best: L{best.layer} a={best.strength}, word-scored gap {best.gap_word}). "
+        f"(best: L{best.layer} a={best.strength}, gap {gap_of(best)}). "
         f"Behavioural inference explains the reports at every strength tested."
     )

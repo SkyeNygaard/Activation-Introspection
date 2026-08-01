@@ -19,10 +19,48 @@ pre-registered conditions.
 
 ## Status
 
-Full pipeline implemented and running: concept banks, interventions, both
-elicitation modes, the observer arm, bootstrap intervals, and a scale ladder.
-Sweep results are being collected; treat any number currently in `results/` as
-preliminary until it appears in [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md).
+Pipeline complete and swept. Standing result at 0.5B: **no evidence of
+introspective access**, and the one metric that appeared to show it was circular.
+
+## Result
+
+`Qwen2.5-0.5B-Instruct`, 1440 trials, 360 per arm:
+
+| quantity | estimate | chance |
+|---|---|---|
+| detection AUROC, concept vs clean | 0.446 [0.403, 0.489] | 0.5 |
+| detection AUROC, **shuffled null** | 0.484 [0.436, 0.529] | 0.5 |
+| identification (8-way, digit-scored) | 0.106 [0.075, 0.139] | 0.125 |
+| observer, same question from output only | 0.178 [0.139, 0.219] | 0.125 |
+| **gap (introspector − observer), paired** | **−0.072** [−0.117, −0.031] | 0 |
+
+The null arm bracketing 0.5 is what makes the rest readable. Identification sits
+at chance, and the gap is *negative*: a clean copy of the same model, reading
+only the intervened model's output, does better than the intervened model reading
+its own activations.
+
+### The circular metric
+
+Scoring identification over concept *words* rather than digit indices produced
+**1.000** accuracy — perfect 8-way identification from a 0.5B model. It is an
+artifact, and the control that proves it is one extra forward pass:
+
+| | accuracy (chance 0.125) |
+|---|---|
+| word-scored identification, question asked | 1.000 |
+| **token promotion, no question asked** | **1.000** |
+| token promotion on the shuffled control | 0.167 |
+
+Concept vectors are contrast directions that raise the concept's own token, so
+injecting one raises P(" ocean") mechanically. Asking the question adds nothing;
+the shuffled arm at chance shows the control is specific rather than vacuous.
+
+This generalises beyond this repo: **any concept-injection study that asks a model
+to name the injected concept and scores the name is circular unless it runs the
+no-question control.** The confound's effect size (1.000) exceeds any plausible
+real effect, so a study omitting it is not weak evidence — it is no evidence.
+`analysis.headline` now refuses to report a word-scored gap when the control
+fires.
 
 ## The design
 

@@ -13,7 +13,7 @@ from pathlib import Path
 from rich.console import Console
 from rich.table import Table
 
-from introspect.analysis import headline, summarize_all
+from introspect.analysis import has_word_scores, headline, matched_kl_bins, summarize_all
 from introspect.experiment import TrialSet
 from introspect.metrics import accuracy, bootstrap_auroc
 
@@ -23,6 +23,7 @@ console = Console()
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("path", type=Path, nargs="?", default=Path("results/ladder.jsonl"))
+    ap.add_argument("--figures", type=Path, default=None, help="write plots to this directory")
     args = ap.parse_args()
 
     ts = TrialSet.load(args.path)
@@ -93,7 +94,39 @@ def main() -> None:
         )
     console.print(pooled)
 
-    console.print(f"\n[bold]{headline(summaries)}[/bold]")
+    console.rule("matched behavioural effect")
+    word = has_word_scores(ts)
+    if not word:
+        console.print(
+            "[yellow]This file predates word-scored identification; falling back to "
+            "digit scoring, which charges the model for the concept->digit "
+            "indirection.[/yellow]"
+        )
+    bins = matched_kl_bins(ts)
+    if bins:
+        kl_table = Table("KL band", "n", "introspector", "observer", "gap (paired)")
+        for b in bins:
+            kl_table.add_row(
+                f"[{b.lo:.4f}, {b.hi:.4f}]",
+                str(b.n),
+                f"{b.identify.value:.3f}",
+                f"{b.observer.value:.3f}",
+                f"{b.gap.value:+.3f} [{b.gap.lo:+.3f}, {b.gap.hi:+.3f}]",
+            )
+        console.print(kl_table)
+        console.print(
+            "[dim]Binning on behavioural effect removes the observer's structural "
+            "advantage: within a band both arms face the same visible drift. Under "
+            "behavioural inference the gap is flat and centred on zero.[/dim]"
+        )
+
+    if args.figures is not None:
+        from introspect.figures import plot_all
+
+        written = plot_all(ts, summaries, bins, args.figures, word_scored=word)
+        console.print(f"\nwrote {len(written)} figures to {args.figures}")
+
+    console.print(f"\n[bold]{headline(summaries, word_scored=word)}[/bold]")
     console.print(
         "\n[dim]Chance for identification is 1/8 = 0.125. The null AUROC column is the "
         "gate: if the shuffled control detects above chance, the model is responding to "
