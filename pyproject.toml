@@ -18,7 +18,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-llm = ["anthropic>=0.45,<1"]
+# The model-based monitor runs locally against the same Qwen weights repo A uses,
+# so the LLM arm needs no API key and no network. Kept optional: the scripted
+# experiments are the bulk of this repo and must stay instant.
+llm = [
+  "torch>=2.6,<3",
+  "transformers>=4.49,<5",
+  "accelerate>=1.4,<2",
+  "activation-introspection",
+]
 
 [dependency-groups]
 dev = [
@@ -40,6 +48,9 @@ sandbox = "sandbox.cli:app"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/sandbox"]
+
+[tool.uv.sources]
+activation-introspection = { path = "../activation-introspection", editable = true }
 
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers"
@@ -69,3 +80,8 @@ python_version = "3.12"
 strict = true
 files = ["src", "tests"]
 plugins = ["pydantic.mypy"]
+
+# The local judge model is an optional extra; mypy runs without it installed.
+[[tool.mypy.overrides]]
+module = ["introspect.*"]
+ignore_missing_imports = true
