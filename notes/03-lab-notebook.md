@@ -469,3 +469,94 @@ introspective report does not, at these sizes.
 n=96 per cell gives ±0.10, which is enough for the sign of these effects but not
 for fine comparisons. The 1.5B gap CI excludes zero comfortably; the 0.5B one
 touches it.
+
+---
+
+## 2026-08-01 — Full-depth profile, and the position after reading the field
+
+### The literature position (see `notes/00-literature.md`)
+
+The confounds I characterised are published: binary detection is a global logit
+shift (arXiv 2512.12411, r=0.999 against factually-false controls); identification
+confabulates while detection succeeds (arXiv 2603.05414); the introspective
+circuit sits at ~70% depth (arXiv 2603.21396).
+
+The **gap** is that both papers training models to introspect state they do not
+compare probe decodability against verbalization:
+
+- *Introspection Fine-Tuning* (arXiv 2607.14111) — Llama-1B 9.6% → 60.6% on
+  sentence localization, peaks "at optimal layer/strength configurations", and
+  "does not employ linear probes to compare what activations encode versus what
+  models report".
+- *Introspection Adapters* (arXiv 2604.16812) — 89% verbalization on AuditBench,
+  no probe-vs-verbalization comparison, open question stated as *why* they
+  generalize.
+
+So the quantity nobody has measured is **how much concept information is linearly
+present before any introspection training**. That is the profile below, and it
+licenses a falsifiable prediction: IFT gains should track pre-training
+decodability layer by layer.
+
+### The profile (Qwen2.5-0.5B, inject L8, α=0.2, n_train=320, n_test=400)
+
+Probe trained only on natural text; permuted-label null; self-report flat at
+0.125 (chance) at every layer, since it is one measurement of the model.
+
+| layer | depth | within-natural | transfer | null |
+|---|---|---|---|---|
+| 9 | 38% | 0.713 | 0.625 | 0.067 |
+| 11 | 46% | 0.650 | 0.525 | 0.158 |
+| 13 | 54% | 0.650 | 0.500 | 0.050 |
+| 14 | 58% | 0.769 | 0.750 | 0.167 |
+| 15 | 62% | 0.750 | 0.775 | 0.158 |
+| 16 | 67% | 0.700 | 0.775 | 0.083 |
+| **17** | **71%** | 0.681 | **0.875** | 0.200 |
+| 18 | 75% | 0.691 | 0.825 | 0.100 |
+| 20 | 83% | 0.934 | 1.000 | 0.108 |
+| 23 | 96% | 1.000 | 1.000 | 0.100 |
+
+Transfer beats its null at every layer from L9 on. The shape has a clear stable
+high band at **58–75% depth (L14–18)**, peaking at L17 = 71%, which brackets the
+~70% introspective circuit Macar et al. locate in two much larger models. That
+convergence across a 0.5B model and 27B/235B models is worth noting and worth not
+overreading — it is one model here.
+
+### Two things that keep this honest
+
+**Transfer exceeds within-natural at L17** (0.875 vs 0.681). The injected state is
+*more* linearly separable than natural concept text, not merely as separable. That
+is expected — a contrast-derived steering vector is a purer version of the
+direction than any natural sentence — but it means "the injection induces a
+genuinely concept-like state" is too strong. The defensible statement is: a
+decision boundary fit on natural text assigns injected states to the correct
+concept, and injected states sit further from that boundary than natural examples
+do.
+
+**L20+ is near output space** and its 1.000 should not be the headline; at the
+final layers "ocean" text and an "ocean" injection both point at ocean tokens,
+which is token promotion in another guise. **L14–18 is the load-bearing band.**
+
+### Instability near the injection site
+
+An earlier run injecting at L9 and probing at L11 gave transfer 0.125 (at null).
+This run injects at L8 and probes L11 at 0.525. A one-layer shift in the injection
+site — which also moves the layer the concept bank is built at — changes the
+nearby profile substantially. Downstream of ~L14 the profile is stable across both
+configurations (0.75–0.88 vs 0.70–0.78).
+
+So: the band from 58% depth onward is a property of the model; the first few
+layers after injection are a property of the configuration. Any claim about early
+layers needs the injection site swept, not fixed.
+
+### Standing limitation, unchanged and important
+
+Self-report is digit-indexed forced choice, which this model fails independently
+of introspection. The transfer-vs-self-report spread therefore overstates the
+access gap by an unknown amount. The profile is the contribution; the gap
+magnitude is not quotable until the self-report instrument is fixed.
+
+### Next
+
+1. Sweep the injection site, to separate model structure from configuration.
+2. Run the profile on 1.5B and 3B: does the high band stay at 58–75% depth?
+3. Cross-lingual self-report, for an honest denominator.
