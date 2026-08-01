@@ -44,20 +44,20 @@ building one.
 | **What Training Pressures Cause CoT Obfuscation?** (Cody Wild, Google DeepMind) | Direct, from an unusual angle. The attacker's reasoning becomes uninformative to the monitor with **no gradient step anywhere** — the pressure comes entirely from informative refusals. If that holds with real models, "don't train against the monitor" is insufficient as a mitigation. |
 | **Does Reward Seeking Generalize Better Than Instruction Following?** (Anders Woodruff, Sebastian Prasanna) | Shared design. The honest-vs-attacker contrast is a matched-pair setup where the two agents run identical code and differ only in whether they pursue a proxy objective — the same controlled comparison that project needs. |
 
-### What it does not claim
+### What it does and does not claim
 
-The attacker is scripted. Its escalation ladder is a hypothesis about what
-adaptation looks like, not a discovery, so **nothing here licenses a claim about
-how a real model behaves**. The LLM *monitor* arm is real (local Qwen, no API
-key); the LLM *agent* arm is not built, and that is the experiment that would turn
-this from an existence proof into a result.
+The scripted attacker's ladder is a hypothesis about what adaptation looks like,
+not a discovery. The point of the LLM *agent* arm (below) is precisely to test
+whether real models supply that adaptation — and at ≤3B they do not, which turns
+the scripted results into an explicit upper bound rather than a description. Both
+the agent and monitor arms run locally on Qwen weights; no API key.
 
 ## Status
 
-Scripted attacker and rule/provenance monitors are implemented and swept across
-30 seeds with bootstrap intervals. The LLM agent and LLM monitor arms are not
-built yet, so **nothing here licenses a claim about how a real model behaves** —
-the scripted attacker's ladder is a hypothesis about adaptation, not a discovery.
+Complete: scripted attacker, rule/provenance/windowed monitors, a local LLM
+monitor, and a local LLM agent — all swept with bootstrap intervals. The headline
+is the real-model result immediately below; the scripted sweeps follow it as the
+environment that motivated the question.
 
 ## Headline result: the scripted attack does not reproduce in a real model at ≤3B
 
