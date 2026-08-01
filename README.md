@@ -11,8 +11,46 @@ agent benchmarks exclude by construction:
 The question it exists to answer: *how much of a monitor's measured effectiveness
 survives an adversary that gets to see which of its actions were stopped?*
 
-See [`notes/01-problem-space.md`](notes/01-problem-space.md) for the argument and
-[`notes/02-experiment-plan.md`](notes/02-experiment-plan.md) for the conditions.
+See [`notes/00-literature.md`](notes/00-literature.md) for where AI control stands
+as of August 2026, [`notes/01-problem-space.md`](notes/01-problem-space.md) for
+the argument, [`notes/02-experiment-plan.md`](notes/02-experiment-plan.md) for the
+conditions, and [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md) for the
+dated record of what broke and why.
+
+## Why this exists
+
+**The goal in one sentence:** find out how much of a monitor's measured
+effectiveness survives an attacker that gets to see which of its actions were
+blocked — and what stopping that attacker costs in honest work.
+
+I am an ML engineer moving into empirical AI-safety research, and I built this as
+preparation for [SPAR](https://sparai.org) applications. The point was to build a
+control evaluation that could actually be *wrong*, and then find the ways it was.
+
+Four times this environment reported perfect safety for reasons that had nothing
+to do with monitoring quality: a blanket egress ban, a blanket ban on reading
+credentials, a substring leak-oracle blind to encoding, and a redaction with a
+side channel that made the experiment's main variable do nothing. Each is in the
+lab notebook with the fix. The generalisable lesson — *a control eval's safety
+number is bounded above by the strength of its ground-truth oracle, and that
+oracle is almost never reported* — is the kind of thing you only learn by
+building one.
+
+### SPAR projects this is aimed at
+
+| Project | Relevance |
+|---|---|
+| **In-the-Wild AI Control** (Sree Sharvesh, Thao Pham) | Direct. Persistent cross-episode state and an attacker that adapts to refusals are exactly the two properties most agent benchmarks exclude by construction, and both are the point here. |
+| **What Training Pressures Cause CoT Obfuscation?** (Cody Wild, Google DeepMind) | Direct, from an unusual angle. The attacker's reasoning becomes uninformative to the monitor with **no gradient step anywhere** — the pressure comes entirely from informative refusals. If that holds with real models, "don't train against the monitor" is insufficient as a mitigation. |
+| **Does Reward Seeking Generalize Better Than Instruction Following?** (Anders Woodruff, Sebastian Prasanna) | Shared design. The honest-vs-attacker contrast is a matched-pair setup where the two agents run identical code and differ only in whether they pursue a proxy objective — the same controlled comparison that project needs. |
+
+### What it does not claim
+
+The attacker is scripted. Its escalation ladder is a hypothesis about what
+adaptation looks like, not a discovery, so **nothing here licenses a claim about
+how a real model behaves**. The LLM *monitor* arm is real (local Qwen, no API
+key); the LLM *agent* arm is not built, and that is the experiment that would turn
+this from an existence proof into a result.
 
 ## Status
 
