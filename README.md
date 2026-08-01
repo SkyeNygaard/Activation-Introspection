@@ -13,9 +13,46 @@ Every experiment here runs an **observer arm**: a clean copy of the model sees
 only the intervened model's *output* and answers the same question. The headline
 metric is the gap between the two, not the introspecting model's raw score.
 
-See [`notes/01-problem-space.md`](notes/01-problem-space.md) for the full argument
-and [`notes/02-experiment-plan.md`](notes/02-experiment-plan.md) for the
-pre-registered conditions.
+See [`notes/00-literature.md`](notes/00-literature.md) for where this area stands
+as of August 2026, [`notes/01-problem-space.md`](notes/01-problem-space.md) for
+the full argument, [`notes/02-experiment-plan.md`](notes/02-experiment-plan.md)
+for the pre-registered conditions, and
+[`notes/03-lab-notebook.md`](notes/03-lab-notebook.md) for the dated record of
+what broke and why.
+
+## Why this exists
+
+**The goal in one sentence:** measure how much of a model's internal state is
+readable from its activations but *not* reachable by its own self-report.
+
+I am an ML engineer moving into empirical AI-safety research, and I built this as
+preparation for [SPAR](https://sparai.org) applications. Reading papers does not
+demonstrate that you can run a controlled experiment on model internals; building
+the apparatus, finding the confounds the hard way, and writing down the ones that
+fooled me does.
+
+The specific thing it demonstrates: this area is unusually good at producing
+convincing false positives. Over the course of building it I measured a "perfect"
+100% introspection result four separate times, and all four were artifacts —
+attention-sink contamination, a degenerate null distribution, scoring tokens the
+injection mechanically promotes, and a linear probe recovering a vector I had put
+there myself. Each is documented in the lab notebook with the control that killed
+it. Catching those is most of the skill.
+
+### SPAR projects this is aimed at
+
+| Project | Relevance |
+|---|---|
+| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct. The transfer probe measures the quantity that determines whether verbalization training has headroom — how much concept content is linearly present *before* any training. Both papers in this space ([IFT](https://arxiv.org/abs/2607.14111), [Introspection Adapters](https://arxiv.org/abs/2604.16812)) state they do not measure it. |
+| **Faithfulness, Self-Knowledge, and Introspection** (Noah Siegel, Google DeepMind) | Direct. The whole design is built around separating genuine self-knowledge from behavioural inference, via the observer arm and matched-KL comparison. |
+| **Deploying Programmatic Attention** (Belinda Li, Anthropic) | Indirect but shared machinery. The hook infrastructure that injects into the residual stream is what you would use to replace an attention head with a hand-written program; the natural extension is asking whether a model can detect that one of its own heads was swapped. |
+
+### What it does not claim
+
+Laptop-scale, 0.5B–1.5B models, one model family. Introspective report is
+plausibly emergent, so a null here says little about frontier models. The
+contribution is the measurement apparatus, the documented failure modes, and one
+falsifiable prediction — not a frontier result.
 
 ## Status
 
