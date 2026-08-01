@@ -102,8 +102,6 @@ Full derivation, and the four confounds caught along the way, in
 
 ## Earlier result: no introspective access at 0.5B
 
-## Result
-
 `Qwen2.5-0.5B-Instruct`, 1440 trials, 360 per arm:
 
 | quantity | estimate | chance |
