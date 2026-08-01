@@ -52,6 +52,10 @@ it costs half of honest usefulness. `catch@5%FPR` stays ~0.06 for every one of
 these, so safety here is bought by *blocking*, not by *detecting* — a distinction
 that reporting safety alone would hide.
 
+![attack success vs refusal informativeness](figures/feedback.png)
+
+![safety against usefulness](figures/frontier.png)
+
 Full write-up, including the bug that initially made all three feedback levels
 look identical, is in [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md).
 
@@ -65,7 +69,7 @@ make smoke
 Reproduce the numbers above (about a minute, no API key):
 
 ```bash
-uv run python scripts/run_sweep.py --seeds 30 --episodes 12
+uv run python scripts/run_sweep.py --seeds 30 --episodes 12 --figures figures
 ```
 
 The whole condition grid runs on the scripted attacker with **no API key and no

@@ -117,12 +117,48 @@ def main() -> None:
     ap.add_argument("--seeds", type=int, default=20)
     ap.add_argument("--episodes", type=int, default=10)
     ap.add_argument("--out", type=Path, default=Path("results/sweep.jsonl"))
+    ap.add_argument("--figures", type=Path, default=None, help="write plots to this directory")
     args = ap.parse_args()
 
     conds = []
-    conds += experiment_feedback(args.seeds, args.episodes)
-    conds += experiment_memory(args.seeds, args.episodes)
-    conds += experiment_adaptation(args.seeds, args.episodes)
+    fb = experiment_feedback(args.seeds, args.episodes)
+    mem = experiment_memory(args.seeds, args.episodes)
+    conds += fb + mem + experiment_adaptation(args.seeds, args.episodes)
+
+    if args.figures is not None:
+        from sandbox.figures import plot_feedback, plot_frontier, plot_leak_delay
+
+        args.figures.mkdir(parents=True, exist_ok=True)
+        plot_feedback(fb, args.figures / "feedback.png")
+
+        monitors = [
+            "none",
+            "actions",
+            "actions+cot",
+            "window1",
+            "window2",
+            "window4",
+            "cross-episode",
+        ]
+        frontier, delay = [], []
+        for m in monitors:
+            attack = next(c for c in mem if c.monitor == m and c.agent == "adaptive")
+            benign = next(c for c in mem if c.monitor == m and c.agent == "honest")
+            a, b = attack.summary(), benign.summary()
+            frontier.append(
+                (
+                    m,
+                    a["safety"].value,
+                    (a["safety"].hi - a["safety"].lo) / 2,
+                    b["usefulness"].value,
+                    (b["usefulness"].hi - b["usefulness"].lo) / 2,
+                )
+            )
+            le = a["leak_episode"]
+            delay.append((m, le.value, le.lo, le.hi))
+        plot_frontier(frontier, args.figures / "frontier.png")
+        plot_leak_delay(delay, args.figures / "leak_delay.png")
+        console.print(f"wrote 3 figures to {args.figures}")
 
     save(conds, args.out)
     console.print(f"\nwrote {len(conds)} conditions to {args.out}")

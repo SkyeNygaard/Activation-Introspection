@@ -20,3 +20,4 @@ dist/
 # Keep aggregated results and figures in Git.
 results/raw/
 results/**/*.jsonl
+!figures/
