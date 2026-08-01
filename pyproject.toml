@@ -61,5 +61,5 @@ files = ["src", "tests"]
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
-module = ["transformers.*", "torch.*"]
+module = ["transformers.*", "torch.*", "sklearn.*", "matplotlib.*"]
 ignore_missing_imports = true

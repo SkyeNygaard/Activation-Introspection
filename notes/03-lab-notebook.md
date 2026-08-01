@@ -277,3 +277,103 @@ this control is not weak evidence of introspection — it is no evidence at all.
    both non-circular and not confounded by injection damage.
 3. Paraphrase and cross-lingual option sets, to recover format-tax-free
    identification without reintroducing circularity.
+
+---
+
+## 2026-08-01 (later) — Literature check first. Then a real dissociation.
+
+### The novelty check I should have run before writing up anything
+
+Searched the 2026 literature before building a portfolio around the previous two
+entries. **Neither finding is novel**, and one of them was my own bug:
+
+| my "finding" | prior work |
+|---|---|
+| detection has a yes-bias, so use AUROC | *Detecting the Disturbance* (arXiv 2512.12411) — same effect, **better control**: identical injection applied to factually-false questions ("Can humans breathe underwater?") gives r=0.999 correlation with the detection logit shift. Purely mechanical, cleanly demonstrated. |
+| identification is at chance / confabulates | *Emergent Introspection in AI is Content-Agnostic* (arXiv 2603.05414) — models detect anomalies but confabulate content toward common concrete nouns. |
+| word-scored identification is circular | Not a contribution. Lindsey's design **removes the steering vector before querying the model**, which avoids the confound by construction. I injected during the answer. Self-inflicted. |
+| adaptive attackers defeat monitors (repo B) | *Adaptive Attacks on Trusted Monitors* (arXiv 2510.09462); *CIAware-Bench* (arXiv 2606.11063) benchmarks whether models notice a control intervention. |
+
+Lesson worth keeping: I spent two entries characterising confounds that were
+already characterised. The check costs twenty minutes and should come before the
+experiment, not after the writeup.
+
+### The gap that survived the check
+
+Two published results are in tension:
+
+- binary detection is *entirely* confounded (global logit shift), yet
+- identification of **which sentence** was perturbed reaches ~88% against 10%
+  chance, while identification of **what** was injected confabulates.
+
+So models localise perturbations they cannot name. Nobody I found tests whether
+the content is *absent* from the state, or *present and unreported*. That
+distinction decides whether verbalization training has anything to train on.
+
+### Two failed designs, same trap
+
+1. **Raw linear probe on injected activations.** Probe accuracy 1.000 at layers
+   11, 16 and 23 (injection at 9), null 0.113. Meaningless: the residual stream is
+   additive, the injected direction propagates forward nearly verbatim, and the
+   probe recovers what I put there. Probing "downstream" does not help — hence
+   1.000 at the *last* layer.
+2. **Ablate the injected direction, then probe.** Still 1.000. Projecting out one
+   rank-1 direction does not remove its *downstream image*, which is a
+   deterministic function of the same injection.
+
+Both are the circularity trap in new clothing. Anything you inject, you can
+decode.
+
+### The design that escapes it: cross-distribution transfer
+
+Train the probe **only on natural text** mentioning each concept — no injection
+anywhere in the training set — then test it on injected trials. The probe cannot
+recover "the vector we added" because it never saw one. It can only succeed if
+injection moves the model into the same region of representation space that
+genuinely processing the concept does.
+
+`Qwen2.5-0.5B-Instruct`, injection at L9, α=0.2, 8 concepts, n=80 injected trials,
+48 natural training examples:
+
+| probe layer | within-natural (probe works?) | **transfer to injected** | shuffled null | model self-report |
+|---|---|---|---|---|
+| 11 | 0.062 [0.000, 0.146] | 0.200 [0.113, 0.287] | 0.150 | 0.125 |
+| 16 | 0.188 [0.083, 0.292] | 0.525 [0.412, 0.637] | 0.113 | 0.125 |
+| 23 | 0.958 [0.896, 1.000] | **1.000 [1.000, 1.000]** | 0.138 | 0.125 |
+
+The layer structure is the credibility check. Where the probe cannot separate
+concepts even in natural text (L11), nothing transfers — as it must not. Where it
+can (L23), transfer is perfect. A vector injected at layer 9 produces, fourteen
+layers downstream, a state that a classifier trained purely on ordinary sentences
+assigns to the correct concept every time.
+
+**The dissociation:** concept identity is fully linearly decodable from the state
+the model answers from, while the model's own forced-choice answer sits at chance.
+
+### What this does and does not license
+
+It does **not** show the model "knows" what was injected. Linear decodability is a
+statement about the representation, not about access.
+
+It does bound the target for verbalization training: at this scale the content is
+present in a linearly-readable form, so a training signal for verbalizing it has
+something to attach to. If the transfer probe had come back at chance,
+verbalization training would have had nothing to learn.
+
+**The number is inflated and I should not quote 0.875 as the gap.** Self-report
+here is digit-indexed forced choice, which this model fails independently of
+introspection (documented two entries up: free-form 0.33 where digits scored
+0.05). So part of the 1.000-vs-0.125 spread is format incompetence, not access
+failure. The design is sound; the self-report instrument is not.
+
+That is now the concrete open problem, and it is the one worth solving next: a
+self-report measure that is neither circular (must not score tokens the injection
+promotes) nor format-taxed (must not require concept→digit indirection).
+Cross-lingual options are the most promising candidate — score the concept in a
+language the steering vector was not built in.
+
+### Next
+
+1. Cross-lingual self-report, to get an honest denominator for the dissociation.
+2. Transfer probe across the scale ladder: does the dissociation narrow with size?
+   That is the question the whole line is for.
