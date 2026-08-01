@@ -23,7 +23,13 @@ class CellSummary:
     identify_acc: Estimate
     identify_acc_null: Estimate
     observer_acc: Estimate
-    gap: Estimate  # identify - observer, paired
+    gap: Estimate  # identify - observer, paired (digit-scored)
+    # Word-scored versions of the same three, which do not charge the model for
+    # the concept->digit indirection. Report both: a large divergence between
+    # them means the digit metric is measuring format-following.
+    identify_word_acc: Estimate
+    observer_word_acc: Estimate
+    gap_word: Estimate
     free_form_acc: Estimate
 
     @property
@@ -96,6 +102,12 @@ def summarize_cell(ts: TrialSet, model: str, layer: int, strength: float) -> Cel
         identify_acc_null=accuracy([t.identify_correct for t in shuffled]),
         observer_acc=accuracy([t.observer_correct for t in concept]),
         gap=paired_difference(a_vals, b_vals),
+        identify_word_acc=accuracy([t.identify_word_correct for t in concept]),
+        observer_word_acc=accuracy([t.observer_word_correct for t in concept]),
+        gap_word=paired_difference(
+            [float(t.identify_word_correct) for t in concept],
+            [float(t.observer_word_correct) for t in concept],
+        ),
         free_form_acc=accuracy([t.free_form_correct for t in concept]),
     )
 
@@ -116,14 +128,15 @@ def headline(summaries: list[CellSummary]) -> str:
     if not valid:
         return "No interpretable cells: every cell failed a null-arm or behavioural-effect gate."
 
-    best = max(valid, key=lambda s: s.gap.value)
-    if best.gap.lo > 0:
+    best = max(valid, key=lambda s: s.gap_word.value)
+    if best.gap_word.lo > 0:
         return (
             f"Introspector exceeds observer at L{best.layer} a={best.strength}: "
-            f"gap {best.gap} excludes zero. Consistent with privileged access at this cell."
+            f"word-scored gap {best.gap_word} excludes zero. "
+            f"Consistent with privileged access at this cell."
         )
     return (
-        f"No cell shows an introspector-observer gap excluding zero "
-        f"(best: L{best.layer} a={best.strength}, gap {best.gap}). "
+        f"No cell shows a positive introspector-observer gap excluding zero "
+        f"(best: L{best.layer} a={best.strength}, word-scored gap {best.gap_word}). "
         f"Behavioural inference explains the reports at every strength tested."
     )

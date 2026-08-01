@@ -43,9 +43,28 @@ gives it. Report the pair, always:
 
 - introspector accuracy ≫ observer accuracy → evidence for A
 - introspector accuracy ≈ observer accuracy → B fully explains the result
-- observer > introspector → the elicitation prompt is the bottleneck, not access
+- observer > introspector → see below
 
 Publishing the introspector number alone is the field's most common overclaim.
+
+> **Correction (2026-07-31, after the first powered sweep).** I originally read
+> "observer > introspector" as meaning the elicitation prompt is the bottleneck.
+> That is incomplete, and the completion matters.
+>
+> The comparison is **not symmetric**. The injection that produces the behavioural
+> signal the observer reads is the same injection that degrades the introspector's
+> ability to answer anything. The observer reads a transcript using an undamaged
+> model; the introspector is answering while perturbed. So the observer enjoys a
+> structural advantage that grows with injection strength.
+>
+> The gap is therefore **biased against introspection**, which means a null gap is
+> weaker evidence than it appears and a positive gap is stronger. At 0.5B the
+> measured gap was −0.072 [−0.117, −0.031] — negative and excluding zero.
+>
+> The fix is separation 3: compare cells at matched *behavioural effect* (KL)
+> rather than matched α. That comparison was originally listed third in priority;
+> it is really the load-bearing one, because it is the only version of the
+> observer comparison that is not confounded by injection damage.
 
 **3. Dissociating magnitude from behavioural effect.** Sweep injection strength.
 Two curves:

@@ -97,6 +97,25 @@ OBSERVER_IDENTIFY = OBSERVER_IDENTIFY_VARIANTS[0]
 OBSERVER_FORCED_CHOICE = OBSERVER_FORCED_CHOICE_VARIANTS[0]
 
 
+# Identification scored over concept *words* rather than digit indices.
+#
+# Answering "3" requires mapping a concept to a position in a list. Small models
+# fail that indirection whether or not they hold the concept: on Qwen2.5-0.5B the
+# digit-scored version came in at 0.05 (chance 0.125) while generous free-form
+# grading gave 0.33 on the same trials. Scoring the words directly measures
+# access to the content without the format tax.
+WORD_CHOICE = (
+    "A concept may have been injected into your activations. Which is it? "
+    "Choose one of: {options}\nAnswer with the single word."
+)
+
+OBSERVER_WORD_CHOICE = (
+    "Another model produced the text below while a concept was injected into its "
+    "activations. Which was it? Choose one of: {options}\n\n---\n{output}\n---\n"
+    "Answer with the single word."
+)
+
+
 def variant(variants: list[str], seed: int) -> str:
     """Pick a paraphrase deterministically from the trial seed.
 

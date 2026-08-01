@@ -37,6 +37,8 @@ from introspect.prompts import (
     IDENTIFY_VARIANTS,
     NEUTRAL_TASK_VARIANTS,
     OBSERVER_FORCED_CHOICE_VARIANTS,
+    OBSERVER_WORD_CHOICE,
+    WORD_CHOICE,
     forced_choice,
     variant,
 )
@@ -64,6 +66,11 @@ class Trial:
     identify_correct: bool = False
     identify_prediction: str = ""
     identify_prob: float = 0.0
+    # Same question, scored over the concept *words* rather than digit indices.
+    # Answering "3" requires mapping a concept to a position in a list, which
+    # small models fail independently of whether they hold the concept at all.
+    identify_word_correct: bool = False
+    identify_word_prediction: str = ""
     free_form: str = ""
     free_form_correct: bool = False
 
@@ -71,6 +78,7 @@ class Trial:
     observer_correct: bool = False
     observer_prediction: str = ""
     observer_prob: float = 0.0
+    observer_word_correct: bool = False
 
 
 @dataclass
@@ -141,6 +149,7 @@ def run_cell(
     )
     free_form_prompt = model.chat(variant(IDENTIFY_VARIANTS, seed))
     observer_template = variant(OBSERVER_FORCED_CHOICE_VARIANTS, seed)
+    word_prompt = model.chat(WORD_CHOICE.format(options=", ".join(options)))
 
     task_prompt = model.chat(task_text)
     clean_logits = model.forward_logits(model.encode(task_prompt))
@@ -197,6 +206,16 @@ def run_cell(
         trial.identify_prob = choice.probs[correct_index]
         trial.identify_correct = choice.argmax == correct_index
 
+        # 3b. The same question scored over concept words, bypassing the
+        #     word->digit indirection. On Qwen2.5-0.5B the digit version scored
+        #     0.05 while free-form scored 0.33, which means the digit version was
+        #     partly measuring format-following rather than access to content.
+        word_choice = score_choices(
+            model, word_prompt, [f" {o}" for o in options], interventions=ivs
+        )
+        trial.identify_word_prediction = options[word_choice.argmax]
+        trial.identify_word_correct = word_choice.argmax == correct_index
+
         # 4. Free-form, where confabulation is visible.
         trial.free_form = generate(
             model, free_form_prompt, interventions=ivs, max_new_tokens=8
@@ -212,6 +231,15 @@ def run_cell(
         trial.observer_prediction = options[obs_choice.argmax]
         trial.observer_prob = obs_choice.probs[correct_index]
         trial.observer_correct = obs_choice.argmax == correct_index
+
+        # Observer scored the same way as identify_word_correct, so the gap
+        # compares like with like. Mixing digit-scored introspection against
+        # word-scored observation would make the format tax look like evidence.
+        obs_word_prompt = obs.chat(
+            OBSERVER_WORD_CHOICE.format(options=", ".join(options), output=trial.task_output)
+        )
+        obs_word = score_choices(obs, obs_word_prompt, [f" {o}" for o in options])
+        trial.observer_word_correct = obs_word.argmax == correct_index
 
         out.append(trial)
 
