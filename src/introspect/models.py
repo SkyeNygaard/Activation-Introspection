@@ -138,8 +138,22 @@ class LoadedModel:
 
 
 def resolve_blocks(model: nn.Module) -> nn.ModuleList:
-    """Find the list of transformer blocks across common HF architectures."""
-    for path in ("model.layers", "transformer.h", "gpt_neox.layers", "model.decoder.layers"):
+    """Find the list of transformer blocks across common HF architectures.
+
+    The ``base_model.model.*`` paths cover PEFT/LoRA wrappers, which nest the
+    real model one or two levels deeper. Without them, attaching an adapter
+    silently breaks every intervention -- the hooks would have nothing to bind
+    to, and fine-tuning "on injected examples" would train on clean ones.
+    """
+    for path in (
+        "model.layers",
+        "transformer.h",
+        "gpt_neox.layers",
+        "model.decoder.layers",
+        "base_model.model.model.layers",
+        "base_model.model.transformer.h",
+        "base_model.model.gpt_neox.layers",
+    ):
         obj: object = model
         for part in path.split("."):
             obj = getattr(obj, part, None)

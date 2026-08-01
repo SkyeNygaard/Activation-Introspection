@@ -56,8 +56,51 @@ falsifiable prediction — not a frontier result.
 
 ## Status
 
-Pipeline complete and swept. Standing result at 0.5B: **no evidence of
-introspective access**, and the one metric that appeared to show it was circular.
+Pipeline complete. Includes a working introspection-fine-tuning arm (LoRA, local),
+which was used to test — and falsify — this repo's own central prediction.
+
+## Headline result: what governs introspection-training generalization
+
+*Introspection Fine-Tuning* ([arXiv 2607.14111](https://arxiv.org/abs/2607.14111))
+lists **"mechanisms underlying the layer-agnostic generalization effect"** as an
+open question. This repo offers a candidate answer, arrived at by predicting the
+wrong thing and being corrected by the data.
+
+I predicted that pre-training linear decodability would forecast where
+introspection training generalizes. It does the opposite: r = **−0.774**.
+
+What actually governs it is the **remaining compute budget** — how many layers
+sit downstream of the injection. Fine-tuning at one layer, evaluated at all
+others (n=37 layer evaluations across two training layers):
+
+| | mean post-IFT accuracy |
+|---|---|
+| ≥4 layers remaining downstream | **0.957** (n=29) |
+| ≤3 layers remaining | **0.346** (n=8) |
+
+It is not distance from the trained layer: training at L16 generalizes *downward*
+14 layers (L2 → 0.938) while failing *upward* at +5 (L21 → 0.550). The failure
+boundary sits at the same absolute place regardless of where training happened.
+
+**The dissociation that makes this interesting:** the collapse happens exactly
+where an external linear probe reads the injected concept at **1.000**. The
+information is present, linearly available, and unreportable.
+
+> Decodability by an external probe is not usability by the model's own forward
+> pass. The probe reads the residual directly; the model has to route that content
+> through remaining layers into a token choice, and near the output there are none.
+
+![post-IFT accuracy vs pre-training decodability](figures/ift_vs_probe.png)
+
+Two actionable consequences, neither requiring the training to be run: **train at
+mid-depth** (L16 covers 19 layers, L8 covers 12), and **do not read late-layer
+IFT failure as absence of the representation** — it is maximally decodable exactly
+there.
+
+Full derivation, and the four confounds caught along the way, in
+[`notes/03-lab-notebook.md`](notes/03-lab-notebook.md).
+
+## Earlier result: no introspective access at 0.5B
 
 ## Result
 

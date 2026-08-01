@@ -11,6 +11,7 @@ from collections.abc import Callable
 from pathlib import Path
 
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")  # no display on a headless run
 import matplotlib.pyplot as plt
@@ -231,3 +232,57 @@ def plot_all(
         if (outdir / name).exists():
             written.append(outdir / name)
     return written
+
+
+def plot_ift_vs_probe(ift_json: Path, path: Path) -> None:
+    """Post-IFT accuracy against pre-training probe decodability, per held-out layer.
+
+    The test of the prediction. Each point is one layer the adapter was never
+    trained on: x is how decodable the injected concept was *before* any training,
+    y is how well the fine-tuned model reports it. A positive slope means
+    pre-training decodability forecasts where introspection training generalizes.
+    """
+    import json
+
+    data = json.loads(ift_json.read_text())
+    rows = [r for r in data["layers"] if r.get("probe_transfer") is not None]
+    if len(rows) < 3:
+        return
+
+    x = [r["probe_transfer"] for r in rows]
+    y = [r["post"][0] for r in rows]
+    lo = [r["post"][0] - r["post"][1] for r in rows]
+    hi = [r["post"][2] - r["post"][0] for r in rows]
+    depth = [r["depth_frac"] for r in rows]
+
+    fig, ax = plt.subplots(figsize=(7, 4.6))
+    sc = ax.scatter(x, y, c=depth, cmap="viridis", s=60, zorder=3)
+    ax.errorbar(x, y, yerr=[lo, hi], fmt="none", ecolor="#999", capsize=3, zorder=2)
+
+    if len(set(x)) > 1:
+        m, b = np.polyfit(x, y, 1)
+        xs = np.linspace(min(x), max(x), 50)
+        r = np.corrcoef(x, y)[0, 1]
+        ax.plot(xs, m * xs + b, ls="--", color="#1b6ca8", label=f"r = {r:+.2f}")
+        ax.legend(frameon=False)
+
+    ax.axhline(data["chance"], ls=":", lw=1, color="k", alpha=0.6)
+    ax.annotate(
+        "chance",
+        (min(x), data["chance"]),
+        textcoords="offset points",
+        xytext=(2, 4),
+        fontsize=8,
+        color="gray",
+    )
+    fig.colorbar(sc, ax=ax, label="depth (fraction of layers)")
+    ax.set_xlabel("pre-training transfer-probe accuracy at this layer")
+    ax.set_ylabel("post-IFT self-report accuracy")
+    ax.set_title(
+        "Does pre-training decodability predict where\nintrospection training generalizes?\n"
+        f"(trained only on L{data['train_layer']}; every point is a held-out layer)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)

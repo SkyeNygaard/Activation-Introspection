@@ -560,3 +560,113 @@ magnitude is not quotable until the self-report instrument is fixed.
 1. Sweep the injection site, to separate model structure from configuration.
 2. Run the profile on 1.5B and 3B: does the high band stay at 58–75% depth?
 3. Cross-lingual self-report, for an honest denominator.
+
+---
+
+## 2026-08-01 — Prediction falsified. The real variable is the remaining compute budget.
+
+### The test
+
+I predicted that pre-training transfer-probe decodability would forecast where
+introspection training generalizes. Tested it directly: LoRA fine-tune
+Qwen2.5-0.5B to answer the identification question with a concept injected at ONE
+layer, then measure accuracy at every other layer. Training and evaluation use
+**disjoint prompt paraphrases** (variants 0–2 vs 3–4), so held-out layers are
+scored on wordings never trained on. Digit-scored, so not circular. 144 training
+examples, 2 epochs, base model frozen.
+
+### The prediction was wrong, with the opposite sign
+
+r = **−0.774** (train L8) and **−0.640** (train L16) between pre-training probe
+transfer and post-IFT accuracy. Decodability does *not* predict where training
+generalizes — it anti-predicts it.
+
+### What actually governs it
+
+Two training runs, L8 and L16, evaluated on both sides of the trained layer:
+
+| injection layer | layers remaining | trained @ L8 | trained @ L16 | probe transfer |
+|---|---|---|---|---|
+| 2 | 21 | – | 0.938 | – |
+| 8 | 15 | 1.000 | 1.000 | – |
+| 14 | 9 | 1.000 | 1.000 | 0.750 |
+| 17 | 6 | 0.944 | 1.000 | 0.875 |
+| 19 | 4 | 0.812 | 1.000 | 0.600 |
+| **20** | **3** | 0.525 | 1.000 | **1.000** |
+| **21** | **2** | 0.125 | 0.550 | **1.000** |
+| **22** | **1** | 0.125 | 0.194 | **1.000** |
+| **23** | **0** | 0.125 | 0.125 | **1.000** |
+
+Pooled over both runs (n=37 layer evaluations):
+
+- **≥4 layers remaining downstream: mean post-IFT accuracy 0.957** (n=29)
+- **≤3 layers remaining: mean post-IFT accuracy 0.346** (n=8)
+
+It is not distance from the trained layer. Training at L16 generalizes *downward*
+fourteen layers to L2 at 0.938, while failing *upward* at just +5 (L21, 0.550).
+An effect that reaches 14 layers in one direction and 5 in the other is not a
+distance effect. The failure boundary sits at the same absolute place in both
+runs — the last three layers — regardless of where training happened.
+
+### The mechanism, and the dissociation that makes it interesting
+
+The model needs a minimum amount of remaining computation to convert an injected
+signal into an answer token. Below roughly three or four remaining blocks it
+cannot, and no amount of fine-tuning fixes that.
+
+The sharp part: **this failure occurs exactly where linear decodability is
+maximal**. At L21–23 an external probe trained on natural text reads the injected
+concept at 1.000, while the fine-tuned model reports at chance. The information
+is present, linearly available, and unreportable.
+
+So the two quantities come apart completely:
+
+> **Decodability by an external probe is not usability by the model's own forward
+> pass.** A probe may read the final residual directly; the model must route that
+> content through its remaining layers into a token choice, and near the output
+> there are no remaining layers to route through.
+
+This is why my earlier framing — "decodability bounds verbalization headroom" —
+was wrong. Decodability is necessary but nowhere near sufficient; the binding
+constraint at late layers is compute, not representation.
+
+### What this says about IFT's open question
+
+*Introspection Fine-Tuning* (arXiv 2607.14111) lists "mechanisms underlying the
+layer-agnostic generalization effect" as unresolved. This gives a candidate
+answer:
+
+> IFT generalizes across layers not because the learned report is layer-agnostic,
+> but because a **remaining-compute budget** governs it. Generalization holds
+> wherever enough layers of computation remain downstream of the injection, and
+> fails otherwise, largely independent of which layer was trained on.
+
+Two practical consequences, both directly actionable and neither requiring the
+training to be run:
+
+1. **Train at mid-depth.** Training at L16 covers L2–L20 (19 layers); training at
+   L8 covers L8–L19 (12 layers). Mid-depth training generalizes over strictly more
+   of the model, because it is not the distance that matters.
+2. **Do not expect introspection training to work on the last few layers**, and do
+   not read failure there as absence of the representation — the representation is
+   maximally decodable exactly there.
+
+### Limits, stated plainly
+
+One model (Qwen2.5-0.5B), one concept bank, one strength, LoRA rather than full
+fine-tuning, and a small training set that drives loss to ~1e-4 (the adapter
+certainly memorises the training layer; the claim rests on held-out layers and
+held-out paraphrases). The "3–4 layer" threshold is a number from a 24-layer
+model and should be expected to scale with depth rather than transfer as a
+constant.
+
+The falsification is solid regardless: whatever governs layer generalization, it
+is not pre-training decodability, because the two anti-correlate.
+
+### Next
+
+1. Replicate on 1.5B: does the boundary sit at a constant *number* of remaining
+   layers, or a constant *fraction* of depth? That distinguishes a fixed compute
+   requirement from a proportional one.
+2. Vary injection strength at fixed remaining depth — if the boundary is compute,
+   a stronger injection should not move it.
