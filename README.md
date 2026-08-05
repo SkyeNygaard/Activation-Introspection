@@ -9,6 +9,9 @@ Three directories, one repository, so every cross-reference resolves.
 - [`adaptive-monitor-sandbox/`](adaptive-monitor-sandbox/) — the control sandbox
   and the Study 3 design.
 
+[`AI_ASSISTANCE.md`](AI_ASSISTANCE.md) records what was agent-assisted. Most of
+it was.
+
 Each subdirectory keeps its own `pyproject.toml`, tests, and verification
 contract. The two code repositories were developed separately and merged here
 with `git subtree`, so their individual commit histories are intact — that

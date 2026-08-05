@@ -43,21 +43,31 @@ arbitrary post-hoc codebook, which forecloses the token-promotion artifact this
 repo previously fell for — the propagation control above, and the scale ladder.
 Details in [LITERATURE-BOUNDARY.md](LITERATURE-BOUNDARY.md).
 
-## The second thing this portfolio is for
+## The method, which is the point
 
-Beyond the result: I can work out what an experiment actually measures, catch the
-artifacts that fake a result in either direction, and drop a claim when a
-corrected comparison kills it. The record of that is in
-[CLAIMS.md](CLAIMS.md) — including a retracted `r = −0.774` headline, a "100%
-identification" result killed by its own control, three control arms found to be
+The result above is a replication. What is not standard is the apparatus around
+it: I work out what an experiment actually measures, catch the artifacts that
+fake a result in either direction, and drop a claim when a corrected comparison
+kills it.
+
+The record is in [CLAIMS.md](CLAIMS.md), which grades every statement in this
+repository and includes the ones that did not survive — a retracted `r = −0.774`
+headline that compared two different injection sites, a "100% identification"
+result killed by its own no-question control, three control arms found to be
 arithmetic identities that could never have failed, and a randomized-response
 feedback channel that turned out never to randomize.
 
-This portfolio covers six [SPAR Fall 2026
-projects](https://www.sparai.org/projects/f26/) and contains **one executed
-study**, two pilot repositories, a claim audit, plans for the studies I would run
-next, and a brief for each project. It does not contain six finished results, and
-does not pretend to.
+I keep the same ledger in unrelated work. My [ARC White-Box Estimation
+Challenge](https://github.com/SkyeNygaard/AI-Safety-Roadmap) repository carries a
+`claims.csv` with per-claim evidence status, a research ledger, and the full
+record of what failed, alongside a graded competition submission and a proof.
+Different field, same discipline. One evidence ledger is a habit; two independent
+ones is a method, and the method is what I would bring to a project.
+
+**Scope.** This repository contains **one executed study** and two pilot
+repositories. It is not six projects' worth of results and does not pretend to
+be. [PROJECT-BRIEFS.md](PROJECT-BRIEFS.md) records what I would do on each of the
+six, and where this work does not reach.
 
 ## Start here
 
@@ -72,6 +82,8 @@ does not pretend to.
   six projects, including where it does not.
 - [AUDIT-MANIFEST.md](AUDIT-MANIFEST.md) — repository state, verification
   commands, artifact policy, and what still blocks publication.
+- [AI_ASSISTANCE.md](../AI_ASSISTANCE.md) — what was agent-assisted, which is
+  most of it, and what that does not license.
 
 ## Evidence repositories
 
@@ -123,7 +135,12 @@ survive. Layer 21 is the only cell that qualifies — at layer 15 only one of th
 two controls is above target, and the layer-3 cell fails badly (target KL 2.44
 against 0.51 and 0.41) and should not be quoted.
 
-## Fit to the six projects
+## Appendix: where this reaches each of the six projects
+
+I am applying to all six, and this table is deliberately unflattering where it
+should be. Three of the six are proposal-only: the work below them does not
+exist yet, and saying so is more useful to a mentor than a brief that implies
+otherwise.
 
 | SPAR project | Current fit | Why |
 |---|---|---|
