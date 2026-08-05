@@ -18,6 +18,19 @@ model's ability to *do anything with it*.
 |---|---|---|---|---|---|---|
 | **use** — can the model answer with it? | **0.500** | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
 | **storage** — can a probe read it off? | 1.000 | 1.000 | 1.000 | 0.958 | 1.000 | 1.000 |
+
+That storage row is worth one more question: is the probe reading the model, or
+reading back the vector I added? Rebuild the readout state as the *clean* carrier
+plus the identical delta, with no forward computation in between, and it scores
+**0.167** where the real arm scores 1.000. The intervening blocks are what make
+the injected direction legible to a boundary fit on ordinary text.
+
+![propagation control](figures/retained_propagation.png)
+
+The rightmost cell is the control failing on purpose: when the injection site is
+also the readout site, capture happens on the block the edit was applied to, and
+synthetic rises to meet real at 1.000. That is what this artifact looks like when
+it is genuinely present, which is why the other five cells mean something.
 | best control arm | 0.125 | 0.141 | 0.130 | 0.146 | 0.135 | 0.130 |
 
 Storage is not the bottleneck. Readout is. Full protocol, controls, and the
