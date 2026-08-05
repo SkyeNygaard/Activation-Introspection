@@ -1,0 +1,100 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "adaptive-monitor-sandbox"
+version = "0.1.0"
+description = "A persistent-state agent environment where the attacker adapts to what the monitor blocks"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Skye Nygaard" }]
+dependencies = [
+  "pydantic>=2.10,<3",
+  "typer>=0.15,<1",
+  "rich>=13.9,<15",
+  "numpy>=2.2,<3",
+]
+
+[project.optional-dependencies]
+# The model-based monitor runs locally against the same Qwen weights repo A uses,
+# so the LLM arm needs no API key and no network. Kept optional: the scripted
+# experiments are the bulk of this repo and must stay instant.
+llm = [
+  "torch>=2.6,<3",
+  "transformers>=4.49,<5",
+  "accelerate>=1.4,<2",
+  "activation-introspection",
+]
+
+[dependency-groups]
+dev = [
+  "mypy>=1.14,<2",
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.11,<1",
+]
+analysis = [
+  "ipykernel>=6.29,<8",
+  "jupyterlab>=4.3,<5",
+  "matplotlib>=3.10,<4",
+  "pandas>=2.2,<4",
+  "scikit-learn>=1.6,<2",
+  # power_study3.py needs a t quantile. It arrives transitively via
+  # scikit-learn today; depending on that is how a transitive dependency
+  # disappears in a later resolve and takes a script with it.
+  "scipy>=1.15,<2",
+]
+
+[project.scripts]
+sandbox = "sandbox.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sandbox"]
+
+[tool.uv.sources]
+activation-introspection = { path = "../activation-introspection", editable = true }
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["sandbox"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# .uv-cache holds extracted third-party packages. Ruff does not exclude it by
+# default, and `ruff format .` will happily rewrite several thousand cached
+# library files if you let it.
+extend-exclude = [".uv-cache", ".venv"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "RUF", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+# `scripts` is included deliberately: those files generate every published
+# number, so leaving them unchecked put the least-reviewed code in the
+# repository behind the strictest claims.
+files = ["src", "tests", "scripts"]
+mypy_path = "scripts"
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+# scipy ships no stubs in this pin; only a t quantile is used from it.
+module = ["scipy.*"]
+ignore_missing_imports = true
+
+# The local judge model is an optional extra; mypy runs without it installed.
+[[tool.mypy.overrides]]
+module = ["introspect.*"]
+ignore_missing_imports = true
