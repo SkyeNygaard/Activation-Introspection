@@ -1,6 +1,6 @@
 """End-to-end plumbing check: does an injection change anything at all?
 
-Run this first. It proves four things before any experiment is worth running:
+Run this first. It checks four plumbing properties before an experiment is worth running:
 
 1. The model loads on this machine and generates.
 2. Hooks fire on the right blocks and are removed afterwards.
@@ -8,8 +8,8 @@ Run this first. It proves four things before any experiment is worth running:
 4. There exists a strength window where injection changes the output measurably
    without reducing it to word salad.
 
-It is *not* a result. It is the check that a null result later would mean
-something.
+It is *not* a result, and passing it does not make a later null informative;
+format, reach, damage, and statistical controls must also pass.
 """
 
 from __future__ import annotations

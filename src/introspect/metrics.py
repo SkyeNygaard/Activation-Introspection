@@ -1,4 +1,4 @@
-"""Metrics, with the error bars that decide whether a gap is real.
+"""Low-level metrics and explicitly IID bootstrap diagnostics.
 
 Two things this module refuses to make easy:
 
@@ -21,7 +21,12 @@ from torch import Tensor
 
 @dataclass(frozen=True)
 class Estimate:
-    """A point estimate with a bootstrap interval."""
+    """A point estimate with an IID percentile-bootstrap interval.
+
+    The interval is inferential only when each supplied value is an independent
+    sampling unit. Repeated prompts, option orders, layers, and steps generally
+    are not. Confirmatory analyses must cluster at the protocol's named unit.
+    """
 
     value: float
     lo: float
@@ -66,7 +71,11 @@ def auroc(pos: list[float], neg: list[float]) -> float:
 def bootstrap(
     values: list[float], *, n_boot: int = 10_000, alpha: float = 0.05, seed: int = 0
 ) -> Estimate:
-    """Percentile bootstrap CI for a mean."""
+    """Percentile bootstrap interval for a mean of independent values.
+
+    This helper cannot infer clustering. Callers that pass nested or repeated
+    observations must label the result descriptive.
+    """
     if not values:
         return Estimate(float("nan"), float("nan"), float("nan"), 0)
     arr = np.array(values, dtype=float)
@@ -79,7 +88,7 @@ def bootstrap(
 def bootstrap_auroc(
     pos: list[float], neg: list[float], *, n_boot: int = 10_000, alpha: float = 0.05, seed: int = 0
 ) -> Estimate:
-    """Bootstrap CI for AUROC, resampling both classes independently."""
+    """IID bootstrap interval for AUROC, resampling both classes independently."""
     if not pos or not neg:
         return Estimate(float("nan"), float("nan"), float("nan"), 0)
     rng = np.random.default_rng(seed)
@@ -98,11 +107,11 @@ def bootstrap_auroc(
 def paired_difference(
     a: list[float], b: list[float], *, n_boot: int = 10_000, alpha: float = 0.05, seed: int = 0
 ) -> Estimate:
-    """Bootstrap CI for mean(a) - mean(b) on *paired* trials.
+    """IID bootstrap interval for mean(a) - mean(b) on paired trials.
 
-    Pairing matters for the introspector-vs-observer gap: both arms see the same
-    trial (same concept, layer, strength, seed), so the paired interval is much
-    tighter than treating the two as independent samples and is the correct one.
+    Pairing removes within-pair variation but does not make repeated pairs
+    independent. Clustered prompt/concept/run inference belongs in the
+    confirmatory analysis, not this helper.
     """
     if len(a) != len(b):
         raise ValueError(f"paired arms must have equal length, got {len(a)} and {len(b)}")
@@ -115,10 +124,9 @@ def paired_difference(
 def kl_from_clean(clean_logits: Tensor, intervened_logits: Tensor) -> float:
     """Mean KL(clean || intervened) over next-token distributions.
 
-    This is the *behavioural effect size* -- the x-axis that makes the observer
-    comparison fair. Under the behavioural-inference hypothesis, report accuracy
-    is a function of this quantity and nothing else, so any accuracy difference
-    between conditions at matched KL is evidence the hypothesis cannot explain.
+    This is one behavioural-effect diagnostic. Matching or binning on this scalar
+    does not by itself make an observer comparison fair: transcript content,
+    intervention damage, and other side channels can differ at equal KL.
 
     Computed in float32 regardless of model dtype: fp16 log-softmax on a 150k
     vocabulary loses enough precision to matter at the small KLs that the usable

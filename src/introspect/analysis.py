@@ -51,12 +51,11 @@ class CellSummary:
 
     @property
     def valid(self) -> bool:
-        """Is this cell interpretable at all?
+        """Did this cell pass two exploratory plumbing gates?
 
-        Two gates. If the null arm detects above chance, the model is responding
-        to *perturbation* rather than content and the concept arm means nothing.
-        If the behavioural effect is zero, nothing was injected and a null result
-        is trivial.
+        These thresholds were not preregistered equivalence criteria and do not
+        establish construct validity. They only flag obvious null-arm or
+        intervention failures in the legacy pilot.
         """
         return self.detection_auroc_null.lo < 0.65 and self.behavioural_kl.value > 1e-4
 
@@ -169,7 +168,7 @@ def has_word_scores(ts: TrialSet) -> bool:
 def matched_kl_bins(
     ts: TrialSet, *, model: str | None = None, n_bins: int = 4, word_scored: bool | None = None
 ) -> list[KLBin]:
-    """Compare introspector and observer *within* bands of equal behavioural effect.
+    """Describe introspector and observer within coarse KL bands.
 
     This is the load-bearing comparison, and the reason is asymmetry. The
     injection that produces the behavioural signal the observer reads is the same
@@ -178,14 +177,10 @@ def matched_kl_bins(
     advantage that grows with injection strength -- which biases the raw gap
     against introspection.
 
-    Binning on KL holds the observer's information roughly fixed. Within a bin,
-    both arms face the same amount of visible drift, so a difference between them
-    is not explained by "the observer had more to look at".
-
-    Under the behavioural-inference hypothesis, report accuracy is a function of
-    KL and nothing else, so the gap should be flat and centred on zero across
-    bins. A gap that *grows* at matched KL is the signature the hypothesis cannot
-    produce.
+    Binning holds one scalar consequence roughly fixed; it does not match the
+    transcript, intervention damage, geometry, or observer information. The
+    result is an exploratory sensitivity plot, not an identified test of
+    behavioural inference.
     """
     trials = [t for t in ts.trials if t.arm == "concept" and (model is None or t.model == model)]
     if not trials:
@@ -223,7 +218,7 @@ def matched_kl_bins(
 
 
 def headline(summaries: list[CellSummary], *, word_scored: bool = True) -> str:
-    """The one-paragraph verdict, stated conservatively.
+    """A legacy-pilot summary that refuses confirmatory causal language.
 
     Deliberately refuses to report a positive unless the null arms behave. A gap
     measured in a cell where the shuffled control also detects is not evidence of
@@ -248,11 +243,13 @@ def headline(summaries: list[CellSummary], *, word_scored: bool = True) -> str:
     if gap_of(best).lo > 0:
         return (
             f"Introspector exceeds observer at L{best.layer} a={best.strength}: "
-            f"gap {gap_of(best)} excludes zero. "
-            f"Consistent with privileged access at this cell."
+            f"IID gap {gap_of(best)} excludes zero. This is an exploratory signal; "
+            f"clustered inference and transcript/damage-yoked controls are required "
+            f"before interpreting privileged access."
         )
     return (
         f"No cell shows a positive introspector-observer gap excluding zero "
         f"(best: L{best.layer} a={best.strength}, gap {gap_of(best)}). "
-        f"Behavioural inference explains the reports at every strength tested."
+        f"This is no positive evidence under the legacy instrument, not evidence "
+        f"of absence; the IID interval and asymmetric observer can hide an effect."
     )

@@ -47,55 +47,133 @@ computation that emerges from post-training.
 
 ## Training models to introspect — the active frontier
 
-**Hahami et al., *Introspection Fine-Tuning (IFT)*** (arXiv 2607.14111).
+**Hahami et al., [*Introspection Fine-Tuning (IFT)*](https://arxiv.org/abs/2607.14111)**.
 Supervised fine-tuning on the model's own perturbed forward passes. Llama-3.2
 1B/3B/8B and Gemma-4 2B/4B/26B. Llama-1B goes **9.6% → 60.6%** on sentence
 localization (6×); Llama-3B 14.4% → 34.7%. Zero-shot transfer to strength
 comparison, 30.2% → 52.2%. Peak accuracy reaches 100% "at optimal layer/strength
 configurations". Capability preserved (MMLU, Winogrande unaffected).
 
-**Anthropic, *Introspection Adapters*** (arXiv 2604.16812,
-alignment.anthropic.com). LoRA adapters trained jointly across model organisms
+**Shenoy et al., [*Introspection Adapters*](https://arxiv.org/abs/2604.16812)**.
+LoRA adapters trained jointly across model organisms
 with implanted behaviours, plus a DPO refinement stage. 89% verbalization on
 AuditBench (50/56 models); detects encrypted fine-tuning attacks. Limitations
 they state: high false-positive rate on untrained models, plateau beyond six
 behaviour families, expense.
 
-## The gap this repo targets
+**Rivera & Africa, [*Steering Awareness: Detecting Activation Steering from
+Within*](https://arxiv.org/abs/2511.21399)** predates this repo's IFT arm. It
+fine-tunes seven instruction-tuned models, evaluates held-out concepts, and
+reports both detection and concept identification. This directly blocks any
+claim that training a model to identify held-out injected concepts is new here.
 
-Both training papers state they do **not** compare what a linear probe can decode
-from activations against what the model verbalizes:
+**Li et al., [*Training Language Models to Explain Their Own
+Computations*](https://arxiv.org/abs/2511.08579)** train explanations of features,
+causal activation structure, and token influence. Their self-vs-other comparison
+reports an advantage for models explaining their own computations, including
+against more capable other models. They also report that activation alignment
+predicts explainer quality and that a pretrained projection recovers part of the
+cross-model deficit. The earlier repo statement that self/other comparisons were
+absent was false; alignment is a live causal alternative, not a cosmetic control.
 
-- IFT "does not employ linear probes to compare what activations encode versus
-  what models report", and lists "mechanisms underlying the layer-agnostic
-  generalization effect" as open.
-- Introspection Adapters "don't explicitly compare linear probes versus
-  verbalization capabilities", and state the open question as *why* the adapters
-  generalize across differently-trained models.
+**Li et al., [*Can LLMs Introspect? A Reality
+Check*](https://arxiv.org/abs/2605.26242)** find that input-only classifiers can
+match some hidden-state prediction results and identify representational
+compatibility as an alternative to privileged self-access. A self-versus-other
+gap without an aligned-other intervention does not distinguish these explanations.
 
-So nobody has measured **how much concept information is linearly present before
-any introspection training** — which is precisely the quantity that should
-determine how much such training can gain.
+**Gurnee et al., [*Verbalizable Representations Form a Global Workspace in
+Language Models*](https://arxiv.org/abs/2607.15495)** report representations that
+can be verbalized, retained, deliberately manipulated, and passed into downstream
+computations. Demonstrating flexible use of a hidden trace is therefore an
+instrument result here, not a new general construct claim.
 
-That is what `scripts/layer_profile.py` measures, and it yields a falsifiable
-prediction: **introspection-training gains should track pre-training transfer-probe
-decodability, layer by layer.** Where transfer sits at the permuted-label null,
-training should have nothing to latch onto; where transfer is high, gains should
-be large. If the IFT layer optima coincide with the decodability profile measured
-here, that is a mechanistic account of when introspection training works — and a
-way to predict where it will fail without running the training.
+**Cheah et al., [*Training Large Language Models for Self-Explanation
+Faithfulness*](https://arxiv.org/abs/2607.21090)** directly optimize disclosure of
+intervention-relevant factors and report model- and setup-dependent transfer.
+Generic intervention-disclosure training is already occupied literature.
 
-Supporting convergence: Macar et al. put the introspective circuit at ~70% depth;
-the transfer profile on Qwen2.5-0.5B rises into its stable high band at 58–75%
-depth (layers 14–18 of 24).
+**Kutsyk & Zieliński, [*Revealing Hidden Model Behaviors with Task-Specific
+Self-Reports*](https://arxiv.org/abs/2607.03640)** and Introspection Adapters both
+train reporting interfaces for hidden learned behaviours. These are the closest
+comparators for any adapter-based portfolio claim.
+
+## Decodability, privileged information, and false controls
+
+**Li et al., [*Do Activation Verbalization Methods Convey Privileged
+Information?*](https://arxiv.org/abs/2509.13316)** show that strong benchmark
+performance can be possible without target-model activations and that a
+verbalizer's parametric knowledge can drive its reports. Input-only and
+other-model baselines are therefore central, not optional.
+
+**Sharma et al., [*Dissociating Decodability and Causal Use in Bracket-Sequence
+Transformers*](https://arxiv.org/abs/2604.22128)** already establishes the
+general point that linearly decodable variables need not be causally used. This
+repo cannot claim that slogan as a novel result.
+
+**Bersia & Gaintseva, [*When Activation Oracles Learn Not to
+Read*](https://arxiv.org/abs/2607.23379)** directly separate behavioural leakage,
+representation-level decodability, and oracle verbalizability. Their learned
+oracles can retain decodable target information while failing to report it,
+making them directly relevant to any decodability/verbalization comparison.
+
+**Martorell, [*Quantitative Introspection in Language Models*](https://arxiv.org/abs/2603.18893)**
+uses logit-based numeric self-reports, conversational trajectories, probes, and
+activation steering. This is relevant to the local format-tax problem: a weak
+generated format can hide signal visible in continuous logits.
+
+## Corrected novelty position for this repo
+
+The earlier literature note attributed two exact claims to IFT and Introspection
+Adapters: that they did not compare probes with reports, and that the
+"mechanisms underlying the layer-agnostic generalization effect" were an open
+question. The 2026-08-01 audit could not verify those quotations in the cited
+papers, so they are withdrawn. At most they were the author's inference from the
+papers' scope. IFT also explicitly studies random-layer versus fixed-layer
+training; this repo must engage that design rather than present layer
+generalization as untouched.
+
+The old r = −0.774 result did not fill a literature gap anyway: it compared a
+fixed-source propagation profile with inject-at-each-layer IFT evaluation. The
+comparison was mechanically mismatched and is retracted. A matched
+inject-at-L/read-at-output reconstruction moved in the same direction as
+post-IFT performance, but its local aggregate lacks raw trials and provenance.
+
+The defensible contribution is therefore methodological and prospective:
+
+1. a reproducible matched-site runner with raw trial records;
+2. controls for token promotion, answer-format competence, option mapping,
+   adapter dropout, and vector-bank layer;
+3. a preregistered factorial replication that can estimate false-positive and
+   false-negative rates; and
+4. an explicit demonstration that the current observer comparison is not yet a
+   privileged-information test because its contexts and perturbation damage are
+   asymmetric.
+
+The sharper prospective question is whether an own-source reporting advantage
+survives **causal equalization of representational compatibility**. A symmetric
+two-sibling experiment should compare own, raw-other, and cross-fitted
+aligned-other traces in both directions under source-blind reporter training. The
+targeted review found papers that establish the own advantage, alignment
+correlation, and partial recovery from projection, but not that exact symmetric
+source-swap estimand. This is a candidate extension, not a guaranteed novelty
+claim; rerun the search and citation chase before locking confirmation.
+
+The local full-depth profile and its apparent 58–75% high band remain an
+exploratory single-model observation. Similarity to Macar et al.'s reported
+depth is a hypothesis for replication, not independent confirmation.
 
 ## Practical rules extracted from all of the above
 
-1. Never report binary detection accuracy in a small model. It is a logit shift.
-   Use localization or strength comparison, or report AUROC with a matched null.
-2. Never score identification on tokens the injection promotes, and if the vector
-   is live during the answer, run the no-question control.
-3. Report the layer as a fraction of depth, not an index — the interesting
-   structure sits at 60–75% across very different models.
-4. State the injection schedule explicitly (during-prompt, during-answer, removed
-   before query). It changes what the experiment measures.
+1. Treat binary detection in small models as confounded until a content- and
+   damage-matched control rules out a generic logit shift.
+2. If the vector is live during the answer, pair word-scored identification with
+   a no-question token-promotion control; removal-before-query is a different
+   and often cleaner schedule.
+3. Report both absolute and fractional depth, and replicate across injection
+   sites and model families before calling a depth band structural.
+4. State the injection schedule and hook placement exactly. An edit after the
+   final trainable block tests a different computation graph from an edit before
+   that block.
+5. Randomize answer mappings and distinguish nuisance permutations from model,
+   concept, prompt-family, and training seeds in uncertainty estimates.

@@ -1,7 +1,9 @@
 """Run the same design across the scale ladder, one model at a time.
 
-The scale question is the point: a null result at 0.5B says little, and the
-interesting claim is whether the introspector-observer gap *opens up* with size.
+The scale question is diagnostic: a null result at 0.5B says little, and this
+runner describes whether the legacy introspector-observer gap changes with size.
+Because that observer is transcript- and damage-asymmetric, a gap is not a
+privileged-access estimate.
 Models are loaded and freed one at a time -- holding two resident is what pushes
 a 24 GB machine into swap, where a sweep silently takes hours.
 """

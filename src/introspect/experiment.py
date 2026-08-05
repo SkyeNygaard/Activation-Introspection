@@ -139,10 +139,11 @@ def run_cell(
 ) -> list[Trial]:
     """Run every arm for one (concept, layer, strength) cell.
 
-    ``observer`` defaults to ``model`` -- the same weights, a fresh context. That
-    is the right control: it holds capability fixed and varies only whether the
-    answer can draw on internal state. A stronger observer model would confound
-    "no privileged access" with "the observer is better at the task".
+    ``observer`` defaults to ``model`` -- the same weights, but a fresh context
+    and clean activations. This holds model capability fixed while changing more
+    than privileged access, so the arm is a behavioural-inference stress test,
+    not a decisive control. See ``notes/04-claim-audit.md`` for the proposed
+    transcript- and damage-matched design.
     """
     obs = observer or model
     concept = bank[concept_name]

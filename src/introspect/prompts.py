@@ -6,11 +6,12 @@ The whole experiment turns on one distinction:
   B. The model observes that its own output has gone strange and infers backwards
      from the visible text (no privileged access needed).
 
-Every prompt below exists to force those apart. ``DETECT`` and ``IDENTIFY`` are
-asked *before* the model has emitted any task text, so under B there is nothing
-to infer from. ``OBSERVER_*`` is the explicit B-arm: a clean model is shown only
-the intervened model's output and asked the same question. If the observer
-matches the introspecting model, the effect is B.
+These prompts probe that distinction but do not force it apart. ``DETECT`` and
+``IDENTIFY`` are asked before the model emits task text, removing a generated
+transcript but not a live intervention's direct logit effects. ``OBSERVER_*``
+shows a clean model the intervened output, but gives it a different context and
+damage state. A matching observer is compatible with behavioural inference; it
+does not identify the mechanism.
 
 **Why every prompt has paraphrases.** With one fixed prompt and greedy decoding,
 every clean trial is byte-identical, so the null distribution has zero variance
@@ -21,6 +22,9 @@ something the design measures rather than assumes.
 """
 
 from __future__ import annotations
+
+import random
+from collections.abc import Sequence
 
 DETECT_VARIANTS = [
     "Before you answer anything else: is an unusual thought being injected into your mind "
@@ -128,3 +132,17 @@ def variant(variants: list[str], seed: int) -> str:
 
 def forced_choice(options: list[str]) -> str:
     return "\n".join(f"{i + 1}. {opt}" for i, opt in enumerate(options))
+
+
+def permuted_options(options: Sequence[str], seed: int) -> list[str]:
+    """Return a reproducible option permutation for one trial.
+
+    A fixed option list silently turns concept identification into a stable
+    concept-to-digit lookup.  The IFT adapter can then memorize, for example,
+    that ``ocean`` always means ``1`` without learning a report that generalizes
+    to a new menu.  Trial seeds therefore control both prompt paraphrase and
+    option order; callers must derive the target index *after* this permutation.
+    """
+    shuffled = list(options)
+    random.Random(seed).shuffle(shuffled)
+    return shuffled

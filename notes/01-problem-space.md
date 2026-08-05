@@ -1,5 +1,9 @@
 # Problem space: what would count as introspection?
 
+> **Audit note (2026-08-01):** this document described the original conceptual
+> design. The observer arm is now treated as a stress test rather than a decisive
+> privileged-access control; see `04-claim-audit.md` for the corrected design.
+
 ## The claim under test
 
 A model is said to *introspect* when it reports on its own internal state using
@@ -27,9 +31,10 @@ Everything in this repo is organised around forcing A and B apart.
 ## Four separations
 
 **1. Pre-verbalization report.** Ask the detection question *before* the model has
-emitted any task text. Under B there is nothing to infer from: the visible
-context is identical to the control. If detection accuracy stays above chance
-with an empty behavioural channel, that is the strongest available evidence for A.
+emitted any task text. This removes a generated behavioural transcript, but it
+does not remove generic logit shifts or damage from the live intervention. It is
+a useful diagnostic, not privileged-access evidence by itself. The v2 proposal
+in `04-claim-audit.md` removes the hook before revealing the answer codebook.
 
 This is the single most important condition. It is also fragile: the chat
 template, the prefill, and the position mask must guarantee that no injected
@@ -37,9 +42,9 @@ token has been emitted yet. `Intervention(positions="all")` on the prompt is fin
 `positions="generated"` is what makes the pre-verbalization arm meaningful.
 
 **2. The observer arm.** Take the intervened model's *output* and hand it to a
-clean copy of the same model with `OBSERVER_IDENTIFY`. The observer has exactly
-the information B gives the introspecting model, and none of the information A
-gives it. Report the pair, always:
+clean copy of the same model with `OBSERVER_IDENTIFY`. The observer receives one
+candidate behavioural channel, but not the introspector's exact transcript or
+damage state. Report the pair, while keeping that asymmetry explicit:
 
 - introspector accuracy ≫ observer accuracy → evidence for A
 - introspector accuracy ≈ observer accuracy → B fully explains the result
@@ -61,10 +66,10 @@ Publishing the introspector number alone is the field's most common overclaim.
 > weaker evidence than it appears and a positive gap is stronger. At 0.5B the
 > measured gap was −0.072 [−0.117, −0.031] — negative and excluding zero.
 >
-> The fix is separation 3: compare cells at matched *behavioural effect* (KL)
-> rather than matched α. That comparison was originally listed third in priority;
-> it is really the load-bearing one, because it is the only version of the
-> observer comparison that is not confounded by injection damage.
+> Matching behavioural KL is one useful repair, but it does not remove the
+> different-context or clean-observer advantages. The 2026-08-01 clustered
+> reanalysis also moved the interval to [−0.236, 0.047], so the old IID interval
+> is historical rather than inferential evidence.
 
 **3. Dissociating magnitude from behavioural effect.** Sweep injection strength.
 Two curves:
@@ -73,10 +78,12 @@ Two curves:
 - report accuracy vs **behavioural effect size** — e.g. KL between intervened and
   clean next-token distributions on a neutral task
 
-Under B, accuracy is a function of behavioural effect and nothing else. So find
+Under a narrow leakage-only version of B, accuracy should largely track
+behavioural effect. So find
 pairs of conditions with *matched* behavioural effect but different injection
 geometry (different layers, or a concept direction vs a shuffled control tuned to
-equal KL). If accuracy differs at matched behavioural effect, B cannot explain it.
+equal KL). A difference is a useful diagnostic, but geometry can change leakage
+in ways a scalar next-token KL does not capture, so it is not decisive by itself.
 
 **4. Matched-norm null directions.** `random_control` and `shuffled_control`
 inject something with the same magnitude and no meaning. If the model confidently
@@ -123,8 +130,9 @@ size is a better artifact than a single unreplicated number at one scale.
    accuracy does, because strong injection makes the output obviously themed.
 4. Pre-verbalization identification is at chance for models below ~7B.
 
-Prediction 4 being wrong is the interesting outcome. Prediction 3 holding is what
-makes the introspector/observer gap the headline metric rather than the raw score.
+Prediction 4 being wrong is the interesting outcome. The observer gap is now a
+secondary diagnostic rather than the headline until transcript and damage are
+matched.
 
 ## Open threads
 
@@ -132,5 +140,6 @@ makes the introspector/observer gap the headline metric rather than the raw scor
 - Ablation rather than addition: can the model report a concept being *removed*?
   Harder to explain via B, since ablation often has a small behavioural signature.
 - Does a model report interventions on *itself* better than interventions on a
-  different model's stream presented as its own? That is a self/other control
-  nobody runs and it is cheap here.
+  different model's stream presented as its own? Prior work already includes
+  self/other comparisons (notably arXiv 2511.08579); a local version would be a
+  replication/extension, not a first.

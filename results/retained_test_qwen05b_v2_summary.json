@@ -1,0 +1,54 @@
+{
+  "estimand": "post_cache_codebook_label_probability",
+  "schedule": "transient_carrier_injection_hook_removed_before_codebook",
+  "split": "test",
+  "concepts": [
+    "mountain",
+    "coffee",
+    "tiger",
+    "piano",
+    "forest",
+    "airport",
+    "candle",
+    "river"
+  ],
+  "labels": [
+    "Q",
+    "K",
+    "Z",
+    "J",
+    "X",
+    "V",
+    "W",
+    "Y"
+  ],
+  "chance": 0.125,
+  "layers": [
+    2,
+    6,
+    10,
+    14,
+    18,
+    22
+  ],
+  "strengths": [
+    1.0
+  ],
+  "carriers": 3,
+  "codebooks": 8,
+  "n_rows": 6912,
+  "raw": "retained_test_qwen05b_v2_raw.jsonl",
+  "raw_sha256": "9613cdfb33e8690b2f430607aa5f0f65f8de98537e87504ed860f37648d53905",
+  "activations": "retained_test_qwen05b_v2_raw.acts.pt",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "model_revision": "unknown",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "git_commit": "c5ea0ec7baec2cc30893fe55f63ebfbff47d5f11",
+  "python": "3.12.13",
+  "torch": "2.13.0",
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "query_sha256": "ec07f00347a11623",
+  "carrier_sha256": "072bd9f36460eadf",
+  "seed": 0
+}

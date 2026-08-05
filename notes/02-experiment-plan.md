@@ -1,5 +1,10 @@
 # Experiment plan
 
+> **Superseded by `04-claim-audit.md` (2026-08-01).** This v1 preregistration is
+> preserved to show what was specified before the pilot. Its IID bootstrap,
+> observer-headline, sample-size, novelty, and clean-negative assumptions failed
+> the later audit and must not be used for a new run.
+
 Written before results exist. Amend by appending dated entries, not by editing
 predictions after the fact.
 
@@ -67,3 +72,13 @@ window, or token-matching — and ask two questions: how much task performance i
 lost, and can the model detect that one of its heads has been replaced? The
 second question is the bridge back to this repo's main line and is, as far as I
 can tell, unasked. Keep it as a stretch section, not a second project.
+
+---
+
+## 2026-08-01 audit amendment
+
+The observer does not receive the same transcript or damage state, repeated
+trials are not independent, and a small-model null is not a clean bound unless
+format, reach, training, and damage controls pass. The programmatic-attention
+novelty statement was also not supported by a systematic review. All new work
+uses the v2 protocol in `04-claim-audit.md`.

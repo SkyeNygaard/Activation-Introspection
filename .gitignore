@@ -23,7 +23,14 @@ hf_cache/
 *.gguf
 *.bin
 
-# Raw run outputs. Keep small reviewed summaries and figures in Git.
-results/raw/
+# Raw run outputs are ignored by default. The matched-profile rows are the small,
+# required evidence behind their summaries and are explicitly reviewable.
+results/raw/*
+!results/raw/reach_output_*.trials.jsonl
+!results/raw/reach_output_*.natural-trials.jsonl
 results/**/*.pt
 results/**/*.npz
+
+# Local pre-audit aggregate without raw trials or provenance. Preserve locally,
+# but regenerate it through the raw-first runner before publishing evidence.
+results/reach_output_qwen05b.json

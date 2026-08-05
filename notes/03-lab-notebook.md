@@ -474,6 +474,10 @@ touches it.
 
 ## 2026-08-01 — Full-depth profile, and the position after reading the field
 
+> **Audit banner (added 2026-08-01):** the novelty claims and paper quotations in
+> this historical entry were not verified. See the correction appended at the
+> end and `04-claim-audit.md`. Text below is preserved as the original record.
+
 ### The literature position (see `notes/00-literature.md`)
 
 The confounds I characterised are published: binary detection is a global logit
@@ -564,6 +568,12 @@ magnitude is not quotable until the self-report instrument is fixed.
 ---
 
 ## 2026-08-01 — Prediction falsified. The real variable is the remaining compute budget.
+
+> **RETRACTED (audit added 2026-08-01):** the r = −0.774 comparison mismatched
+> injection sites, and the remaining-compute mechanism was overclaimed. The old
+> run also evaluated with adapter dropout, fixed the concept→digit mapping, and
+> reused a training-layer vector bank at held-out sites. Text below is preserved
+> as the original record; the correction is appended after it.
 
 ### The test
 
@@ -670,3 +680,118 @@ is not pre-training decodability, because the two anti-correlate.
    requirement from a proportional one.
 2. Vary injection strength at fixed remaining depth — if the boundary is compute,
    a stronger injection should not move it.
+
+---
+
+## 2026-08-01 — Serious audit: central claim retracted; v2 begins
+
+I audited the headline for failures in both directions before using this repo as
+application evidence. The audit changed the conclusion, not merely its wording.
+
+### The mismatched-site correlation was a false positive
+
+`probe_transfer` injected once at L8 and read successively at L. Post-IFT
+evaluation injected at each L and read the answer at the output. The first curve
+measures propagation from a fixed source; the second measures reachability from
+a moving source. Their opposite depth trends are partly mechanical. The reported
+r = −0.774 and the local slogan “decodability is not usability” are retracted.
+
+Using the local reach-to-output aggregate to match injection sites changes the
+sign: r = .867 for the L8-trained run, .973 for the L16-trained run, .905 when
+pooling the legacy layer rows, and .940 after averaging IFT runs within layer.
+These numbers are audit diagnostics only. The aggregate has no raw trials,
+generator, model revision, or provenance, and a correlation over adjacent layers
+does not have independent samples. I am not elevating the aggregate to evidence.
+The replacement `scripts/run_reach_output.py` writes raw trial JSONL, provenance,
+and an estimand tag; `scripts/run_ift.py` refuses the fixed-source profile.
+
+### “Remaining compute” was an intervention-graph artifact, not a mechanism
+
+The hook adds the vector after a transformer block. LoRA modules live inside the
+blocks. An L23 edit therefore occurs after the final trainable block: no adapted
+downstream block can read it. Late failure is expected from this graph and does
+not establish a general compute wall. L1 is a direct counterexample to remaining
+layers being sufficient: 22 blocks remain, yet the legacy L16-trained run scored
+.175. Pre-block vs post-block intervention and a trainable downstream readout
+are required tests.
+
+The old statement “no amount of fine-tuning fixes that” was unsupported: I tried
+one LoRA configuration and amount. It is withdrawn.
+
+### The IFT evaluation itself must be rerun
+
+- The PEFT wrapper remained in training mode. Its LoRA dropout was active during
+  evaluation, and repeated prompt ids sampled dropout masks rather than
+  independent model seeds.
+- Training used three prompt paraphrases and evaluation two, repeated many
+  times. Those repetitions were counted too generously in uncertainty claims.
+- The option order was fixed, so concept identity had a stable digit label.
+- The vector bank constructed at the training layer was injected at every
+  held-out layer.
+- `layer_profile.py` and `probe.collect` applied the same intervention twice on
+  the self-report forward.
+
+The code now randomizes option order with a dynamically recomputed target,
+forces dropout off for evaluation, restores mode after both train and eval,
+constructs a bank at every held-out injection site, rejects mismatched banks,
+and uses one intervention per forward. The preserved JSON results predate these
+repairs and are exploratory only.
+
+### The observer null also had false-negative risk
+
+The old paired interval [−.117, −.031] treated dependent cell repetitions as
+IID. A concept×prompt clustered audit interval was [−.236, .047], which includes
+zero. More fundamentally, the observer uses clean activations and a fresh
+context while the introspector answers under perturbation. It is not the same
+transcript with only privileged access removed.
+
+So “no introspective access at 0.5B” is too strong. The corrected statement is:
+this instrument found no positive evidence at 0.5B, but its scale, format tax,
+damage asymmetry, and observer design can all create false negatives.
+
+### Literature correction
+
+I could not verify the exact alleged quotes about “mechanisms underlying the
+layer-agnostic generalization effect” or papers explicitly disclaiming probe
+comparisons. They are withdrawn as quotations. More importantly, I had omitted
+directly relevant work: *Steering Awareness* (2511.21399), *Training Language
+Models to Explain Their Own Computations* (2511.08579), *Do Activation
+Verbalization Methods Convey Privileged Information?* (2509.13316),
+*Quantitative Introspection* (2603.18893), *Dissociating Decodability and Causal
+Use* (2604.22128), and *When Activation Oracles Learn Not to Read* (2607.23379).
+The updated literature note gives links and the novelty implications.
+
+### New standing conclusion
+
+There is no validated headline result yet. What survives is a stronger apparatus
+and a concrete v2 protocol designed so that a positive cannot be explained by
+token promotion, mapping leakage, dropout, probe overfit, or estimand mismatch,
+and a null cannot be explained by format incompetence, absent signal, injection
+damage, observer advantage, or unreachable hook placement. That protocol is in
+`notes/04-claim-audit.md`.
+
+---
+
+## 2026-08-01 (later) — the v2 protocol was implemented and run
+
+`notes/04-claim-audit.md` specified a transient-carrier/post-codebook endpoint and
+labelled it "proposed and not implemented". It is now implemented
+(`src/introspect/retained.py`) and executed on a held-out concept bank.
+
+The standing conclusion above — "there is no validated headline result yet" — is
+superseded for this one endpoint only. The result, its gates, its threats, and
+its prior art are in [`05-retained-trace.md`](05-retained-trace.md).
+
+Two things worth recording here because they are corrections to earlier entries:
+
+1. **The positive control I assumed would fail, passed.** I expected a 0.5B model
+   to be unable to bind a concept to an arbitrary label revealed after a carrier.
+   It reaches 0.875 on 8-way. The whole plan had been resting on an untested
+   assumption in the other direction.
+2. **The novelty check should have been run against the built design, not the
+   idea.** `00-literature.md` already recorded that Lindsey removes the steering
+   vector before querying — I wrote that down and still described the schedule as
+   though it were this repo's contribution. Krasheninnikov et al. (2512.12411)
+   additionally report the early-layer-only collapse that this run reproduces,
+   which my own summary of that paper had missed. The result stands; the framing
+   was wrong until corrected.

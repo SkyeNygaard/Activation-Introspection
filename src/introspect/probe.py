@@ -1,4 +1,4 @@
-"""Is the injected concept *present but unreportable*, or genuinely absent?
+"""What concept information is linearly recoverable after an intervention?
 
 ## The gap this targets
 
@@ -11,8 +11,8 @@ Two 2026 results sit in tension:
   while confabulating when asked *what* was injected -- guesses drift toward
   common concrete nouns ("apple").
 
-So a model can localize a perturbation it cannot name. That leaves an unanswered
-question with a direct bearing on whether verbalization training can work:
+So a model can localize a perturbation it does not name under one elicitation.
+That motivates a narrower measurement question:
 
     Is the concept's identity absent from the state the model answers from,
     or present in it and simply not reaching the output?
@@ -24,14 +24,16 @@ generates its answer from** -- the final token of the identification prompt,
 under injection. Then fit a linear probe to predict which concept was injected,
 and compare probe accuracy to the model's own answer on held-out trials.
 
-- probe ≈ self-report → the limit is representational. Nothing to verbalize.
-- probe ≫ self-report → the identity is linearly available at the decision point
-  and the model still fails to say it. An **access** limit, not a representation
-  limit, which is the case where verbalization training has headroom.
+- probe ≈ self-report → no dissociation is detected by these instruments.
+- probe ≫ self-report → identity is linearly recoverable at the decision point
+  while this report format performs worse. This is a decodability/report
+  dissociation, not by itself an access mechanism or evidence that training will
+  help.
 
 ## The circularity trap, and the only control that escapes it
 
-**A raw probe on injected activations is meaningless.** Measured here: probe
+**A raw probe on injected activations is circular as evidence of model
+computation.** Measured here: probe
 accuracy was exactly 1.000 at every layer probed (11, 16, 23) with an injection
 at layer 9, against a 0.113 shuffled null. That is not a finding. The residual
 stream is additive, so an injected direction propagates forward essentially
@@ -49,8 +51,8 @@ removed, then the model's own computation has elaborated the concept into
 directions we did not put there. That is a claim about the model, not about our
 own arithmetic.
 
-Three quantities are therefore reported together, and only the third means
-anything:
+Three quantities are therefore reported together. The third is less direct than
+the raw probe, but remains a diagnostic rather than a proof of elaboration:
 
 1. ``probe_acc_raw`` -- trivially ~1.0. Included as a sanity check that the
    injection landed, and as a standing reminder of the trap.
@@ -58,17 +60,18 @@ anything:
 3. ``probe_acc_ablated`` -- **the measurement**. Identity decodable after the
    injected direction is projected out.
 
-Interpretation of the third against self-report:
+Conservative interpretation of the third against self-report:
 
-- ablated probe ~ chance → the model never elaborates the concept; there is
-  nothing beyond the injected vector for introspection to reach, and the limit is
-  representational. Verbalization training would have nothing to latch onto.
-- ablated probe >> self-report → the model builds a content-specific
-  representation it does not report. An **access** limit, and the case where
-  verbalization training has headroom.
+- ablated probe ~ chance → this probe finds no residual signal after the chosen
+  projection. That can reflect absent signal, an incomplete readout, limited data,
+  or a representation not captured by this linear control.
+- ablated probe >> self-report → this pipeline finds a residual linear signal
+  that the selected report endpoint does not express. Format competence,
+  intervention damage, probe leakage, and held-out transfer still have to be
+  ruled out.
 
-Even then the claim stays narrow: linear decodability of an elaborated
-representation is not "the model knows". It bounds headroom, nothing more.
+Even then the claim stays narrow: linear decodability is not "the model knows,"
+does not establish causal use, and does not by itself bound training headroom.
 """
 
 from __future__ import annotations
@@ -87,7 +90,12 @@ from introspect.grading import score_choices
 from introspect.hooks import Intervention, capture, intervene
 from introspect.metrics import Estimate, accuracy
 from introspect.models import LoadedModel
-from introspect.prompts import IDENTIFY_FORCED_CHOICE_VARIANTS, forced_choice, variant
+from introspect.prompts import (
+    IDENTIFY_FORCED_CHOICE_VARIANTS,
+    forced_choice,
+    permuted_options,
+    variant,
+)
 
 
 @dataclass
@@ -110,27 +118,26 @@ class ProbeResult:
     def verdict(self) -> str:
         if self.probe_acc_ablated.hi <= self.probe_acc_shuffled.hi:
             return (
-                f"After projecting out the injected direction, concept identity is NOT "
-                f"decodable ({self.probe_acc_ablated} vs null "
-                f"{self.probe_acc_shuffled}). The model does not elaborate the "
-                f"injection into a content-specific representation, so there is nothing "
-                f"beyond the injected vector for introspection to reach. This is a "
-                f"REPRESENTATION limit -- verbalization training has nothing to latch "
-                f"onto at this scale. (Raw probe {self.probe_acc_raw.value:.2f} is the "
-                f"circular measurement and means nothing.)"
+                f"After projecting out the injected direction, this probe does not "
+                f"separate concept identity from its permuted-label diagnostic "
+                f"({self.probe_acc_ablated} vs {self.probe_acc_shuffled}). This is "
+                f"inconclusive about whether signal is absent, nonlinear, or "
+                f"underpowered. Raw probe {self.probe_acc_raw.value:.2f} is expected "
+                f"to recover the injected axis and is not evidence of elaboration."
             )
         if self.gap.lo > 0:
             return (
                 f"Concept identity survives ablation of the injected direction at "
                 f"{self.probe_acc_ablated.value:.2f} (null "
                 f"{self.probe_acc_shuffled.value:.2f}) while the model's own answer is "
-                f"at {self.self_report_acc.value:.2f} (chance {self.chance:.3f}). The "
-                f"model builds a representation it does not report: an ACCESS limit, "
-                f"and verbalization training has headroom."
+                f"at {self.self_report_acc.value:.2f} (chance {self.chance:.3f}). This "
+                f"is an exploratory linear-decoding/report dissociation under an IID "
+                f"interval, not proof of privileged access or training headroom."
             )
         return (
             f"Ablated probe {self.probe_acc_ablated.value:.2f} vs self-report "
-            f"{self.self_report_acc.value:.2f}: no reliable gap."
+            f"{self.self_report_acc.value:.2f}: no positive dissociation under this "
+            f"instrument; clustered confirmatory inference was not run."
         )
 
 
@@ -152,7 +159,6 @@ def collect(
     that supports a claim about the model.
     """
     options = sorted(bank)
-    option_block = forced_choice(options)
     digits = [str(i + 1) for i in range(len(options))]
 
     feats: list[np.ndarray] = []
@@ -163,17 +169,23 @@ def collect(
     for concept_idx, name in enumerate(options):
         vec = bank[name]
         for seed in seeds:
+            trial_options = permuted_options(options, seed)
             prompt = model.chat(
-                variant(IDENTIFY_FORCED_CHOICE_VARIANTS, seed).format(options=option_block)
+                variant(IDENTIFY_FORCED_CHOICE_VARIANTS, seed).format(
+                    options=forced_choice(trial_options)
+                )
             )
             ids = model.encode(prompt)
             iv = Intervention(layer=inject_layer, direction=vec.vector, strength=strength)
 
-            # Register the intervention first so capture observes the edited stream.
-            with intervene(model, [iv], prompt_len=int(ids.shape[1])):
-                with capture(model, [probe_layer]) as store:
-                    model.forward_logits(ids)
-                choice = score_choices(model, prompt, digits, interventions=[iv])
+            # One intervened forward supplies both capture and answer logits.
+            # Passing ``iv`` to score_choices inside the outer context used to
+            # register it twice, silently doubling the self-report strength.
+            with (
+                intervene(model, [iv], prompt_len=int(ids.shape[1])),
+                capture(model, [probe_layer]) as store,
+            ):
+                choice = score_choices(model, prompt, digits)
 
             act = store.last_token(probe_layer)[0]
             feats.append(act.numpy())
@@ -184,7 +196,7 @@ def collect(
             ablated.append((act - torch.dot(act, unit) * unit).numpy())
 
             labels.append(concept_idx)
-            correct.append(choice.argmax == concept_idx)
+            correct.append(choice.argmax == trial_options.index(name))
 
     return np.stack(feats), np.stack(ablated), np.array(labels), correct
 
@@ -360,24 +372,15 @@ class TransferResult:
         if self.within_natural_acc.lo < 2 * self.chance:
             return (
                 f"The probe cannot separate these concepts even in natural text "
-                f"({self.within_natural_acc}); nothing downstream is interpretable."
-            )
-        if self.transfer_acc.lo <= self.transfer_acc_permuted.hi:
-            return (
-                f"A probe that reads natural concept representations at "
-                f"{self.within_natural_acc.value:.2f} does NOT transfer to injected "
-                f"trials ({self.transfer_acc} vs null {self.transfer_acc_permuted}). "
-                f"The injection does not put the model into a state resembling its own "
-                f"representation of the concept -- so there is no concept-like content "
-                f"for introspection to report, and self-report at "
-                f"{self.self_report_acc.value:.2f} is exactly what that predicts."
+                f"({self.within_natural_acc}); transfer results from this readout are "
+                f"uninformative rather than evidence of an absent representation."
             )
         return (
             f"A natural-text probe transfers to injected trials at {self.transfer_acc} "
             f"(null {self.transfer_acc_permuted}) while the model reports at "
-            f"{self.self_report_acc.value:.2f} (chance {self.chance:.3f}). The injection "
-            f"induces a genuinely concept-like state that the model does not verbalize: "
-            f"headroom for verbalization training."
+            f"{self.self_report_acc.value:.2f} (chance {self.chance:.3f}). This is "
+            f"consistent with alignment to this natural-text decision boundary; it "
+            f"does not establish causal use, introspective access, or training headroom."
         )
 
 
@@ -408,10 +411,10 @@ def run_transfer_probe(
 ) -> TransferResult:
     """Train on natural concept text, test on injected trials.
 
-    This is the design that answers the question, because the probe never sees an
-    injected activation during training. It cannot recover "the vector we added";
-    it can only succeed if injection moves the model toward the same region of
-    representation space that genuinely thinking about the concept does.
+    The probe never sees an injected activation during training, so success shows
+    transfer of a natural-text decision boundary to the injected distribution.
+    It does not establish that the boundary is causally used, nor rule out direct
+    geometric alignment between the constructed vector and that boundary.
     """
     concepts = sorted(bank)
     x_nat, y_nat, g_nat = collect_natural(model, concepts, probe_layer)

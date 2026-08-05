@@ -115,9 +115,9 @@ def main() -> None:
             )
         console.print(kl_table)
         console.print(
-            "[dim]Binning on behavioural effect removes the observer's structural "
-            "advantage: within a band both arms face the same visible drift. Under "
-            "behavioural inference the gap is flat and centred on zero.[/dim]"
+            "[dim]KL binning matches one scalar consequence only. It does not match "
+            "transcript content or intervention damage, so these are exploratory "
+            "sensitivity summaries rather than a causal observer control.[/dim]"
         )
 
     if args.figures is not None:
@@ -129,8 +129,8 @@ def main() -> None:
     console.print(f"\n[bold]{headline(summaries, word_scored=word)}[/bold]")
     console.print(
         "\n[dim]Chance for identification is 1/8 = 0.125. The null AUROC column is the "
-        "gate: if the shuffled control detects above chance, the model is responding to "
-        "perturbation rather than content and the concept column means nothing.[/dim]"
+        "gate: a shuffled-control failure makes the concept column uninterpretable. "
+        "Passing this diagnostic is necessary but not sufficient for construct validity.[/dim]"
     )
 
 

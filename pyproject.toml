@@ -58,7 +58,10 @@ select = ["B", "E", "F", "I", "RUF", "UP"]
 [tool.mypy]
 python_version = "3.12"
 strict = true
-files = ["src", "tests"]
+# `scripts` is included deliberately: those files generate every published
+# number, so leaving them unchecked put the least-reviewed code in the repository
+# behind the strictest claims.
+files = ["src", "tests", "scripts"]
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]

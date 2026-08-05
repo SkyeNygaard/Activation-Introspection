@@ -9,6 +9,7 @@ surface token statistics, which is why every experiment needs the controls in
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass
 from typing import cast
 
@@ -158,14 +159,29 @@ def max_offdiagonal_cosine(bank: dict[str, ConceptVector]) -> float:
     return max((abs(v) for v in pairs.values()), default=0.0)
 
 
+def _stream(seed: int, reference: ConceptVector) -> torch.Generator:
+    """A generator keyed to the concept as well as the seed.
+
+    Keying on ``seed`` alone gave every concept the *same* control direction.
+    Because ``Intervention`` normalizes to unit length, the per-concept norm was
+    then discarded too, so all concepts received a byte-identical edit. A control
+    arm built that way cannot carry concept identity by construction: its
+    accuracy is exactly ``1/n`` and its probe transfer exactly chance whatever
+    the model does, which makes it an arithmetic identity rather than a gate.
+    """
+    key = f"{seed}|{reference.name}|{reference.layer}"
+    return torch.Generator().manual_seed(int.from_bytes(hashlib.sha256(key.encode()).digest()[:8]))
+
+
 def random_control(reference: ConceptVector, *, seed: int = 0) -> ConceptVector:
     """A random direction with the same norm as ``reference``.
 
     The point of this arm: if the model reports *a* concept just as confidently
     under a meaningless direction, its reports are confabulated rather than read
-    off anything real.
+    off anything real. That requires a *different* meaningless direction per
+    concept -- see ``_stream``.
     """
-    g = torch.Generator().manual_seed(seed)
+    g = _stream(seed, reference)
     v = torch.randn(reference.vector.shape, generator=g)
     v = v / v.norm() * reference.vector.norm()
     return ConceptVector(name=f"random[{seed}]", layer=reference.layer, vector=v)
@@ -177,7 +193,7 @@ def shuffled_control(reference: ConceptVector, *, seed: int = 0) -> ConceptVecto
     Preserves the norm and the marginal distribution of coordinate magnitudes,
     destroying only the direction. A tighter control than pure Gaussian noise.
     """
-    g = torch.Generator().manual_seed(seed)
+    g = _stream(seed, reference)
     perm = torch.randperm(reference.vector.numel(), generator=g)
     return ConceptVector(
         name=f"shuffled[{seed}]", layer=reference.layer, vector=reference.vector[perm].clone()

@@ -2,7 +2,7 @@
 
 Why this exists. Sweeping a fixed alpha across layers confounds two things:
 
-- whether a layer supports introspective access, and
+- the layer-specific reporting/readout response under intervention, and
 - how much damage the injection does at that layer.
 
 The first sweep made this concrete. At L9 the behavioural KL ran 0.02 -> 2.7

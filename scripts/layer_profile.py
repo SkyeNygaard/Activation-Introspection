@@ -1,31 +1,24 @@
-"""Transfer-probe accuracy as a function of depth, at full power.
+"""Fixed-source transfer-probe propagation as a function of read depth.
 
-## Why this profile is the deliverable
+This script constructs a concept bank at one injection layer, injects there, and
+reads successive downstream layers with natural-text-trained probes. It answers
+"how does a fixed edit propagate?" It does *not* answer "what happens when I
+inject at each layer?" and must not be correlated with held-out-layer IFT
+accuracy from ``run_ift.py``. That mismatched comparison produced the retracted
+r = -0.774 headline.
 
-Two 2026 papers train models to verbalize their own internal states:
+Prior work already trains models to verbalize internal states, including IFT
+([arXiv 2607.14111](https://arxiv.org/abs/2607.14111)), Steering Awareness
+([arXiv 2511.21399](https://arxiv.org/abs/2511.21399)), and Introspection
+Adapters ([arXiv 2604.16812](https://arxiv.org/abs/2604.16812)). The earlier
+version of this docstring said these papers left this exact quantity unmeasured
+and quoted open questions that the audit could not verify. Those novelty claims
+are withdrawn.
 
-- **Introspection Fine-Tuning** (arXiv 2607.14111) takes Llama-1B from 9.6% to
-  60.6% on sentence localization, and reports peak accuracy "at optimal
-  layer/strength configurations". It states it does **not** use linear probes to
-  compare what activations encode against what the model reports.
-- **Introspection Adapters** (Anthropic, arXiv 2604.16812) reach 89% verbalization
-  on AuditBench, and likewise do not compare probe decodability to verbalization.
-  Their stated open question is *why* the adapters generalize.
-
-Both therefore leave the same quantity unmeasured: **how much concept information
-is linearly present before any introspection training**. That is what this
-profile measures, layer by layer.
-
-The prediction it licenses is falsifiable and cheap to test: introspection
-training should gain most at layers where pre-training transfer accuracy is high,
-and gain little where transfer sits at the permuted-label null. If the layer
-profile of IFT gains tracks the layer profile measured here, that is a mechanistic
-account of when introspection training works -- and a way to predict where it
-will fail without running the training.
-
-Independent convergence worth noting: Macar et al. (2026) locate a distributed
-"introspective circuit" at roughly 70% of model depth. On Qwen2.5-0.5B that is
-layer ~17, and transfer here reaches the probe's own ceiling at layer 16.
+This remains useful as a descriptive propagation diagnostic and as a check that
+a natural-text decision boundary transfers to injected states. It does not show
+causal use, introspective access, or IFT headroom. The near-output readout is
+especially vulnerable to token-promotion geometry.
 
 ## Efficiency
 
@@ -39,6 +32,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 import torch
@@ -47,22 +41,45 @@ from rich.table import Table
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
-from introspect.concepts import DEFAULT_CONCEPTS, build_bank, max_offdiagonal_cosine
+from introspect.concepts import (
+    DEFAULT_CONCEPTS,
+    ConceptVector,
+    build_bank,
+    max_offdiagonal_cosine,
+)
 from introspect.grading import score_choices
 from introspect.hooks import Intervention, capture, intervene
 from introspect.metrics import accuracy
-from introspect.models import DEFAULT_MODEL, load
+from introspect.models import DEFAULT_MODEL, LoadedModel, load
 from introspect.probe import NATURAL_TEMPLATES, fit_probe_grouped
-from introspect.prompts import IDENTIFY_FORCED_CHOICE_VARIANTS, forced_choice, variant
+from introspect.prompts import (
+    IDENTIFY_FORCED_CHOICE_VARIANTS,
+    forced_choice,
+    permuted_options,
+    variant,
+)
 
 console = Console()
 
 
 @torch.no_grad()
-def collect_all_layers(model, bank, inject_layer, strength, layers, n_seeds):  # type: ignore[no-untyped-def]
+def collect_all_layers(
+    model: LoadedModel,
+    bank: dict[str, ConceptVector],
+    inject_layer: int,
+    strength: float,
+    layers: list[int],
+    n_seeds: int,
+) -> tuple[
+    dict[int, np.ndarray],
+    np.ndarray,
+    np.ndarray,
+    dict[int, np.ndarray],
+    np.ndarray,
+    list[bool],
+]:
     """One forward pass per trial; activations harvested at every probe layer."""
     concepts = sorted(bank)
-    option_block = forced_choice(concepts)
     digits = [str(i + 1) for i in range(len(concepts))]
 
     # Natural (no injection anywhere) -- the probe's training set.
@@ -86,18 +103,26 @@ def collect_all_layers(model, bank, inject_layer, strength, layers, n_seeds):  #
     for idx, name in enumerate(concepts):
         iv = Intervention(layer=inject_layer, direction=bank[name].vector, strength=strength)
         for seed in range(n_seeds):
+            options = permuted_options(concepts, seed)
             prompt = model.chat(
-                variant(IDENTIFY_FORCED_CHOICE_VARIANTS, seed).format(options=option_block)
+                variant(IDENTIFY_FORCED_CHOICE_VARIANTS, seed).format(
+                    options=forced_choice(options)
+                )
             )
             ids = model.encode(prompt)
-            with intervene(model, [iv], prompt_len=int(ids.shape[1])):
-                with capture(model, layers) as store:
-                    model.forward_logits(ids)
-                choice = score_choices(model, prompt, digits, interventions=[iv])
+            # One intervened forward supplies both the captured activations and
+            # the digit logits. Previously ``score_choices(..., interventions=[iv])``
+            # was called while the same outer intervention hook was still live,
+            # applying the edit twice on self-report trials.
+            with (
+                intervene(model, [iv], prompt_len=int(ids.shape[1])),
+                capture(model, layers) as store,
+            ):
+                choice = score_choices(model, prompt, digits)
             for layer in layers:
                 inj[layer].append(store.last_token(layer)[0].numpy())
             inj_y.append(idx)
-            self_report.append(choice.argmax == idx)
+            self_report.append(choice.argmax == options.index(name))
 
     return (
         {layer: np.stack(v) for layer, v in nat.items()},
@@ -114,7 +139,12 @@ def main() -> None:
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--inject-layer", type=int, default=None)
     ap.add_argument("--strength", type=float, default=0.2)
-    ap.add_argument("--seeds", type=int, default=50)
+    ap.add_argument(
+        "--seeds",
+        type=int,
+        default=50,
+        help="option orders per concept (nuisance repetitions, not model seeds)",
+    )
     ap.add_argument("--out", type=Path, default=None)
     args = ap.parse_args()
 
@@ -141,7 +171,7 @@ def main() -> None:
 
     rng = np.random.default_rng(0)
     rows = []
-    table = Table("layer", "depth %", "within-natural", "transfer", "permuted null", "verdict")
+    table = Table("layer", "depth %", "within-natural", "transfer", "permuted null", "descriptive")
     for layer in layers:
         scaler = StandardScaler().fit(nat_x[layer])
         xs_nat, xs_inj = scaler.transform(nat_x[layer]), scaler.transform(inj_x[layer])
@@ -155,14 +185,17 @@ def main() -> None:
         null = accuracy(null_hits)
         within = accuracy(fit_probe_grouped(nat_x[layer], nat_y, nat_g))
 
-        beats = transfer.lo > null.hi
+        # Option orders and adjacent layers are not independent samples. The old
+        # IID interval-separation rule overstated this as an inferential verdict.
+        # Keep only the point-estimate comparison as a descriptive diagnostic.
+        above_null = transfer.value > null.value
         table.add_row(
             str(layer),
             f"{100 * layer / model.n_layers:.0f}%",
             f"{within.value:.3f}",
-            f"{transfer.value:.3f} [{transfer.lo:.3f}, {transfer.hi:.3f}]",
+            f"{transfer.value:.3f}",
             f"{null.value:.3f}",
-            "[green]decodable[/green]" if beats else "[dim]at null[/dim]",
+            "[green]transfer > null[/green]" if above_null else "[dim]not above null[/dim]",
         )
         rows.append(
             {
@@ -171,7 +204,7 @@ def main() -> None:
                 "within_natural": within.value,
                 "transfer": [transfer.value, transfer.lo, transfer.hi],
                 "null": [null.value, null.lo, null.hi],
-                "beats_null": bool(beats),
+                "transfer_above_null_descriptive": bool(above_null),
             }
         )
 
@@ -179,16 +212,17 @@ def main() -> None:
     console.print(
         f"\n[dim]Self-report is flat at {report.value:.3f} regardless of layer -- it is one "
         f"measurement of the model, not a per-layer quantity. The profile is what varies, "
-        f"and it is the quantity introspection-training papers leave unmeasured.[/dim]"
+        f"but neither the fixed-source profile nor its repeated option orders provide "
+        f"independent inferential samples.[/dim]"
     )
 
-    onset = next((r for r in rows if r["beats_null"]), None)
+    onset = next((r for r in rows if r["transfer_above_null_descriptive"]), None)
     if onset:
         console.print(
-            f"\n[bold]Decodability onset: layer {onset['layer']} "
-            f"({100 * onset['depth_frac']:.0f}% depth). Below this the injected state does "
-            f"not resemble the model's own representation of the concept, so introspection "
-            f"training should have nothing to latch onto there.[/bold]"
+            f"\n[bold]First read layer whose point estimate exceeds this pooled null: "
+            f"layer {onset['layer']} ({100 * cast(float, onset['depth_frac']):.0f}% depth). "
+            f"This is a fixed-source propagation diagnostic, not an IFT failure "
+            f"prediction.[/bold]"
         )
 
     out = args.out or Path("results") / f"layer_profile_{args.model}.json"
@@ -196,6 +230,8 @@ def main() -> None:
     out.write_text(
         json.dumps(
             {
+                "schema_version": 2,
+                "status": "descriptive_fixed_source_profile",
                 "model": model.name,
                 "inject_layer": inject,
                 "strength": args.strength,
@@ -203,6 +239,10 @@ def main() -> None:
                 "n_test": len(inj_y),
                 "chance": chance,
                 "self_report": [report.value, report.lo, report.hi],
+                "inference_warning": (
+                    "Intervals in nested metric objects are IID diagnostics only. Option "
+                    "orders are nuisance repetitions and layers are dependent sites."
+                ),
                 "layers": rows,
             },
             indent=2,

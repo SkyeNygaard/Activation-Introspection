@@ -1,8 +1,9 @@
-"""Figures. Every plot of a claim carries the arm that could falsify it.
+"""Legacy exploratory figures with explicit stress-test arms.
 
-House rule for this repo: no figure shows the concept arm without its null arm,
-and no figure shows the introspector without the observer. A plot of the positive
-arm alone is the visual form of the overclaim the whole design exists to avoid.
+No figure shows the concept arm without its null arm, and no legacy report plot
+shows the introspector without the observer. Those arms expose some artifacts but
+do not make the IID intervals or asymmetric observer confirmatory. The retired
+IFT/probe entry point fails loudly rather than regenerating the retracted plot.
 """
 
 from __future__ import annotations
@@ -11,7 +12,6 @@ from collections.abc import Callable
 from pathlib import Path
 
 import matplotlib
-import numpy as np
 
 matplotlib.use("Agg")  # no display on a headless run
 import matplotlib.pyplot as plt
@@ -108,10 +108,7 @@ def plot_introspector_vs_observer(
     ax.set_xticks(list(x))
     ax.set_xticklabels(labels, fontsize=8)
     ax.set_ylabel("identification accuracy")
-    ax.set_title(
-        "Introspection vs behavioural inference\n"
-        "(observer above introspector = no privileged access)"
-    )
+    ax.set_title("Introspection vs behavioural inference\n(legacy asymmetric observer diagnostic)")
     ax.legend(frameon=False, fontsize=9)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
@@ -119,10 +116,10 @@ def plot_introspector_vs_observer(
 
 
 def plot_matched_kl(bins: list[KLBin], path: Path) -> None:
-    """The gap within bands of equal behavioural effect.
+    """Legacy gap within bands of similar scalar behavioural effect.
 
-    The comparison that is not confounded by injection damage. A flat line at
-    zero means behavioural inference explains everything.
+    KL binning does not equalize transcript, damage geometry, or reporter state;
+    this plot is descriptive and cannot identify privileged access.
     """
     if not bins:
         return
@@ -141,7 +138,7 @@ def plot_matched_kl(bins: list[KLBin], path: Path) -> None:
     )
     ax.axhline(0, ls="--", lw=1, color="k", alpha=0.6)
     ax.annotate(
-        "no privileged access",
+        "zero legacy gap",
         xy=(centres[0], 0),
         textcoords="offset points",
         xytext=(4, 6),
@@ -235,54 +232,9 @@ def plot_all(
 
 
 def plot_ift_vs_probe(ift_json: Path, path: Path) -> None:
-    """Post-IFT accuracy against pre-training probe decodability, per held-out layer.
-
-    The test of the prediction. Each point is one layer the adapter was never
-    trained on: x is how decodable the injected concept was *before* any training,
-    y is how well the fine-tuned model reports it. A positive slope means
-    pre-training decodability forecasts where introspection training generalizes.
-    """
-    import json
-
-    data = json.loads(ift_json.read_text())
-    rows = [r for r in data["layers"] if r.get("probe_transfer") is not None]
-    if len(rows) < 3:
-        return
-
-    x = [r["probe_transfer"] for r in rows]
-    y = [r["post"][0] for r in rows]
-    lo = [r["post"][0] - r["post"][1] for r in rows]
-    hi = [r["post"][2] - r["post"][0] for r in rows]
-    depth = [r["depth_frac"] for r in rows]
-
-    fig, ax = plt.subplots(figsize=(7, 4.6))
-    sc = ax.scatter(x, y, c=depth, cmap="viridis", s=60, zorder=3)
-    ax.errorbar(x, y, yerr=[lo, hi], fmt="none", ecolor="#999", capsize=3, zorder=2)
-
-    if len(set(x)) > 1:
-        m, b = np.polyfit(x, y, 1)
-        xs = np.linspace(min(x), max(x), 50)
-        r = np.corrcoef(x, y)[0, 1]
-        ax.plot(xs, m * xs + b, ls="--", color="#1b6ca8", label=f"r = {r:+.2f}")
-        ax.legend(frameon=False)
-
-    ax.axhline(data["chance"], ls=":", lw=1, color="k", alpha=0.6)
-    ax.annotate(
-        "chance",
-        (min(x), data["chance"]),
-        textcoords="offset points",
-        xytext=(2, 4),
-        fontsize=8,
-        color="gray",
+    """Retired: the legacy inputs used mismatched sites and invalid IID bars."""
+    del ift_json, path
+    raise RuntimeError(
+        "legacy IFT-versus-probe figure retired: regenerate a schema-2 matched-site "
+        "profile and raw multi-run IFT artifact before plotting a descriptive join"
     )
-    fig.colorbar(sc, ax=ax, label="depth (fraction of layers)")
-    ax.set_xlabel("pre-training transfer-probe accuracy at this layer")
-    ax.set_ylabel("post-IFT self-report accuracy")
-    ax.set_title(
-        "Does pre-training decodability predict where\nintrospection training generalizes?\n"
-        f"(trained only on L{data['train_layer']}; every point is a held-out layer)",
-        fontsize=10,
-    )
-    fig.tight_layout()
-    fig.savefig(path, dpi=150)
-    plt.close(fig)
