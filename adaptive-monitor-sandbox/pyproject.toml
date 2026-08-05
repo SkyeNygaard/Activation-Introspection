@@ -95,6 +95,9 @@ module = ["scipy.*"]
 ignore_missing_imports = true
 
 # The local judge model is an optional extra; mypy runs without it installed.
+# torch arrives through that same `llm` extra, so a default `uv sync` -- which
+# installs dependency-groups but not extras -- leaves it absent and `make check`
+# fails on a fresh clone unless it is listed here too.
 [[tool.mypy.overrides]]
-module = ["introspect.*"]
+module = ["introspect.*", "torch.*"]
 ignore_missing_imports = true

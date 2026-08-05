@@ -1,2 +1,5 @@
 # Per-project ignores live in each subdirectory; this covers the root only.
 .DS_Store
+
+# Application working notes. Not part of the published portfolio.
+APPLICATION-PREP.md

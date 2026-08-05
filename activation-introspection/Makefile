@@ -19,6 +19,11 @@ sweep:
 # runs the held-out concept bank once at the frozen strength. Do not run
 # retained-test more than once against a new hypothesis -- that turns the
 # confirmatory split into a second development split.
+#
+# RETAINED_RUN names the quotable confirmatory run. It is _v2_ -- the rerun under
+# the repaired control -- and results/README.md says to cite that one. Override it
+# to write a fresh run rather than clobbering the run the documents quote.
+RETAINED_RUN ?= retained_test_qwen05b_v2
 retained-dev:
 	uv run python scripts/run_retained_trace.py --split dev \
 	  --layers 2,6,10,14,18,22 --strength 0.5,1,2,4,8 \
@@ -28,16 +33,16 @@ retained-dev:
 retained-test:
 	uv run python scripts/run_retained_trace.py --split test \
 	  --layers 2,6,10,14,18,22 --strength 1.0 \
-	  --raw results/retained_test_qwen05b_raw.jsonl \
-	  --summary results/retained_test_qwen05b_summary.json
+	  --raw results/$(RETAINED_RUN)_raw.jsonl \
+	  --summary results/$(RETAINED_RUN)_summary.json
 
 retained-report:
 	uv run --group analysis python scripts/analyze_retained.py \
-	  --raw results/retained_test_qwen05b_raw.jsonl \
-	  --summary results/retained_test_qwen05b_summary.json --cell 2,1.0
+	  --raw results/$(RETAINED_RUN)_raw.jsonl \
+	  --summary results/$(RETAINED_RUN)_summary.json --cell 2,1.0
 	uv run --group analysis python scripts/plot_retained.py \
-	  --raw results/retained_test_qwen05b_raw.jsonl \
-	  --summary results/retained_test_qwen05b_summary.json --strength 1.0
+	  --raw results/$(RETAINED_RUN)_raw.jsonl \
+	  --summary results/$(RETAINED_RUN)_summary.json --strength 1.0
 
 test:
 	uv run pytest
