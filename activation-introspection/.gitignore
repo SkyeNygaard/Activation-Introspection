@@ -1,0 +1,36 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+.uv-cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.ipynb_checkpoints/
+
+# Model weights and caches are reproducible from the config; never commit them.
+models/
+hf_cache/
+*.safetensors
+*.gguf
+*.bin
+
+# Raw run outputs are ignored by default. The matched-profile rows are the small,
+# required evidence behind their summaries and are explicitly reviewable.
+results/raw/*
+!results/raw/reach_output_*.trials.jsonl
+!results/raw/reach_output_*.natural-trials.jsonl
+results/**/*.pt
+results/**/*.npz
+
+# Local pre-audit aggregate without raw trials or provenance. Preserve locally,
+# but regenerate it through the raw-first runner before publishing evidence.
+results/reach_output_qwen05b.json

@@ -1,0 +1,386 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "train_layer": 16,
+  "strength": 0.2,
+  "chance": 0.125,
+  "n_train_examples": 144,
+  "eval_seeds": 10,
+  "trained_layer_pre": 0.125,
+  "trained_layer_post": 1.0,
+  "layers": [
+    {
+      "layer": 1,
+      "depth_frac": 0.041666666666666664,
+      "distance": -15,
+      "pre": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "post": [
+        0.175,
+        0.11875,
+        0.2375
+      ],
+      "gain": 0.04999999999999999,
+      "probe_transfer": null
+    },
+    {
+      "layer": 2,
+      "depth_frac": 0.08333333333333333,
+      "distance": -14,
+      "pre": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "post": [
+        0.9375,
+        0.9,
+        0.975
+      ],
+      "gain": 0.8125,
+      "probe_transfer": null
+    },
+    {
+      "layer": 3,
+      "depth_frac": 0.125,
+      "distance": -13,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": null
+    },
+    {
+      "layer": 4,
+      "depth_frac": 0.16666666666666666,
+      "distance": -12,
+      "pre": [
+        0.1875,
+        0.13125,
+        0.25
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.8125,
+      "probe_transfer": null
+    },
+    {
+      "layer": 5,
+      "depth_frac": 0.20833333333333334,
+      "distance": -11,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": null
+    },
+    {
+      "layer": 6,
+      "depth_frac": 0.25,
+      "distance": -10,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": null
+    },
+    {
+      "layer": 7,
+      "depth_frac": 0.2916666666666667,
+      "distance": -9,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": null
+    },
+    {
+      "layer": 8,
+      "depth_frac": 0.3333333333333333,
+      "distance": -8,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": null
+    },
+    {
+      "layer": 9,
+      "depth_frac": 0.375,
+      "distance": -7,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.625
+    },
+    {
+      "layer": 10,
+      "depth_frac": 0.4166666666666667,
+      "distance": -6,
+      "pre": [
+        0.0625,
+        0.03125,
+        0.1
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.9375,
+      "probe_transfer": 0.5
+    },
+    {
+      "layer": 11,
+      "depth_frac": 0.4583333333333333,
+      "distance": -5,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.525
+    },
+    {
+      "layer": 12,
+      "depth_frac": 0.5,
+      "distance": -4,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.525
+    },
+    {
+      "layer": 13,
+      "depth_frac": 0.5416666666666666,
+      "distance": -3,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.5
+    },
+    {
+      "layer": 14,
+      "depth_frac": 0.5833333333333334,
+      "distance": -2,
+      "pre": [
+        0.125,
+        0.075,
+        0.18125
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.75
+    },
+    {
+      "layer": 15,
+      "depth_frac": 0.625,
+      "distance": -1,
+      "pre": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.775
+    },
+    {
+      "layer": 17,
+      "depth_frac": 0.7083333333333334,
+      "distance": 1,
+      "pre": [
+        0.0625,
+        0.03125,
+        0.1
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.9375,
+      "probe_transfer": 0.875
+    },
+    {
+      "layer": 18,
+      "depth_frac": 0.75,
+      "distance": 2,
+      "pre": [
+        0.0625,
+        0.03125,
+        0.1
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.9375,
+      "probe_transfer": 0.825
+    },
+    {
+      "layer": 19,
+      "depth_frac": 0.7916666666666666,
+      "distance": 3,
+      "pre": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 0.6
+    },
+    {
+      "layer": 20,
+      "depth_frac": 0.8333333333333334,
+      "distance": 4,
+      "pre": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "post": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "gain": 0.875,
+      "probe_transfer": 1.0
+    },
+    {
+      "layer": 21,
+      "depth_frac": 0.875,
+      "distance": 5,
+      "pre": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "post": [
+        0.55,
+        0.475,
+        0.625
+      ],
+      "gain": 0.42500000000000004,
+      "probe_transfer": 1.0
+    },
+    {
+      "layer": 22,
+      "depth_frac": 0.9166666666666666,
+      "distance": 6,
+      "pre": [
+        0.1875,
+        0.13125,
+        0.25
+      ],
+      "post": [
+        0.19375,
+        0.13125,
+        0.25625
+      ],
+      "gain": 0.0062500000000000056,
+      "probe_transfer": 1.0
+    },
+    {
+      "layer": 23,
+      "depth_frac": 0.9583333333333334,
+      "distance": 7,
+      "pre": [
+        0.1875,
+        0.13125,
+        0.25
+      ],
+      "post": [
+        0.125,
+        0.075,
+        0.175
+      ],
+      "gain": -0.0625,
+      "probe_transfer": 1.0
+    }
+  ]
+}
