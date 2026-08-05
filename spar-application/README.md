@@ -197,13 +197,17 @@ against what I actually published.
 
 ## Publication state
 
-The sibling repository links above work in this local workspace but will not
-cross between three independent GitHub repositories. The central directory is
-not yet versioned, A and B have no remotes, and their audit repairs are
-uncommitted. Before attaching this to an application, choose a monorepo/submodule
-layout or replace every sibling link with a commit-pinned GitHub URL. The exact
-steps and the unprovenanced file that must not be added accidentally are listed
-in [AUDIT-MANIFEST.md](AUDIT-MANIFEST.md).
+Resolved on 2026-08-05. All three directories now live in one repository, so
+every cross-reference resolves as written — 94 relative links, checked. The two
+code repositories were merged with `git subtree`, so their separate commit
+histories are intact; that history records the corrections as they happened and
+is part of the evidence.
+
+Both trees are committed and both verification contracts pass from the merged
+layout. What remains is pushing to a remote, which is a deliberate choice about
+what becomes public and when. The unprovenanced reach aggregate that must not be
+added is still excluded by the ignore rules; see
+[AUDIT-MANIFEST.md](AUDIT-MANIFEST.md).
 
 ## License
 

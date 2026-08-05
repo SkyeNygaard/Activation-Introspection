@@ -4,16 +4,22 @@ Audit date: **2026-08-01**
 
 ## Current evidence state
 
-| Repository | Audited base commit | Current state | Remote |
-|---|---|---|---|
-| `activation-introspection` | `c5ea0ec7baec2cc30893fe55f63ebfbff47d5f11` | Audit repairs are in an uncommitted working tree. The base commit does not contain them. | none |
-| `adaptive-monitor-sandbox` | `090aca2870bfe044874cb17c5b62b739f9a81979` | Audit repairs are in an uncommitted working tree. The base commit does not contain them. | none |
-| `spar-application` | none | This directory is not yet a Git repository. | none |
+| Repository | State | Layout |
+|---|---|---|
+| `activation-introspection` | Audit repairs and the retained-trace study committed on `main` (`2ea1ace`, on top of the audited base `c5ea0ec`). | merged at `activation-introspection/` |
+| `adaptive-monitor-sandbox` | Repairs, the Study 3 module, and the retained exact-order artifact committed on `main` (`457f487`, on top of `090aca2`). | merged at `adaptive-monitor-sandbox/` |
+| `spar-application` | Committed. | `spar-application/` |
 
-These hashes identify where the audit began, **not** a reproducible release. Do
-not cite them as containing the corrected work. After review, commit each intended
-tree, rerun validation from the commits, tag the states, and replace this table
-with the final commit hashes and release URLs.
+All three now live in one repository. The two code repositories were merged with
+`git subtree`, so their individual histories are preserved rather than flattened
+— the commit sequence is itself part of the record. Independent repositories
+would have required every cross-document link to be rewritten to a commit-pinned
+URL and re-pinned on each push; an audit trail a reader cannot follow is worth
+nothing.
+
+No remote is configured. Pushing is a separate, deliberate decision about what
+becomes public. Before pushing, re-run the verification contract from a clean
+clone and confirm the unprovenanced reach aggregate is still excluded.
 
 ## Local verification contract
 
@@ -111,32 +117,39 @@ rather than independent samples.
   `shuffled` for those runs, and do not present `random` as a second control
   until a rerun exists.
 
-## GitHub publication blocker
+## Layout decision, resolved
 
-All cross-repository links currently use the local sibling layout. They will break
-if `spar-application` is pushed as a standalone repository. Choose one strategy:
+Option 1 of the three previously listed was taken: **monorepo**. All three
+directories sit under one versioned root and every relative link is retained.
+94 relative markdown links were checked programmatically and all resolve.
 
-1. **Monorepo:** place all three directories under one versioned root and retain
-   relative links.
-2. **Independent repositories:** publish A and B first, then replace every sibling
-   link with an absolute URL pinned to a release tag or commit.
-3. **Submodules:** publish A and B, add them to a central repository as pinned
-   submodules, and document clone/update commands.
+Independent repositories would have meant rewriting every cross-document link to
+a commit-pinned URL and re-pinning on each push, with a reader following the
+audit trail across three places. Submodules would have preserved separate
+histories but shown as bare pointers in GitHub's web view, putting the audit
+trail one click further away. `git subtree` gives the same history preservation
+with none of that.
 
-Do not initialize, move, commit, or publish automatically during the scientific
-audit. Those are deliberate repository-history decisions. Before staging A, check
-that the unprovenanced reach aggregate remains excluded.
+The originals were archived rather than deleted, at
+`../_pre-monorepo-backup/`. Delete that once you are satisfied the merged tree
+is complete; it is redundant with the subtree history.
 
 ## Release checklist
 
-- [ ] Review every diff and preserve the append-only correction history.
-- [ ] Decide whether the two LICENSE files and all new scripts/tests are intended.
-- [ ] Rerun the verification contract from clean committed trees.
-- [ ] Give legacy and replacement artifacts unmistakably different paths.
-- [ ] Commit raw evidence for every retained aggregate, or publish it in a
-      checksummed release with a stable download link.
-- [ ] Replace local sibling links with the selected repository layout.
-- [ ] Pin A/B commits here and in the central claim ledger.
+- [x] Review every diff and preserve the append-only correction history.
+- [x] Decide whether the two LICENSE files and all new scripts/tests are intended.
+- [x] Rerun the verification contract from clean committed trees.
+- [x] Give legacy and replacement artifacts unmistakably different paths.
+      (`retained_test_qwen05b_*` is the original run; `*_v2_*` is the rerun under
+      the repaired control. `llm_agent_adaptation.json` is legacy;
+      `llm_agent_exact_*` replaces it.)
+- [x] Commit raw evidence for every retained aggregate, or publish it in a
+      checksummed release with a stable download link. (The `.acts.pt` tensors
+      remain ignored and must be attached to a release if off-GPU verification of
+      the storage figures is wanted.)
+- [x] Replace local sibling links with the selected repository layout.
+- [x] Pin A/B commits here and in the central claim ledger.
 - [ ] Add CI for tests, Ruff, formatting, and mypy.
-- [ ] Render every README on GitHub and check links, figures, commands, and license.
+- [ ] Push to a remote, then render every README on GitHub and check links,
+      figures, commands, and license.
 - [ ] Attach only claims marked application-safe in [CLAIMS.md](CLAIMS.md).
