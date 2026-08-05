@@ -20,4 +20,7 @@ dist/
 # Keep aggregated results and figures in Git.
 results/raw/
 results/**/*.jsonl
+# The exact one-scenario menu diagnostic is 72 small rows and is the evidence
+# required to audit its descriptive summary. Larger transcripts stay ignored.
+!results/llm_agent_exact_raw.jsonl
 !figures/

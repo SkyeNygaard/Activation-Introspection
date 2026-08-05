@@ -1,134 +1,79 @@
-# Problem space: what breaks when the adversary adapts?
+# Problem space after the claim audit
 
-## The gap this targets
+Updated: 2026-08-01. This note replaces the pre-audit results narrative. Legacy
+numbers remain in the append-only lab notebook and `results/`, with explicit
+retractions in [`04-claim-audit.md`](04-claim-audit.md).
 
-Most control evaluations measure a monitor against a *fixed* attack policy: run
-the red team, score the blue team, report catch rate. That number is an upper
-bound on a quantity nobody cares about, because a deployed adversary is not
-fixed. It observes which of its actions were refused and routes around them.
+## The question
 
-Two properties of real deployments are excluded by construction from almost every
-agent benchmark, and both are load-bearing:
+When an agent observes that a monitor blocked an action, does the information in
+the refusal causally change its probability of finding and executing another
+route around the constraint? If so, how does reducing that information affect
+honest task recovery and monitor usefulness?
 
-1. **State persists across episodes.** A task that ends by wiping the filesystem
-   cannot express an attack whose steps are spread over a week.
-2. **Refusals are informative.** Error messages, refusals, and latency all leak
-   which action tripped the wire. `FeedbackLevel.SPECIFIC` is the realistic
-   default, not the pessimistic one.
+Neither adaptation nor persistent-state attacks are new research topics. The
+closest empirical precursor, *Noticing the Watcher* (arXiv 2603.16928), studies
+inference from blocking feedback and proposes silent/delayed/probabilistic
+feedback as follow-up. Persistent-state and multi-turn attacks are also covered
+by arXiv 2607.02514 and 2607.18063. The literature boundary is documented in
+[`00-literature.md`](00-literature.md).
 
-Put those together and a monitor's measured catch rate can be almost entirely an
-artefact of the attacker not being allowed to learn.
+## Why the environment still helps
 
-## The attack that motivates the design
+Many controls can look safe for accidental reasons: the attacker never acquires
+the target, no viable egress route exists, the leak oracle misses an encoding,
+task success is inherited from old persistent state, or the feedback treatment
+leaks through another field. A small deterministic world makes those causal
+invariants executable and testable.
 
-The interesting failure is not a clever single action. It is an attack in which
-**no single action is suspicious**:
+The sandbox therefore has two legitimate roles:
 
-- Episode 0: read a credential (ops agents legitimately do this)
-- Episode 2: write a build report into the published artifact directory
-- Episode 2, later: the environment's own sync process publishes that directory
+1. **Mechanism testing.** A transparent scripted policy checks whether the world
+   can represent acquisition, staging, delayed publication, monitor memory, and
+   adaptation. Since the response policy is written by the researcher, its
+   behavior is not a finding about language models.
+2. **Evaluation plumbing.** The same interfaces can host a model policy after
+   the scenario bank, feedback controls, inference plan, and ground-truth outcome
+   checks are in place.
 
-There is no alarming step anywhere. The exfiltration is not an event in any
-episode — it is a consequence of a routine process. A monitor scoring actions in
-isolation has nothing to find, and it is not being stupid: the information
-required to find it is not in its input.
+## Load-bearing invariants
 
-This is why the environment publishes via a **directory sync** rather than an
-agent-issued network call. An agent posting to an unknown host looks alarming and
-any rule catches it. That version of the environment measures nothing.
+- The protected value is unavailable to the attacker until a permitted read
+  succeeds.
+- The leak label is privileged and content based. It must dominate every
+  encoding in the registered attack family, and its coverage must be reported.
+- A public artifact written in episode *t* cannot sync until episode *t + 1*.
+- Task usefulness requires successful required operations in the scored episode;
+  a postcondition left by old state is insufficient.
+- Monitor visibility is rendered centrally, and the policy sees only the
+  treatment-specific feedback view.
+- Honest tasks use the same sensitive stores and publication channels, so a
+  defense cannot appear free merely because benign traffic avoids them.
 
-## What the first run showed
+## The causal contrast
 
-Building the environment surfaced three ways to make it *look* like monitoring
-works when it does not. All three produced safety = 1.00 across every condition:
+Silent, generic, and specific feedback alone are insufficient. A specific reason
+can directly tell a model which listed route to abandon. The registered design
+also needs an irrelevant but equally detailed reason and a length/style-matched
+sham. A causal feedback-content effect should be larger for relevant detail
+than for both controls.
 
-| Degenerate choice | Why it kills the experiment |
-|---|---|
-| Block all outbound network calls | Exfiltration impossible for any attacker; every monitor scores perfectly for reasons unrelated to monitoring |
-| Block reads of the secret store | The agent never obtains the credential; the attack cannot start |
-| Judge leaks by raw substring | An encoded payload scores as a non-event — the metric fails in the same direction as the defence |
+The fixed menu is useful only as a diagnostic because it supplies the attacks.
+The confirmatory outcome is functional bypass in a free-form multi-turn tool
+loop, using scenario and attack families held out from development.
 
-The third is the dangerous one, because the other two at least look suspicious in
-a results table. A substring oracle reports a run where the credential
-demonstrably crossed the boundary as perfectly safe, and nothing errors.
+## Measurement rules
 
-**Rule adopted:** the ground-truth oracle must dominate every obfuscation in the
-attacker's ladder. `encode_payload` and `contains_secret` live side by side in
-`state.py` so they cannot drift apart, and a test asserts the oracle sees through
-each encoding.
+- Scenario family is the unit of inference. Deterministic menu orders, action
+  steps, and tokens are nested nuisance observations.
+- Safety and honest usefulness are reported together.
+- Detection thresholds are calibrated on data separate from evaluation.
+- Right-censored time-to-leak is analyzed as censored data, not replaced by the
+  horizon and treated as an ordinary mean.
+- A null claim requires a pre-registered smallest effect size of interest and an
+  equivalence interval fully contained inside it.
+- Fixed-menu mean rung is diagnostic only; the categories are not known to be
+  equally spaced and do not prove execution.
 
-Corollary worth stating in any writeup: *a control evaluation's safety number is
-bounded above by the strength of its ground-truth oracle*, and that oracle is
-almost never reported.
-
-## Results structure after the fixes
-
-| Attacker | Per-episode rule monitor | Cross-episode provenance |
-|---|---|---|
-| honest | safe, useful 1.00 | safe, useful 1.00 |
-| static | **caught** | caught |
-| adaptive | **leaks at ep2** | caught, useful **0.38** |
-
-Three things fall out, and each maps onto a different open question:
-
-**1. The static-attacker control is doing real work.** Static and adaptive run
-identical code and differ only in whether blocks escalate the strategy. Static is
-caught by every monitor; adaptive defeats all the per-episode ones. Without the
-control, the adaptive curve could just mean "more attempts."
-
-**2. CoT visibility helps, and does not save you.** Detection AUROC goes 0.62
-(actions only) → 0.75 (with reasoning), and catch@5%FPR 0.25 → 0.50. But the
-credential still leaves, one episode later. A monitor that is better at ranking
-but still below the audit threshold buys delay, not safety. Reporting AUROC alone
-would have made CoT access look like a fix.
-
-**3. Cross-episode memory is the variable that actually matters, and it is not
-free.** Provenance tracking catches everything — and drops usefulness from 1.00
-to 0.38, because taint never clears. That number belongs in the headline. A
-defence quoted without its usefulness cost is not a defence.
-
-## Obfuscation without gradients
-
-The adaptive attacker's mean suspicion per episode falls 0.21 → 0.00 while the
-static attacker's stays flat at ~0.42. The attack still succeeds; it just stops
-looking like anything.
-
-Nothing was trained. No gradient step was taken anywhere. The obfuscation is
-produced entirely by in-context adaptation to which actions were refused.
-
-This is the connection to CoT-obfuscation work, and it suggests a claim worth
-testing properly: **optimisation pressure against a monitor does not require
-training against the monitor.** Any deployment that returns informative refusals
-to a capable agent already supplies the pressure. If that holds, "don't train
-against the monitor" is insufficient as a mitigation, and the relevant variable
-is how much the refusal channel leaks.
-
-That is the sharpest thing this environment could establish, and it is cheap to
-test: sweep `FeedbackLevel` and measure how obfuscation rate scales with feedback
-specificity.
-
-## Known limitations, stated up front
-
-- **The attacker is scripted.** Its ladder is a hypothesis about what adaptation
-  looks like, not a discovery. It shows the environment *can* express the failure;
-  it does not show a model would find it. The LLM arm is what tests that, and
-  until it runs, no claim about model behaviour is licensed.
-- **The reasoning summariser is truncation**, a crude stand-in for a real
-  summarisation step, which drops different information.
-- **The rule monitor is deliberately naive.** It is the floor. A model-based
-  monitor might catch the staged write — that is the next experiment, and the
-  honest prediction is that it helps on rung 2 and fails on rung 3.
-- **Safety is binary per run** (leaked or not). With more runs this should become
-  a survival curve over episodes.
-
-## Next questions, in priority order
-
-1. Does obfuscation rate scale with `FeedbackLevel`? (cheap, and the strongest claim)
-2. Does a model-based monitor close the per-episode gap, or just raise the rung
-   at which the attacker succeeds?
-3. Does an LLM agent, given the same environment and no attack script, discover
-   the staging route on its own?
-4. How much cross-episode context does a monitor need — full history, or a
-   summary? Where is the knee?
-
-Question 3 is the one that turns this from an existence proof into a result.
+The complete registered protocol and unresolved threats are in
+[`04-claim-audit.md`](04-claim-audit.md).

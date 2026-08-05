@@ -1,61 +1,92 @@
-# Where the AI-control literature is, as of August 2026
+# Literature boundary for adaptive monitoring experiments
 
-Read before extending this repo.
+Updated: 2026-08-01. Read this before making a novelty claim.
 
-## Adaptive attacks are established, and they win
+This is a scoped map, not a systematic review. The confirmatory v2 protocol must
+run a fresh search and record query strings, databases, dates, and inclusion
+criteria before results are unblinded.
 
-**Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols** (arXiv
-2510.09462). Most control protocols route through an LLM monitor, which becomes a
-single point of failure. An untrusted model that knows the protocol and the
-monitor can embed prompt injections in its own output and fully subvert the
-monitor. Strategic attack *selection* — choosing when the monitor is weakest — is
-a further multiplier.
+## Adaptive attacks and control awareness are established
 
-**Attack Selection in Agentic AI Control Evaluations Meaningfully Decreases
-Safety** (arXiv 2606.06529). Safety numbers from control evals depend heavily on
-how attacks were chosen; poor selection inflates measured safety.
+- [Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols](https://arxiv.org/abs/2510.09462)
+  shows that attackers which know and adapt to a control protocol can subvert
+  trusted-monitor setups. Adaptation itself is not novel here.
+- [CIAware-Bench](https://arxiv.org/abs/2606.11063) evaluates whether models infer
+  that a control protocol has intervened, treating awareness as a prerequisite
+  for adaptive evasion.
+- [Noticing the Watcher: LLM Agents Can Infer CoT Monitoring from Blocking Feedback](https://arxiv.org/abs/2603.16928)
+  is the closest predecessor to this repository's intended model experiment. It
+  studies multi-episode blocking feedback with frontier agents, finds some
+  control awareness but much rarer successful intentional evasion, and names
+  silent, delayed, and probabilistic feedback as open directions.
+- [Adaptive Adversaries](https://arxiv.org/abs/2607.18063) studies adversaries
+  changing behavior across multi-turn interactions. A multi-turn adaptation loop
+  is therefore an extension/comparison point, not an untouched problem.
+- [ALIBI](https://arxiv.org/abs/2607.24964) iteratively refines adversarial code
+  comments using detector reasoning and feedback. Feedback-guided evasion is not
+  a new headline here.
+- [Analyzing Defensive Misdirection Against Model-Guided Automated
+  Attacks](https://arxiv.org/abs/2606.20470) argues that predictable refusals aid
+  automated search and evaluates strategically misleading responses. The value
+  and dual use of refusal content are already explicit research questions.
 
-**CIAware-Bench** (arXiv 2606.11063). Benchmarks whether frontier models can
-detect that a control protocol has intervened on their trajectory — explicitly
-framed as *a prerequisite for adaptive evasion*. This is the premise of this
-repo's feedback lever, already benchmarked at frontier scale.
+## Persistent-state and attack-selection work is established
 
-## What that means for this repo's claims
+- [Distributed Attacks in Persistent-State AI Control](https://arxiv.org/abs/2607.02514)
+  studies attacks spread across persistent codebase/PR state and multiple
+  actors/monitors. This supersedes any broad claim that cross-episode persistence
+  is new.
+- [Attack Selection in Agentic AI Control Evaluations Meaningfully Decreases Safety](https://arxiv.org/abs/2606.06529)
+  shows that measured safety depends strongly on how attacks are selected. A
+  fixed researcher-written ladder can only be a mechanism check.
+- [CoopGuard](https://arxiv.org/abs/2604.04060) proposes a stateful multi-round
+  defense against evolving attacks, while [Stateful Online Monitoring Catches
+  Distributed Agent Attacks](https://arxiv.org/abs/2605.31593) aggregates weak
+  evidence across otherwise isolated transcripts. Stateful defense itself is not
+  the contribution.
 
-The headline here — attack success is monotone in refusal informativeness — is
-**not novel**. It is a scripted-attacker demonstration of the mechanism
-CIAware-Bench measures the prerequisite for, and that 2510.09462 exploits.
+## The remaining contribution must be narrow
 
-What this repo can still contribute, honestly stated:
+This repository can be useful as a registered follow-up to *Noticing the
+Watcher*: at the first genuinely model-generated blocked action, freeze the exact
+agent/world/monitor checkpoint and randomize only the **validity of a fixed-width
+reported trigger**. Then measure oracle-lineage functional harm and honest
+recovery, first under a fixed monitor and only then under a private stateful
+attempt ledger.
 
-1. **A dose-response curve on the refusal channel.** Prior work establishes that
-   adaptive attacks work. It does not treat *how much the refusal discloses* as a
-   tunable parameter and measure the safety/usefulness curve against it. Here:
-   safety 1.00 (silent) / 0.10 (generic) / 0.00 (specific), with a static-attacker
-   control flat at 1.00.
-2. **The cost side.** Most control results report safety. This repo refuses to
-   report safety without honest usefulness, and the frontier that produces
-   (unbounded provenance: safety 1.00 at usefulness 0.48) is the actual decision
-   object.
-3. **The blocking/detecting distinction.** catch@5%FPR stays ~0.06 for every
-   memory-based monitor here while safety reaches 1.00. Safety bought by blocking
-   is not the same as safety bought by discrimination, and reporting safety alone
-   conflates them.
+That statement is narrower than the earlier “dose response is missing from the
+literature” claim. Feedback-mediated adaptation and stateful defense have both
+been studied. The possible increment is their exact randomized causal crossing,
+combined with:
 
-## Standing limitation
+- an identical-prefix checkpoint branch at the first eligible refusal;
+- `K=4` randomized response at `q=1`, `q=0.75`, and `q=0.25`, with identical
+  vocabulary, format, and length;
+- one treated refusal per primary continuation, because later block count is
+  treatment dependent;
+- free-form tool use, a private causal-lineage oracle, and scenario-family
+  inference rather than menu permutations;
+- positive policy/route controls, harmless rule-identification forks, and paired
+  honest recovery at a matched trajectory-level false-block budget; and
+- a sequential test: establish the fixed-monitor feedback effect before testing
+  attenuation by private memory.
 
-The attacker is scripted. Its ladder is a hypothesis about adaptation, not a
-discovery, so nothing here licenses a claim about how a real model behaves. The
-LLM *monitor* arm is now real (`llm_monitor.py`, local Qwen); the LLM *agent* arm
-is not built. Until it is, the correct framing is "this environment can express
-the failure mode", not "models do this".
+The targeted review did not find this exact feedback-validity × private-memory
+factorial on functional outcomes. That is a candidate extension, not proof of
+novelty; repeat the search and citation chase before confirmation.
 
-## Practical rules extracted
+## Implications for current artifacts
 
-1. A monitor's measured catch rate is an upper bound on a quantity nobody cares
-   about unless the adversary was allowed to adapt.
-2. Small-model monitors have a severe affirmative-response bias — measured here,
-   every action scores 0.998–1.000. Calibrate the threshold on honest traffic at a
-   stated audit budget; never ship a fixed 0.5.
-3. The ground-truth oracle must dominate every obfuscation in the attacker's
-   ladder, or safety is overestimated silently.
+1. The scripted ladder is not a behavioral discovery; the response is encoded in
+   the policy.
+2. The fixed-menu pilot tests preference among supplied routes. It does not test
+   emergence or execution.
+3. A result from one Qwen prompt cannot locate a capability threshold or establish
+   a null for models up to a parameter scale.
+4. Persistent-state results must be presented as sandbox stress tests and
+   compared explicitly with 2607.02514.
+5. Any CoT-obfuscation claim requires a real training-pressure intervention;
+   sanitizing a scripted reasoning string is not such an experiment.
+
+The claim ledger and registered design are in
+[`04-claim-audit.md`](04-claim-audit.md).

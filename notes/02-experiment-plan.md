@@ -3,6 +3,13 @@
 Written before the real runs. Amend by appending, not by editing predictions
 after the fact.
 
+> **Audit notice (2026-08-01):** This is the frozen legacy plan, not the current
+> protocol. Its sample-size rule treated model reruns as independent, its fixed
+> menu could not measure emergence, and several simulator invariants were later
+> repaired. None of its numeric outputs are confirmatory. The replacement plan
+> is [`04-claim-audit.md`](04-claim-audit.md); the append-only correction is in
+> [`03-lab-notebook.md`](03-lab-notebook.md).
+
 ## Conditions
 
 Full factorial, all with the scripted attacker first (free, deterministic):

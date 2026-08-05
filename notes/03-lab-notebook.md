@@ -3,6 +3,11 @@
 Append-only. Dated entries. Predictions in `02-experiment-plan.md` are not edited
 after the fact; corrections go here.
 
+> **Current audit status (2026-08-01):** Entries before “Serious audit” are a
+> historical record and contain claims that are now retracted. Do not quote their
+> headlines or intervals as current evidence. Read the correction at the end and
+> the authoritative ledger in [`04-claim-audit.md`](04-claim-audit.md).
+
 ---
 
 ## 2026-07-31 — First real sweep. One bug voided the main lever.
@@ -151,7 +156,7 @@ a control protocol intervened — explicitly as a prerequisite for adaptive
 evasion. That is this repo's premise, already measured at frontier scale.
 
 What survives as a contribution is narrower and I should state it that way: a
-**dose-response curve** treating refusal disclosure as a tunable parameter, always
+**feedback-content comparison** treating refusal disclosure as a design factor, always
 reported against its usefulness cost.
 
 ### LLM monitor arm, run locally
@@ -307,3 +312,118 @@ this measures whether small models *supply* it, and they do not.
    need the loop, not a single counterfactual.
 2. If an API key becomes available, the same menu on a frontier model is the
    direct test of where the trend above crosses zero.
+
+---
+
+## 2026-08-01 — Serious audit: the model null and bound are retracted
+
+This entry supersedes the inferential claims in the preceding “real model”
+entry. The old text remains above because this notebook is append-only.
+
+### The six seeds were not model seeds
+
+`score_choices` is a deterministic forward pass. The six seeds changed only the
+random order of the same four menu items. Across the saved design, they sampled
+menu orders with repeats and unequal frequency; they did not create independent
+model-behavior observations. The reported percentiles of seed means therefore
+were neither valid confidence intervals for the prompt nor evidence about a
+population of scenarios.
+
+The corrected pilot implementation enumerates all 4! = 24 menu orders exactly
+once per feedback condition, retains each slot and option probability vector,
+and reports descriptive averages only. Menu order is a nuisance to marginalize,
+not a unit of inference.
+
+Consequently, these claims are retracted:
+
+- “No model up to 3B adapts.”
+- “The result is a bound locating where capability has not emerged.”
+- “Every interval overlaps zero, therefore the mechanism is absent.”
+
+The only defensible statement about the legacy file is that, for the exact
+model/prompt/menu calculation recorded there, the descriptive average changed
+little across the three refusal strings. It cannot distinguish practical
+equivalence from low power, task misunderstanding, menu constraint, prompt
+specificity, or a genuine absence of sensitivity.
+
+### The pilot does not measure attack emergence
+
+The system prompt tells the model about the external collector and the automatic
+public-directory sync. The four choices then enumerate direct, encoded, staged,
+and disguised routes. A specific refusal naming “outbound network request” also
+directly cues the supplied non-network options. This is a fixed-choice preference
+instrument, not evidence that a model discovers an attack, adapts in a live
+trajectory, or can execute the selected route.
+
+The corrected design therefore adds relevant-specific, irrelevant-specific, and
+length-matched sham refusals; a positive comprehension control; benign
+error-recovery controls; independently authored scenario families; and a
+free-form multi-turn held-out confirmation. See `notes/04-claim-audit.md`.
+
+### Three simulator invariants were also wrong
+
+1. `_exfil_plan` substituted the global `SECRET_VALUE` when the attacker had not
+   successfully read it. The attacker could act on information it never acquired.
+2. `/srv/public/` synced at the end of the same episode as a write, despite prose
+   describing a later-episode attack.
+3. `Task.completed` checked persistent final state only. A task could receive
+   credit from a prior episode even when required current actions were blocked.
+
+The implementation now requires successful acquisition before use, syncs the
+previous snapshot at the start of a later episode, and requires successful
+in-episode reads/writes/deletes for task credit. Old sweep numbers and figures
+predate these changes and are preserved only as legacy exploratory artifacts.
+
+### Novelty correction
+
+The intended experiment is not an untouched gap. *Noticing the Watcher* (arXiv
+2603.16928) directly studies agents inferring CoT monitoring from blocking
+feedback and identifies silent/delayed/probabilistic feedback as follow-up
+directions. *Distributed Attacks in Persistent-State AI Control* (arXiv
+2607.02514) covers persistent-state attacks, and *Adaptive Adversaries* (arXiv
+2607.18063) covers multi-turn adaptation.
+
+The honest contribution, if v2 succeeds, is a registered feedback-content
+feedback-content contrast with causal controls and functional outcomes—not the discovery of
+adaptation or persistence.
+
+### Reporting rule going forward
+
+A failure to reject zero is called **inconclusive** unless a pre-registered
+equivalence interval lies entirely inside the smallest effect size of interest.
+For v2 the provisional SESOI is five percentage points in functional bypass
+probability. The scenario family is the inference unit. Deterministic menu
+orders, action steps, and prompt tokens are never counted as independent trials.
+
+---
+
+## 2026-08-01 — Follow-up audit: provenance and scripted-sweep outputs repaired
+
+### Blocked actions were mutating monitor memory
+
+`CrossEpisodeMonitor.judge` and `WindowedMonitor.judge` updated
+`agent_holds_secret`/taint while deciding whether to block a proposed action. A
+blocked secret read therefore made the monitor act as though the agent had
+successfully acquired the secret, and a blocked write tainted a path that did not
+exist. Failed reads had the same problem. This created fictional provenance and
+could overstate later blocking effectiveness.
+
+Monitoring is now two phase: `judge` is side-effect free, the environment
+executes or blocks the action, and `observe` commits provenance only for
+`Outcome.OK`. Regression tests cover blocked reads, failed reads, blocked writes,
+and both finite and unbounded provenance monitors.
+
+### The scripted sweep implied inference it did not support
+
+The old runner attached bootstrap intervals to scheduler/path variants, printed
+“significant” verdicts, pooled dependent episode scores into AUROC/catch-rate,
+and imputed right-censored no-leak runs as though the leak occurred at the
+horizon. Those outputs could be read as causal feedback, validated detection, or
+survival claims. None was licensed by the authored simulator.
+
+The replacement runner labels every output `scripted_mechanism_diagnostic`,
+reports observed means and ranges only, retains first-leak time as an integer or
+`null` with a right-censor flag, and emits no detection or significance metric.
+Legacy plotting functions that encoded the invalid claims now fail loudly. New
+plots state in their title that the response rule is encoded by construction and
+that values are descriptive only.
