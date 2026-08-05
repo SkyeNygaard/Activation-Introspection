@@ -1,0 +1,54 @@
+{
+  "estimand": "post_cache_codebook_label_probability",
+  "schedule": "transient_carrier_injection_hook_removed_before_codebook",
+  "split": "dev",
+  "concepts": [
+    "ocean",
+    "bread",
+    "volcano",
+    "violin",
+    "spider",
+    "hospital",
+    "desert",
+    "clock"
+  ],
+  "labels": [
+    "Q",
+    "K",
+    "Z",
+    "J",
+    "X",
+    "V",
+    "W",
+    "Y"
+  ],
+  "chance": 0.125,
+  "layers": [
+    2,
+    12,
+    26
+  ],
+  "strengths": [
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "carriers": 3,
+  "codebooks": 8,
+  "n_rows": 8640,
+  "raw": "retained_dev_qwen15b_raw.jsonl",
+  "raw_sha256": "ca6cbcf73294158a7eb1ba669c9180101c9751c7078ba3df2d3d9cbf161a770c",
+  "activations": "retained_dev_qwen15b_raw.acts.pt",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "model_revision": "unknown",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "git_commit": "4bce41f7df636a8b3676b2a0105d34f24a8f480e",
+  "python": "3.12.13",
+  "torch": "2.13.0",
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "query_sha256": "ec07f00347a11623",
+  "carrier_sha256": "072bd9f36460eadf",
+  "seed": 0
+}

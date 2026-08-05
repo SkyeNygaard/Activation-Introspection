@@ -198,6 +198,41 @@ claim about the model rather than about our own arithmetic — and the inject-22
 column shows exactly what the artifact looks like when it *is* present.
 Reproduced by `scripts/analyze_retained.py`.
 
+### Per-model strength calibration, 2026-08-05 (dev bank, exploratory)
+
+The scale ladder's stated weakness was that strength was frozen on 0.5B and
+carried to 1.5B and 3B without recalibration, so the arms were not damage-matched
+across models. This sweep fixes the input to that: `Qwen2.5-1.5B-Instruct`, **dev**
+concepts, three layers, four strengths.
+
+| `a` | 0.5 | 1 | 2 | 4 |
+|---|---|---|---|---|
+| **L2** carrier KL / target | 0.14 / 0.292 | 1.04 / 0.661 | 1.52 / 0.729 | 4.68 / 0.401 |
+| **L12** carrier KL / target | 0.18 / 0.182 | 0.51 / 0.177 | 1.36 / 0.130 | 4.20 / 0.083 |
+| **L26** carrier KL / target | 0.20 / 0.109 | 1.95 / 0.120 | 7.95 / 0.125 | 15.20 / 0.141 |
+
+Two things fall out, and the second is the more useful.
+
+**The calibration answer.** Mean target carrier KL across the three layers is
+0.173, 1.167, 3.61, 8.03 for `a` = 0.5, 1, 2, 4. The 0.5B confirmatory run sits at
+a mean of 1.105. So `a = 1` is already the damage-matched setting for 1.5B: the
+carried-over strength happened to be right, and the "not damage-matched across
+scales" caveat was conservative for this model. Whether that holds at 3B is a
+separate question — 3B's layer-3 cell is known to be badly mismatched.
+
+**The under-injection objection, closed at 1.5B.** The obvious complaint about
+the depth profile is that late injection sites look dead only because the edit
+was too weak by the time it got there. At **L26 the model sits at chance across a
+76-fold range of carrier damage** — KL 0.20 to 15.20, ten times the damage at the
+headline cell — never exceeding 0.141. At L12 accuracy *falls* as strength rises,
+reaching 0.083 at `a = 4`. Injecting harder at depth does not recover the channel;
+it makes things worse. That is a stronger form of the depth claim than the
+frozen-strength runs could support, because strength is varied rather than
+assumed.
+
+This is dev-bank calibration output and is exploratory. It selects a strength; it
+is not a confirmatory result, and the held-out bank governs any reported number.
+
 ### Rerun under a repaired control, 2026-08-05
 
 `concepts.random_control` seeded on the bare seed, so all eight concepts got the
