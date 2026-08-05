@@ -233,6 +233,56 @@ assumed.
 This is dev-bank calibration output and is exploratory. It selects a strength; it
 is not a confirmatory result, and the held-out bank governs any reported number.
 
+### 3B calibration, and what the two sweeps settle
+
+`Qwen2.5-3B-Instruct`, dev concepts, three layers, four strengths.
+
+| `a` | 0.5 | 1 | 2 | 4 |
+|---|---|---|---|---|
+| **L3** carrier KL / target | 0.16 / 0.344 | 3.49 / 0.740 | 4.84 / 0.797 | 3.92 / 0.646 |
+| **L15** carrier KL / target | 0.24 / 0.224 | 1.39 / 0.255 | 2.06 / 0.276 | 5.29 / 0.323 |
+| **L33** carrier KL / target | 0.13 / 0.125 | 1.08 / 0.130 | 6.89 / 0.130 | 15.36 / 0.125 |
+
+**Damage matching, measured.** Mean target carrier KL against the 0.5B
+confirmatory run's 1.105:
+
+| | `a` = 0.5 | 1 | 2 | 4 |
+|---|---|---|---|---|
+| 1.5B | 0.17 | **1.17** | 3.61 | 8.03 |
+| 3B | 0.18 | **1.98** | 4.60 | 8.19 |
+
+So the blanket caveat "arms are not damage-matched across scales" was too broad.
+**At 1.5B, `a = 1` is matched** — 1.17 against 1.105, a ratio of 1.06. The
+carried-over strength happened to be correct, and that is now measured rather
+than assumed. **At 3B it is not**: 1.98 is 1.80× the reference on average, and
+per layer it ranges 3.49 / 1.39 / 1.08, so no single strength damage-matches
+across depth there. The value that would is between 0.5 and 1 and was not
+sampled. Worse, carrier KL is not monotone in strength at L3 (`a=2` gives 4.84,
+`a=4` gives 3.92), so matching a target KL there has two solutions rather than
+one. Per-layer selection via `kl_matched_profile` is the right instrument for 3B;
+a single per-model strength is not.
+
+The layer-21 cell quoted as the portfolio's sturdiest number is unaffected by
+this. Its argument is within-cell — both control arms carry higher carrier KL
+than the target arm at that site and still sit at chance — and does not depend on
+matching 3B to 0.5B.
+
+**The under-injection objection, now closed at both scales.** The standing
+complaint about the depth profile is that late sites look dead only because the
+edit was too weak by the time it arrived. It is not:
+
+- 1.5B at L26 (93% depth): at chance across carrier KL 0.20 to 15.20, a **76-fold**
+  damage range, never exceeding 0.141.
+- 3B at L33 (92% depth): at chance across carrier KL 0.13 to 15.36, a **118-fold**
+  damage range, never exceeding 0.130.
+
+Mid-depth behaviour differs by model and should not be generalised: 1.5B's L12
+*falls* with strength (0.182 to 0.083), while 3B's L15 *rises* (0.224 to 0.323).
+The depth null at the deepest sites is what survives both.
+
+Dev-bank calibration output, exploratory. It selects a strength and characterises
+damage; the held-out bank governs any reported number.
+
 ### Rerun under a repaired control, 2026-08-05
 
 `concepts.random_control` seeded on the bare seed, so all eight concepts got the

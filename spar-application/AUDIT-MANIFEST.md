@@ -81,6 +81,25 @@ specific-minus-silent shifts are ≤0.009 for one supplied menu and must not be
 interpreted as adaptation or a null, because menu orders are nuisance conditions
 rather than independent samples.
 
+## Compute stopped here, deliberately
+
+The per-model strength calibration ran to completion on 2026-08-05 and answered
+the question it was for. The remaining step — rerunning the 1.5B and 3B held-out
+splits under the repaired control — was **not** run, and that is a decision
+rather than an omission.
+
+Two reasons. First, it would only repair the `random` arm: the 0.5B rerun
+demonstrated that the target arm is bit-identical under repaired control seeding,
+and `shuffled` already carries those runs' contrasts. No reported number depends
+on it. Second, cost: the 3B sweep's final layer took roughly eight hours against
+eight minutes for the previous one, because 3B pushes this machine into swap
+(9.9 GB of 11 GB used at the end of the run). `models.memory_warning` exists to
+predict exactly this. A 3B held-out run across strengths would take days here, not
+the ~80 minutes a non-swapping estimate suggests.
+
+If those reruns are wanted, do them on a machine with enough memory to hold 3B
+without paging, and use per-layer strength selection for 3B rather than one value.
+
 ## Artifact policy
 
 - `activation-introspection/results/reach_output_qwen05b.json` existed before the

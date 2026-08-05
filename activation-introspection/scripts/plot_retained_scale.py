@@ -49,8 +49,8 @@ def main() -> None:
     specs = [
         (
             "0.5B",
-            res / "retained_test_qwen05b_raw.jsonl",
-            res / "retained_test_qwen05b_summary.json",
+            res / "retained_test_qwen05b_v2_raw.jsonl",
+            res / "retained_test_qwen05b_v2_summary.json",
             24,
         ),
         (
