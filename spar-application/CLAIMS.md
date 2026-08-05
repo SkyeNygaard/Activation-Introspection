@@ -50,10 +50,17 @@ machine.
   byte-identical across concepts. Verified on the saved run: maximum pairwise
   distance between the eight `random` states at readout 22 is 0.21 against an
   activation norm of 65, and 143 of 144 cells return a single prediction across
-  all eight concepts. **The `random` arm in the saved 0.5B/1.5B/3B runs is
-  therefore an arithmetic identity, not a control.** `shuffled` was unaffected
-  and carries the reported contrasts. The seed is now derived per concept; a
-  rerun would make `random` informative, and until then no result should cite it.
+  all eight concepts. **The `random` arm in the original 0.5B/1.5B/3B runs is
+  therefore an arithmetic identity, not a control.** `shuffled` was unaffected and
+  carries those runs' contrasts. The seed is now derived per concept, and **0.5B
+  was rerun under the repaired control** into `results/retained_test_qwen05b_v2_*`.
+  The rerun is the useful check on whether the headline depended on a broken
+  control: the target arm is **bit-identical** at every layer
+  (0.500/0.193/0.198/0.125/0.130/0.141), the ceiling is unchanged at 0.875, and
+  the `random` arm's eight concept states now differ by L2 54.5 instead of 0.21 —
+  it went from fp16 noise to a real control, and the result did not move. Quote
+  `_v2_` going forward; the original is retained for provenance. 1.5B and 3B are
+  pending their own reruns, which are folded into the strength recalibration.
 - **A, `analyze_retained.py`.** The reported contrast selected the strongest of
   four "controls", three of which cannot exceed chance. It now selects among the
   concept-varying arms only, preferring `shuffled`. The L2 point estimate is

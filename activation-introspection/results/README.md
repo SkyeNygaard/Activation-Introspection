@@ -41,3 +41,21 @@ multiple independent adapter runs.
 
 The authoritative statuses are in
 [`../notes/04-claim-audit.md`](../notes/04-claim-audit.md).
+
+## The repaired-control rerun (2026-08-05)
+
+`retained_test_qwen05b_v2_*` repeats the confirmatory run after
+`concepts.random_control` was fixed to seed per concept. Before the fix every
+concept received a byte-identical `random` edit, so that arm's 0.125 was
+arithmetic rather than a measurement.
+
+Cite `_v2_`. The original `retained_test_qwen05b_*` is retained for provenance
+and is not wrong — its target arm is bit-identical to the rerun's at every layer,
+because the control seeding never touched the target arm. What changed is that
+the `random` arm's eight concept states now differ by L2 54.5 instead of 0.21,
+which is the difference between fp16 noise and a control. The headline did not
+move when the control started working, which is the only reason the rerun was
+worth doing.
+
+`retained_test_qwen{15b,3b}_*` still carry the degenerate `random` arm. Quote
+`shuffled` for those until their reruns land with the recalibrated strength.

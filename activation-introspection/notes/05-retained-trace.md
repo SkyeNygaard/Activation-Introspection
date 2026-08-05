@@ -198,6 +198,26 @@ claim about the model rather than about our own arithmetic — and the inject-22
 column shows exactly what the artifact looks like when it *is* present.
 Reproduced by `scripts/analyze_retained.py`.
 
+### Rerun under a repaired control, 2026-08-05
+
+`concepts.random_control` seeded on the bare seed, so all eight concepts got the
+same control direction — and since `Intervention` normalizes to unit length, the
+per-concept norm was discarded too and the edits were byte-identical. That arm
+could not have failed. Fixed, and the confirmatory run repeated into
+`results/retained_test_qwen05b_v2_*`.
+
+| layer | 2 | 6 | 10 | 14 | 18 | 22 |
+|---|---|---|---|---|---|---|
+| target, original | 0.500 | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
+| target, repaired | 0.500 | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
+| `random`, original | 0.125 | 0.130 | 0.125 | 0.125 | 0.125 | 0.125 |
+| `random`, repaired | 0.125 | 0.115 | 0.141 | 0.115 | 0.125 | 0.115 |
+
+The target arm is bit-identical, as it has to be — control seeding never touched
+it. The `random` arm's concept states went from 0.21 apart (fp16 noise) to 54.5
+apart, and its accuracy now moves instead of pinning at chance. **The result did
+not depend on the broken control**, which is what the rerun was for.
+
 ### Threats checked
 
 - **Format collapse.** Strong injections damage formatting. At L2 only 44% of
