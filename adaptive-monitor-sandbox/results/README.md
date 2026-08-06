@@ -21,8 +21,8 @@ stated scope: 72 rows, all 4! = 24 menu orders exactly once per feedback level,
 That hash matches a run made four days earlier in a separate process, so the
 deterministic log-prob scoring is reproducible.
 
-What they show is a **9–15× display-position effect** — slot 3 takes 0.63–0.67
-of the choice mass, slot 1 takes 0.045–0.094 — which is the reason exact
+What they show is a **9× to 15× display-position effect**. Slot 3 takes 0.63 to
+0.67 of the choice mass, and slot 1 takes 0.045 to 0.094. That is the reason exact
 enumeration replaced random "seeds". What they do not show is adaptation. With
 order marginalised, option identity is near-uniform and the specific-minus-silent
 shifts are at most 0.009; those are descriptive numbers for one supplied menu,

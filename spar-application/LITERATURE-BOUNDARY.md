@@ -30,7 +30,7 @@ The important distinction is:
 - **new headline:** requires evidence that the exact estimand and design are not
   already established. None of the current repositories earns this label.
 
-## 1 and 3 — introspection training, faithfulness, and self-knowledge
+## 1 and 3: introspection training, faithfulness, and self-knowledge
 
 Closest work already covers substantial ground:
 
@@ -98,8 +98,8 @@ retained-trace endpoint without naming the work that introduced it.
   peaks roughly two-thirds of the way through the model.
 - [Latent Introspection: Models Can Detect Prior Concept
   Injections](https://arxiv.org/abs/2602.20031) implements the same transient
-  KV-cache protocol explicitly — steer during turn-1 cache construction, remove,
-  query in turn 2 — on Qwen2.5-Coder-32B, injecting at a fixed middle band
+  KV-cache protocol explicitly (steer during turn-1 cache construction, remove,
+  query in turn 2) on Qwen2.5-Coder-32B, injecting at a fixed middle band
   (layers 21–42 of 64).
 - **Krasheninnikov et al., *Detecting the Disturbance*** (arXiv 2512.12411),
   already cited in the repo notes for the affirmative-shift confound, **also
@@ -152,7 +152,7 @@ it must not be advertised as the first evidence that fine-tuning changes readout
 | Global Workspace | flexible report, retention, manipulation, and downstream use of verbalizable representations | source identity × coordinate compatibility, not another flexible-use demonstration |
 | Study 2 | no completed evidence | frozen cross-fitted transport, matched-information/damage gates, and a symmetric estimand that can support mediation or a bounded residual |
 
-## 2 — programmatic attention
+## 2: programmatic attention
 
 [Explaining Attention with Program
 Synthesis](https://arxiv.org/abs/2606.19317) already synthesizes executable
@@ -170,7 +170,7 @@ memory, sequence-length/domain scaling, and the latency–memory–fidelity brea
 surface. A training-path study is separate. Both are proposal-only until
 implemented.
 
-## 4 — in-the-wild AI control
+## 4: in-the-wild AI control
 
 - [Noticing the Watcher](https://arxiv.org/abs/2603.16928) already demonstrates
   that frontier agents can infer CoT monitoring from blocking feedback in a
@@ -211,15 +211,15 @@ the current script remains an apparatus control.
 | CoopGuard / Stateful Online Monitoring | stateful defenses can aggregate evidence across rounds or transcripts | same-scorer private-memory arm crossed with feedback validity at matched honest cost |
 | Study 3 | no completed behavioral evidence | sequential `τ_fixed` then attenuation `δ`, lineage oracle, harmless awareness fork, and honest recovery |
 
-## 5 — reward seeking versus instruction following
+## 5: reward seeking versus instruction following
 
 The [official project](https://sparai.org/projects/f26/recI17glBpMTAGiae/) asks
 about zero-shot performance and learning speed for a reward-seeking model organism
 in held-out RL environments. The current sandbox does not instantiate either
 motivational arm and provides no evidence on this question.
 
-The original portfolio sketch—scalar RL reward for one arm versus supervised
-targets for the other—would confound motivation with feedback and learning
+The original portfolio sketch, scalar RL reward for one arm versus supervised
+targets for the other, would confound motivation with feedback and learning
 algorithm. The corrected proposal first creates content-/compute-matched
 reward-seeking, instruction-following, and neutral organisms, validates the
 motivation manipulation on reward–instruction conflict tasks, and then gives every
@@ -238,7 +238,7 @@ the motivational diagnostic throughout RL and distinguish exploration/data
 collection from update efficiency; reward curves alone are not a manipulation
 check.
 
-## 6 — training pressure and CoT obfuscation
+## 6: training pressure and CoT obfuscation
 
 The broad headline is already known:
 

@@ -1,57 +1,59 @@
 # AI assistance disclosure
 
-Large-language-model agents were used extensively across this repository: to
-propose and write code, draft prose, run adversarial review passes over the
-apparatus, and execute experiments. **Agent agreement is not independent
-verification.** Several of the errors recorded in
-[`spar-application/CLAIMS.md`](spar-application/CLAIMS.md) were found by an agent
-reviewing code an agent had helped write, which is a useful check and not an
-independent one.
+Large-language-model agents were used heavily across this repository. They
+proposed and wrote code, drafted prose, ran adversarial review passes over the
+apparatus, and executed experiments.
 
-Skye Nygaard is the human author and remains responsible for every public claim,
+**Agent agreement is not independent verification.** Several of the errors
+recorded in [`spar-application/CLAIMS.md`](spar-application/CLAIMS.md) were found
+by an agent reviewing code that an agent had helped write. That is a useful check.
+It is not an independent one.
+
+Skye Nygaard is the human author, and remains responsible for every public claim,
 result, artifact selection, and correction here.
 
-This mirrors the policy in the companion
-[ARC White-Box Estimation Challenge repository](https://github.com/SkyeNygaard/AI-Safety-Roadmap),
-which carries the same disclosure.
+This mirrors the policy in the companion [ARC White-Box Estimation Challenge
+repository](https://github.com/SkyeNygaard/AI-Safety-Roadmap), which carries the
+same disclosure.
 
 ## What was agent-assisted, specifically
 
-The 2026-08-05 validation pass was substantially agent-driven. It:
+The validation pass on 2026-08-05 was largely agent-driven. It did the following.
 
-- re-derived every headline number in the retained-trace study from the raw
-  per-trial rows, independently of the saved aggregates;
-- found that three of the four control arms in that study were arithmetic
-  identities, that the `random` arm gave every concept a byte-identical edit, and
-  that the storage result needed a propagation control it did not have;
-- found that the Study 3 feedback channel never randomized, that its harm oracle
-  was roughly twice as sensitive to hex-encoded payloads as to plaintext, and
-  that its power simulation's `--icc` argument was not an intraclass correlation;
-- wrote the corresponding source repairs, the tests that pin them, and
-  `analyze_retained.propagation_control` with its figure;
-- ran the repaired-control rerun, the exact-order menu diagnostic, and the
-  per-model strength calibration sweeps;
-- drafted or rewrote substantial prose in `CLAIMS.md`, `AUDIT-MANIFEST.md`, both
-  repository READMEs, `notes/05-retained-trace.md`, and this file;
-- performed the monorepo restructure and wrote the commit messages.
+It re-derived every headline number in the retained-trace study from the raw
+per-trial rows, without using the saved aggregates.
 
-Earlier work in both code repositories was likewise agent-assisted throughout.
+It found four problems in that study. Three of the four control arms were
+arithmetic identities. The `random` arm gave every concept a byte-identical edit.
+The storage result needed a propagation control that it did not have.
+
+It found three more in Study 3. The feedback channel never randomized. The harm
+oracle was roughly twice as sensitive to hex-encoded payloads as to plaintext. The
+power simulation's `--icc` argument was not an intraclass correlation.
+
+It then wrote the source repairs, the tests that pin them, and
+`analyze_retained.propagation_control` with its figure. It ran the repaired-control
+rerun, the exact-order menu diagnostic, and the per-model strength calibration
+sweeps. It drafted or rewrote much of the prose in `CLAIMS.md`,
+`AUDIT-MANIFEST.md`, both repository READMEs, `notes/05-retained-trace.md`, and
+this file. It performed the monorepo restructure and wrote the commit messages.
+
+Earlier work in both code repositories was agent-assisted throughout as well.
 
 ## What that does and does not license
 
-The numbers are reproducible from the committed raw rows and the committed code:
-that is a property of the artifacts, not of who typed them, and it is the reason
-the raw JSONL and checksums are committed rather than summarised. A reader who
+The numbers can be reproduced from the committed raw rows and the committed code.
+That is a property of the artifacts, not of who typed them. It is also why the raw
+JSONL and the checksums are committed rather than summarised. A reader who
 distrusts the process can rerun the verification contract in
 [`spar-application/AUDIT-MANIFEST.md`](spar-application/AUDIT-MANIFEST.md) and
 recompute every table from `results/`.
 
 What agent assistance does not supply is an independent referee. Two things are
-still outstanding and are marked as such rather than quietly assumed:
+still outstanding, and they are marked as such rather than quietly assumed:
 
-- no named human review of the statistical design by someone who did not write
-  it; and
-- no independent reproduction on different hardware.
+- No named human has reviewed the statistical design who did not also write it.
+- No independent reproduction has been run on different hardware.
 
-Agent reports are preserved as provenance where they exist. They should be read
-as research notes or audit artifacts, not as independent verification.
+Agent reports are kept as provenance where they exist. Read them as research notes
+or audit artifacts. Do not read them as independent verification.

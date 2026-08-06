@@ -3,7 +3,7 @@
 Edit a language model's activations, then take the edit away. Can the model still
 use what you did to it?
 
-Here the answer is **yes, but only if the edit happens early in the network** —
+Here the answer is **yes, but only if the edit happens early in the network**.
 and the reason it fails later is not the obvious one. The injected concept is
 still present at the end of the network no matter where you put it: a linear
 probe reads it back perfectly from every injection depth. What breaks is the
@@ -16,8 +16,8 @@ model's ability to *do anything with it*.
 
 | injection layer | 2 | 6 | 10 | 14 | 18 | 22 |
 |---|---|---|---|---|---|---|
-| **use** — can the model answer with it? | **0.500** | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
-| **storage** — can a probe read it off? | 1.000 | 1.000 | 1.000 | 0.958 | 1.000 | 1.000 |
+| **use**, can the model answer with it? | **0.500** | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
+| **storage**, can a probe read it off? | 1.000 | 1.000 | 1.000 | 0.958 | 1.000 | 1.000 |
 
 That storage row is worth one more question: is the probe reading the model, or
 reading back the vector I added? Rebuild the readout state as the *clean* carrier
@@ -42,8 +42,8 @@ things that could still be wrong: [`notes/05-retained-trace.md`](notes/05-retain
 2. While the model reads that note, add a concept direction to its residual
    stream, and keep the resulting KV cache.
 3. Remove the hook. Assert in code that no hook is registered any more.
-4. *Now* invent a random mapping from concepts to meaningless letters — `ocean =
-   Q`, `bread = K` — paste it in, and ask which letter applies.
+4. *Now* invent a random mapping from concepts to meaningless letters (`ocean =
+   Q`, `bread = K`), paste it in, and ask which letter applies.
 
 The order is the whole point. The codebook does not exist while the edit is live,
 so the edit cannot have nudged the model toward whichever letter turns out to be
@@ -57,7 +57,7 @@ control reproduced at 100%. Details in
 [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md).
 
 Because every concept is assigned every letter equally often, chance is exactly
-`1/8`. The two do-nothing arms land on exactly 0.125 at every site — but note
+`1/8`. The two do-nothing arms land on exactly 0.125 at every site, but note
 what that can and cannot show. They run one forward per (carrier, codebook) and
 score it against all eight concepts, so with cyclic codebooks exactly one of the
 eight rows is correct however the model behaves. They confirm the pipeline is
@@ -71,19 +71,19 @@ artifact:
 
 | worry | check | result |
 |---|---|---|
-| The model just can't do this task | State the concept in plain text, everything else identical | 0.875 — so a null at depth means something |
-| The prompt leaks the answer | `clean` arm: identical text, no edit at all | 0.125 — but by arithmetic; a wiring check, not a test |
+| The model just can't do this task | State the concept in plain text, everything else identical | 0.875, so a null at depth means something |
+| The prompt leaks the answer | `clean` arm: identical text, no edit at all | 0.125, but by arithmetic. A wiring check, not a test |
 | Merely running a hook does something | `sham` arm: same hook, strength zero | 0.125, same caveat |
-| Any perturbation would do | Coordinate-shuffled edit, per concept | 0.125–0.146 — the control that could have failed |
+| Any perturbation would do | Coordinate-shuffled edit, per concept | 0.125 to 0.146. The control that could have failed |
 | The edit just broke the output format | Restrict to trials where the model still emits a letter | 0.435 at layer 2, still far above chance |
 | One lucky concept carries the mean | Per-concept breakdown | 6 of 8 above twice chance |
-| The probe is reading the vector I injected | Rebuild the readout-22 state as clean + the same delta, no forward computation in between, and probe that | 0.167 vs 1.000 for the real arm — the blocks did the work |
+| The probe is reading the vector I injected | Rebuild the readout-22 state as clean + the same delta, no forward computation in between, and probe that | 0.167 against 1.000 for the real arm. The blocks did the work |
 
 The honest remaining weakness: the arms are matched on vector *norm*, not on how
 much damage they do. At layer 2 the real concept perturbs the model about 50%
 more than a random direction of the same size, because it points somewhere the
 model actually uses. The best-matched control still loses 0.500 to 0.125, so this
-does not explain the result — but a cleaner run would calibrate each arm to the
+does not explain the result, but a cleaner run would calibrate each arm to the
 same damage level.
 
 The 3B run answers that objection where it matters most. At its layer 21 the
@@ -126,12 +126,12 @@ back worse than I hoped:
 - [arXiv 2602.20031](https://arxiv.org/abs/2602.20031) runs the same
   transient-cache protocol on a 32B model.
 - Krasheninnikov et al. (arXiv 2512.12411) already report that these capacities
-  are confined to early-layer injections and collapse to chance after — the same
+  are confined to early-layer injections and collapse to chance after, which is the same
   profile measured here, on Llama-3.1-8B.
 
 What is left that is mine: the answer space (an arbitrary codebook sampled after
 the edit, which none of the cited work uses) and the scale. The claim this
-licenses is "the model causally used a retained trace" — not introspection, not
+licenses is "the model causally used a retained trace". Not introspection, not
 self-knowledge, not privileged access.
 
 ## Why this repo exists
@@ -153,14 +153,14 @@ control that killed it. Catching those is most of the skill.
 | Project | Relevance |
 |---|---|
 | **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. The result says what training would have to fix: the concept is already stored perfectly, so the deficit is in readout, and it is specific to injection site rather than uniform. |
-| **Faithfulness, Self-Knowledge, and Introspection** (Noah Siegel, Google DeepMind) | Direct fit. A concrete decodable-but-unusable case, with the answer token made impossible to promote by construction — plus the history of retracting an earlier, badly-controlled version of the same claim. |
+| **Faithfulness, Self-Knowledge, and Introspection** (Noah Siegel, Google DeepMind) | Direct fit. A concrete decodable-but-unusable case, with the answer token made impossible to promote by construction. It also comes with the history of retracting an earlier, badly-controlled version of the same claim. |
 | **Deploying Programmatic Attention** (Belinda Li, Anthropic) | Adjacent plumbing only, not evidence for this project. A real bridge would replace selected QK attention with a sparse executable rule and measure quality, latency, and memory against the learned head. |
 
 ### What it does not claim
 
 One model family, 0.5B–3B, one task, one interface. Introspective report is
 plausibly emergent, so nothing here constrains frontier models. Read the
-apparatus, the documented failure modes, and one carefully scoped replication —
+apparatus, the documented failure modes, and one carefully scoped replication.
 not a frontier result.
 
 Background reading: [`notes/00-literature.md`](notes/00-literature.md) for the
@@ -182,7 +182,7 @@ the former headline.
 | negative introspector−observer gap proves no access | **Unsupported.** A concept×prompt clustered interval recomputed during audit was [−0.236, 0.047], unlike the old IID interval [−0.117, −0.031]. The asymmetric observer design also has false-negative risk. |
 
 During the audit I recomputed that comparison properly, matching the injection
-site on both sides. It came out **positive** — r between 0.87 and 0.97 depending
+site on both sides. It came out **positive**, with r between 0.87 and 0.97 depending
 on the run. I am not claiming that either. Both halves of the join are old
 aggregates with no raw trials, no model revision, and no provenance, and adjacent
 layers are not independent points. It is a debugging clue, not a replacement
@@ -207,7 +207,7 @@ The full ledger and the threats in both directions are in
 ## What comes next
 
 The retained-trace experiment above was the gate, and it passed at early
-injection sites. That unblocks the study below — with one constraint the result
+injection sites. That unblocks the study below, with one constraint the result
 imposes: the sibling comparison has to run somewhere the reporting channel is
 still alive. Past the midpoint every arm sits at chance, so a comparison there
 would measure the readout collapse instead of the thing it is meant to measure.
@@ -221,7 +221,7 @@ The question is whether an apparent "I read my own activations better than yours
 advantage survives once the coordinate mismatch is removed. If it vanishes after
 alignment, the advantage was representational compatibility all along. If it
 survives in **both** directions with decodability, reconstruction, damage, and
-format all matched, that is a residual worth reporting — though still only
+format all matched, that is a residual worth reporting, though still only
 "compatibility beyond the transform I happened to test", not metacognition. An
 effect in one direction only is model heterogeneity, and does not get pooled into
 a claim about self-access.
@@ -251,7 +251,7 @@ still reveal one.
 ### The circular metric
 
 Scoring identification over concept *words* rather than digit indices produced
-**1.000** accuracy — perfect 8-way identification from a 0.5B model. It is an
+**1.000** accuracy, meaning perfect 8-way identification from a 0.5B model. It is an
 artifact, and one extra forward-pass control exposes it:
 
 | | accuracy (chance 0.125) |
@@ -277,11 +277,11 @@ prompts, seeds, or bugs:
 
 | arm | rules out |
 |---|---|
-| `clean` | response bias — the model saying YES regardless |
-| `concept` | — |
+| `clean` | response bias, the model saying YES regardless |
+| `concept` | n/a |
 | `shuffled` | "any perturbation triggers a report" (matched norm, permuted coords) |
 | `random` | same, looser null |
-| observer on `concept` | **behavioural inference** — a clean model reading only the output |
+| observer on `concept` | **behavioural inference**, a clean model reading only the output |
 | observer on `shuffled` | observer-side bias |
 
 The observer uses the same weights, but a fresh context does **not** vary only
@@ -310,7 +310,7 @@ Run the pipeline:
 uv run python scripts/run_sweep.py --model qwen-1.5b --seeds 5
 ```
 
-Scale ladder (loads and frees one model at a time — holding two resident is what
+Scale ladder (loads and frees one model at a time. Holding two resident is what
 pushes a 24 GB machine into swap):
 
 ```bash
@@ -326,7 +326,7 @@ uv run python scripts/analyze.py results/ladder.jsonl
 Reproduce the retained-trace study. The dev target sweeps layer and strength; the
 test target runs the held-out concept bank **once** at the frozen strength.
 Running `retained-test` repeatedly against new hypotheses converts the
-confirmatory split into a second development split — don't.
+confirmatory split into a second development split. Don't.
 
 ```bash
 make retained-dev
@@ -373,7 +373,7 @@ uv run python scripts/smoke_injection.py --model qwen-7b --concept volcano --lay
 | `scripts/run_retained_trace.py` | Retained-trace runner; raw JSONL plus checksummed provenance |
 | `scripts/analyze_retained.py` | Cluster-bootstrap contrasts, damage matching, transfer probe |
 | `scripts/smoke_injection.py` | End-to-end plumbing check |
-| `tests/` | Position-mask and hook-hygiene tests against a stub model — no weights needed |
+| `tests/` | Position-mask and hook-hygiene tests against a stub model. No weights needed |
 
 ## Design notes
 
@@ -389,7 +389,7 @@ work from. The mask logic is unit-tested for exactly this reason.
 
 **Controls are matched-norm, not absent.** `shuffled_control` permutes the
 concept vector's coordinates, preserving norm and coordinate distribution while
-destroying direction — a tighter null than Gaussian noise. Matching on norm is
+destroying direction, which is a tighter null than Gaussian noise. Matching on norm is
 not the same as matching on damage, and the retained-trace results report both.
 
 **The two stages are one tokenization.** Tokenizing the carrier and the codebook
@@ -397,7 +397,7 @@ separately would be wrong, because BPE merges across the seam and the two halves
 would not reconstruct the sequence the model is supposed to see. `split_prompt`
 tokenizes the whole prompt once and cuts it at the last token whose decoding is
 still inside the carrier. That guarantees the property the design actually needs
-— no codebook token is ever in stage 1 — for any carrier text.
+(no codebook token is ever in stage 1) for any carrier text.
 
 ## Scale caveat
 

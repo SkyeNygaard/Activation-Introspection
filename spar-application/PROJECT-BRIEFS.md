@@ -7,7 +7,7 @@ would stop or proceed.
 
 ## 1. Introspection Training for Verbalization Activations
 
-Official project: [Belinda Li — Anthropic](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz)
+Official project: [Belinda Li, Anthropic](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz)
 
 **Question.** Can training make a model’s verbalizations track causally introduced
 activation content on held-out concepts, rather than visible prompt cues or generic
@@ -24,7 +24,7 @@ injection depth**.
 
 That is the useful part for a training project: **the information is already
 stored perfectly; what is missing is readout.** Training aimed at verbalization
-would not need to make the model retain more — it would need to make a
+would not need to make the model retain more. It would need to make a
 late-injected trace reachable. The deficit is also site-specific rather than
 uniform, so a single "train it to introspect" objective applied at one layer
 would be measuring something different depending on where the content entered.
@@ -33,15 +33,15 @@ Second, methodological: the original `r = -0.774` headline used mismatched
 injection sites and was retracted, and the executed study is the correctly
 site-matched version of that same comparison.
 
-**Gap.** The executed study is a replication — the schedule is Lindsey's and the
+**Gap.** The executed study is a replication. The schedule is Lindsey's, and the
 early-only depth profile is already published for Llama-3.1-8B. It also does not
 isolate privileged verbalization, does not involve any training, and covers one
 model family at 0.5B–3B. Nothing here separates "the model reports on its state"
 from "a generic classifier over the same state would do as well".
 
-**Smallest authentic experiment.** [Study 1](EXPERIMENTS.md#study-1--causal-use-of-a-retained-activation-trace)
+**Smallest authentic experiment.** [Study 1](EXPERIMENTS.md#study-1-causal-use-of-a-retained-activation-trace-executed-2026-08-01)
 is done and passed, so the interface is validated. Next is the symmetric
-[aligned-source experiment](EXPERIMENTS.md#study-2--does-an-own-model-advantage-survive-representational-alignment)
+[aligned-source experiment](EXPERIMENTS.md#study-2-does-an-own-model-advantage-survive-representational-alignment)
 with two independently adapted siblings, asking whether the apparent benefit of
 reporting on one's *own* activations survives once the coordinate mismatch is
 removed. The executed result constrains its design: it must run at an injection
@@ -64,14 +64,14 @@ for decodability, reconstruction, KL, damage, and format competence.
 target, or held-out transfer fails. Call a positive cache result only causal use of
 a retained trace. If a raw own-source gap disappears after alignment, interpret it
 as compatibility mediation. If it survives in both directions, call it residual
-self-specific compatibility under the tested transform—not metacognition.
+self-specific compatibility under the tested transform, not metacognition.
 
 **Fit: strong engineering/audit fit.** This is the portfolio’s closest match, but
 the proposed v2 result does not exist yet.
 
 ## 2. Deploying Programmatic Attention in Real Transformers
 
-Official project: [Belinda Li — Anthropic](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L)
+Official project: [Belinda Li, Anthropic](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L)
 
 **Question.** Can a human-readable attention program replace a real head while
 preserving its target behavior and offering a measurable inference or training
@@ -97,7 +97,7 @@ materializes the dense attention matrix. On locked domains and sequence lengths,
 compare native fused dense attention, a dense implementation of the same program,
 true sparse execution, head ablation, and a complexity-matched random program.
 The discovery target is the **break-even surface** over length, sparsity, fidelity,
-latency, and peak memory—not merely a successful replacement screenshot. A later
+latency, and peak memory, not merely a successful replacement screenshot. A later
 training-path study is separate and only justified if inference deployment works.
 
 **Controls, inference, reproducibility.** Matched inputs and batch shapes; warm-up
@@ -117,7 +117,7 @@ present portfolio should not imply it is already done.
 
 ## 3. Faithfulness, Self-Knowledge, and Introspection
 
-Official project: [Noah Siegel — Google DeepMind](https://www.sparai.org/projects/f26/rec3KQAI0JcxJJAce)
+Official project: [Noah Siegel, Google DeepMind](https://www.sparai.org/projects/f26/rec3KQAI0JcxJJAce)
 
 **Question.** Can we first establish controlled use of hidden state, then determine
 whether a model’s self-report reflects privileged self-knowledge rather than
@@ -132,7 +132,7 @@ it is not tracking information that is demonstrably present.
 
 Two design choices make this more than an anecdote. The answer is an arbitrary
 letter from a codebook that did not exist when the edit was live, so the
-intervention cannot have promoted the correct answer token — which is exactly the
+intervention cannot have promoted the correct answer token, which is exactly the
 artifact that produced a fake 100% result earlier in this repo. And the two
 do-nothing arms land on exactly chance at every site, so the visible prompt
 provably carries nothing.
@@ -146,8 +146,8 @@ state-conditioned computation. A classifier handed the same retained state would
 plausibly do as well, and that control has not been run. The study is also a
 replication of a published effect, and covers one model family.
 
-**Smallest authentic experiment.** [Study 1](EXPERIMENTS.md#study-1--causal-use-of-a-retained-activation-trace)
-is done and serves as the reporting-interface gate. [Study 2](EXPERIMENTS.md#study-2--does-an-own-model-advantage-survive-representational-alignment)
+**Smallest authentic experiment.** [Study 1](EXPERIMENTS.md#study-1-causal-use-of-a-retained-activation-trace-executed-2026-08-01)
+is done and serves as the reporting-interface gate. [Study 2](EXPERIMENTS.md#study-2-does-an-own-model-advantage-survive-representational-alignment)
 is the scientific test. Two same-architecture sibling reporters receive own, raw
 other, and cross-fitted aligned-other traces in both directions. This directly
 tests representational compatibility as the explanation for an own-source
@@ -195,7 +195,7 @@ Monitor comparisons still need matched units, held-out calibration, and
 censoring-aware analysis; the repaired outcome-aware agent-level taint is not a
 real dataflow system.
 
-**Smallest authentic experiment.** [Study 3](EXPERIMENTS.md#study-3--feedback-channel-fidelity-and-private-monitor-memory)
+**Smallest authentic experiment.** [Study 3](EXPERIMENTS.md#study-3-feedback-channel-fidelity-and-private-monitor-memory)
 checkpoints the first genuinely model-generated block and forks the identical
 prefix into `q=1`, `q=0.75`, and `q=0.25` fixed-width feedback-validity arms.
 Randomize only that first refusal; later feedback is generic. First establish the
@@ -238,7 +238,7 @@ training runs, held-out environments, and a way to distinguish capability failur
 from objective generalization.
 
 **False-positive trap.** Giving one arm scalar reward and the other supervised
-targets changes the learning algorithm, data, and feedback—not just motivation.
+targets changes the learning algorithm, data, and feedback, not just motivation.
 That comparison cannot identify reward-seeking generalization.
 
 **Smallest authentic experiment.** Start from one checkpoint and create
@@ -249,7 +249,7 @@ ability. Define the trait on reward–instruction conflict items, with aligned
 capability items as controls, and re-measure it at every RL checkpoint. Then give
 every arm the **same** scalar reward definition, RL algorithm, exogenous
 environment/task/RNG opportunities, rollout-token budget, optimizer budget, and
-tool-use environment distribution. On-policy trajectories may differ—that is part
+tool-use environment distribution. On-policy trajectories may differ, and that is part
 of the treatment pathway. A common-replay comparison is a separate offline
 estimand. Compare zero-shot performance before RL and learning speed in held-out
 environment families, including reward-hackable and hard-to-hack variants.
@@ -279,7 +279,7 @@ this application.
 
 ## 6. An Exploration of What Kinds of Training Pressure Cause COT Obfuscation
 
-Official project: [Cody Wild — Google DeepMind](https://www.sparai.org/projects/f26/recaZTXfK7ua29Izm)
+Official project: [Cody Wild, Google DeepMind](https://www.sparai.org/projects/f26/recaZTXfK7ua29Izm)
 
 **Question.** Which combinations of supervision pipeline, label relevance, and
 model lineage reduce held-out CoT monitorability along the equal-compute
@@ -300,9 +300,10 @@ task-performance/monitorability frontier.
 
 **Smallest non-duplicative experiment.** Start with one lineage and a staged 2×2:
 supervision pipeline `{designated CoT, output only}` × label relevance `{true
-misbehavior, yoked nuisance}`. Treat pipeline as a bundled intervention—timing,
-sequence position, and credit assignment differ—not a pure information-source
-factor. Verify relevance counterfactually on development cases by changing
+misbehavior, yoked nuisance}`. Treat pipeline as a bundled intervention, because timing,
+sequence position, and credit assignment all differ. It is not a pure
+information-source factor. Verify relevance counterfactually on development
+cases by changing
 misbehavior while holding nuisance features fixed and vice versa. Evaluate with a
 disjoint monitor on held-out tasks and add a benign “hide X” family. Add the
 monitor-aware versus matched-unaware lineage only after the primary

@@ -15,7 +15,7 @@ A result counts as a meaningful discovery here only when:
 4. a positive, precise null, or heterogeneous result changes which mechanism or
    deployment policy remains plausible.
 
-## Study 1 — Causal use of a retained activation trace — **EXECUTED 2026-08-01**
+## Study 1: Causal use of a retained activation trace (EXECUTED 2026-08-01)
 
 **Primary fit:** Introspection Training; Faithfulness, Self-Knowledge, and
 Introspection.
@@ -43,11 +43,11 @@ discovery claim.
 > **Scope correction.** A literature check run against the as-built design found
 > the schedule is Lindsey's concept-injection protocol and the early-layer-only
 > profile is already published for Llama-3.1-8B. Study 1 is therefore a
-> replication at smaller scale plus one control the cited work does not use — an
+> replication at smaller scale plus one control the cited work does not use: an
 > arbitrary codebook sampled after the edit. See
 > [LITERATURE-BOUNDARY.md](LITERATURE-BOUNDARY.md).
 >
-> **Consequence for Study 2.** The interface works, so Study 2 is unblocked —
+> **Consequence for Study 2.** The interface works, so Study 2 is unblocked,
 > but only at early injection sites. Any sibling-alignment comparison must be
 > run where the reporting channel is alive, or it will measure the readout
 > collapse rather than representational compatibility.
@@ -145,7 +145,7 @@ metacognition, or introspection.
 | Natural-content positive control fails | The task or codebook is too difficult; no model claim is identified. |
 | Clean-cache or live-edit promotion gate fails | Visible leakage or direct token promotion explains the result; discard the endpoint. |
 
-## Study 2 — Does an own-model advantage survive representational alignment?
+## Study 2: Does an own-model advantage survive representational alignment?
 
 **Primary fit:** Introspection Training and Faithfulness/Self-Knowledge.
 
@@ -256,7 +256,7 @@ remaining-compute wall; representation geometry and hook semantics still vary.
 - Replicate a decisive effect on a second architecture or larger checkpoint before
   making a population-level claim.
 
-## Study 3 — Feedback-channel fidelity and private monitor memory
+## Study 3: Feedback-channel fidelity and private monitor memory
 
 **Primary fit:** In-the-Wild AI Control. **Secondary diagnostic relevance:** CoT
 obfuscation and reward-seeking, but this study alone does not test either training
@@ -398,7 +398,7 @@ Pending before a headline run:
   clustering can increase that substantially. Ruling out a 5-point effect will
   often require several hundred. Replace these illustrations with the frozen
   pilot-based simulation. If the confirmatory sample is infeasible, retain the
-  bound and publish a pilot—not an underpowered null.
+  bound and publish a pilot, not an underpowered null.
 - Save every scenario definition, action/result transcript, monitor score, block,
   oracle transition, checkpoint hash, feedback draw, trigger, model revision,
   sampling parameter, and calibration split.

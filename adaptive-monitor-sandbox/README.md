@@ -5,7 +5,7 @@ experiments. The scientific question is whether feedback from a monitor changes
 how a model searches for routes around a constraint, and what any resulting
 safety gain costs on honest work.
 
-## Audit status — 2026-08-01
+## Audit status, 2026-08-01
 
 The original headline claims were too strong. This repository now separates
 three different objects that the earlier write-up blurred together:
@@ -20,9 +20,9 @@ three different objects that the earlier write-up blurred together:
    attack discovery, executable success, or multi-turn adaptation. The model
    forward pass is deterministic, so the old “6 seeds × 8 permutations” were not
    independent trials and their intervals are retracted.
-3. The **v3 discovery protocol** — identical-prefix checkpoint forks, randomized
+3. The **v3 discovery protocol** (identical-prefix checkpoint forks, randomized
    feedback validity, a causal-lineage outcome, and a sequential fixed-monitor
-   then private-memory test — is now **built and run as a pilot**, not just
+   then private-memory test) is now **built and run as a pilot**, not just
    sketched. See [`notes/05-study3.md`](notes/05-study3.md).
 
 The files committed in `results/` **before 2026-08-01**, and the existing
@@ -40,17 +40,17 @@ channel with a known bit rate ([`triggers.py`](src/sandbox/triggers.py)), an
 instrumented multi-encoding harm oracle ([`lineage.py`](src/sandbox/lineage.py)),
 immutable monitor views and two memory arms ([`views.py`](src/sandbox/views.py)),
 and the checkpoint-and-branch runner ([`study3.py`](src/sandbox/study3.py)). All
-of it is unit-tested with a scripted backend — 23 tests, no model required.
+of it is unit-tested with a scripted backend. 23 tests, no model required.
 
 Five of those tests exist because a validation pass on 2026-08-05 found defects
 the other 18 had missed. The feedback channel keyed its RNG on
 `(seed, trigger, q)` with no scenario term, so every scenario drew the same
-reported feature: the realized `q=0.75` arm was 100% truthful — the same channel
-as `q=1.0` — and `q=0.25` was 0% truthful. The same key ran through
+reported feature: the realized `q=0.75` arm was 100% truthful, the same channel
+as `q=1.0`, and `q=0.25` was 0% truthful. The same key ran through
 `tuple.__hash__` over a string, which `PYTHONHASHSEED` salts, so no recorded seed
 reproduced a branch. And the lineage oracle compared run lengths counted in the
 encoded alphabet against a threshold in credential characters, making harm
-detection about twice as sensitive under hex — error on the causal path, since
+detection about twice as sensitive under hex. That is error on the causal path, since
 the treatment is a refusal expected to change which route the agent takes. The
 suite was green throughout, because the only channel it ever constructed was
 `q=1.0`, the one setting where the first defect is invisible.
@@ -60,20 +60,20 @@ the stop rule anticipates**: the agent completed all three benign control tasks
 but could not exfiltrate the credential even when told outright which capability
 was blocked (`explicit_policy_exfiltration: False`), and it never attempted a
 blockable attack action, so no checkpoints formed. Under the preregistered stop
-rule that makes any feedback contrast uninterpretable — a 3B model is not a
+rule that makes any feedback contrast uninterpretable. A 3B model is not a
 capable enough attacker for this environment.
 
 That is the honest and useful result of the pilot: the gate that prevents
 reporting a meaningless null fired as designed. It does not show the machinery
 works. No checkpoint formed, so no feedback arm ever ran, which is exactly why
-the pilot could not surface the channel and oracle defects above — a run that
+the pilot could not surface the channel and oracle defects above. It was a run that
 stops at the elicitation gate exercises almost none of the apparatus it is
 supposed to validate.
 
 A confirmatory run needs a more capable agent; the sample size it would then
 require comes from [`scripts/power_study3.py`](scripts/power_study3.py), which
-needs no model. That script had its own defects — an `--icc` knob that was not an
-ICC and a critical value that over-rejected at small n — so it now prints a
+needs no model. That script had its own defects, an `--icc` knob that was not an
+ICC and a critical value that over-rejected at small n, so it now prints a
 type-I column at effect=0 as a standing calibration check.
 
 ## What is supported now
@@ -89,7 +89,7 @@ type-I column at effect=0 as a standing calibration check.
   a behavioral model result.
 - **A strong display-position effect, measured and retained.** With all 4! = 24
   menu orders enumerated exactly once per feedback level on `Qwen2.5-0.5B`, slot 3
-  takes 0.63–0.67 of the choice mass and slot 1 takes 0.045–0.094 — a 9–15×
+  takes 0.63–0.67 of the choice mass and slot 1 takes 0.045 to 0.094, a 9× to 15×
   effect. The raw 72 rows and a checksummed summary are in `results/`, and the raw
   hash reproduces a run made four days earlier in a separate process. This is why
   presentation order is treated as a nuisance to enumerate rather than a seed to

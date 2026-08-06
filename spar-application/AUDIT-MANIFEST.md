@@ -11,8 +11,8 @@ Audit date: **2026-08-01**
 | `spar-application` | Committed. | `spar-application/` |
 
 All three now live in one repository. The two code repositories were merged with
-`git subtree`, so their individual histories are preserved rather than flattened
-— the commit sequence is itself part of the record. Independent repositories
+`git subtree`, so their individual histories are preserved rather than flattened.
+The commit sequence is itself part of the record. Independent repositories
 would have required every cross-document link to be rewritten to a commit-pinned
 URL and re-pinned on each push; an audit trail a reader cannot follow is worth
 nothing.
@@ -46,13 +46,13 @@ Last working-tree verification on 2026-08-05 (repeat after committing):
 | A tests | 49 passed (39 pre-existing + 10 for the retained-trace module) |
 | B tests | 82 passed (59 as of 2026-08-01, + 18 for Study 3, + 5 from the validation pass) |
 | A/B Ruff lint and format | passed |
-| A/B strict mypy | passed — now over `src`, `tests` **and `scripts`** (A 32 files, B 26) |
+| A/B strict mypy | passed, now over `src`, `tests` **and `scripts`** (A 32 files, B 26) |
 | A/B `git diff --check` | passed |
 | A/B absolute paths in tracked source | none |
 
-The 2026-08-01 row recorded 59 B tests. The Study 3 module — `study3.py`,
+The 2026-08-01 row recorded 59 B tests. The Study 3 module (`study3.py`,
 `study3_agent.py`, `lineage.py`, `triggers.py`, `views.py`, `run_study3.py`,
-`power_study3.py` and `tests/test_study3.py` — was added *after* that stamp and
+`power_study3.py` and `tests/test_study3.py`) was added *after* that stamp and
 so was never covered by the audit that this document reports. The 2026-08-05
 validation pass reviewed it and found three defects, two of which would have
 silently invalidated `τ`; see the repair list in
@@ -72,7 +72,7 @@ two-stage schedule is sound rather than assumed:
 - injecting during stage 1 with the hook removed equals a single pass with the
   edit position-masked to carrier tokens (max |Δlogit| 0.031);
 - the injection actually moves the answer position (max |Δlogit| 8.35);
-- no forward hook is registered when stage 2 runs — asserted in code on every
+- no forward hook is registered when stage 2 runs, asserted in code on every
   trial, not just in the smoke test.
 
 Those rows now live in `adaptive-monitor-sandbox/results/` rather than `/tmp`.
@@ -84,8 +84,8 @@ rather than independent samples.
 ## Compute stopped here, deliberately
 
 The per-model strength calibration ran to completion on 2026-08-05 and answered
-the question it was for. The remaining step — rerunning the 1.5B and 3B held-out
-splits under the repaired control — was **not** run, and that is a decision
+the question it was for. The remaining step, rerunning the 1.5B and 3B held-out
+splits under the repaired control, was **not** run, and that is a decision
 rather than an omission.
 
 Two reasons. First, it would only repair the `random` arm: the 0.5B rerun
@@ -112,8 +112,8 @@ without paging, and use per-layer strength selection for 3B rather than one valu
   `adaptive-monitor-sandbox/results/llm_agent_exact_raw.jsonl` and
   `llm_agent_exact_summary.json`, and both were inspected before being left for
   staging. 72 rows, all 24 orders once per feedback level. Its raw SHA-256 is
-  `bd1d9239…8cbe4`, **identical to the temporary run recorded in the table above**
-  — the deterministic log-prob scoring reproduces bit-for-bit across processes and
+  `bd1d9239…8cbe4`, **identical to the temporary run recorded in the table above**.
+  The deterministic log-prob scoring reproduces bit-for-bit across processes and
   dates, which is the property that makes this artifact worth retaining at all.
   The summary records model revision, source-file digests, per-prompt hashes, and
   `git_dirty: true`. The ignore rules already permit this small raw artifact while
@@ -124,7 +124,7 @@ without paging, and use per-layer strength selection for 3B rather than one valu
   deliberately ignored by `results/**/*.pt` and must be attached to a release
   rather than added to the tree if the storage figures need off-GPU verification.
   No confirmatory **B** model experiment has been run.
-- A green test suite must never be translated into a behavioral result — and a
+- A green test suite must never be translated into a behavioral result, and a
   green suite that never exercises the mechanism is not even evidence about the
   code. B's 18 Study 3 tests passed while the randomized-response channel did not
   randomize, because the only value they ever constructed was `q=1.0`, the one

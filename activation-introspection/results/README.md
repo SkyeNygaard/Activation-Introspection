@@ -50,7 +50,7 @@ concept received a byte-identical `random` edit, so that arm's 0.125 was
 arithmetic rather than a measurement.
 
 Cite `_v2_`. The original `retained_test_qwen05b_*` is retained for provenance
-and is not wrong — its target arm is bit-identical to the rerun's at every layer,
+and is not wrong. Its target arm is bit-identical to the rerun's at every layer,
 because the control seeding never touched the target arm. What changed is that
 the `random` arm's eight concept states now differ by L2 54.5 instead of 0.21,
 which is the difference between fp16 noise and a control. The headline did not
