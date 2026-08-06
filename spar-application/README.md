@@ -215,15 +215,17 @@ against what I actually published.
 ## Publication state
 
 Resolved on 2026-08-05. All three directories now live in one repository, so
-every cross-reference resolves as written — 94 relative links, checked. The two
+every cross-reference resolves as written — 106 relative links, checked. The two
 code repositories were merged with `git subtree`, so their separate commit
 histories are intact; that history records the corrections as they happened and
 is part of the evidence.
 
-Both trees are committed and both verification contracts pass from the merged
-layout. What remains is pushing to a remote, which is a deliberate choice about
-what becomes public and when. The unprovenanced reach aggregate that must not be
-added is still excluded by the ignore rules; see
+Both verification contracts pass from the merged layout on a fresh clone. They
+did not at first: the virtualenvs carried shebangs pointing at the pre-merge
+paths, and `adaptive-monitor-sandbox` type-checked only where the optional `llm`
+extra happened to be installed. Both are fixed, and the claim in this paragraph
+is the reason it was worth checking rather than asserting. The unprovenanced
+reach aggregate that must not be added is excluded by the ignore rules; see
 [AUDIT-MANIFEST.md](AUDIT-MANIFEST.md).
 
 ## License
