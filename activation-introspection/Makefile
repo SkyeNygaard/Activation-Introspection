@@ -4,7 +4,7 @@ export UV_CACHE_DIR
 HF_HOME ?= $(CURDIR)/hf_cache
 export HF_HOME
 
-.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report codebook-report head-screen-report report-training report-training-seeds-report remap-training remap-training-report
+.PHONY: setup smoke test lint format check preflight clean-cache retained-dev retained-test retained-report codebook-report head-screen-report report-training report-training-seeds-report remap-training remap-training-report
 
 setup:
 	uv sync --all-groups
@@ -89,6 +89,12 @@ remap-training-report:
 	  --raw results/remap_training_v2_seed[0-2]_raw.jsonl \
 	  --protocol results/remap_training_protocol_v2.json \
 	  --out results/remap_training_v2_seeds_summary.json
+
+# Look before loading. Refuses if another experiment is running or if this
+# machine cannot currently hold the model. Frozen runners cannot import the
+# check without invalidating their artifacts, so run this first for those.
+preflight:
+	uv run python -m introspect.preflight $(MODEL) $(if $(TRAINING),--training,)
 
 test:
 	uv run pytest

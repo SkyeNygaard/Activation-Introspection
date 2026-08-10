@@ -34,3 +34,6 @@ results/**/*.npz
 # Local pre-audit aggregate without raw trials or provenance. Preserve locally,
 # but regenerate it through the raw-first runner before publishing evidence.
 results/reach_output_qwen05b.json
+
+# LoRA checkpoints: regenerable from the frozen protocol, ~120 MB each.
+results/**/*_adapter/
