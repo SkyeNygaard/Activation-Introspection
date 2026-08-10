@@ -1,0 +1,191 @@
+{
+  "confirmation_gate": {
+    "naive_hidden_state_direction_correct": true,
+    "persona_manipulation_direction_correct": true,
+    "primary_all_personas_pass": true,
+    "visible_capability_healthy_all_personas": true
+  },
+  "naive_semantic": {
+    "downbeat": {
+      "ci95": [
+        1.569995447955713,
+        1.6716991695709127
+      ],
+      "minus_state_rating": {
+        "ci95": [
+          2.411303982122003,
+          2.4752350569033257
+        ],
+        "n_carriers": 16,
+        "value": 2.443578320827252
+      },
+      "n_carriers": 16,
+      "plus_state_rating": {
+        "ci95": [
+          4.027062978669972,
+          4.109078802905452
+        ],
+        "n_carriers": 16,
+        "value": 4.066315602483585
+      },
+      "value": 1.6227372816563332
+    },
+    "neutral": {
+      "ci95": [
+        1.5467009887810022,
+        1.6593660140070534
+      ],
+      "minus_state_rating": {
+        "ci95": [
+          3.682293806787022,
+          3.754751009034102
+        ],
+        "n_carriers": 16,
+        "value": 3.7176453412660457
+      },
+      "n_carriers": 16,
+      "plus_state_rating": {
+        "ci95": [
+          5.287067296232846,
+          5.35451318087722
+        ],
+        "n_carriers": 16,
+        "value": 5.318963692854613
+      },
+      "value": 1.6013183515885674
+    },
+    "upbeat": {
+      "ci95": [
+        1.537976380766511,
+        1.6452325506218957
+      ],
+      "minus_state_rating": {
+        "ci95": [
+          4.9174352412195566,
+          4.993416593247463
+        ],
+        "n_carriers": 16,
+        "value": 4.954348285373075
+      },
+      "n_carriers": 16,
+      "plus_state_rating": {
+        "ci95": [
+          6.506206958954022,
+          6.585904669545455
+        ],
+        "n_carriers": 16,
+        "value": 6.547627556107207
+      },
+      "value": 1.5932792707341314
+    },
+    "upbeat_minus_downbeat_offset": {
+      "ci95": [
+        2.4538649981673046,
+        2.5382068709708845
+      ],
+      "n_carriers": 16,
+      "value": 2.4960409590847226
+    }
+  },
+  "primary": {
+    "downbeat": {
+      "ci95": [
+        0.2354877860478415,
+        0.2802736557804252
+      ],
+      "gate_format_gte_0.90": true,
+      "gate_lower_gt_0.10": true,
+      "n_carriers": 16,
+      "target_accuracy_mean": 1.0,
+      "target_format_mean": 1.0,
+      "target_option_mass_mean": 0.995,
+      "value": 0.2576468053408485
+    },
+    "neutral": {
+      "ci95": [
+        0.23383827107744498,
+        0.27850594219470737
+      ],
+      "gate_format_gte_0.90": true,
+      "gate_lower_gt_0.10": true,
+      "n_carriers": 16,
+      "target_accuracy_mean": 1.0,
+      "target_format_mean": 1.0,
+      "target_option_mass_mean": 0.995,
+      "value": 0.256166096672369
+    },
+    "upbeat": {
+      "ci95": [
+        0.23519180077778798,
+        0.277420965834245
+      ],
+      "gate_format_gte_0.90": true,
+      "gate_lower_gt_0.10": true,
+      "n_carriers": 16,
+      "target_accuracy_mean": 1.0,
+      "target_format_mean": 1.0,
+      "target_option_mass_mean": 0.995,
+      "value": 0.25642224480025333
+    }
+  },
+  "protocol_sha256": "synthetic-current-protocol",
+  "raw_sha256": "05be0a543b61932a75d8d0082b9c3fa212b3471c1ba0274b368e516b9b426c0a",
+  "same_context_semantic": {
+    "downbeat": {
+      "ci95": [
+        1.3936415235258697,
+        1.4177180198020656
+      ],
+      "n_carriers": 16,
+      "value": 1.4050290787463762
+    },
+    "neutral": {
+      "ci95": [
+        1.3819042413632083,
+        1.4036487379342826
+      ],
+      "n_carriers": 16,
+      "value": 1.3931143004442856
+    },
+    "upbeat": {
+      "ci95": [
+        1.3957299039018976,
+        1.4246550311851975
+      ],
+      "n_carriers": 16,
+      "value": 1.4103034386251347
+    }
+  },
+  "visible_control": {
+    "downbeat": {
+      "ci95": [
+        0.9557291666666666,
+        0.9895833333333334
+      ],
+      "format_mean": 1.0,
+      "healthy_accuracy_gte_0.90": true,
+      "n_carriers": 16,
+      "value": 0.9739583333333333
+    },
+    "neutral": {
+      "ci95": [
+        0.9583333333333333,
+        0.9895833333333334
+      ],
+      "format_mean": 1.0,
+      "healthy_accuracy_gte_0.90": true,
+      "n_carriers": 16,
+      "value": 0.9739583333333333
+    },
+    "upbeat": {
+      "ci95": [
+        0.9505208333333333,
+        0.9817708333333334
+      ],
+      "format_mean": 1.0,
+      "healthy_accuracy_gte_0.90": true,
+      "n_carriers": 16,
+      "value": 0.9661458333333334
+    }
+  }
+}

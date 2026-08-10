@@ -44,35 +44,66 @@ own behavioral access has collapsed. Together, the results identify a usable
 in-context interface and a later-depth regime that training would have to repair.
 
 **Trained evidence.** A LoRA fitted on eight concept directions reports the sign
-of a causally injected hidden state at 0.583 twin-pair accuracy on eight
-directions and three carriers withheld from training, against 0.000 for the
-untrained base model and 0.250/0.208 for magnitude-matched controls, with format
-and label mass at 1.000. The pair-wise null is 0.000 for a prompt-only strategy,
-so the frozen 0.500 threshold is conservative.
+of a causally injected hidden state at **0.927 mean twin-pair accuracy, range
+[0.833, 1.000] across four training seeds**, on eight directions and three
+carriers withheld from training. The untrained base model is at 0.000 on every
+seed and magnitude-matched controls at 0.260/0.208, with format and label mass
+1.000 throughout. The pair-wise null is 0.000 for a prompt-only strategy, so the
+frozen 0.500 threshold is conservative.
 
-The first version of that run is the more useful half. It scored 0.917 and passed
-every gate while holding 5e-9 probability on the answer tokens: the training loss
-was a two-way softmax over the label logits, which fixes their ordering and
-leaves the rest of the vocabulary free, so the adapter suppressed both labels
-and kept the right one on top. **Restricting an introspection-training loss to
-the answer options produces a probe wearing the model's output head, and no
-forced-choice metric can see it.** Repairing the loss cost 33 points. That trap
-sits directly in this project's path.
+Two failed versions are the more useful half. V1 scored 0.917 and passed every
+gate while holding 5e-9 probability on the answer tokens: the loss was a two-way
+softmax over the label logits, which fixes their ordering and leaves the rest of
+the vocabulary free, so the adapter suppressed both labels and kept the right one
+on top. **Restricting an introspection-training loss to the answer options
+produces a probe wearing the model's output head, and no forced-choice metric can
+see it.** V2 repaired the loss, scored 0.583, and I reported that as the cost of
+the repair — also wrong, because neither run seeded the adapter's initialization.
+Both traps sit directly in this project's path.
 
-**Gap.** The trained result is one seed, one layer, one strength, one binary
-variable, and a fixed rather than episode-remapped mapping — so it is not
-comparable to the in-context number. The causal ICL result is binary and
+**The trade-off that training creates.** A further study trains two adapters that
+differ only in whether the label convention is fixed or re-randomised, then scores
+both against the untrained model at and below the training strength. Two findings,
+three seeds, all gates passing.
+
+Training extends the detection floor: at injection strength 0.15 the untrained
+model is at exactly 0.500 with 0.010 twin-pair accuracy — blind — while adapters
+trained only at 0.5 read it at 0.790–0.863. And training destroys selectivity:
+untrained, magnitude-matched random directions sit at chance (0.513) while concept
+directions reach 0.745, but after training random directions reach 0.913–0.955.
+
+> Introspection training buys sensitivity and pays for it in specificity.
+
+A monitor trained this way answers "did something move at this site" rather than
+"is concept X active", so any displacement — including an adversarial one with no
+semantic content — yields a positive report. That is a concrete failure mode for
+activation monitoring, and it is the most directly project-relevant result here.
+It also settles the probe objection: both adapters score 1.000 on mapping-flip
+pairs, where a fixed sign-to-token readout scores 0.000 by construction.
+
+**Gap.** Every edit in every study here is an injected direction. Nothing yet
+shows the model reporting a state it computed on its own, which is the largest
+distance between this work and the project's eventual target. Everything is one
+model, one layer, binary answers; three or four seeds give a mean and a range,
+not an interval. The causal ICL result is binary and
 explicitly elicited. Neither isolates privileged access, uses J-space variables,
 or shows free-form verbalization. The retained-trace schedule remains a
 replication. Nothing here yet answers whether training generalizes across
 internal variables, layers, or naturally occurring computations.
 
-**Smallest authentic experiment.** Run the trained reporter across independent
-seeds first, since one seed cannot separate the effect from initialization luck.
-Then restore episode remapping by training on few-shot episodes rather than a
-fixed mapping, and extend to unused layers and to richer multiway/continuous
-variables. Keep the unrestricted full-vocabulary format and label-mass gates on
-every arm. A
+**Smallest authentic experiment.** Seeds and episode-remapped training are done.
+The next step follows from the trade-off above: test whether a trained reporter
+transfers to a **naturally computed** internal state rather than an injected one.
+Locate an intermediate the model computes on its own — a two-hop bridge entity is
+convenient — verify by patching that it is causally load-bearing downstream, then
+swap it between matched prompts with the visible text held identical and elicit
+the report before the answer appears. Compare base, fixed and remap adapters.
+The design is only worth running if it can separate "the capability does not
+transfer" from "the instrument did not reach", so the patch needs a positive
+control on downstream behaviour and the reporter needs a within-regime anchor.
+Then extend to unused layers and to richer multiway/continuous variables. Keep
+the unrestricted full-vocabulary format and label-mass gates on every arm; they
+are what caught V1. A
 later J-space phase should replace lexical contrast vectors with causally patched
 workspace variables and ask whether the learned verbalizer transfers. Keep the
 symmetric aligned-source experiment as the privileged-access test; do not make it
@@ -98,10 +129,13 @@ self-specific compatibility under the tested transform, not metacognition.
 
 **Fit: an executed in-context benchmark and an executed training result, plus a
 methodological trap found the hard way.** The ICL benchmark exists and passed its
-stated gates; the trained reporter generalizes partially to unseen directions;
-and the loss-restriction failure is a concrete contribution to how this project
-should be evaluated. Monitoring robustness, multi-seed inference, and
-generalization to naturally occurring internal variables remain untested.
+stated gates; the trained reporter generalizes to unseen directions across four
+seeds; and the sensitivity/specificity trade-off is a concrete failure mode for
+activation monitoring. The three failures on the way — a loss restricted to the
+answer options, a number quoted from an unseeded run, and a hypothesis falsified
+by its own gates — are contributions to how this project should be evaluated.
+Generalization to naturally occurring internal variables remains untested and is
+the direction I would propose.
 
 ## 2. Deploying Programmatic Attention in Real Transformers
 

@@ -1,0 +1,69 @@
+{
+  "config": {
+    "centering_direction_sha256": "6a97191773992fc36ce46a2d4de4ce60f5b90459498348e3c3b672d6d0f8280d",
+    "device": "mps",
+    "elapsed_seconds": 2827.8,
+    "eval_carriers": [
+      "A neutral status note is displayed. Hidden state marker: \u00a7",
+      "Nothing changed. Hidden state marker: \u00a7"
+    ],
+    "eval_concepts": [
+      "garden",
+      "camera",
+      "train",
+      "banana",
+      "eagle",
+      "library",
+      "hammer",
+      "island"
+    ],
+    "git_commit": "8138009a7f08c2632300a1efaf92c93e5ac35073",
+    "git_dirty": true,
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "n_steps": {
+      "fixed": 1152,
+      "remap": 1152
+    },
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "protocol_sha256": "f29b479d869d8870d4f79cf3520ed28f9f706be68d4f2f702ce9091276fbe0d0",
+    "python": "3.12.13",
+    "smoke": false,
+    "source_files_sha256": {
+      "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+      "scripts/run_remap_training.py": "03e8ba2a69f1bb24ca41df6d8d68c98f9364af7048123a2558e2d22c550f6c66",
+      "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+      "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+      "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+      "src/introspect/ift.py": "3ae5b23c8597e499f2de9ae02d5f281ed60922cd2e521c3b1693d83611968487",
+      "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+      "src/introspect/report_training.py": "f5286ccba8a03a4fcb0c92e33662b634c434c8f1475d6859e4413f5dd762c56e",
+      "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+    },
+    "source_sha256": "9a8db605c0599b3df2d3fcf1194cae31fc70947fac6895e4155bad2300e3e24b",
+    "torch": "2.13.0",
+    "train_carriers": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "A standard archive entry is visible. Hidden state marker: \u00a7"
+    ],
+    "train_concepts": [
+      "guitar",
+      "harbor",
+      "lantern",
+      "meadow",
+      "satellite",
+      "teapot",
+      "tunnel",
+      "whale"
+    ],
+    "train_seed": 1
+  },
+  "config_sha256": "070abf7fa1376df77940dc6276900db45799bf3b1fc801a4ae46a3d3eb2ac31c",
+  "final_epoch_loss": {
+    "fixed": 3.576272320060525e-06,
+    "remap": 4.529942543740617e-06
+  },
+  "n_rows": 4608,
+  "raw": "remap_training_v2_seed1_raw.jsonl",
+  "raw_sha256": "ae4ff7ff8035748b89d74e44c7587d0aa8d2a34d668b13359340f4fa42dfa210",
+  "schema_version": 1
+}

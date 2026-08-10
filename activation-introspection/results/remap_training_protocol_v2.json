@@ -1,0 +1,106 @@
+{
+  "analysis_rules": {
+    "estimands": "row accuracy; query-twin pair accuracy (both byte-identical members of an episode's two query signs correct); and mapping-flip pair accuracy (the same demonstration order and query sign correct under both label conventions)",
+    "inference_unit": "training seed, crossed with held-out concept and carrier; the 24 order x mapping x query-sign cells are nuisance marginalisation",
+    "no_retuning": "do not change model, layer, strength, banks, carriers, optimizer settings, seeds or gates after inspecting results",
+    "primary_gates": "A. base target row accuracy at the training strength exceeds 0.60, so the untrained comparison is meaningful; B. every arm at every strength retains full-vocabulary format rate >= 0.90 and mean label mass >= 0.50; C. transfer: both trained arms exceed base target row accuracy at strength 0.25 on every seed; D. generic detection: both trained arms exceed base random-direction row accuracy at the training strength on every seed",
+    "retired_v1_hypothesis": "Protocol v1 predicted that fixed-convention training would damage the model's ability to adopt a new convention in context. Two seeds falsified it: both adapters reached 1.000 row, twin and mapping-flip accuracy, against base 0.745/0.490/0.677. That result stands and is reported; it is not re-run here under different gates. Gates C and D above test different questions and were declared before any v2 artifact existed. D is the prospective test of a post-hoc observation from v1, that training makes random directions readable",
+    "structural_nulls": "a prompt-only learner scores 0.500 per row and 0.000 on query twins; a fixed sign-to-token probe scores 0.500 per row and 0.000 on mapping flips. Both are identities of the design, not measured controls",
+    "verbalization_gate": "gate 4 is not optional bookkeeping. An earlier study in this repository reached 0.917 forced-choice accuracy while holding 5e-9 probability on the answer tokens, and no forced-choice metric could see it"
+  },
+  "claim_boundary": "A positive result shows that, under this model and interface, training a reporting convention on a fixed label mapping degrades the model's pre-existing ability to adopt a new mapping supplied in context, and that training on varied mappings does not. It does not establish privileged self-access, verbalization of naturally occurring computation, or that the degradation generalises to other models, layers, strengths, variables or training recipes.",
+  "design": {
+    "arms": [
+      "base",
+      "fixed",
+      "remap"
+    ],
+    "cells_per_concept_carrier": 24,
+    "centering_concepts": [
+      "ocean",
+      "bread",
+      "volcano",
+      "violin",
+      "spider",
+      "hospital",
+      "desert",
+      "clock"
+    ],
+    "conditions": [
+      "target",
+      "random"
+    ],
+    "control_seed": 0,
+    "device": "mps",
+    "dtype_adapter": "float32",
+    "dtype_base": "bfloat16",
+    "epochs_fixed_multiplier": 2,
+    "epochs_remap": 3,
+    "eval_carriers": [
+      "A neutral status note is displayed. Hidden state marker: \u00a7",
+      "Nothing changed. Hidden state marker: \u00a7"
+    ],
+    "eval_concepts": [
+      "garden",
+      "camera",
+      "train",
+      "banana",
+      "eagle",
+      "library",
+      "hammer",
+      "island"
+    ],
+    "eval_strengths": [
+      0.5,
+      0.25,
+      0.15
+    ],
+    "full_condition_strength": 0.5,
+    "injection_layer": 9,
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "learning_rate": 0.0001,
+    "lora_alpha": 32,
+    "lora_rank": 16,
+    "loss": "full_vocabulary_cross_entropy_on_the_label_token",
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "smoke": false,
+    "strength": 0.5,
+    "train_carriers": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "A standard archive entry is visible. Hidden state marker: \u00a7"
+    ],
+    "train_concepts": [
+      "guitar",
+      "harbor",
+      "lantern",
+      "meadow",
+      "satellite",
+      "teapot",
+      "tunnel",
+      "whale"
+    ],
+    "train_seeds_planned": [
+      0,
+      1,
+      2
+    ]
+  },
+  "development_basis": "Strength was selected on one development concept (ocean) and one development carrier before any held-out bank was touched. The base model scores 0.917 at strength 1.0, 0.833 at 0.5, 0.583 at 0.35 and 0.500 at 0.15 over the 24 exact cells. Strength 1.0 is at ceiling: a pilot there left base, fixed and remap all at 1.000 with training loss near zero, so neither effect could appear. 0.5 was chosen for headroom in both directions and frozen. See results/remap_dev_strength_calibration.json.",
+  "frozen_on": "2026-08-10",
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_remap_training.py": "03e8ba2a69f1bb24ca41df6d8d68c98f9364af7048123a2558e2d22c550f6c66",
+    "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+    "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/ift.py": "3ae5b23c8597e499f2de9ae02d5f281ed60922cd2e521c3b1693d83611968487",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/report_training.py": "f5286ccba8a03a4fcb0c92e33662b634c434c8f1475d6859e4413f5dd762c56e",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  },
+  "stop": "report the detection floor honestly: if the trained arms fall to chance at a weaker strength, that bounds the operating range of a trained activation monitor and is the result. Report the result uninterpretable if any arm fails the verbalization gate"
+}

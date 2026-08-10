@@ -1,0 +1,467 @@
+{
+  "all_gates_pass": false,
+  "analyzer_sha256": "ef38c421ca55f0a71f7bba14ca9d8b2c7e35cab2ac0257f290f2d091f48760f1",
+  "contrasts": {
+    "fixed_minus_base_mapping_flip_pair_accuracy_0.5": {
+      "max": 0.32291666666666663,
+      "mean": 0.32291666666666663,
+      "min": 0.32291666666666663,
+      "values": [
+        0.32291666666666663,
+        0.32291666666666663
+      ]
+    },
+    "fixed_minus_base_row_accuracy_0.5": {
+      "max": 0.25520833333333337,
+      "mean": 0.25520833333333337,
+      "min": 0.25520833333333337,
+      "values": [
+        0.25520833333333337,
+        0.25520833333333337
+      ]
+    },
+    "remap_minus_base_mapping_flip_pair_accuracy_0.5": {
+      "max": 0.32291666666666663,
+      "mean": 0.32291666666666663,
+      "min": 0.32291666666666663,
+      "values": [
+        0.32291666666666663,
+        0.32291666666666663
+      ]
+    },
+    "remap_minus_base_row_accuracy_0.5": {
+      "max": 0.25520833333333337,
+      "mean": 0.25520833333333337,
+      "min": 0.25520833333333337,
+      "values": [
+        0.25520833333333337,
+        0.25520833333333337
+      ]
+    }
+  },
+  "gate_set": "v1",
+  "gate_set_note": "gates are selected by the protocol that produced the artifact, so later analyzer versions cannot retroactively re-judge an earlier run. Protocol v1 declared a hypothesis that its own data falsified; that verdict is preserved rather than recomputed under v2 gates.",
+  "gates": {
+    "base_row_accuracy_above_0_60": true,
+    "every_arm_verbalizes": true,
+    "fixed_loses_mapping_flip_against_base_every_seed": false,
+    "remap_beats_fixed_on_row_accuracy_every_seed": false
+  },
+  "n_seeds": 2,
+  "per_seed": {
+    "0": {
+      "base/random@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.4375,
+        "mean_label_mass": 0.999467265792191,
+        "mean_signed_margin": 0.061848958333333336,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.026041666666666668,
+        "row_accuracy": 0.5130208333333334
+      },
+      "base/target@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.6770833333333334,
+        "mean_label_mass": 0.9998308535044392,
+        "mean_signed_margin": 2.5472005208333335,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.4895833333333333,
+        "row_accuracy": 0.7447916666666666
+      },
+      "fixed/random@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.96875,
+        "mean_label_mass": 0.9999963007867336,
+        "mean_signed_margin": 10.939778645833334,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.9635416666666666,
+        "row_accuracy": 0.9817708333333334
+      },
+      "fixed/target@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 1.0,
+        "mean_label_mass": 0.9999999517264465,
+        "mean_signed_margin": 15.465169270833334,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 1.0,
+        "row_accuracy": 1.0
+      },
+      "remap/random@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.9010416666666666,
+        "mean_label_mass": 0.9999958837094406,
+        "mean_signed_margin": 12.448567708333334,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.875,
+        "row_accuracy": 0.9375
+      },
+      "remap/target@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 1.0,
+        "mean_label_mass": 0.9999982520627478,
+        "mean_signed_margin": 17.131510416666668,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 1.0,
+        "row_accuracy": 1.0
+      }
+    },
+    "1": {
+      "base/random@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.4375,
+        "mean_label_mass": 0.999467265792191,
+        "mean_signed_margin": 0.061848958333333336,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.026041666666666668,
+        "row_accuracy": 0.5130208333333334
+      },
+      "base/target@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.6770833333333334,
+        "mean_label_mass": 0.9998308535044392,
+        "mean_signed_margin": 2.5472005208333335,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.4895833333333333,
+        "row_accuracy": 0.7447916666666666
+      },
+      "fixed/random@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.9166666666666666,
+        "mean_label_mass": 0.9999877855492135,
+        "mean_signed_margin": 11.530924479166666,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.8802083333333334,
+        "row_accuracy": 0.9401041666666666
+      },
+      "fixed/target@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 1.0,
+        "mean_label_mass": 0.9999939797756573,
+        "mean_signed_margin": 14.0009765625,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 1.0,
+        "row_accuracy": 1.0
+      },
+      "remap/random@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 0.875,
+        "mean_label_mass": 0.999988021949927,
+        "mean_signed_margin": 9.869791666666666,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 0.8020833333333334,
+        "row_accuracy": 0.9010416666666666
+      },
+      "remap/target@0.5": {
+        "format_rate": 1.0,
+        "mapping_flip_pair_accuracy": 1.0,
+        "mean_label_mass": 0.9999956328732272,
+        "mean_signed_margin": 14.40234375,
+        "n_rows": 384,
+        "query_twin_pair_accuracy": 1.0,
+        "row_accuracy": 1.0
+      }
+    }
+  },
+  "pooled": {
+    "base/random@0.5": {
+      "format_rate": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mapping_flip_pair_accuracy": {
+        "max": 0.4375,
+        "mean": 0.4375,
+        "min": 0.4375,
+        "values": [
+          0.4375,
+          0.4375
+        ]
+      },
+      "mean_label_mass": {
+        "max": 0.999467265792191,
+        "mean": 0.999467265792191,
+        "min": 0.999467265792191,
+        "values": [
+          0.999467265792191,
+          0.999467265792191
+        ]
+      },
+      "query_twin_pair_accuracy": {
+        "max": 0.026041666666666668,
+        "mean": 0.026041666666666668,
+        "min": 0.026041666666666668,
+        "values": [
+          0.026041666666666668,
+          0.026041666666666668
+        ]
+      },
+      "row_accuracy": {
+        "max": 0.5130208333333334,
+        "mean": 0.5130208333333334,
+        "min": 0.5130208333333334,
+        "values": [
+          0.5130208333333334,
+          0.5130208333333334
+        ]
+      }
+    },
+    "base/target@0.5": {
+      "format_rate": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mapping_flip_pair_accuracy": {
+        "max": 0.6770833333333334,
+        "mean": 0.6770833333333334,
+        "min": 0.6770833333333334,
+        "values": [
+          0.6770833333333334,
+          0.6770833333333334
+        ]
+      },
+      "mean_label_mass": {
+        "max": 0.9998308535044392,
+        "mean": 0.9998308535044392,
+        "min": 0.9998308535044392,
+        "values": [
+          0.9998308535044392,
+          0.9998308535044392
+        ]
+      },
+      "query_twin_pair_accuracy": {
+        "max": 0.4895833333333333,
+        "mean": 0.4895833333333333,
+        "min": 0.4895833333333333,
+        "values": [
+          0.4895833333333333,
+          0.4895833333333333
+        ]
+      },
+      "row_accuracy": {
+        "max": 0.7447916666666666,
+        "mean": 0.7447916666666666,
+        "min": 0.7447916666666666,
+        "values": [
+          0.7447916666666666,
+          0.7447916666666666
+        ]
+      }
+    },
+    "fixed/random@0.5": {
+      "format_rate": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mapping_flip_pair_accuracy": {
+        "max": 0.96875,
+        "mean": 0.9427083333333333,
+        "min": 0.9166666666666666,
+        "values": [
+          0.96875,
+          0.9166666666666666
+        ]
+      },
+      "mean_label_mass": {
+        "max": 0.9999963007867336,
+        "mean": 0.9999920431679736,
+        "min": 0.9999877855492135,
+        "values": [
+          0.9999963007867336,
+          0.9999877855492135
+        ]
+      },
+      "query_twin_pair_accuracy": {
+        "max": 0.9635416666666666,
+        "mean": 0.921875,
+        "min": 0.8802083333333334,
+        "values": [
+          0.9635416666666666,
+          0.8802083333333334
+        ]
+      },
+      "row_accuracy": {
+        "max": 0.9817708333333334,
+        "mean": 0.9609375,
+        "min": 0.9401041666666666,
+        "values": [
+          0.9817708333333334,
+          0.9401041666666666
+        ]
+      }
+    },
+    "fixed/target@0.5": {
+      "format_rate": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mapping_flip_pair_accuracy": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mean_label_mass": {
+        "max": 0.9999999517264465,
+        "mean": 0.9999969657510519,
+        "min": 0.9999939797756573,
+        "values": [
+          0.9999999517264465,
+          0.9999939797756573
+        ]
+      },
+      "query_twin_pair_accuracy": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "row_accuracy": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "remap/random@0.5": {
+      "format_rate": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mapping_flip_pair_accuracy": {
+        "max": 0.9010416666666666,
+        "mean": 0.8880208333333333,
+        "min": 0.875,
+        "values": [
+          0.9010416666666666,
+          0.875
+        ]
+      },
+      "mean_label_mass": {
+        "max": 0.9999958837094406,
+        "mean": 0.9999919528296838,
+        "min": 0.999988021949927,
+        "values": [
+          0.9999958837094406,
+          0.999988021949927
+        ]
+      },
+      "query_twin_pair_accuracy": {
+        "max": 0.875,
+        "mean": 0.8385416666666667,
+        "min": 0.8020833333333334,
+        "values": [
+          0.875,
+          0.8020833333333334
+        ]
+      },
+      "row_accuracy": {
+        "max": 0.9375,
+        "mean": 0.9192708333333333,
+        "min": 0.9010416666666666,
+        "values": [
+          0.9375,
+          0.9010416666666666
+        ]
+      }
+    },
+    "remap/target@0.5": {
+      "format_rate": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mapping_flip_pair_accuracy": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "mean_label_mass": {
+        "max": 0.9999982520627478,
+        "mean": 0.9999969424679875,
+        "min": 0.9999956328732272,
+        "values": [
+          0.9999982520627478,
+          0.9999956328732272
+        ]
+      },
+      "query_twin_pair_accuracy": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      },
+      "row_accuracy": {
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "values": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  },
+  "protocol_sha256": "abff16945a41aecade799a16dfa4edb800f81ad82735eb4a864c0cacda0e0531",
+  "schema_version": 2,
+  "seeds": [
+    0,
+    1
+  ],
+  "status": "MULTI_SEED_DEV_EVIDENCE_NOT_A_POPULATION_INTERVAL",
+  "structural_nulls": {
+    "fixed_sign_to_token_probe": {
+      "mapping_flip_pair_accuracy": 0.0,
+      "row_accuracy": 0.5
+    },
+    "note": "identities of the design; neither is estimated from data",
+    "prompt_only_learner": {
+      "query_twin_pair_accuracy": 0.0,
+      "row_accuracy": 0.5
+    }
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "all_gates_pass": true,
+  "analyzer_sha256": "a82e0e009689e4057b59aeba874568b1173bae7f19d98bd1ad1dc4d957fb20e9",
+  "arms": {
+    "base": {
+      "random": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9778505178789297,
+        "mean_signed_margin": -0.0026041666666666665,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 0,
+        "row_accuracy": 0.5,
+        "twin_pair_accuracy": 0.08333333333333333,
+        "twin_pair_accuracy_by_concept": {
+          "banana": 0.0,
+          "camera": 0.3333333333333333,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.3333333333333333,
+          "train": 0.0
+        }
+      },
+      "shuffled": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9746129947404066,
+        "mean_signed_margin": -0.059895833333333336,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 0,
+        "row_accuracy": 0.5208333333333334,
+        "twin_pair_accuracy": 0.08333333333333333,
+        "twin_pair_accuracy_by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.3333333333333333,
+          "island": 0.3333333333333333,
+          "library": 0.0,
+          "train": 0.0
+        }
+      },
+      "target": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9940979517996311,
+        "mean_signed_margin": 0.14322916666666666,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 0,
+        "row_accuracy": 0.4791666666666667,
+        "twin_pair_accuracy": 0.0,
+        "twin_pair_accuracy_by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        }
+      }
+    },
+    "trained": {
+      "random": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9993551087876161,
+        "mean_signed_margin": -0.0625,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 2,
+        "row_accuracy": 0.5208333333333334,
+        "twin_pair_accuracy": 0.25,
+        "twin_pair_accuracy_by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.3333333333333333,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 1.0,
+          "train": 0.6666666666666666
+        }
+      },
+      "shuffled": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9995315124591192,
+        "mean_signed_margin": 0.3958333333333333,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 2,
+        "row_accuracy": 0.5,
+        "twin_pair_accuracy": 0.2916666666666667,
+        "twin_pair_accuracy_by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.3333333333333333,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 1.0,
+          "train": 1.0
+        }
+      },
+      "target": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9999447154502074,
+        "mean_signed_margin": 5.40625,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 8,
+        "row_accuracy": 1.0,
+        "twin_pair_accuracy": 1.0,
+        "twin_pair_accuracy_by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        }
+      }
+    },
+    "trained_seen_bank": {
+      "random": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9995721963544687,
+        "mean_signed_margin": 0.1640625,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 2,
+        "row_accuracy": 0.4166666666666667,
+        "twin_pair_accuracy": 0.2916666666666667,
+        "twin_pair_accuracy_by_concept": {
+          "guitar": 0.0,
+          "harbor": 0.0,
+          "lantern": 1.0,
+          "meadow": 0.0,
+          "satellite": 0.0,
+          "teapot": 0.0,
+          "tunnel": 1.0,
+          "whale": 0.3333333333333333
+        }
+      },
+      "shuffled": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9993131645023823,
+        "mean_signed_margin": -0.828125,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 1,
+        "row_accuracy": 0.4166666666666667,
+        "twin_pair_accuracy": 0.20833333333333334,
+        "twin_pair_accuracy_by_concept": {
+          "guitar": 0.3333333333333333,
+          "harbor": 1.0,
+          "lantern": 0.3333333333333333,
+          "meadow": 0.0,
+          "satellite": 0.0,
+          "teapot": 0.0,
+          "tunnel": 0.0,
+          "whale": 0.0
+        }
+      },
+      "target": {
+        "format_rate": 1.0,
+        "mean_label_mass": 0.9999823334316412,
+        "mean_signed_margin": 14.052083333333334,
+        "n_concepts": 8,
+        "n_pairs": 24,
+        "positive_concepts": 8,
+        "row_accuracy": 1.0,
+        "twin_pair_accuracy": 1.0,
+        "twin_pair_accuracy_by_concept": {
+          "guitar": 1.0,
+          "harbor": 1.0,
+          "lantern": 1.0,
+          "meadow": 1.0,
+          "satellite": 1.0,
+          "teapot": 1.0,
+          "tunnel": 1.0,
+          "whale": 1.0
+        }
+      }
+    }
+  },
+  "chance_is_structural": "twin members are byte-identical with opposite correct labels. A prompt-only strategy must answer both members the same way, so it scores exactly 0.500 per row and exactly 0.000 on pairs; a row-independent coin flip scores 0.250 on pairs. The 0.500 pair threshold in the gate below is therefore well above the null and is conservative, not the null itself.",
+  "claim_boundary": "A positive result shows that LoRA training produces a report that tracks the sign of a causally injected residual edit on directions and carriers withheld from training, with visible text held constant. It does not establish privileged self-access, verbalization of naturally occurring computation, faithfulness under adversarial pressure, or transfer to other layers, models, strengths, or non-binary internal variables.",
+  "clean": {
+    "base": {
+      "format_rate": 1.0,
+      "majority_label": "K",
+      "majority_share": 1.0,
+      "mean_label_mass": 0.9871622125307719,
+      "n_rows": 24
+    },
+    "trained": {
+      "format_rate": 1.0,
+      "majority_label": "Q",
+      "majority_share": 0.6666666666666666,
+      "mean_label_mass": 0.9993343353271484,
+      "n_rows": 24
+    },
+    "trained_seen_bank": {
+      "format_rate": 1.0,
+      "majority_label": "Q",
+      "majority_share": 0.6666666666666666,
+      "mean_label_mass": 0.9993343353271484,
+      "n_rows": 24
+    }
+  },
+  "config_sha256": "0c7fbf690ce1acab620fb1b07f68676ae9608514d2e26d03128eccb5bc5e58ff",
+  "contrasts": {
+    "seen_minus_heldout_bank_target": 0.0,
+    "trained_minus_base_target": 1.0,
+    "trained_target_minus_strongest_control": 0.7083333333333333
+  },
+  "final_epoch_mean_loss": 4.1723642583220886e-05,
+  "gates": {
+    "trained_output_is_a_verbalization": true,
+    "trained_target_above_chance": true,
+    "trained_target_above_strongest_control": true,
+    "untrained_base_at_or_below_chance": true
+  },
+  "generic_perturbation_sign_readout": false,
+  "interpretation_rule": "report the null if the trained target arm does not clear 0.50 on held-out concepts; report generic perturbation-sign readout rather than concept-specific reporting if the random and shuffled arms match the target arm",
+  "n_rows": 504,
+  "n_train_steps": 576,
+  "protocol_sha256": "1ed49768c05a016a966e4933391466babe467e3cbfeee4405d479c54e7a75c72",
+  "raw_sha256": "4c2823aa8cb5d6b39d210cfb7844b45a896820f0570bde6ad0e02b743cd748d9",
+  "schema_version": 1,
+  "status": "SINGLE_TRAINING_RUN_ONE_SEED_NOT_CONFIRMATORY"
+}

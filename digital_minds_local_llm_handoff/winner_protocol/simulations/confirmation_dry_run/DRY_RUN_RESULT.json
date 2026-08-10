@@ -1,0 +1,11 @@
+{
+  "clean_confirmation_dry_run_passed": true,
+  "confirmation_gate": {
+    "naive_hidden_state_direction_correct": true,
+    "persona_manipulation_direction_correct": true,
+    "primary_all_personas_pass": true
+  },
+  "mutated_raw_rejected": true,
+  "missing_row_rejected": true,
+  "carrier_grid_corruption_rejected": true
+}

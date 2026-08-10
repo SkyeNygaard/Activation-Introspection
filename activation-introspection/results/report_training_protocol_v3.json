@@ -1,0 +1,105 @@
+{
+  "analysis_rules": {
+    "aggregation": "score twin pairs, not rows: a pair is correct only when both byte-identical members get their opposite labels right; aggregate as an unweighted mean over concept-carrier strata",
+    "clean_role": "the no-injection arm has no correct label; it measures standing label bias and is not scored for accuracy",
+    "inference_unit": "concept crossed with carrier; the two signs of a twin are one paired observation, not two independent samples",
+    "input_only_identity": "twin members are byte-identical with opposite correct labels, so any prompt-only strategy scores exactly 0.500 on pairs by construction; no separate input-only arm is run because the value is an identity rather than a measurement",
+    "no_retuning": "do not change model, layer, strength, prompts, labels, banks, carriers, optimizer settings or gates after inspecting results; correct only invalidating bugs, disclose them, and rerun",
+    "primary_gate": "trained target twin-pair accuracy on held-out concepts exceeds 0.50, the untrained base model does not, and the trained target arm exceeds the stronger of the random and shuffled arms",
+    "seed_inference": "the independent unit for the trained arm is the training seed; report every planned seed and their range, and never quote a single seed as the effect",
+    "verbalization_gate": "the trained arm must retain at least 0.90 full-vocabulary format rate and at least 0.50 mean label mass; a discriminative readout over tokens the model would not emit is not a verbalization, and V1 failed exactly this way"
+  },
+  "claim_boundary": "A positive result shows that LoRA training produces a report that tracks the sign of a causally injected residual edit on directions and carriers withheld from training, with visible text held constant. It does not establish privileged self-access, verbalization of naturally occurring computation, faithfulness under adversarial pressure, or transfer to other layers, models, strengths, or non-binary internal variables.",
+  "design": {
+    "centering_concepts": [
+      "ocean",
+      "bread",
+      "volcano",
+      "violin",
+      "spider",
+      "hospital",
+      "desert",
+      "clock"
+    ],
+    "conditions": [
+      "target",
+      "random",
+      "shuffled",
+      "clean"
+    ],
+    "control_seed": 0,
+    "device": "mps",
+    "dtype_adapter": "float32",
+    "dtype_base": "bfloat16",
+    "epochs": 6,
+    "eval_carriers": [
+      "A neutral status note is displayed. Hidden state marker: \u00a7",
+      "Nothing changed. Hidden state marker: \u00a7",
+      "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: \u00a7"
+    ],
+    "eval_concepts": [
+      "garden",
+      "camera",
+      "train",
+      "banana",
+      "eagle",
+      "library",
+      "hammer",
+      "island"
+    ],
+    "injection_layer": 9,
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "learning_rate": 0.0001,
+    "lora_alpha": 32,
+    "lora_rank": 16,
+    "loss": "full_vocabulary_cross_entropy_on_the_label_token",
+    "mapping": {
+      "+1": "Q",
+      "-1": "K"
+    },
+    "max_offdiagonal_cosine_gate": 0.5,
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "smoke": false,
+    "strength": 1.0,
+    "train_carriers": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "A standard archive entry is visible. Hidden state marker: \u00a7",
+      "The shift log has been signed off. Hidden state marker: \u00a7",
+      "An inventory count is pending review. Hidden state marker: \u00a7",
+      "The duty roster is posted on the wall. Hidden state marker: \u00a7",
+      "A blank requisition sits in the tray. Hidden state marker: \u00a7"
+    ],
+    "train_concepts": [
+      "guitar",
+      "harbor",
+      "lantern",
+      "meadow",
+      "satellite",
+      "teapot",
+      "tunnel",
+      "whale"
+    ],
+    "train_seeds_planned": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "frozen_on": "2026-08-10",
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_report_training.py": "dd1a67e1eda23fd9b44ec6ef73ada53885761e9e4abda4f0a7191bcb304a6654",
+    "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/ift.py": "3ae5b23c8597e499f2de9ae02d5f281ed60922cd2e521c3b1693d83611968487",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/report_training.py": "f5286ccba8a03a4fcb0c92e33662b634c434c8f1475d6859e4413f5dd762c56e",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  },
+  "stop": "report the null if the trained target arm does not clear 0.50 on held-out concepts; report generic perturbation-sign readout rather than concept-specific reporting if the random and shuffled arms match the target arm"
+}

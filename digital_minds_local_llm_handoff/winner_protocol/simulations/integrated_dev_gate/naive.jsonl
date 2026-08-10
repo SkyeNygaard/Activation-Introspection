@@ -1,0 +1,12 @@
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev a", "persona": "neutral", "sign": -1, "semantic_rating": 3.7579683903799626}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev a", "persona": "neutral", "sign": 1, "semantic_rating": 5.342673036649931}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev a", "persona": "upbeat", "sign": -1, "semantic_rating": 4.694398351513839}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev a", "persona": "upbeat", "sign": 1, "semantic_rating": 6.311249602088976}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev a", "persona": "downbeat", "sign": -1, "semantic_rating": 2.661892052256832}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev a", "persona": "downbeat", "sign": 1, "semantic_rating": 4.311913765691469}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev b", "persona": "neutral", "sign": -1, "semantic_rating": 3.7178931123380927}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev b", "persona": "neutral", "sign": 1, "semantic_rating": 5.2454846385816785}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev b", "persona": "upbeat", "sign": -1, "semantic_rating": 4.640390355424834}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev b", "persona": "upbeat", "sign": 1, "semantic_rating": 6.261478207693723}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev b", "persona": "downbeat", "sign": -1, "semantic_rating": 2.7875580228355847}
+{"model": "Qwen/Qwen3-4B-Instruct-2507", "vector_file": "x", "layer": 29, "factor": 2.0, "carrier": "dev b", "persona": "downbeat", "sign": 1, "semantic_rating": 4.3731681545670815}

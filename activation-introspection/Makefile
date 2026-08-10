@@ -4,7 +4,7 @@ export UV_CACHE_DIR
 HF_HOME ?= $(CURDIR)/hf_cache
 export HF_HOME
 
-.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report codebook-report head-screen-report report-training report-training-report
+.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report codebook-report head-screen-report report-training report-training-seeds-report remap-training remap-training-report
 
 setup:
 	uv sync --all-groups
@@ -60,13 +60,35 @@ head-screen-report:
 # Zero-demonstration trained reporter. Needs MPS; the runner refuses to
 # overwrite an existing artifact, so reproduce into a new path.
 report-training:
-	uv run python scripts/run_report_training.py \
-	  --out results/report_training_reproduction_raw.jsonl
+	for s in 0 1 2 3; do \
+	  uv run python scripts/run_report_training.py --seed $$s \
+	    --out results/report_training_reproduction_seed$$s\_raw.jsonl; \
+	done
 
-report-training-report:
-	uv run --group analysis python scripts/analyze_report_training.py \
-	  --raw results/report_training_v1_raw.jsonl \
-	  --out results/report_training_v1_summary.json
+# The citable result is the four-seed pool, not any single run.
+report-training-seeds-report:
+	for s in 0 1 2 3; do \
+	  uv run --group analysis python scripts/analyze_report_training.py \
+	    --raw results/report_training_v3_seed$$s\_raw.jsonl \
+	    --protocol results/report_training_protocol_v3.json \
+	    --out results/report_training_v3_seed$$s\_summary.json; \
+	done
+	uv run --group analysis python scripts/analyze_report_training_seeds.py \
+	  --summary results/report_training_v3_seed[0-3]_summary.json \
+	  --out results/report_training_v3_seeds_summary.json
+
+# Fixed-versus-remapped convention training, with the strength-transfer arms.
+remap-training:
+	for s in 0 1 2; do \
+	  uv run python scripts/run_remap_training.py --seed $$s \
+	    --out results/remap_training_reproduction_seed$$s\_raw.jsonl; \
+	done
+
+remap-training-report:
+	uv run --group analysis python scripts/analyze_remap_training.py \
+	  --raw results/remap_training_v2_seed[0-2]_raw.jsonl \
+	  --protocol results/remap_training_protocol_v2.json \
+	  --out results/remap_training_v2_seeds_summary.json
 
 test:
 	uv run pytest

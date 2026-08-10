@@ -138,8 +138,10 @@ what failed, next to a graded competition entry and a proof. Different field, sa
 discipline. Doing it once is a habit. Doing it twice, independently, is a method,
 and the method is what I would bring to a project.
 
-**Scope.** Two executed activation experiments: one causal extension and one
-replication. Programmatic attention remains a concrete proposal, not a result.
+**Scope.** Four executed activation experiments: a causal in-context extension, a
+replication, a trained reporter across four seeds, and a two-stage attention
+localization that stopped on its own gate. Programmatic attention has two
+executed negatives and no positive result.
 
 ## Start here
 
@@ -219,7 +221,7 @@ the layer-3 case fails badly (2.44 against 0.51 and 0.41) and should not be quot
 
 | SPAR project | Current fit | Why |
 |---|---|---|
-| [Introspection Training for Verbalization Activations](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz), Belinda Li | **Executed in-context benchmark plus an executed training result** | The causal codebook tests the project's zero-training starter question while making the visible sentence-content shortcut impossible by construction, then replicates on three out-of-bank concepts at 0.958. A trained LoRA reporter then verbalizes the sign of an injected state at 0.583 on eight withheld directions, against 0.000 untrained. Its first version scored 0.917 while putting 5e-9 probability on the answer tokens, which is a trap this project would hit. Neither result establishes a robust safety monitor, and the trained arm is one seed. |
+| [Introspection Training for Verbalization Activations](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz), Belinda Li | **Executed in-context benchmark plus an executed training result** | The causal codebook tests the project's zero-training starter question while making the visible sentence-content shortcut impossible by construction, then replicates on three out-of-bank concepts at 0.958. A trained LoRA reporter then verbalizes the sign of an injected state at 0.927 across four seeds against 0.000 untrained, and a further study finds the trade-off training creates: it extends the detection floor to edits the untrained model is blind to (0.790–0.863 where base is exactly 0.500) while destroying semantic selectivity (random directions 0.513 → 0.913–0.955). Three failures on the way are contributions in themselves: a loss restricted to the answer options that scored 0.917 while emitting no labels, a number quoted from an unseeded run, and a hypothesis falsified by its own pre-registered gates. Neither result establishes a robust safety monitor. |
 | [Deploying Programmatic Attention in Real Transformers](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L), Belinda Li | **Two executed negatives against frozen thresholds** | The disjoint head screen ran and stopped: influence is redundant across six components where the protocol allowed 2–4, so there is no compact route to program. Separately, an exact `O(TD)` lowering of one released GPT-2 program is 18.63× faster in isolation but 1.089× once integrated, missing a preregistered 1.25×, which localizes the cost to partial-head projection and dispatch. Neither is a circuit or a monitoring-robustness result. |
 
 Official resources: the [Fall 2026 project list](https://www.sparai.org/projects/f26/),
@@ -233,12 +235,14 @@ stopped it: influence over the reporting behavior is redundant across six
 attention components, not compact enough to replace with a readable program. So
 the thing I would do first is no longer the head screen.
 
-The trained reporter is now run, and what it needs next is obvious from its own
-limits: **independent training seeds**, because one LoRA run cannot separate the
-effect from initialization luck, and then episode-remapped training so the
-trained and in-context designs become comparable. Both are cheap. Neither
-depends on a compact attention route existing, which is why this is the line to
-push rather than re-running the head screen.
+Episode-remapped training is done, and it produced the sensitivity/specificity
+trade-off. The next step follows from that result's own limit: every edit here is
+still an injected direction, so the open question is whether a trained reporter
+transfers to a **naturally computed** internal state — a two-hop intermediate,
+say, patched between matched prompts and validated as causally load-bearing before
+the report is elicited. Both outcomes are informative only if the design can
+separate "the capability does not transfer" from "the instrument did not reach",
+which is why it is the next project rather than a rushed addendum.
 
 ## What I would lead with
 

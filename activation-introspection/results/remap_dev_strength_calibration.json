@@ -1,0 +1,28 @@
+{
+  "by_strength": {
+    "0.15": {
+      "accuracy": 0.5,
+      "format": 1.0
+    },
+    "0.25": {
+      "accuracy": 0.5416666666666666,
+      "format": 1.0
+    },
+    "0.35": {
+      "accuracy": 0.5833333333333334,
+      "format": 1.0
+    },
+    "0.5": {
+      "accuracy": 0.8333333333333334,
+      "format": 1.0
+    },
+    "1.0": {
+      "accuracy": 0.9166666666666666,
+      "format": 1.0
+    }
+  },
+  "dev_carrier": "A routine maintenance record is open. Hidden state marker: \u00a7",
+  "dev_concept": "ocean",
+  "layer": 9,
+  "n_cells": 24
+}

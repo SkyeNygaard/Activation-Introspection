@@ -143,6 +143,11 @@ def build_protocol(smoke: bool) -> dict[str, Any]:
                 "readout over tokens the model would not emit is not a "
                 "verbalization, and V1 failed exactly this way"
             ),
+            "seed_inference": (
+                "the independent unit for the trained arm is the training seed; "
+                "report every planned seed and their range, and never quote a "
+                "single seed as the effect"
+            ),
             "no_retuning": (
                 "do not change model, layer, strength, prompts, labels, banks, "
                 "carriers, optimizer settings or gates after inspecting results; "
@@ -182,7 +187,7 @@ def build_protocol(smoke: bool) -> dict[str, Any]:
             "strength": STRENGTH,
             "train_carriers": list(TRAIN_CARRIERS),
             "train_concepts": list(TRAIN_CONCEPTS),
-            "train_seed": TRAIN_SEED,
+            "train_seeds_planned": [0, 1, 2, 3],
         },
         "frozen_on": "2026-08-10",
         "source_files_sha256": _source_hashes(),
@@ -230,6 +235,7 @@ def train_reporter(
     model: models.LoadedModel,
     bank: dict[str, ConceptVector],
     prepared: dict[str, PreparedReport],
+    seed: int,
 ) -> list[float]:
     """Fit the adapter on signed edits over the training bank and carriers."""
     import random
@@ -240,7 +246,7 @@ def train_reporter(
         for carrier in TRAIN_CARRIERS
         for sign in (-1, 1)
     ]
-    rng = random.Random(TRAIN_SEED)
+    rng = random.Random(seed)
     params = [p for p in model.model.parameters() if p.requires_grad]
     optimizer = torch.optim.AdamW(params, lr=LEARNING_RATE)
 
@@ -371,10 +377,11 @@ def _write_atomic(path: Path, lines: list[str]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--protocol", type=Path, default=ROOT / "results" / "report_training_protocol_v2.json"
+        "--protocol", type=Path, default=ROOT / "results" / "report_training_protocol_v3.json"
     )
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--seed", type=int, default=TRAIN_SEED)
     args = parser.parse_args()
 
     if args.out.exists():
@@ -410,12 +417,15 @@ def main() -> None:
     print("scoring untrained base model", flush=True)
     base_rows = score_all(model, eval_bank, prepared, trained=False, carriers=eval_carriers)
 
-    print("attaching adapter and training", flush=True)
+    print(f"attaching adapter and training (seed {args.seed})", flush=True)
+    # Seed the adapter initialisation as well as the example order: the point of
+    # running several seeds is to vary exactly what a single run cannot.
+    torch.manual_seed(args.seed)
     attach_lora(model, r=LORA_RANK, alpha=LORA_ALPHA)
     for parameter in model.model.parameters():
         if parameter.requires_grad:
             parameter.data = parameter.data.float()
-    losses = train_reporter(model, train_bank, prepared)
+    losses = train_reporter(model, train_bank, prepared, args.seed)
 
     print("scoring trained model on held-out banks", flush=True)
     trained_rows = score_all(model, eval_bank, prepared, trained=True, carriers=eval_carriers)
@@ -443,6 +453,7 @@ def main() -> None:
         "final_epoch_mean_loss": sum(losses[-len(train_bank) * len(TRAIN_CARRIERS) * 2 :])
         / max(len(train_bank) * len(TRAIN_CARRIERS) * 2, 1),
         "git_commit": _git("rev-parse", "HEAD"),
+        "train_seed": args.seed,
         "git_dirty": bool(_git("status", "--porcelain")),
         "model_resolved": model.name,
         "model_revision": resolved,

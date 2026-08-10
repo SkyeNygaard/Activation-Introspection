@@ -14,7 +14,7 @@ carriers it never saw, with no demonstrations in context?
 Everything else in this repository is a zero-weight-update intervention. This is
 the first result here that trains anything.
 
-## Why chance is exactly 0.500, and why that is not a measured control
+## Why the null is 0.000 on pairs, and why that is not a measured control
 
 Both members of a query twin are byte-identical in visible text and have
 opposite correct labels. Any strategy that reads only the prompt must give both
@@ -49,7 +49,7 @@ fixed in the in-context V2 protocol and the same rule applies here.
 
 Six training carriers; three evaluation carriers withheld from training, one of
 them deliberately terse (`Nothing changed.`) and one deliberately long. LoRA rank
-16, alpha 32, learning rate 1e-4, six epochs, one seed.
+16, alpha 32, learning rate 1e-4, six epochs, four training seeds in V3.
 
 Arms at evaluation: `target` (the concept direction), `random` and `shuffled`
 (magnitude-matched controls), and `clean` (no edit, which has no correct label
@@ -113,28 +113,68 @@ All four gates pass. 504 rows, raw SHA-256 `a3d6361e…db6c68`.
 | **trained** | **target** | **0.583** | 0.729 | 3.30 | **1.000** | **1.000** |
 | trained, own training bank | target | 1.000 | 1.000 | 10.74 | 1.000 | 1.000 |
 
-Fixing the loss restored verbalization completely — format 1.000 and label mass
-1.000, against V1's 0.000 and 5e-9 — and **cut held-out accuracy from 0.917 to
-0.583**. That drop is the measurement of how much V1's number was inflated by a
-readout the model would never have spoken.
+Fixing the loss restored verbalization completely: format 1.000 and label mass
+1.000, against V1's 0.000 and 5e-9. Held-out accuracy came out at 0.583.
 
-What survives is still a genuine effect, and the floor it clears is lower than
-0.500. A prompt-only strategy scores 0.000 on pairs, and a row-independent coin
-flip scores 0.250; the preregistered 0.500 threshold is conservative rather than
-the null. Against that, the trained reporter reaches 0.583 on directions it never
-saw and carriers it never saw, while the untrained model is at 0.000 and the
-magnitude-matched controls are at 0.208–0.250. The readout is therefore
-direction-specific and not a generic "something was perturbed" detector — the
-in-context study found random and shuffled directions learnable at 0.658/0.660,
-and training did not reproduce that.
+**Do not read that 0.583 as the cost of the repair.** V2 is a single training run
+whose adapter initialization was never seeded, and V3 below shows the seeded
+distribution sits far above it. V2 is retained as one uncontrolled draw, not as
+the effect.
 
-Two things temper it. Generalization is partial and uneven: the adapter is
-perfect on its own eight training directions and loses 41.7 points on the eight
-held-out ones, and per-concept accuracy ranges from 1.000 (`garden`, `eagle`,
-`hammer`) to 0.000 (`library`, `train`), with 5 of 8 concepts above the
-threshold. And the `clean` arm answers `K` on 100% of rows in every arm,
-including the base model, so there is a strong standing label bias that the twin
-structure controls for but does not remove.
+## V3: four seeds, and what V2 got wrong
+
+V1 and V2 both set `random.Random(TRAIN_SEED)` for the example order and nothing
+else. LoRA initialization and dropout draws came from whatever global RNG state
+happened to exist. So "one seed" understated the problem: **nothing was
+controlled**, and neither run could be distinguished from initialization luck.
+
+V3 adds `torch.manual_seed` before the adapter is attached, declares the training
+seed as the inference unit, and names all four seeds in the protocol before any
+of them runs. Nothing else changes. 504 rows per seed.
+
+| arm | condition | twin-pair mean | range | per seed | format | label mass |
+|---|---|---:|---|---|---:|---:|
+| untrained base | target | 0.000 | — | 0.000 ×4 | 1.000 | 0.994 |
+| trained | random | 0.260 | [0.125, 0.333] | 0.250 / 0.125 / 0.333 / 0.333 | 1.000 | 0.997 |
+| trained | shuffled | 0.208 | [0.167, 0.292] | 0.292 / 0.167 / 0.208 / 0.167 | 1.000 | 0.996 |
+| **trained** | **target** | **0.927** | **[0.833, 1.000]** | **1.000 / 0.833 / 1.000 / 0.875** | **1.000** | **1.000** |
+| trained, own bank | target | 1.000 | — | 1.000 ×4 | 1.000 | 1.000 |
+
+Every seed passes every gate. Target minus its own strongest control is +0.708,
++0.667, +0.667, +0.542 — the effect is direction-specific in all four, and the
+in-context study's finding that random and shuffled directions are themselves
+learnable at 0.658/0.660 does not reproduce under training.
+
+Generalization is much better than V2 suggested: 1.000 on the adapter's own eight
+directions against 0.927 on eight it never saw, a 7.3-point gap rather than 41.7.
+
+### The correction this forces
+
+The V2 write-up said the 0.917 → 0.583 drop measured how much V1's broken loss
+had inflated itself. **That was wrong**, and the seeded runs are what show it.
+Fixing the loss cost essentially nothing in accuracy — V1's degenerate 0.917
+against V3's genuine 0.927 — it only made the output into something the model
+actually says. V2's 0.583 was a low draw, and reporting it as the effect was the
+same pseudo-replication error this repository's claim ledger exists to catch. I
+made it, in the same session, immediately after writing about V1's defect.
+
+One honesty limit on the diagnosis. Seeding changes adapter initialization *and*
+makes LoRA dropout deterministic, so V2 and V3 differ in two ways at once. The
+gap is consistent with 0.583 being an unlucky draw, but a systematic effect of
+determinism on training dynamics is not excluded, and four seeds cannot separate
+them. What is certain either way is that V2 alone could not support a number.
+
+### What four seeds do and do not buy
+
+Four points give a mean and a range. They do not give a confidence interval, and
+the aggregator deliberately reports no standard error. The seeds share one model,
+one layer, one strength, one concept bank, and one machine, so this is
+development-grade evidence that the effect is not initialization luck — not a
+population estimate.
+
+The `clean` arm answers `K` on 100% of rows in every arm including the base
+model, so a strong standing label bias exists. The twin structure controls for it
+by construction rather than removing it.
 
 ## Disclosed deviations
 
@@ -153,6 +193,13 @@ structure controls for but does not remove.
   frozen protocols, so correcting it would invalidate the V1 and V2 artifacts for
   the sake of a comment. It is disclosed here and stated correctly in the
   analyzer and in this note instead. Fix it in the next protocol version.
+- V3 was designed and run after V2's 0.583 was inspected. The seeds were fixed
+  in the protocol before any of them ran and all four are reported, so no seed
+  was selected on its outcome — but the code change that produced the higher
+  numbers was made after seeing a disappointing result, and that ordering is
+  exactly what a reader should be suspicious of. The defence is that seeding
+  initialization is a control every multi-run experiment needs, not a knob
+  turned toward a better answer, and that all four seeds are published.
 - The verbalization gate was added to the analyzer after V1 was inspected. Under
   the current analyzer V1 reports `gates_pass=false`; under the analyzer that
   existed when V1 ran, it reported true. Both summaries in `results/` are
@@ -161,9 +208,9 @@ structure controls for but does not remove.
 
 ## What does not follow
 
-- One model, one layer, one strength, one binary variable, **one training seed**.
-  A single seed cannot separate the effect from initialization luck; the design
-  calls for independent seeds and they have not been run.
+- One model, one layer, one strength, one binary variable, one concept bank, one
+  machine. Four training seeds rule out initialization luck; they are not a
+  population estimate and support no interval.
 - The mapping is fixed and global, not re-randomized per episode. With zero
   demonstrations an episode-specific mapping is unanswerable in principle, so
   this design gives up the property that makes the in-context result strong.
@@ -180,10 +227,14 @@ structure controls for but does not remove.
 
 ## Artifacts
 
-- V1 precursor: `results/report_training_protocol_v1.json`,
-  `results/report_training_v1_raw.jsonl` and its manifest and summary;
-- V2: `results/report_training_protocol_v2.json`,
-  `results/report_training_v2_raw.jsonl` and its manifest and summary;
-- runner and analyzer: `scripts/run_report_training.py`,
-  `scripts/analyze_report_training.py`;
-- regenerate the summary with `make report-training-report`.
+- V1 precursor (degenerate loss): `results/report_training_protocol_v1.json`,
+  `results/report_training_v1_*`;
+- V2 precursor (repaired loss, unseeded initialization):
+  `results/report_training_protocol_v2.json`, `results/report_training_v2_*`;
+- V3, the citable result: `results/report_training_protocol_v3.json`,
+  `results/report_training_v3_seed{0,1,2,3}_*`, pooled into
+  `results/report_training_v3_seeds_summary.json`;
+- runner and analyzers: `scripts/run_report_training.py`,
+  `scripts/analyze_report_training.py`,
+  `scripts/analyze_report_training_seeds.py`;
+- regenerate with `make report-training-seeds-report`.

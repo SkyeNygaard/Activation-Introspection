@@ -65,41 +65,67 @@ against **0.500** for the exactly query-matched arm, with the right sign in all
 six concept-carrier strata and 100% label format. The effect was not specific to
 the eight concepts it was confirmed on.
 
-### Then I trained one, and it caught me out
+### Then I trained one, and found a trade-off
 
-Everything above is a zero-weight-update intervention. So I trained a LoRA to do
-the same job with the demonstrations removed: fit it on eight concept directions,
-then ask it to name the sign of a hidden edit on eight directions and three
-carriers it never saw.
+Everything above is a zero-weight-update intervention. Training changes what the
+model can do, in two directions at once.
 
-The first version scored **0.917** on held-out directions and all three frozen
-gates passed. It is not a result, and the same saved artifact says why: the
-trained model put **5e-9** of its probability on the two answer tokens and never
-once actually emitted one. The 0.917 was a forced choice between words the model
-would not say.
+I trained two adapters on episodes byte-identical to the experiment above, same
+concepts, carriers, optimiser, and gradient-step count. They differ in one thing:
+one always uses the convention `+ → Q`, the other re-randomises it every episode.
+Both are then tested on eight concept directions and two sentences neither ever
+saw. Three seeds.
 
-The cause was one line. I had minimised cross-entropy over the two label logits
-alone, which pins their *order* and leaves the rest of the vocabulary free, so
-the optimiser quietly suppressed both labels while keeping the right one on top.
-Restricting an introspection-training loss to the answer options gives you a
-probe wearing the model's output head — and no forced-choice metric can see it.
-Only an unrestricted full-vocabulary check catches it.
+**Training makes the model far more sensitive.** The injection strength is how
+hard I push the internal state. Untrained, the model goes blind below a certain
+push. Trained only at strength 0.5, it reads pushes it has never seen:
 
-The repaired version changes only the loss. Format and label mass return to
-1.000, and held-out accuracy falls to **0.583**. That 33-point drop is the
-measurement of how much the broken version was inflating itself.
+| injection strength | untrained | fixed convention | re-randomised |
+|---|---:|---:|---:|
+| 0.5 *(trained on)* | 0.745 | **1.000** | **1.000** |
+| 0.25 | 0.526 | **0.997** | **0.990** |
+| 0.15 | **0.500** | **0.863** | **0.790** |
 
-| | untrained | trained, random dir. | trained, shuffled dir. | **trained, concept dir.** |
-|---|---:|---:|---:|---:|
-| twin-pair accuracy | 0.000 | 0.250 | 0.208 | **0.583** |
+At 0.15 the untrained model is at exactly chance — 0.500, and 0.010 on paired
+twins. It cannot see the edit at all. The trained ones read it at 79–86%.
 
-A prompt-only strategy scores 0.000 here, and a coin flip 0.250, so 0.583 on
-directions never trained on is a real effect — and it is direction-specific,
-which the in-context version was not. It is also one seed, partial (the adapter
-is perfect on its own eight directions and loses 41.7 points on the held-out
-eight), and uneven across concepts. [Full write-up, including an error I left in
-the frozen source and disclosed rather than
-patched](activation-introspection/notes/07-trained-activation-reporter.md).
+**And it makes the model much less discriminating.** Untrained, a random
+direction of the same size is invisible — 0.513, chance — while a real concept
+direction reads at 0.745. Its access is *selective*: it notices internal changes
+that mean something. After training, random directions read at 0.91–0.96.
+
+> Introspection training buys sensitivity and pays for it in specificity. The
+> trained monitor sees internal changes three times weaker than the base model
+> can — and stops distinguishing changes that mean something from changes that
+> do not.
+
+A monitor built this way is more sensitive and less trustworthy about *what* it
+saw. Ask it "is concept X active" and it answers a different question: "did
+something move at layer 9."
+
+Two cheats are impossible here by arithmetic rather than by measurement. A
+text-only reader scores 0.000 on twin pairs, because twins are byte-identical
+with opposite answers. A fixed `direction → letter` probe scores 0.000 on
+mapping-flip pairs, because the same nudge carries opposite answers under the two
+conventions. Both adapters score **1.000** on the second, which settles whether a
+trained reporter is "just a probe."
+
+**The hypothesis I built this to test was wrong.** I predicted fixed-convention
+training would damage the model's ability to adopt a new convention. It does not
+— the two adapters are indistinguishable, and the fixed one is marginally better.
+Two seeds falsified it and are kept with `all_gates_pass=false` rather than
+re-run under friendlier gates. [Full write-up, including a strength-1.0 pilot
+that was dead on arrival at ceiling, and a flaw I found in my own
+analyzer](activation-introspection/notes/08-sensitivity-specificity-tradeoff.md).
+
+An earlier version of this line is worth keeping for one reason: it scored 0.917
+and was not a report at all. The trained model held 5e-9 probability on the two
+answer tokens and never emitted one, because I had trained it by scoring only
+those two tokens against each other — which pins their order and lets the
+optimiser suppress both. **Restrict an introspection-training loss to the answer
+options and you get a probe wearing the model's mouth, invisible to every
+forced-choice metric.** [That study is
+here](activation-introspection/notes/07-trained-activation-reporter.md).
 
 ### The route turned out not to be compact, and that is the result
 

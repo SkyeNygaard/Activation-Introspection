@@ -1,27 +1,71 @@
 # Result artifact status
 
-## Trained zero-demonstration reporter, and the loss bug it caught
+## Sensitivity/specificity trade-off in introspection training
 
-`report_training_protocol_v2.json` (SHA-256 `6812dc8f…e461d`) freezes the
-repaired run; `report_training_protocol_v1.json` (`acb92e81…d8082`) is retained
-as the disclosed precursor. Each raw artifact holds 504 rows across an untrained
-base arm, a trained held-out-bank arm, and a trained own-bank arm.
+`remap_training_protocol_v2.json` (SHA-256 `f29b479d…be0f0`) freezes the citable
+run: three training seeds, 4,608 rows each, all four gates passing. Two adapters
+are trained on byte-identical episode formats differing only in whether the label
+convention is held fixed or re-randomised, then scored against the untrained
+model on eight concept directions and two carriers neither saw.
 
-V1 reached 0.917 twin-pair accuracy on eight concept directions it never trained
-on — and was not a verbalization. Its trained arm held ~5e-9 total probability on
-the two labels and a 0.000 full-vocabulary format rate, because the training loss
-was a two-way softmax over the label logits that constrained their ordering and
-nothing else. V2 changes only the loss to full-vocabulary cross-entropy. Format
-and label mass return to 1.000 and held-out accuracy falls to **0.583**, against
-0.000 for the untrained base model and 0.208–0.250 for magnitude-matched
-controls. All four V2 gates pass; under the current analyzer V1 fails the
-verbalization gate.
+**Training extends the detection floor.** At injection strength 0.15 the
+untrained model is at exactly chance (0.500 row, 0.010 twin pairs — blind). Both
+adapters, trained only at strength 0.5, read it at 0.790–0.863. At 0.25 the base
+is at 0.526 and the adapters at 0.990–0.997.
 
-Note that the pair-wise null is 0.000 for a prompt-only strategy and 0.250 for a
-coin flip, not 0.500 — the frozen 0.500 threshold is conservative. Full protocol,
+**Training destroys semantic selectivity.** Untrained, random magnitude-matched
+directions sit at chance (0.513) while concept directions reach 0.745 — access is
+selective. After training, random directions reach 0.913–0.955.
+
+Two nulls are identities of the design rather than measured controls: a
+prompt-only learner scores 0.000 on query-twin pairs, and a fixed sign-to-token
+probe scores 0.000 on mapping-flip pairs. Both adapters reach 1.000 on the latter,
+which settles the probe objection to `report_training`.
+
+`remap_training_protocol_v1.json` and `remap_training_v1_seed{0,1}_*` are the
+falsified precursor: v1 predicted fixed-convention training would damage
+in-context remapping, and two seeds refuted it. Their summary carries
+`gate set v1` and `all_gates_pass=false`, because gate sets are keyed to the
+protocol that produced the artifact rather than to the current analyzer.
+
+Full protocol, limits and disclosed deviations are in
+[`../notes/08-sensitivity-specificity-tradeoff.md`](../notes/08-sensitivity-specificity-tradeoff.md).
+Regenerate with `make remap-training-report`.
+
+## Trained zero-demonstration reporter, and two errors it caught
+
+`report_training_protocol_v3.json` freezes the citable run: four training seeds
+named before any of them ran, 504 rows each, seed declared as the inference unit.
+V1 and V2 are retained as disclosed precursors.
+
+Across four seeds a LoRA trained on eight concept directions names the sign of a
+causally injected hidden state on eight directions and three carriers it never
+saw at **0.927 mean twin-pair accuracy, range [0.833, 1.000]**, with format and
+label mass at 1.000. The untrained base model is at 0.000 on every seed;
+magnitude-matched random and shuffled directions sit at 0.260 and 0.208. Every
+seed passes every gate, and every seed beats its own strongest control by
++0.542 to +0.708.
+
+Two precursors, both instructive:
+
+- **V1 scored 0.917 and was not a verbalization.** Its training loss was a
+  two-way softmax over the label logits, which fixes their ordering and leaves
+  the rest of the vocabulary free; the adapter suppressed both labels to ~5e-9
+  total probability and never emitted one. No forced-choice metric can see this.
+- **V2 repaired the loss and scored 0.583 — and that number is not the effect.**
+  V1 and V2 seeded only the example order, never the adapter initialization, so
+  neither could be distinguished from initialization luck. V2 was one
+  uncontrolled draw and it fell below all four seeded runs.
+
+The V2 write-up's claim that the 0.917 → 0.583 drop measured the broken loss's
+inflation was wrong; the repair cost essentially nothing in accuracy (0.917
+degenerate against 0.927 genuine) and only made the output real.
+
+The pair-wise null is 0.000 for a prompt-only strategy and 0.250 for a coin
+flip, not 0.500 — the frozen 0.500 threshold is conservative. Full protocol,
 limits, and a disclosed docstring error in the frozen source are in
 [`../notes/07-trained-activation-reporter.md`](../notes/07-trained-activation-reporter.md).
-Regenerate with `make report-training-report`.
+Regenerate with `make report-training-seeds-report`.
 
 ## Stage 1b head screen: pre-registered STOP, and a cross-concept replication
 

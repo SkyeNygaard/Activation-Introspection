@@ -118,7 +118,21 @@ The same session designed, implemented, and ran the trained reporter in
 `notes/07`, including the V1 loss defect and its V2 repair. The defect was found
 by the agent reading its own saved label-mass column, not by me. The
 verbalization gate that now fails V1 was written afterwards, and that ordering is
-disclosed in the note. As everywhere else here, this is agent-assisted work with
+disclosed in the note. The agent then reported V2's 0.583 as the effect, noticed
+on the next run that neither V1 nor V2 had seeded adapter initialization at all,
+and retracted its own figure in [CLAIMS.md](spar-application/CLAIMS.md). Both the
+wrong statement and the retraction are agent output; a reader should weigh that
+the error and its correction came from the same process.
+
+A follow-up study on the fixed-versus-remapped training convention was designed,
+run and written up the same way. Its stated hypothesis was falsified by its own
+pre-registered gates and the falsifying artifact is retained rather than re-run.
+Two further self-caught defects belong on the record: the analyzer's gates lived
+in code rather than in the protocol, so extending it silently re-judged an earlier
+failed artifact as passing; and the runner cloned the whole model state dict
+between arms, costing about 6 GB of wired memory and restoring nothing. Both were
+found by the agent, and both are disclosed in
+[notes/08](activation-introspection/notes/08-sensitivity-specificity-tradeoff.md). As everywhere else here, this is agent-assisted work with
 the artifacts committed so a reader can recompute rather than trust it — it is
 not independent review.
 
