@@ -6,7 +6,7 @@ Audit date: **2026-08-10**
 
 | Repository | State | Layout |
 |---|---|---|
-| `activation-introspection` | Retained-trace history plus the 2026-08-09 causal-codebook V1 precursor and V2 repair-confirmation. The new worktree artifacts are checksummed but not yet committed. | merged at `activation-introspection/` |
+| `activation-introspection` | Retained-trace history, the 2026-08-09 causal-codebook V1 precursor and V2 repair-confirmation, and the 2026-08-10 Stage 1a/1b attention screens. Stage 1b returned a pre-registered stop. The new worktree artifacts are checksummed but not yet committed. | merged at `activation-introspection/` |
 | `adaptive-monitor-sandbox` | Repairs, the Study 3 module, and the retained exact-order artifact committed on `main` (`457f487`, on top of `090aca2`). | merged at `adaptive-monitor-sandbox/` |
 | `spar-application` | Committed. | `spar-application/` |
 
@@ -68,6 +68,9 @@ re-stamp the date on every subsequent tree.
 | A retained-trace confirmatory run | 6912 rows; `results/retained_test_qwen05b_raw.jsonl`; SHA-256 and model revision recorded in the paired summary |
 | A causal-codebook V2 repair-confirmation | 576 episode rows / 2,880 scored forwards; model revision `aa8e72537993ba99e69dfaafa59ed015b17504d1`; raw SHA-256 `f45d2ac5…7cf20`; manifest `84022779…fc40`; summary `896fcdd6…37f6a`; protocol `fbba4892…ffc39`; config `06e404fa…61f28`; analyzer `67130c64…94f57`; exact 8 × 3 × 24 design and all 40 statistics independently reconstructed with no discrepancy |
 | A DEV attention-localization screen | One concept/carrier, 12 rows, 1,248 patches / 1,284 scored forwards; raw `530f4f55…d5c1c`; manifest `8c6dffb8…a5e0c`; summary `f2329275…d3dcbb`; protocol `27c8af5f…e41427`; analyzer `025a0add…6d2c`; independently reconstructed with no discrepancy. Selection only, not confirmation |
+| A trained zero-demonstration reporter | 504 rows per version; V2 raw `a3d6361e…db6c68`, protocol `6812dc8f…e461d`; V1 precursor raw `13641578…f796e4`, protocol `acb92e81…d8082`; runner `21307f54…20cbc`; analyzer `a82e0e00…b20e9`. V2 passes all four gates at 0.583 twin-pair on held-out directions; V1 fails the verbalization gate under the current analyzer. One training seed. Regenerate with `make report-training-report` |
+| A Stage 1b DEV head screen | Three concepts × two carriers, 72 unit rows, 5,112 scored forwards; raw `9833a9bf…54bde`; config `d29e0b5c…f0c6`; protocol `759c0850…25856d`; runner `93c8d4e2…41a0`; analyzer `de69e02d…63078`; summary `c9bea45f…24212`. The analyzer evaluates the frozen stop/go predicates itself and returned `proceed=false`. Protocols V1 and V2 are retained unrun as disclosed precursors. Regenerate with `make head-screen-report` |
+| A programmatic-attention lowering | 818 raw rows; raw `c62c1f77…ba1a7b`; protocol `7ad77347…96f593`; 216/216 equivalence cells at max abs error 4.8e-7; isolated operator 18.63× and integrated module 1.089× at `B=1, T=1024`, CPU fp32, 30 paired blocks per cell. The 1.25× integration threshold was frozen before the grid ran and was not met |
 
 ### Mechanism checks behind the retained-trace run
 

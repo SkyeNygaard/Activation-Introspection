@@ -197,8 +197,8 @@ control that killed it. Catching those is most of the skill.
 
 | Project | Relevance |
 |---|---|
-| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. The new result is a matched-visible-observation ICL benchmark that eliminates the visible sentence-content shortcut; the earlier replication identifies a depth-dependent readout failure for training to target. |
-| **Deploying Programmatic Attention** (Belinda Li, Anthropic) | DEV progress, not a safety result. A frozen paired screen selected query-marker L21/L23 and final-answer L26/L31 for a disjoint multi-concept head screen. Unexplained paths remain. Only a compact replicated route would justify the false-cue program test. Runtime is appendix-only. |
+| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. A matched-visible-observation ICL benchmark in which the visible sentence-content shortcut is impossible by construction, replicated at 0.958 on three out-of-bank concepts; a trained LoRA reporter at 0.583 on eight withheld directions against 0.000 untrained ([notes/07](notes/07-trained-activation-reporter.md)); and a loss-restriction failure that inflated the first trained run to 0.917 while it emitted no labels at all. The earlier replication identifies a depth-dependent readout failure for training to target. |
+| **Deploying Programmatic Attention** (Belinda Li, Anthropic) | Two executed negatives. The disjoint head screen ran and stopped — six components qualified where the frozen protocol allowed 2–4, so influence is redundant and there is no compact route to program. An exact `O(TD)` lowering of one released GPT-2 program is 18.63× faster in isolation but 1.089× integrated, missing a preregistered 1.25× and localizing the cost to partial-head projection and dispatch. |
 
 ### What it does not claim
 

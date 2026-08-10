@@ -2,7 +2,10 @@
 
 `attention_localization_dev.png` is a descriptive DEV-selection figure generated
 from the hash-bound localization summary. Stars mark candidates for a disjoint
-head screen; they are not confirmed components.
+head screen; they are not confirmed components. That head screen has since run
+and stopped — three of the four starred pairs replicated, `query_marker@23` did
+not, and six individual components qualified where the protocol allowed 2–4. Read
+the figure as the input to a decision that came out negative, not as a route.
 
 `causal_codebook_icl.png` is the current V2 repair-confirmation figure. It is
 regenerated from the checksummed raw artifact by `scripts/analyze_codebook_icl.py`;

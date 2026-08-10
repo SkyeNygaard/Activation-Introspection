@@ -4,7 +4,7 @@ export UV_CACHE_DIR
 HF_HOME ?= $(CURDIR)/hf_cache
 export HF_HOME
 
-.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report codebook-report
+.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report codebook-report head-screen-report report-training report-training-report
 
 setup:
 	uv sync --all-groups
@@ -49,6 +49,24 @@ codebook-report:
 	  --raw results/codebook_icl_confirm_v2_raw.jsonl \
 	  --out results/codebook_icl_confirm_v2_summary.json \
 	  --figure figures/causal_codebook_icl.png
+
+# Stage 1b. The analyzer is fail-closed and evaluates the frozen stop/go gates
+# itself, so this target reproduces the published verdict, not just the numbers.
+head-screen-report:
+	uv run --group analysis python scripts/analyze_attention_head_screen.py \
+	  --raw results/attention_head_screen_dev_v3_raw.jsonl \
+	  --out results/attention_head_screen_dev_v3_summary.json
+
+# Zero-demonstration trained reporter. Needs MPS; the runner refuses to
+# overwrite an existing artifact, so reproduce into a new path.
+report-training:
+	uv run python scripts/run_report_training.py \
+	  --out results/report_training_reproduction_raw.jsonl
+
+report-training-report:
+	uv run --group analysis python scripts/analyze_report_training.py \
+	  --raw results/report_training_v1_raw.jsonl \
+	  --out results/report_training_v1_summary.json
 
 test:
 	uv run pytest

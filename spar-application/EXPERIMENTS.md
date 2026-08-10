@@ -28,11 +28,16 @@ This question is phase-gated:
    selected query-marker L21/L23 and final-answer L26/L31. It is one
    concept/carrier and leaves unexplained all-position paths, so it is selection,
    not mechanism evidence.
-2. **Stage 1b — disjoint DEV head screen.** Replicate only those four layer-role
-   pairs across multiple concepts/carriers and scan individual heads under a new
-   frozen protocol. Stop unless 1–4 components replicate without format or
-   label-mass collapse.
-3. **Safety stage — cue conflict.** Only after the localization gate passes, place
+2. **Stage 1b — disjoint DEV head screen (executed 2026-08-10; STOPPED).** All 64
+   layer-role-head components were scanned on three disjoint concepts and two
+   carriers, 5,112 scored forwards, under protocol SHA-256 `759c0850…25856d` with
+   a hash-locked analyzer. Two gates failed: `query_marker@23` removed 16.2%
+   against a 20% parent threshold, and six components qualified against a frozen
+   2–4 window. Influence is redundant rather than compact, so the safety stage
+   below is not authorized. The screen's own defect — no zero/random-donor damage
+   control — is recorded in [CLAIMS.md](CLAIMS.md) and must be fixed before any
+   re-attempt.
+3. **Safety stage — cue conflict (not authorized).** Only after the localization gate passes, place
    a decoy after the marker so causal masking prevents it from contaminating the
    source state. Train matched learned-QK and program-routed reporters with
    identical V/O and output readouts, plus wrong-gather and programmed-edge
@@ -49,7 +54,9 @@ programmed-path necessity, and a meaningful advantage over learned routing under
 cue reversal without an in-distribution loss. Otherwise report a boundary or
 null. This can establish resistance to one controlled shortcut only—not honesty,
 privileged introspection, robustness to deceptive optimization, or deployment
-safety. Runtime and memory belong in an appendix.
+safety. Latency and peak memory are a separate outcome family with their own
+preregistered thresholds; they neither rescue nor substitute for a faithfulness
+gate.
 
 ## Study 1: Causal use of a retained activation trace (EXECUTED 2026-08-01)
 
@@ -466,10 +473,12 @@ Pending before a headline run:
 
 1. **Treat Study 1 and causal-codebook V2 as completed instrument gates.** Neither
    is evidence of safety-monitor robustness.
-2. **Run the disjoint DEV individual-head screen.** Stop the single-route study
-   if the four selected layer-role effects do not replicate compactly.
-3. **Run the cue-conflict safety study only if Stage 1b passes.** Freeze the
-   program and all gates before held-out concepts or prompts are exposed.
+2. **The disjoint DEV individual-head screen is run and stopped.** The four
+   selected layer-role effects did not replicate compactly, so the single-route
+   study is closed at this instrument. Any re-attempt must add zero/random-donor
+   damage controls inside the screen and widen the component universe beyond
+   single query heads at preselected sites.
+3. **The cue-conflict safety study is not authorized.** Stage 1b did not pass.
 4. **Keep the aligned-source Study 2 as a separate privileged-access test.** The
    writer/reader factorization is a mechanism extension; neither should be an
    indiscriminate layer sweep.
@@ -477,7 +486,9 @@ Pending before a headline run:
    Run the disjoint confirmatory set only when a real agent, lineage oracle,
    monitor calibration, development mechanism pilot, and positive controls all
    pass.
-6. Treat runtime and memory for Programmatic Attention as appendix diagnostics.
+6. Report latency and memory for Programmatic Attention as their own outcome
+   family with preregistered thresholds, since that project's stated question is
+   cost to task performance *and* efficiency.
    Keep reward-seeking RL and training-induced CoT obfuscation proposal-only unless
    substantially more compute and independent training runs are available.
 

@@ -25,21 +25,54 @@ accuracy is 0.891 [0.816, 0.995], against 0.500 for the exactly query-matched ar
 The target beats the strongest per-position-magnitude-matched random/shuffled
 direction by +0.231 [0.137, 0.286], with 1.000 next-token label-format integrity.
 
+The strongest property of this design is structural rather than statistical.
+Because query twins are byte-identical in visible text and carry opposite correct
+labels, an input-only learner is pinned at exactly 0.500 **by construction**. The
+"reality check" objection — that input-only classifiers can match hidden-state
+prediction — cannot apply here, because there is no input to classify on. That is
+the confound prior activation-label ICL work leaves open.
+
+The effect then replicated out of bank. Three concepts and two carriers used in no
+tuning or selection step give 0.958 target accuracy against 0.500 for the exactly
+query-matched arm, correct sign in 6/6 strata. This came from the control arm of a
+later experiment run for a different purpose, so it is an unplanned generalization
+check rather than a confirmatory rerun.
+
 The earlier retained-trace replication supplies the complementary failure case.
 A naturally trained probe can recover a trace at readout depth after the model's
 own behavioral access has collapsed. Together, the results identify a usable
 in-context interface and a later-depth regime that training would have to repair.
 
-**Gap.** The causal ICL result is binary, explicitly elicited, and measured in one
-model/layer. It does not isolate privileged access, use J-space variables, or
-show trained free-form verbalization. The retained-trace schedule remains a
-replication. No result here yet answers whether training generalizes across
+**Trained evidence.** A LoRA fitted on eight concept directions reports the sign
+of a causally injected hidden state at 0.583 twin-pair accuracy on eight
+directions and three carriers withheld from training, against 0.000 for the
+untrained base model and 0.250/0.208 for magnitude-matched controls, with format
+and label mass at 1.000. The pair-wise null is 0.000 for a prompt-only strategy,
+so the frozen 0.500 threshold is conservative.
+
+The first version of that run is the more useful half. It scored 0.917 and passed
+every gate while holding 5e-9 probability on the answer tokens: the training loss
+was a two-way softmax over the label logits, which fixes their ordering and
+leaves the rest of the vocabulary free, so the adapter suppressed both labels
+and kept the right one on top. **Restricting an introspection-training loss to
+the answer options produces a probe wearing the model's output head, and no
+forced-choice metric can see it.** Repairing the loss cost 33 points. That trap
+sits directly in this project's path.
+
+**Gap.** The trained result is one seed, one layer, one strength, one binary
+variable, and a fixed rather than episode-remapped mapping — so it is not
+comparable to the in-context number. The causal ICL result is binary and
+explicitly elicited. Neither isolates privileged access, uses J-space variables,
+or shows free-form verbalization. The retained-trace schedule remains a
+replication. Nothing here yet answers whether training generalizes across
 internal variables, layers, or naturally occurring computations.
 
-**Smallest authentic experiment.** Train a readout adapter on the same
-matched-visible, episode-remapped causal task, then test unused directions,
-concepts, layers, and richer multiway/continuous variables. Compare training
-against the frozen 0.891 ICL baseline and query-only/random/shuffled controls. A
+**Smallest authentic experiment.** Run the trained reporter across independent
+seeds first, since one seed cannot separate the effect from initialization luck.
+Then restore episode remapping by training on few-shot episodes rather than a
+fixed mapping, and extend to unused layers and to richer multiway/continuous
+variables. Keep the unrestricted full-vocabulary format and label-mass gates on
+every arm. A
 later J-space phase should replace lexical contrast vectors with causally patched
 workspace variables and ask whether the learned verbalizer transfers. Keep the
 symmetric aligned-source experiment as the privileged-access test; do not make it
@@ -63,42 +96,75 @@ a retained trace. If a raw own-source gap disappears after alignment, interpret 
 as compatibility mediation. If it survives in both directions, call it residual
 self-specific compatibility under the tested transform, not metacognition.
 
-**Fit: executed scoped extension candidate plus a direct training path.** The ICL
-benchmark exists and passed its stated gates; monitoring robustness and
-generalization under training remain untested.
+**Fit: an executed in-context benchmark and an executed training result, plus a
+methodological trap found the hard way.** The ICL benchmark exists and passed its
+stated gates; the trained reporter generalizes partially to unseen directions;
+and the loss-restriction failure is a concrete contribution to how this project
+should be evaluated. Monitoring robustness, multi-seed inference, and
+generalization to naturally occurring internal variables remain untested.
 
 ## 2. Deploying Programmatic Attention in Real Transformers
 
 Official project: [Belinda Li, Anthropic](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L)
 
-**Question.** Can a human-readable QK program constrain the causal source of an
-activation report, making it robust to a controlled surface shortcut without
-routing around the declared path? Runtime and training economics are secondary
-deployment questions.
+**Question.** The project asks whether programmatic QK circuits can run inside
+real, usable transformers at minimal cost to both task performance and
+efficiency. I read that as two coupled questions and have partial evidence on
+each: can a human-readable QK program constrain the causal source of an
+activation report, and does an exact programmatic lowering actually pay off once
+it is inside a real attention module?
 
-**Current evidence.** The activation repository demonstrates hook-level transformer
-modification and now supplies a sharp behavior to preserve. A frozen one-concept,
-one-carrier DEV screen selected query-marker L21/L23 and final-answer L26/L31;
-unexplained all-position paths remain, so these are candidates, not a circuit.
-A separate CPU-fp32 exact lowering of one released GPT-2 positional program is a
-systems appendix: it is not a model speedup or safety result.
+**Current evidence, routing side — a pre-registered negative.** A frozen
+one-concept DEV screen (Stage 1a) selected query-marker L21/L23 and final-answer
+L26/L31. A second frozen screen (Stage 1b) tested all 64 layer-role-head
+components on three disjoint concepts and two carriers, 5,112 scored forwards,
+with the analyzer hash-locked before any output was inspected. It **failed its
+own gate**: `query_marker@23` removed 16.2% against a 20% parent threshold, and
+six components qualified against a frozen 2–4 window, with the three
+`final_answer@26` heads jointly exceeding 110% of their parent's effect. Influence
+is redundant and broader than a compact route, so the fixed-route program study
+does not proceed. The screen also lacked a zero/random-donor damage control, which
+is a gate-ordering error I would fix by moving that control inside the screen.
 
-**Gap.** No current result shows that readable QK routing improves activation-
-monitor provenance, excludes alternative information paths, or remains faithful
-when a visible cue conflicts with the hidden state.
+**Current evidence, efficiency side — an informative collapse.** I lowered one
+released GPT-2 positional program to an exact `O(TD)` form, eliminating the `T×T`
+matrix, Q/K, and softmax for that head. Equivalence holds across 216 CPU fp32
+cells at max abs error 4.8e-7. As an isolated operator at `B=1, T=1024` it is
+18.63× [18.45, 18.83] faster; integrated into the real GPT-2 attention module via
+native head pruning it is 1.089× [1.088, 1.091], missing a 1.25× threshold frozen
+before the grid ran. The algebra was never the bottleneck — partial-head
+projection and dispatch are. That is a concrete answer to the project's cost
+question and a specific target for the Triton/CUDA workstream.
+
+**Gap.** No result shows that readable QK routing improves activation-monitor
+provenance, excludes alternative information paths, or remains faithful when a
+visible cue conflicts with the hidden state — and the localization stage that
+would have made that testable stopped. On the systems side, everything is CPU,
+forward-only, uncached, one program, one model, with no allocator peak-memory
+measurement and no behavioral-fidelity evaluation of the pruned model.
 
 **Literature boundary.** *Explaining Attention with Program Synthesis* already
 generates executable attention programs, replaces heads in GPT-2/TinyLlama/Llama,
 and measures perplexity and downstream behavior. Replacing one head and showing
 that the model still works would be a replication, not a new deployment result.
 
-**Smallest non-duplicative experiment.** Stage 1a selected four layer-role pairs.
-Stage 1b freezes those pairs, replicates them across disjoint DEV concepts and
-carriers, and scans their individual heads. Proceed only if 1–4 components
-replicate without format/label-mass collapse and the unexplained envelope is
-accounted for.
+**Smallest non-duplicative experiment.** Stages 1a and 1b are executed; 1b
+stopped. The next honest step is not to re-run the same screen hoping for a
+different verdict. It is to fix the two things that made the stop uninformative
+about mechanism: add zero-donor and random-donor patches at each component so
+removal fraction can be separated from disruption, and widen the component
+universe past single query heads at preselected sites to include head pairs and
+the KV side. If influence is still redundant under those conditions, the
+right conclusion is that this behavior is not a fixed-route target, and the
+program should be imposed during training rather than discovered after it.
 
-Stage 2 adds a decoy after the edited marker. Make it predictive during reporter
+On the systems side the smallest next experiment is sharply defined by the 1.089×
+result: measure where the integrated overhead goes between projection, dispatch,
+and the residual dense path, then test whether a fused partial-head projection
+recovers any of the isolated 18.63×. That is a small, falsifiable inference-
+workstream contribution with a preregistered threshold.
+
+Stage 2, if a compact route ever replicates, adds a decoy after the edited marker. Make it predictive during reporter
 training, then independent or reversed at test. Compare matched reporters that
 differ only in QK routing: learned attention, a fixed `query → marker` program,
 wrong-marker/random gather, and programmed-edge ablation. Keep V/O and the output
@@ -111,17 +177,25 @@ multiple independent reporter-training seeds; crossed concept/prompt inference;
 saved logits, routes, checkpoints, protocol, and raw rows. Primary outcomes are
 the hidden-intervention effect, cue-swap effect at fixed hidden state, reversed-cue
 worst-group accuracy, and the fraction of the hidden-state effect removed by
-ablating the declared edge. Runtime and memory belong in a separate appendix.
+ablating the declared edge. Latency and peak memory are reported as a separate
+outcome family with their own preregistered thresholds, not folded into the
+safety verdict: a runtime gain cannot rescue a failed faithfulness gate, and a
+faithfulness gain does not excuse an unusable module.
 
-**Stop/go.** Stop after Stage 1 if influence is diffuse, alternative residual
-paths cannot be excluded, or localization mostly tracks format damage. Proceed
-with a safety claim only if the program-routed reporter retains a preregistered
-hidden-state effect, has cue sensitivity inside an equivalence bound, and loses
-the effect when its declared route is ablated. Runtime gains cannot rescue a
-failed safety gate.
+**Stop/go.** The Stage 1 stop rule was "stop if influence is diffuse," and on
+2026-08-10 it fired. That decision is recorded rather than revised. Proceeding
+with a safety claim would still require a program-routed reporter that retains a
+preregistered hidden-state effect, has cue sensitivity inside an equivalence
+bound, and loses the effect when its declared route is ablated. Runtime gains
+cannot rescue a failed safety gate, and the 1.089× integration result cannot be
+promoted into one either.
 
-**Fit: safety protocol proposed, not executed.** V2 supplies the causal
-measurement interface; it does not supply the program or robustness result.
+**Fit: two executed results, both negative against their own thresholds, plus a
+protocol the negatives constrain.** I can supply hook-level transformer
+modification, an exact program lowering with verified equivalence, and a
+measured localization of where integration cost actually sits. What I do not have
+is a compact route to program or a shortcut-robustness result, and the reason is
+recorded with its evidence rather than left as a gap.
 
 ## 3. Faithfulness, Self-Knowledge, and Introspection
 

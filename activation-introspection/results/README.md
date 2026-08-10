@@ -1,5 +1,62 @@
 # Result artifact status
 
+## Trained zero-demonstration reporter, and the loss bug it caught
+
+`report_training_protocol_v2.json` (SHA-256 `6812dc8f…e461d`) freezes the
+repaired run; `report_training_protocol_v1.json` (`acb92e81…d8082`) is retained
+as the disclosed precursor. Each raw artifact holds 504 rows across an untrained
+base arm, a trained held-out-bank arm, and a trained own-bank arm.
+
+V1 reached 0.917 twin-pair accuracy on eight concept directions it never trained
+on — and was not a verbalization. Its trained arm held ~5e-9 total probability on
+the two labels and a 0.000 full-vocabulary format rate, because the training loss
+was a two-way softmax over the label logits that constrained their ordering and
+nothing else. V2 changes only the loss to full-vocabulary cross-entropy. Format
+and label mass return to 1.000 and held-out accuracy falls to **0.583**, against
+0.000 for the untrained base model and 0.208–0.250 for magnitude-matched
+controls. All four V2 gates pass; under the current analyzer V1 fails the
+verbalization gate.
+
+Note that the pair-wise null is 0.000 for a prompt-only strategy and 0.250 for a
+coin flip, not 0.500 — the frozen 0.500 threshold is conservative. Full protocol,
+limits, and a disclosed docstring error in the frozen source are in
+[`../notes/07-trained-activation-reporter.md`](../notes/07-trained-activation-reporter.md).
+Regenerate with `make report-training-report`.
+
+## Stage 1b head screen: pre-registered STOP, and a cross-concept replication
+
+`attention_head_screen_dev_protocol_v3.json` (SHA-256 `759c0850…25856d`) froze
+the 64-component universe, the gate algebra, and the stop rule before any model
+output was seen. The 72-row raw artifact holds 5,112 scored forwards (SHA-256
+`9833a9bf…54bde`); `attention_head_screen_dev_v3_summary.json` is produced by the
+hash-locked analyzer, which evaluates the gates itself rather than leaving the
+verdict to prose.
+
+**The screen stopped the single-route study.** Two gates failed:
+
+- `query_marker@23` removed 16.2% of the aggregate baseline margin against a
+  20% all-head replication threshold. The other three parents passed
+  (`final_answer@26` 71.6%, `final_answer@31` 37.1%, `query_marker@21` 29.4%).
+- Six individual components cleared the 10% component threshold, against a
+  frozen `sparse_go` window of 2–4. Influence is broader than a compact route.
+
+The six passers are `final_answer@26/head-{0,5,10}` (41.5%/36.8%/24.8%),
+`final_answer@31/head-7` (27.6%), `query_marker@21/head-2` (18.0%), and
+`query_marker@23/head-2` (11.5%). All are 6/6 strata positive with format 1.000
+and label-mass retention 1.0000. The layer-26 heads alone exceed 110% of their
+own parent's 71.6%, which is redundancy, not decomposition; the protocol forbids
+reading these additively.
+
+The same artifact carries an unplanned positive. Its baseline arm is a clean
+replication of the causal-codebook effect on three concepts (`bread`, `volcano`,
+`violin`) and two carriers that appear in neither the V2 confirmation bank nor
+the Stage 1a selection: target accuracy **0.958** against **0.500** for the
+exactly query-matched `test_only` arm, mean signed-margin gap 5.19, 6/6 strata
+positive, format 1.000. That is a cross-concept generalization check, not a
+confirmatory rerun, and it was not the reason the run was commissioned.
+
+Regenerate with `make head-screen-report`.
+
 ## DEV-only attention localization (selection, not confirmation)
 
 `attention_localization_dev_protocol_v2.json` (SHA-256 `27c8af5f…e41427`)

@@ -96,6 +96,32 @@ this file. It performed the monorepo restructure and wrote the commit messages.
 
 Earlier work in both code repositories was agent-assisted throughout as well.
 
+### Stage 1b analysis and the reframing that followed, 2026-08-10
+
+The Stage 1b head screen's 5,112-forward raw artifact was generated in an agent
+session that hit a usage limit before running the analyzer, so the experiment sat
+complete and unanalyzed. A later agent session ran the hash-locked analyzer
+against it, read the pre-registered stop, and rewrote the documents that still
+described the screen as pending. The verdict is the analyzer's own machine-
+evaluated gate output, not a human or agent reading of the table.
+
+That session also reversed an earlier framing decision. Latency and memory had
+been demoted to appendix-only after I said I cared about safety rather than
+runtime. The programmatic-attention project's stated question is cost to task
+performance **and** efficiency, so the lowering benchmark is reported as project
+evidence again. That was a correction to my instruction, argued rather than
+silently applied.
+
+### Trained activation reporter, 2026-08-10
+
+The same session designed, implemented, and ran the trained reporter in
+`notes/07`, including the V1 loss defect and its V2 repair. The defect was found
+by the agent reading its own saved label-mass column, not by me. The
+verbalization gate that now fails V1 was written afterwards, and that ordering is
+disclosed in the note. As everywhere else here, this is agent-assisted work with
+the artifacts committed so a reader can recompute rather than trust it — it is
+not independent review.
+
 ## What that does and does not license
 
 The numbers can be reproduced from the committed raw rows and the committed code.

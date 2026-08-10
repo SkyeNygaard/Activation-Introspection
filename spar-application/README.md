@@ -219,8 +219,8 @@ the layer-3 case fails badly (2.44 against 0.51 and 0.41) and should not be quot
 
 | SPAR project | Current fit | Why |
 |---|---|---|
-| [Introspection Training for Verbalization Activations](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz), Belinda Li | **Executed scoped extension candidate** | The causal codebook tests one controlled instance of the project's zero-training question while eliminating the visible sentence-content shortcut. The retained-trace replication identifies where access collapses. Neither result establishes a robust safety monitor. |
-| [Deploying Programmatic Attention in Real Transformers](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L), Belinda Li | **Audited DEV progress; safety untested** | A frozen screen selected query-marker L21/L23 and final-answer L26/L31 for a disjoint head screen. It does not establish a circuit or monitoring robustness. A separate CPU exact-lowering result is systems appendix evidence only. |
+| [Introspection Training for Verbalization Activations](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz), Belinda Li | **Executed in-context benchmark plus an executed training result** | The causal codebook tests the project's zero-training starter question while making the visible sentence-content shortcut impossible by construction, then replicates on three out-of-bank concepts at 0.958. A trained LoRA reporter then verbalizes the sign of an injected state at 0.583 on eight withheld directions, against 0.000 untrained. Its first version scored 0.917 while putting 5e-9 probability on the answer tokens, which is a trap this project would hit. Neither result establishes a robust safety monitor, and the trained arm is one seed. |
+| [Deploying Programmatic Attention in Real Transformers](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L), Belinda Li | **Two executed negatives against frozen thresholds** | The disjoint head screen ran and stopped: influence is redundant across six components where the protocol allowed 2–4, so there is no compact route to program. Separately, an exact `O(TD)` lowering of one released GPT-2 program is 18.63× faster in isolation but 1.089× once integrated, missing a preregistered 1.25×, which localizes the cost to partial-head projection and dispatch. Neither is a circuit or a monitoring-robustness result. |
 
 Official resources: the [Fall 2026 project list](https://www.sparai.org/projects/f26/),
 the [application advice](https://www.sparai.org/advice/), and the [mentee
@@ -228,13 +228,17 @@ application](https://forms.sparai.org/spar/mentee-app).
 
 ## What I would do first
 
-Run one staged safety study. First replicate the four DEV-selected layer-role
-pairs and scan their individual heads on disjoint DEV concepts/carriers. Stop if
-influence is diffuse or unexplained paths remain. Only if that gate passes, add a
-controlled post-marker decoy and compare matched
-learned-QK and fixed-gather reporters for hidden-state sensitivity, cue-swap
-invariance, and programmed-path necessity on held-out concepts and prompts.
-Latency and memory are appendix diagnostics, not success criteria.
+That staged safety study has had its first two stages run, and the second one
+stopped it: influence over the reporting behavior is redundant across six
+attention components, not compact enough to replace with a readable program. So
+the thing I would do first is no longer the head screen.
+
+The trained reporter is now run, and what it needs next is obvious from its own
+limits: **independent training seeds**, because one LoRA run cannot separate the
+effect from initialization luck, and then episode-remapped training so the
+trained and in-context designs become comparable. Both are cheap. Neither
+depends on a compact attention route existing, which is why this is the line to
+push rather than re-running the head screen.
 
 ## What I would lead with
 

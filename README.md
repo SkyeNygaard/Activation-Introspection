@@ -55,19 +55,98 @@ activations induced by visibly different sentences; this matched-visible causal
 extension eliminates that visible sentence-content shortcut. See the full
 [protocol, controls, and limits](activation-introspection/notes/06-causal-codebook-icl.md).
 
-The safety question now is whether a human-readable route can make an activation
-report follow its hidden source rather than a spoofable visible cue. A frozen
-DEV-only screen found candidate sensitivity at the query marker (layers 21/23;
-34.3%/25.3% aggregate margin removal) and final answer (layers 26/31;
-88.7%/41.7%), with 100% label format and >99.98% label-mass retention. This is
-selection on one concept/carrier, not a circuit or safety result: unexplained
-all-position paths remain and the layer-26 hybrid has substantial output KL.
+### It replicates on concepts I never touched
+
+The follow-up experiment below was run for a different reason, but its control
+arm is the cleanest generalization check in this repository. Three concepts
+(`bread`, `volcano`, `violin`) and two carriers, none of which appear in the
+confirmation bank above or in any tuning step, give **0.958** target accuracy
+against **0.500** for the exactly query-matched arm, with the right sign in all
+six concept-carrier strata and 100% label format. The effect was not specific to
+the eight concepts it was confirmed on.
+
+### Then I trained one, and it caught me out
+
+Everything above is a zero-weight-update intervention. So I trained a LoRA to do
+the same job with the demonstrations removed: fit it on eight concept directions,
+then ask it to name the sign of a hidden edit on eight directions and three
+carriers it never saw.
+
+The first version scored **0.917** on held-out directions and all three frozen
+gates passed. It is not a result, and the same saved artifact says why: the
+trained model put **5e-9** of its probability on the two answer tokens and never
+once actually emitted one. The 0.917 was a forced choice between words the model
+would not say.
+
+The cause was one line. I had minimised cross-entropy over the two label logits
+alone, which pins their *order* and leaves the rest of the vocabulary free, so
+the optimiser quietly suppressed both labels while keeping the right one on top.
+Restricting an introspection-training loss to the answer options gives you a
+probe wearing the model's output head — and no forced-choice metric can see it.
+Only an unrestricted full-vocabulary check catches it.
+
+The repaired version changes only the loss. Format and label mass return to
+1.000, and held-out accuracy falls to **0.583**. That 33-point drop is the
+measurement of how much the broken version was inflating itself.
+
+| | untrained | trained, random dir. | trained, shuffled dir. | **trained, concept dir.** |
+|---|---:|---:|---:|---:|
+| twin-pair accuracy | 0.000 | 0.250 | 0.208 | **0.583** |
+
+A prompt-only strategy scores 0.000 here, and a coin flip 0.250, so 0.583 on
+directions never trained on is a real effect — and it is direction-specific,
+which the in-context version was not. It is also one seed, partial (the adapter
+is perfect on its own eight directions and loses 41.7 points on the held-out
+eight), and uneven across concepts. [Full write-up, including an error I left in
+the frozen source and disclosed rather than
+patched](activation-introspection/notes/07-trained-activation-reporter.md).
+
+### The route turned out not to be compact, and that is the result
+
+The safety question is whether a human-readable route can make an activation
+report follow its hidden source rather than a spoofable visible cue. That needs a
+small, inspectable set of attention components to program. So I went looking for
+one, in two frozen stages.
+
+A one-concept screen (Stage 1a) found candidate sensitivity at the query marker
+(layers 21/23) and the final answer (layers 26/31). A second frozen screen
+(Stage 1b) then tested all 64 layer-role-head components across the three fresh
+concepts and two carriers — 5,112 scored forwards, with the analyzer hash-locked
+and its stop rule written before any output was seen.
+
+**It failed its own gate, twice over.** One of the four parent layers dropped to
+16.2% margin removal against a 20% threshold. And six individual heads qualified
+where the protocol allowed 2–4, with the three layer-26 heads together exceeding
+110% of their own parent's effect — redundant paths, not a decomposition. The
+pre-registered response to "influence is diffuse" is to stop, so the fixed-route
+program study does not proceed.
 
 ![DEV attention-output interchange screen](activation-introspection/figures/attention_localization_dev.png)
 
-The next bounded step is a frozen multi-concept, multi-carrier individual-head
-screen. Only if a compact route replicates should a fixed marker gather face a
-false post-marker cue. Runtime and memory are appendix diagnostics.
+I would rather report that than a version of it that passed. Two honest limits on
+the stop itself: the screen only tests single query heads at four preselected
+sites, so a route spread over head pairs or the KV side would look identical to
+this; and the screen carries **no damage control**, so a large removal fraction
+cannot be separated from a component simply being disruptive to perturb. That
+control was deferred to the next stage, which means a passing screen would have
+been no more interpretable than this failing one. That is a design error, and it
+belongs inside the screen next time.
+
+### On the efficiency half of the same project
+
+Programmatic attention is a deployment project: the question is whether readable
+QK circuits run in real systems at acceptable cost to *both* behavior and speed.
+So the systems measurement is evidence, not an appendix. I lowered one released
+GPT-2 positional program to an exact `O(TD)` form, removing the `T×T` matrix, Q/K,
+and softmax for that head. On CPU fp32 it is numerically equivalent across 216
+cells (max abs error 4.8e-7) and **18.63×** [18.45, 18.83] faster as an isolated
+operator at `B=1, T=1024`.
+
+Integrated into a real GPT-2 attention module via native head pruning, that
+collapses to **1.089×** [1.088, 1.091], missing the 1.25× threshold I froze
+beforehand. The algebra was never the bottleneck; partial-head projection and
+dispatch are. That is a negative result on a question the project actually asks,
+and it localizes where the cost sits.
 
 ## Earlier result: a trace can be stored but unusable
 
@@ -190,10 +269,15 @@ method, and the method is what I would bring to a project.
 
 ## What is not here
 
-**Two executed activation experiments and one unfinished control line.** The new
-result is a causal extension; the retained-trace result is a replication. The
-portfolio is now focused on the two Belinda Li projects, and it does not imply
-that residual-stream work is already programmatic-attention deployment.
+**More than one training seed.** The trained reporter is a single LoRA run, which
+cannot separate the effect from initialisation luck. Independent seeds are the
+first thing that experiment needs.
+
+**A route to program.** The localization line ran two frozen stages and stopped on
+the second. There is no circuit, no program, and no shortcut-robustness result.
+
+**A frontier-scale claim.** One model family, 0.5B–3B, one layer, one strength,
+binary labels, CPU fp32.
 
 ## Where to go next
 
@@ -201,8 +285,10 @@ that residual-stream work is already programmatic-attention deployment.
   checks that passed, the checks I withdrew after realising they were empty, where
   the comparison is not perfectly fair, and how this maps onto each of the six
   projects.
-- [`activation-introspection/`](activation-introspection/) contains both executed
-  activation experiments, their raw rows, and the code that runs them.
+- [`activation-introspection/`](activation-introspection/) contains every executed
+  activation experiment — the causal codebook, the retained-trace replication, the
+  two attention screens, and the lowering benchmark — with their raw rows and the
+  code that runs them.
 - [`adaptive-monitor-sandbox/`](adaptive-monitor-sandbox/) is the second, unfinished
   line of work: a small world where an AI agent tries to get something past a
   monitor.
