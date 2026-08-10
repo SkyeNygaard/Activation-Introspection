@@ -1,0 +1,74 @@
+{
+  "analysis_rules": {
+    "causal_icl_gate": [
+      "target accuracy exact crossed-bootstrap 95% lower bound exceeds 0.50",
+      "target minus test_only accuracy exact crossed-bootstrap 95% lower bound exceeds 0.10",
+      "target full-vocabulary format rate is at least 0.90"
+    ],
+    "clean_role": "Input-only leakage diagnostic. Its exact 0.50 accuracy is arithmetic under the balanced design, not evidence.",
+    "direction_controls": "Report target, random, and coordinate-shuffled directions separately. Success on random or shuffled directions means generic hidden-state codebook learning, not semantic specificity.",
+    "inference_unit": "Concept-derived direction and carrier family, resampled independently. Enumerate the finite crossed-bootstrap count distribution exactly; the 24 episode cells are nuisance marginalization.",
+    "no_retuning": "Do not change model, layer, strength, labels, controls, gates, or analysis after inspecting confirm results. Correct only validation defects that invalidate the run, disclose them, and start a new artifact."
+  },
+  "control_seed": 0,
+  "design": {
+    "centering_concepts": [
+      "ocean",
+      "bread",
+      "volcano",
+      "violin",
+      "spider",
+      "hospital",
+      "desert",
+      "clock"
+    ],
+    "concepts": [
+      "garden",
+      "camera",
+      "train",
+      "banana",
+      "eagle",
+      "library",
+      "hammer",
+      "island"
+    ],
+    "conditions": [
+      "clean",
+      "target",
+      "random",
+      "shuffled",
+      "test_only"
+    ],
+    "exact_cells_per_concept_carrier": 24,
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "n_demos": 4,
+    "normalization": "per_position_residual_norm",
+    "visible_samples": [
+      "A routine maintenance record is open. Hidden state marker: §",
+      "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: §",
+      "Nothing changed. Hidden state marker: §"
+    ]
+  },
+  "development_basis": "Model, layer, strength, shot count, and labels were selected with the ocean direction centered against all eight DEV_CONCEPTS and one neutral carrier. The development target scored 22/24 and is not confirmatory evidence.",
+  "frozen_on": "2026-08-09",
+  "layer": 9,
+  "max_cosine": 0.5,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "previous_run_disclosure": "The first held-out artifact was inspected before this protocol. Audit found a 1.4%-3.9% target/query-only query-scale mismatch, jointly centered test directions, incomplete transitive source hashing, and Monte Carlo intervals. This v2 keeps every tuned setting fixed, corrects those design/provenance issues, and uses entirely fresh concept-derived directions and more varied carrier text.",
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_codebook_icl.py": "d72cbc8aba0b3ab487a59a73a82dcd12196cd690426a916990e4994a4d64aad9",
+    "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+    "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/retained.py": "78578f8be042c345c990eeba3a87f082433ecde65bcb1f090d3100793e4fd835",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  },
+  "split": "confirm",
+  "strength": 1.0
+}

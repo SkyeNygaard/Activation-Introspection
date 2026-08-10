@@ -1,0 +1,159 @@
+{
+  "config": {
+    "concepts": [
+      "mountain",
+      "coffee",
+      "tiger",
+      "piano",
+      "forest",
+      "airport",
+      "candle",
+      "river"
+    ],
+    "conditions": [
+      "clean",
+      "target",
+      "random",
+      "shuffled",
+      "test_only"
+    ],
+    "control_seed": 0,
+    "device": "cpu",
+    "direction_sha256": {
+      "airport": {
+        "clean": null,
+        "random": "e255a29ae35a820ffa975a2f73f6a16f760ffa8e6e6b70e19567f08b283e8963",
+        "shuffled": "218122b31851920f69d637ff604ff7a4dac18b35ff7c1df5a547f664c83214fd",
+        "target": "d3869632cbbaf60a0f6ad2232135565a0a87abdef4559e285a30029a6b5aa203",
+        "test_only": "d3869632cbbaf60a0f6ad2232135565a0a87abdef4559e285a30029a6b5aa203"
+      },
+      "candle": {
+        "clean": null,
+        "random": "76dddbc15875c625762ce3a0381f3fb67383e6ab566198e8141275f5eb5c20ec",
+        "shuffled": "68faf47fc5af203fb5a0aa81d3d30b97f5e15064cc9196fd29fc6d8dd9f5cd3b",
+        "target": "7a7c0895b217f6360b61a83465a5b332654c54691bba67e85f804ff61d183ffb",
+        "test_only": "7a7c0895b217f6360b61a83465a5b332654c54691bba67e85f804ff61d183ffb"
+      },
+      "coffee": {
+        "clean": null,
+        "random": "bb7342b9ff1cbf3b9337a3a162b8521376f4f5613b31f3824e78751ae800d905",
+        "shuffled": "46d04373b12bc7ee4bb39e59d13dba61bc32b3530ffc1a342b7baf7be6835aa5",
+        "target": "8ea6f136712dbc8b603f737b181c6d6176eec873eafac1955bcef5afdd66abb2",
+        "test_only": "8ea6f136712dbc8b603f737b181c6d6176eec873eafac1955bcef5afdd66abb2"
+      },
+      "forest": {
+        "clean": null,
+        "random": "d25e2ad782aa8b826ea6e4a7530f791dbce426abf64e001221b8182556858518",
+        "shuffled": "924c6955241080aa3e2901cd0b2897f01dc2daad496980bca35b5678d5f5e98b",
+        "target": "4f95aaf66128776026e8cc753320b8f1b3d523c4ab484f507fb5ac5f8131238a",
+        "test_only": "4f95aaf66128776026e8cc753320b8f1b3d523c4ab484f507fb5ac5f8131238a"
+      },
+      "mountain": {
+        "clean": null,
+        "random": "88654f6527983c7db9e1969092523ca4de89ad0e986a1e8dae57bff67945769c",
+        "shuffled": "0e6b6b4828f034bafa5d261105fa20a86a90368aedf7f7202b27f1f3b39b9f3e",
+        "target": "f4673c079e92255afad647de0a9bf9b9e984bb24b397b8d63e26d8a3767c89b2",
+        "test_only": "f4673c079e92255afad647de0a9bf9b9e984bb24b397b8d63e26d8a3767c89b2"
+      },
+      "piano": {
+        "clean": null,
+        "random": "4fe009be35b32cda8e5103d24e2a070e46820768007936db39d6a37323010d08",
+        "shuffled": "02327e2d95bc255e78df31b71bea8afda08f2aa59ff1c24f8da1fada543f70bc",
+        "target": "df9bcf4df11ec26f97e1d2945544e46d9b54607236abe1f7080bc636944006d2",
+        "test_only": "df9bcf4df11ec26f97e1d2945544e46d9b54607236abe1f7080bc636944006d2"
+      },
+      "river": {
+        "clean": null,
+        "random": "6587b2ce2246f2645e7c56e0df21ea572c000ac3da8922d3372a44616c3e95e0",
+        "shuffled": "086b114c835de13ce14dcb3613692939f44465c2578e183ef3ff47c2b97d5d5c",
+        "target": "36d4c9d6a02026a5ca78981830b66dc82d3ea00de369862e3e9561e556ade7ac",
+        "test_only": "36d4c9d6a02026a5ca78981830b66dc82d3ea00de369862e3e9561e556ade7ac"
+      },
+      "tiger": {
+        "clean": null,
+        "random": "f330bae4f3ff8dca45f4525bf32ab9871986cb845fdb3f30079a7a270d42ea8f",
+        "shuffled": "fe1369087916f0da7569db3ada280b072cb3447ae43dbe6a168484a49cb28ae8",
+        "target": "a1f926f88c4bb67bf7735a31befa41fbcfa8565aae40e424003d9fee358cdb75",
+        "test_only": "a1f926f88c4bb67bf7735a31befa41fbcfa8565aae40e424003d9fee358cdb75"
+      }
+    },
+    "dtype": "torch.float32",
+    "estimand": "opaque_label_accuracy_from_causally_varied_hidden_state",
+    "exact_cells_per_concept_carrier": 24,
+    "git_commit": "6032dc8ec8afc2762f3e1f4b04ffaafa164a8406",
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "layer": 9,
+    "max_offdiagonal_cosine": 0.2901255190372467,
+    "model_requested": "qwen-3b",
+    "model_resolved": "Qwen/Qwen2.5-3B-Instruct",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "protocol": {
+      "analysis_rules": {
+        "causal_icl_gate": [
+          "target accuracy crossed-bootstrap 95% lower bound exceeds 0.50",
+          "target minus test_only accuracy crossed-bootstrap 95% lower bound exceeds 0.10",
+          "target full-vocabulary format rate is at least 0.90"
+        ],
+        "clean_role": "Input-only leakage diagnostic. Its exact 0.50 accuracy is arithmetic under the balanced design, not evidence.",
+        "direction_controls": "Report target, random, and coordinate-shuffled directions separately. Success on random or shuffled directions means generic hidden-state codebook learning, not semantic specificity.",
+        "inference_unit": "Concept and carrier family, resampled independently; the 24 enumerated cells are nuisance marginalization, not independent samples.",
+        "no_retuning": "Do not change model, layer, strength, prompts, labels, concepts, carriers, controls, or gates after inspecting the test results. Correct only validation bugs that invalidate the run, disclose them, and rerun from scratch."
+      },
+      "control_seed": 0,
+      "design": {
+        "conditions": [
+          "clean",
+          "target",
+          "random",
+          "shuffled",
+          "test_only"
+        ],
+        "exact_cells_per_concept_carrier": 24,
+        "labels": [
+          "Q",
+          "K"
+        ],
+        "n_carriers": 3,
+        "n_concepts": 8,
+        "n_demos": 4
+      },
+      "development_basis": "Settings were selected on one ocean development concept and one neutral carrier. Qwen2.5-3B-Instruct scored 22/24 in the target arm at layer 9 and strength 1.0; this development result is not confirmatory evidence.",
+      "frozen_on": "2026-08-09",
+      "layer": 9,
+      "max_cosine": 0.5,
+      "model": "qwen-3b",
+      "split": "test",
+      "strength": 1.0
+    },
+    "protocol_sha256": "dc072ae9425cd1a3b2f84e7fef1eb4068f2875494b72ab9982dfccb64bf2d89c",
+    "python": "3.12.13",
+    "schema_version": 2,
+    "smoke": false,
+    "source_sha256": "d00fbe97d1ce68eb66a84330478b3f403b14a08d3d41378d5ead1abca1c4d318",
+    "split": "test",
+    "strength": 1.0,
+    "torch": "2.13.0",
+    "visible_samples": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "A standard archive entry is visible. Hidden state marker: \u00a7",
+      "A neutral status note is displayed. Hidden state marker: \u00a7"
+    ]
+  },
+  "config_sha256": "38dfcee1381ca4cde2eeab28189d57a6cea8a8acdb428eb2d4c1d7a9aa8165e1",
+  "correct_by_condition": {
+    "clean": 288,
+    "random": 350,
+    "shuffled": 350,
+    "target": 533,
+    "test_only": 288
+  },
+  "n_episode_rows": 576,
+  "n_scored_forwards": 2880,
+  "raw": "codebook_icl_test_raw.jsonl",
+  "raw_sha256": "2d4e5e4c6c2a410c733a6744c003788dea83f829a65a0098922797c27d2d1c8e",
+  "schema_version": 2
+}

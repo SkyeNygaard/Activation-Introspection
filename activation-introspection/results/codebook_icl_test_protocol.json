@@ -1,0 +1,38 @@
+{
+  "analysis_rules": {
+    "causal_icl_gate": [
+      "target accuracy crossed-bootstrap 95% lower bound exceeds 0.50",
+      "target minus test_only accuracy crossed-bootstrap 95% lower bound exceeds 0.10",
+      "target full-vocabulary format rate is at least 0.90"
+    ],
+    "clean_role": "Input-only leakage diagnostic. Its exact 0.50 accuracy is arithmetic under the balanced design, not evidence.",
+    "direction_controls": "Report target, random, and coordinate-shuffled directions separately. Success on random or shuffled directions means generic hidden-state codebook learning, not semantic specificity.",
+    "inference_unit": "Concept and carrier family, resampled independently; the 24 enumerated cells are nuisance marginalization, not independent samples.",
+    "no_retuning": "Do not change model, layer, strength, prompts, labels, concepts, carriers, controls, or gates after inspecting the test results. Correct only validation bugs that invalidate the run, disclose them, and rerun from scratch."
+  },
+  "control_seed": 0,
+  "design": {
+    "conditions": [
+      "clean",
+      "target",
+      "random",
+      "shuffled",
+      "test_only"
+    ],
+    "exact_cells_per_concept_carrier": 24,
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "n_carriers": 3,
+    "n_concepts": 8,
+    "n_demos": 4
+  },
+  "development_basis": "Settings were selected on one ocean development concept and one neutral carrier. Qwen2.5-3B-Instruct scored 22/24 in the target arm at layer 9 and strength 1.0; this development result is not confirmatory evidence.",
+  "frozen_on": "2026-08-09",
+  "layer": 9,
+  "max_cosine": 0.5,
+  "model": "qwen-3b",
+  "split": "test",
+  "strength": 1.0
+}

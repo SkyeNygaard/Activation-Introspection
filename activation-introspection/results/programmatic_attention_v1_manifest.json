@@ -1,0 +1,22 @@
+{
+  "analyzer_sha256": "fa5e161c7ffcbd101a5462b49338f3bfb2a61a776d4bcfe7b1d083e9fac4720d",
+  "artifacts_sha256": {
+    "figures/programmatic_attention_lowering.png": "9fd07009738bdb56b318dba6acab23c845ca7d159983eef3ac0652a2f587010c",
+    "results/programmatic_attention_protocol_v1.json": "7ad77347c11f4e75a4764f55ab7117ff0ae7f4557ce2439ce4c2e4979b96c593",
+    "results/programmatic_attention_v1_raw.jsonl": "c62c1f7770ea9ce380e41a97693abe5ac85c56a9c5d440aabe1ee3ef6eba1a7b",
+    "results/programmatic_attention_v1_summary.json": "29652845e35e5e8b4221c1cfcb016f32204fbbedfb510177aeb8539de614b734"
+  },
+  "counts": {
+    "environment_rows": 1,
+    "fidelity_rows": 216,
+    "integration_fidelity_rows": 1,
+    "integration_timing_rows": 300,
+    "operator_timing_rows": 300,
+    "total_raw_rows": 818
+  },
+  "gate": {
+    "publishable_operator_note": true
+  },
+  "schema_version": 1,
+  "status": "post-run integrity manifest; the pre-outcome freeze is the separately hashed protocol"
+}

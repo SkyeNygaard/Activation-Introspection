@@ -1,0 +1,156 @@
+{
+  "analysis": {
+    "paired_bootstrap": {
+      "draws": 10000,
+      "estimand": "median of paired per-block dense_ns / sparse_ns ratios",
+      "interval": "fixed-seed percentile bootstrap over timing-block pairs",
+      "seed": 20260810
+    }
+  },
+  "claim_boundary": "If all gates pass, this study establishes that one released positional GPT-2 attention program has an algebraically exact O(TD) on-device lowering, that the implementation is numerically equivalent to cached dense A@V on the frozen finite-input grid, that a native-pruning integration preserves the dense programmed attention-module output within tolerance, and that the lowered value mixer is faster at the reported CPU shapes. It does not establish a general compiler, bitwise equivalence, pretrained-model behavioral fidelity, end-to-end model speedup, allocator peak memory, cached decoding, backward performance, CUDA performance, or gains for other programs.",
+  "design": {
+    "fidelity": {
+      "batches": [
+        1,
+        8
+      ],
+      "cpu_dtypes": [
+        "float64",
+        "float32"
+      ],
+      "epsilon_multiplier": 8,
+      "head_dim": 64,
+      "lengths": [
+        1,
+        2,
+        17,
+        64,
+        257,
+        1024
+      ],
+      "mps_dtypes": [
+        "float32",
+        "float16"
+      ],
+      "patterns": [
+        "normal",
+        "zeros",
+        "alternating"
+      ],
+      "seeds": [
+        0,
+        1,
+        2
+      ]
+    },
+    "integration": {
+      "dense_reference": "stock eager GPT2Attention plus on-device cached A@V replacement at c_proj input",
+      "epsilon_multiplier": 32,
+      "fidelity_batch": 2,
+      "fidelity_length": 17,
+      "head": 9,
+      "layer": 6,
+      "model_shape": "GPT-2 small: hidden 768, 12 heads, head_dim 64",
+      "seed": 20260810,
+      "sparse_path": "save H9 V/O weights, use native prune_heads({9}), run stock 11-head eager attention, and add lerp(V0,V,0.01) @ O9",
+      "supported_interface": "eval-mode, unpadded, full-sequence self-attention; no cache, head mask, cross-attention, or attention-weight output"
+    },
+    "memory_estimand": {
+      "dense": "element_size * T^2 for one cached matrix shared across batch",
+      "excludes": "common input/output tensors and unmeasured allocator or kernel scratch",
+      "sparse": "zero additional tensor storage beyond the output because V[..., :1, :] is a view"
+    },
+    "rule": {
+      "dense": "A = 0.99 * 1 e_0^T + 0.01 * I; output = A @ V",
+      "program": "first_token_bias_L6H9",
+      "sparse": "torch.lerp(V[..., :1, :], V, 0.01)"
+    },
+    "timing": {
+      "baseline_advantage": "A, V, and V0 are resident before timing; dense matrix construction is excluded",
+      "batches": [
+        1,
+        8
+      ],
+      "blocks": 30,
+      "cpu_dtypes": [
+        "float32"
+      ],
+      "cpu_intraop_threads": 1,
+      "head_dim": 64,
+      "lengths": [
+        64,
+        128,
+        256,
+        512,
+        1024
+      ],
+      "minimum_slower_block_ns": 100000000,
+      "mps_dtypes": [
+        "float32",
+        "float16"
+      ],
+      "order": "30 paired blocks, alternating dense-first and sparse-first",
+      "seed": 20260810,
+      "synchronization": "synchronize immediately before and after every MPS block; CPU is eager",
+      "warmups": 25
+    }
+  },
+  "frozen_at_utc": "2026-08-10T13:18:32Z",
+  "gates": {
+    "cpu_operator_target_batch": 1,
+    "cpu_operator_target_length": 1024,
+    "faster_median_ratio": 1.25,
+    "integration_fidelity": "every available device/dtype cell passes its frozen tolerance",
+    "operator_fidelity": "every available device/dtype/input cell is finite, structurally valid, and passes 8 * eps * max(1, max_abs(dense))",
+    "positive_speed": "at CPU float32 B=1,T=1024, paired median dense/sparse > 1.25 and bootstrap lower bound > 1.0"
+  },
+  "prior_observation": {
+    "disclosure": "Before this protocol was frozen, the public formula was inspected, unit tests and an unrecorded B=2,T=17 integration comparison were run, and two minimal smoke executions at CPU float32 B=1,T=64 were viewed while developing the runner. The full frozen fidelity grid, all other lengths, both batch-8 arms, and all 30-block timing distributions were not run or inspected. No result-dependent setting, gate, or stopping rule is permitted after this file is frozen.",
+    "status": "development-smoke-informed benchmark confirmation, not pristine preregistration"
+  },
+  "schema_version": 1,
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/benchmark_programmatic_attention.py": "5125ec61f437db420703eea33a20c4d8219d0576ce6dbb7ebe5e32b7dd652255",
+    "src/introspect/programmatic_attention.py": "6653cd7bfaa2698f7aae015cff065793b35aa67b9c3577a3f8f957582bef759a",
+    "tests/test_programmatic_attention.py": "d06096da88f5753c09f0b2d2d206b5d18da2613691c1ebcd5b2d640b04d7f7e0",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  },
+  "title": "Exact sparse lowering of a released GPT-2 programmatic attention head",
+  "upstream": {
+    "best_fit_heads": [
+      {
+        "head": 1,
+        "iou": 0.9778504007650476,
+        "layer": 5
+      },
+      {
+        "head": 9,
+        "iou": 0.9634495990228584,
+        "layer": 6
+      },
+      {
+        "head": 2,
+        "iou": 0.973089653876497,
+        "layer": 7
+      },
+      {
+        "head": 1,
+        "iou": 0.8686930716029984,
+        "layer": 8
+      },
+      {
+        "head": 9,
+        "iou": 0.952656455371014,
+        "layer": 9
+      }
+    ],
+    "commit": "df92224956643dbdfc430d418a869033de50af6b",
+    "files": {
+      "code/fixed_attention_gpt2.py": "93cac10e7dd451401a19d34763dc25074f4f06a86959bbc5298254640d702359",
+      "data/gpt2_programs.py": "5dda9c57143d2569a1b97b5048c4f28c92ca55924101f899f1d94fc95973f7d3",
+      "results/best_fits_gpt2.csv": "135fa2af7ee94f1cf887867b0dfb4c427dc5a99e368a7ba68d7a9609dc9b687d"
+    },
+    "repository": "https://github.com/AmiriHayes/explaining_attention_heads"
+  }
+}
