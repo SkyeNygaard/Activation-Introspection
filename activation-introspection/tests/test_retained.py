@@ -8,10 +8,15 @@ token is in the carrier stage, and the arm definitions that make `clean` and
 
 from __future__ import annotations
 
+from types import SimpleNamespace
+from typing import Any, cast
+
 import pytest
 import torch
 
+from introspect.analysis import crossed_cluster_bootstrap
 from introspect.concepts import ConceptVector
+from introspect.models import LoadedModel, loaded_revision
 from introspect.retained import (
     DEV_CONCEPTS,
     SINK_SKIP,
@@ -114,3 +119,48 @@ def test_carrier_kl_is_zero_for_identical_logits_and_positive_otherwise() -> Non
     a = torch.tensor([1.0, 2.0, 3.0])
     assert carrier_kl(a, a) == pytest.approx(0.0, abs=1e-6)
     assert carrier_kl(a, torch.tensor([3.0, 2.0, 1.0])) > 0.0
+
+
+def test_bootstrap_resamples_both_crossed_axes_instead_of_cells() -> None:
+    def interval(axis: str) -> tuple[float, float, float]:
+        rows: list[dict[str, Any]] = []
+        for concept in range(4):
+            for carrier in range(4):
+                rows.append(
+                    {
+                        "concept": str(concept),
+                        "carrier_id": carrier,
+                        "value": float(concept == 3 if axis == "concept" else carrier == 3),
+                    }
+                )
+
+        def mean(sample: list[dict[str, Any]]) -> float:
+            return sum(float(row["value"]) for row in sample) / len(sample)
+
+        return crossed_cluster_bootstrap(rows, mean, n_boot=5_000, seed=0)
+
+    for axis in ("concept", "carrier"):
+        point, lo, hi = interval(axis)
+        assert point == pytest.approx(0.25)
+        assert lo == pytest.approx(0.0)
+        assert hi == pytest.approx(0.75)
+
+
+def test_loaded_revision_comes_from_loaded_objects() -> None:
+    loaded = cast(
+        LoadedModel,
+        SimpleNamespace(
+            model=SimpleNamespace(config=SimpleNamespace(_commit_hash="model-sha")),
+            tokenizer=SimpleNamespace(init_kwargs={"_commit_hash": "tokenizer-sha"}),
+        ),
+    )
+    assert loaded_revision(loaded) == "model-sha"
+
+    tokenizer_only = cast(
+        LoadedModel,
+        SimpleNamespace(
+            model=SimpleNamespace(config=SimpleNamespace(_commit_hash=None)),
+            tokenizer=SimpleNamespace(init_kwargs={"_commit_hash": "tokenizer-sha"}),
+        ),
+    )
+    assert loaded_revision(tokenizer_only) == "tokenizer-sha"

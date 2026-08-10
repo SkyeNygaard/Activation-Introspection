@@ -34,7 +34,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from introspect import concepts as concept_mod
 from introspect import models, probe, retained
+from introspect.analysis import crossed_cluster_bootstrap
 from introspect.hooks import capture
+
+cluster_bootstrap = crossed_cluster_bootstrap
 
 CONTROLS = ["clean", "sham", "random", "shuffled"]
 
@@ -52,37 +55,6 @@ CONCEPT_VARYING = ["shuffled", "random"]
 
 def load_rows(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
-
-
-def cluster_bootstrap(
-    rows: list[dict[str, Any]],
-    stat: Any,
-    *,
-    n_boot: int = 2000,
-    seed: int = 0,
-) -> tuple[float, float, float]:
-    """Resample (concept, carrier) clusters, not individual trials.
-
-    Each concept x carrier cell contributes many rows that share a prompt, a
-    concept vector, and a carrier state. Treating those as independent is what
-    produced the over-narrow legacy intervals.
-    """
-    by_cluster: dict[tuple[str, int], list[dict[str, Any]]] = defaultdict(list)
-    for r in rows:
-        by_cluster[(r["concept"], r["carrier_id"])].append(r)
-    clusters = list(by_cluster.values())
-    rng = np.random.default_rng(seed)
-
-    point = stat([r for c in clusters for r in c])
-    draws = []
-    for _ in range(n_boot):
-        idx = rng.integers(0, len(clusters), len(clusters))
-        sample = [r for i in idx for r in clusters[i]]
-        val = stat(sample)
-        if not np.isnan(val):
-            draws.append(val)
-    lo, hi = np.percentile(draws, [2.5, 97.5])
-    return float(point), float(lo), float(hi)
 
 
 def mean_correct(rows: list[dict[str, Any]]) -> float:

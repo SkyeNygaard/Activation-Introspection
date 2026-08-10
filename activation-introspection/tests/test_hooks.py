@@ -136,3 +136,16 @@ def test_normalize_scales_with_residual_magnitude() -> None:
 
     # The injected component should be far larger where the residual is larger.
     assert d_large[0, 0, 0] > d_small[0, 0, 0] * 10
+
+
+def test_per_position_normalization_matches_each_selected_residual() -> None:
+    hidden = torch.tensor([[[3.0, 4.0], [0.0, 10.0]]])
+    iv = Intervention(
+        layer=0,
+        direction=torch.tensor([1.0, 0.0]),
+        per_position=True,
+    )
+    edited = iv.apply(hidden, torch.tensor([True, True]))
+    delta = edited - hidden
+
+    assert torch.allclose(delta.norm(dim=-1), torch.tensor([[5.0, 10.0]]))

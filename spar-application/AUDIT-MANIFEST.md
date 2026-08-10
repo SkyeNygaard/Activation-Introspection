@@ -1,12 +1,12 @@
 # Audit and publication manifest
 
-Audit date: **2026-08-01**
+Audit date: **2026-08-10**
 
 ## Current evidence state
 
 | Repository | State | Layout |
 |---|---|---|
-| `activation-introspection` | Audit repairs and the retained-trace study committed on `main` (`2ea1ace`, on top of the audited base `c5ea0ec`). | merged at `activation-introspection/` |
+| `activation-introspection` | Retained-trace history plus the 2026-08-09 causal-codebook V1 precursor and V2 repair-confirmation. The new worktree artifacts are checksummed but not yet committed. | merged at `activation-introspection/` |
 | `adaptive-monitor-sandbox` | Repairs, the Study 3 module, and the retained exact-order artifact committed on `main` (`457f487`, on top of `090aca2`). | merged at `adaptive-monitor-sandbox/` |
 | `spar-application` | Committed. | `spar-application/` |
 
@@ -39,14 +39,14 @@ validate a model-behavior claim. Model experiments additionally require their ra
 manifest, model revision, prompt/stimulus hash, code-tree hash, configuration, and
 deterministic aggregation output.
 
-Last working-tree verification on 2026-08-05 (repeat after committing):
+Last working-tree verification on 2026-08-09 (repeat after committing):
 
 | Repository/check | Result |
 |---|---|
-| A tests | 49 passed (39 pre-existing + 10 for the retained-trace module) |
+| A tests | 74 passed, including causal-codebook, attention-patching, and fail-closed artifact analysis |
 | B tests | 82 passed (59 as of 2026-08-01, + 18 for Study 3, + 5 from the validation pass) |
 | A/B Ruff lint and format | passed |
-| A/B strict mypy | passed, now over `src`, `tests` **and `scripts`** (A 32 files, B 26) |
+| A/B strict mypy | passed, now over `src`, `tests` **and `scripts`** (A 48 files, B 26) |
 | A/B `git diff --check` | passed |
 | A/B absolute paths in tracked source | none |
 
@@ -59,8 +59,15 @@ silently invalidated `τ`; see the repair list in
 [CLAIMS.md](CLAIMS.md#apparatus-repairs-from-the-2026-08-05-validation-pass).
 **Nothing added after an audit date is audited by it.** Re-run this contract and
 re-stamp the date on every subsequent tree.
+
+### Retained model artifacts
+
+| Artifact | Verification |
+|---|---|
 | B exact-order model run | 72 rows; model revision `7ae557604adf67be50417f59c2c2f167def9a775`; raw SHA-256 `bd1d923926a082362f69094ad7c10ca583ec3d7f7a5b04c954e2e866bcc8ebe4`. Re-run on 2026-08-05 into `results/llm_agent_exact_raw.jsonl`: same hash, so this is now a retained artifact rather than a `/tmp` smoke test |
 | A retained-trace confirmatory run | 6912 rows; `results/retained_test_qwen05b_raw.jsonl`; SHA-256 and model revision recorded in the paired summary |
+| A causal-codebook V2 repair-confirmation | 576 episode rows / 2,880 scored forwards; model revision `aa8e72537993ba99e69dfaafa59ed015b17504d1`; raw SHA-256 `f45d2ac5…7cf20`; manifest `84022779…fc40`; summary `896fcdd6…37f6a`; protocol `fbba4892…ffc39`; config `06e404fa…61f28`; analyzer `67130c64…94f57`; exact 8 × 3 × 24 design and all 40 statistics independently reconstructed with no discrepancy |
+| A DEV attention-localization screen | One concept/carrier, 12 rows, 1,248 patches / 1,284 scored forwards; raw `530f4f55…d5c1c`; manifest `8c6dffb8…a5e0c`; summary `f2329275…d3dcbb`; protocol `27c8af5f…e41427`; analyzer `025a0add…6d2c`; independently reconstructed with no discrepancy. Selection only, not confirmation |
 
 ### Mechanism checks behind the retained-trace run
 
@@ -124,6 +131,21 @@ without paging, and use per-layer strength selection for 3B rather than one valu
   deliberately ignored by `results/**/*.pt` and must be attached to a release
   rather than added to the tree if the storage figures need off-GPU verification.
   No confirmatory **B** model experiment has been run.
+- **A's causal-codebook V2 is a frozen repair-confirmation after an inspected V1
+  precursor.** V2 retained the model/layer/strength/labels/gates, fixed query-scale
+  matching, DEV-only centering, transitive generation-source locks, validation,
+  and exact intervals, and used fresh concept directions. A two-cell post-freeze
+  smoke scored target 2/2 but caused no retuning or stopping decision before the
+  complete run. Raw JSONL, manifest, summary, and figure are retained together.
+  The analyzer verifies raw/config hashes,
+  prompts, tokens, episodes, scores, and exact balance before aggregation. The
+  analysis rule was protocol-frozen and the executable analyzer is checksummed in
+  the summary, but its hash was not in the protocol's source lock and the
+  fail-closed implementation was hardened while raw generation was running.
+  Independent reconstruction matched all 40 saved values/intervals within
+  `1e-12`; rerunning the analyzer reproduces the summary byte-for-byte. The model
+  ran locally on CPU in float32; no different-hardware reproduction or independent
+  human review exists yet.
 - A green test suite must never be translated into a behavioral result, and a
   green suite that never exercises the mechanism is not even evidence about the
   code. B's 18 Study 3 tests passed while the randomized-response channel did not
@@ -140,7 +162,7 @@ without paging, and use per-layer strength selection for 3B rather than one valu
 
 Option 1 of the three previously listed was taken: **monorepo**. All three
 directories sit under one versioned root and every relative link is retained.
-94 relative markdown links were checked programmatically and all resolve.
+112 relative markdown links were checked programmatically and all resolve.
 
 Independent repositories would have meant rewriting every cross-document link to
 a commit-pinned URL and re-pinning on each push, with a reader following the

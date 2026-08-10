@@ -44,16 +44,6 @@ def git_commit(root: Path) -> str:
         return "unknown"
 
 
-def model_revision(repo: str) -> str:
-    """Immutable snapshot hash of the local weights, when resolvable."""
-    try:
-        from huggingface_hub import HfApi
-
-        return str(HfApi().model_info(repo).sha)
-    except Exception:
-        return "unknown"
-
-
 @dataclass
 class Row:
     inject_layer: int
@@ -285,7 +275,7 @@ def run(args: argparse.Namespace) -> None:
         "raw_sha256": raw_sha,
         "activations": act_path.name if act_path else None,
         "model": m.name,
-        "model_revision": model_revision(m.name),
+        "model_revision": models.loaded_revision(m),
         "device": str(m.device),
         "dtype": str(m.dtype),
         "git_commit": git_commit(root),

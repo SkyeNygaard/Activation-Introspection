@@ -2,12 +2,54 @@
 
 from __future__ import annotations
 
+from collections import defaultdict
+from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Any
+
+import numpy as np
 
 from introspect.experiment import Trial, TrialSet
 from introspect.metrics import Estimate, accuracy, bootstrap, bootstrap_auroc, paired_difference
 
 CHANCE_IDENTIFY = 1 / 8
+
+
+def crossed_cluster_bootstrap(
+    rows: list[dict[str, Any]],
+    stat: Callable[[list[dict[str, Any]]], float],
+    *,
+    n_boot: int = 2000,
+    seed: int = 0,
+) -> tuple[float, float, float]:
+    """Resample concept and carrier units independently in a crossed design."""
+    if not rows:
+        raise ValueError("crossed bootstrap needs at least one row")
+
+    cells: dict[tuple[str, int], list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        cells[(row["concept"], row["carrier_id"])].append(row)
+    concepts = sorted({key[0] for key in cells})
+    carriers = sorted({key[1] for key in cells})
+    if len(cells) != len(concepts) * len(carriers):
+        raise ValueError("concept x carrier design is incomplete")
+
+    rng = np.random.default_rng(seed)
+    draws = []
+    for _ in range(n_boot):
+        concept_idx = rng.integers(0, len(concepts), len(concepts))
+        carrier_idx = rng.integers(0, len(carriers), len(carriers))
+        sample = [
+            row
+            for ci in concept_idx
+            for ki in carrier_idx
+            for row in cells[(concepts[ci], carriers[ki])]
+        ]
+        value = stat(sample)
+        if not np.isnan(value):
+            draws.append(value)
+    lo, hi = np.percentile(draws, [2.5, 97.5])
+    return float(stat(rows)), float(lo), float(hi)
 
 
 @dataclass

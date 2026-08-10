@@ -1,115 +1,232 @@
-# A retained activation trace stays decodable after it stops being usable
+# A model learned an opaque codebook from causally hidden state
 
-Empirical AI-safety portfolio by Skye Nygaard, for SPAR Fall 2026. It holds one
-executed study, two pilot repositories, and a claim ledger that lists the results
-which did not survive.
+Empirical AI-safety portfolio by Skye Nygaard, for SPAR Fall 2026. The newest
+result is a causal extension aimed at Belinda Li's introspection work, confirmed
+under a frozen repair protocol after an adversarial audit; the earlier
+retained-trace result is kept below and labeled as a replication.
 
-The model is `Qwen2.5-0.5B-Instruct`. A concept vector is injected while a
-neutral carrier's KV cache is built. The hook is then removed, and its absence is
-asserted on every trial. Only after that is a freshly sampled concept-to-label
-codebook revealed and the label scored. **The codebook cannot have been targeted
-by the edit, because it did not exist yet.** Strength was frozen on a separate
-development bank. The held-out bank was run once.
+## New result: in-context causal neurofeedback
 
-| inject layer | 2 | 6 | 10 | 14 | 18 | 22 |
+I gave `Qwen2.5-3B-Instruct` four demonstrations of two hidden states called `Q`
+and `K`. Within each episode, every visible observation was identical. The only
+difference was a causal `+` or `−` edit to the residual stream at a marker token.
+The mapping was reversed half the time, so the edit could not simply favor one
+answer token.
+
+The held-out query also had identical visible text. To answer, the model had to
+infer the episode's arbitrary hidden-state-to-label mapping from the edited
+demonstrations and apply it to a new hidden state.
+
+Settings were chosen on one development concept. An initial held-out artifact was
+then audited; it exposed a small query-scale mismatch, test-bank centering, and
+weak provenance checks. I kept that artifact and froze a repaired confirmation
+without changing the model, layer, strength, labels, or gates. The confirmation
+uses eight concept directions absent from both earlier banks, three fixed carrier
+strings (two new plus one anchor), and all 24 balanced combinations of four
+demonstration orders, two label mappings, and two query states. Concept and
+carrier—not the 24 enumerated cells—are the analysis units. A two-cell smoke was
+viewed after the repair protocol was frozen and scored target 2/2; no setting,
+gate, or stopping decision changed afterward.
+
+| condition | opaque-label accuracy | exact crossed-bootstrap 95% interval |
+|---|---:|---:|
+| no hidden edit | 0.500 | [0.500, 0.500] |
+| query edit only; no edited demonstrations | 0.500 | [0.500, 0.500] |
+| random direction | 0.658 | [0.599, 0.717] |
+| coordinate-shuffled concept direction | 0.660 | [0.575, 0.760] |
+| **concept direction** | **0.891** | **[0.816, 0.995]** |
+
+The concept direction beat the strongest random/shuffled direction by **23.1
+percentage points** [13.7, 28.6], and beat the exactly scale-matched query-only arm
+by **39.1 points** [31.6, 49.5]. It answered both members of a byte-identical
+visible query pair correctly in 78.1% [63.2, 99.0] of pairs; query-only managed
+3.5%. At the scored next token, every condition's full-vocabulary top choice was
+a valid label.
+
+![causal hidden-state codebook result](activation-introspection/figures/causal_codebook_icl.png)
+
+The result supports one narrow claim: under this model/layer/interface, the
+class-bearing variation was present only in causally varied residual states, and
+the model used four demonstrations to infer an episode-remapped opaque codebook
+without weight updates. It is not evidence of privileged self-access, a J-space
+mechanism, natural-state reporting, safety-monitor robustness, or population-level
+robustness. The nearest neurofeedback ICL work labels
+activations induced by visibly different sentences; this matched-visible causal
+extension eliminates that visible sentence-content shortcut. See the full
+[protocol, controls, and limits](activation-introspection/notes/06-causal-codebook-icl.md).
+
+The safety question now is whether a human-readable route can make an activation
+report follow its hidden source rather than a spoofable visible cue. A frozen
+DEV-only screen found candidate sensitivity at the query marker (layers 21/23;
+34.3%/25.3% aggregate margin removal) and final answer (layers 26/31;
+88.7%/41.7%), with 100% label format and >99.98% label-mass retention. This is
+selection on one concept/carrier, not a circuit or safety result: unexplained
+all-position paths remain and the layer-26 hybrid has substantial output KL.
+
+![DEV attention-output interchange screen](activation-introspection/figures/attention_localization_dev.png)
+
+The next bounded step is a frozen multi-concept, multi-carrier individual-head
+screen. Only if a compact route replicates should a fixed marker gather face a
+false post-marker cue. Runtime and memory are appendix diagnostics.
+
+## Earlier result: a trace can be stored but unusable
+
+I planted an idea inside a small language model, then checked two things
+separately: whether the idea was still in there, and whether the model could
+actually use it.
+
+Here is the setup, step by step.
+
+1. The model reads a short, neutral piece of text. While it reads, I reach inside
+   and add a "concept" to its internal state. Think of it as slipping the idea of
+   *ocean* into the model's working memory while it is thinking about something
+   else.
+2. I remove the thing that added it, and check on every single trial that it is
+   really gone. From here on, nothing is being pushed into the model. Only the
+   after-effects remain.
+3. **Now** I invent a code, on the spot: *ocean means Q, bread means K*, and so
+   on. I paste that code in and ask which letter applies.
+4. The model has to answer with a letter.
+
+Step 3 is the part that matters. The code did not exist when I planted the idea,
+so the planting cannot have been secretly aimed at the answer. Whatever the model
+does here, it has to do by actually using what it kept.
+
+There are eight concepts and eight letters, so guessing gets you 1 in 8, or 0.125.
+
+## What happened
+
+Two measurements, on the same model state.
+
+- **Use:** can the model answer the question? I score the letter it picks.
+- **Storage:** is the idea still in there at all? I train a simple reader on
+  ordinary text, then point it at the model's internal state and ask what concept
+  it sees. The reader never sees the experiment. It only knows what *ocean* and
+  *bread* normally look like inside this model.
+
+The one thing I varied is *how deep* into the model I planted the idea. The model
+has 24 layers, so layer 2 is near the front and layer 22 is near the back.
+
+| planted at layer | 2 | 6 | 10 | 14 | 18 | 22 |
 |---|---|---|---|---|---|---|
-| **use** (label accuracy, chance 0.125) | **0.500** | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
-| **storage** (probe on the same retained state) | 1.000 | 1.000 | 1.000 | 0.958 | 1.000 | 1.000 |
+| **use** (picks the right letter; guessing = 0.125) | **0.500** | 0.193 | 0.198 | 0.125 | 0.130 | 0.141 |
+| **storage** (the reader finds the idea) | 1.000 | 1.000 | 1.000 | 0.958 | 1.000 | 1.000 |
 
-**The trace is fully retained. It stays linearly recoverable at readout depth from
-every injection depth. What collapses is the model's ability to route it into a
-symbolic lookup.**
+Read the two rows against each other. The bottom row never drops. The idea is
+always in there, and a simple reader finds it every time, no matter where it was
+planted. The top row falls to chance by layer 14. The model stops being able to
+answer with it.
 
-## The obvious objection, and the control that answers it
+**So the information does not go missing. The model just loses the ability to
+reach it.** Plant early and it can use what it kept. Plant late and it cannot,
+even though the idea is sitting right there.
 
-A probe that recovers an injected direction may have recovered only what was
-added. So I measured it.
+## The obvious objection
 
-I rebuilt the readout state as the *clean* carrier plus the identical delta, with
-no forward computation in between. That scores **0.167**. The real arm scores
-**1.000**. The delta on its own scores between 0.125 and 0.375. So the alignment
-with the model's own natural-text representation is produced by the intervening
-blocks, not by the edit.
+If I add something to the model and then a reader finds it, maybe the reader is
+just seeing the thing I added. That would make the bottom row meaningless.
 
-There is one cell where the artifact really is present by construction: injection
-site equal to readout site, with nothing computed in between. It comes out at
-1.000 for both arms. That is what the artifact looks like when it is real.
+So I tested it. I built a fake version of the model's final state: the clean,
+untouched state, plus exactly the same thing I had added, glued on at the end with
+no thinking in between. If the reader were only seeing what I added, this fake
+should score just as well.
+
+It scores **0.167**. The real one scores **1.000**. The added piece on its own
+scores between 0.125 and 0.375, which is roughly guessing.
+
+So the reader is not seeing the raw addition. The model's own layers have to
+process it first, and turn it into something that looks like the model's ordinary
+idea of *ocean*. That processing is the thing doing the work.
+
+One more check, in the other direction. There is a single case where the reader
+*should* be fooled: plant the idea and read it in the same place, with no layers
+in between. That case comes out at 1.000 for both the real and the fake version.
+The test can detect the problem. It just does not find it anywhere else.
 
 ![propagation control](activation-introspection/figures/retained_propagation.png)
 
-## What it is, and what it is not
+## What this is worth, honestly
 
-**It is a replication.** I ran a literature check against the design as built. The
-transient-cache schedule turned out to be Lindsey's. The early-layer-only depth
-profile is already published for Llama-3.1-8B. What is left as a contribution is
-the answer space, meaning an arbitrary post-hoc codebook. That forecloses the
-token-promotion artifact this repository previously fell for. The propagation
-control above and the scale ladder are also mine. The boundary is drawn in
+**It has been done before.** After I built it, I went looking for prior work and
+found that the basic setup is Lindsey's, and that the pattern of "only works if
+you plant it early" is already published for a bigger model. So this is a
+replication, and I label it that way everywhere.
+
+What I would still call mine: the made-up-afterwards code in step 3, which closes
+a loophole this repository previously fell into, plus the fake-state check above,
+and running it across three model sizes. The full accounting is in
 [LITERATURE-BOUNDARY.md](spar-application/LITERATURE-BOUNDARY.md).
 
-The result licenses one thing: causal use of a retained trace, at early injection
-sites, in this model, through this interface. It does **not** license
-introspection, self-knowledge, or privileged access.
+**It proves something narrow.** It shows the model used something it kept. It does
+not show the model knows anything about itself, can inspect itself, or has any
+special access to its own workings. Those are different claims and I have not
+tested them.
 
-## The method, which is the point
+## The part I would actually point a mentor at
 
-The result above is a replication. The apparatus around it is not standard. I work
-out what an experiment actually measures. I catch the artifacts that fake a result
-in either direction. I drop a claim when a corrected comparison kills it.
+The experiment above is a replication. How I handled it is not.
+
+I work out what a measurement really measures. I look for the ways an experiment
+can produce a convincing result for the wrong reason. And when a fixed comparison
+kills a result, I drop the result.
 
 [CLAIMS.md](spar-application/CLAIMS.md) grades every statement in this repository,
-including the ones that did not survive. That list includes a retracted `r =
--0.774` headline which compared two different injection sites. It includes a "100%
-identification" result killed by its own no-question control. It includes three
-control arms that turned out to be arithmetic identities, so they could never have
-failed. And it includes a randomized-response feedback channel that never
-randomized.
+including the ones that did not survive. Among them:
 
-I keep the same ledger in unrelated work. My [ARC White-Box Estimation
-Challenge](https://github.com/SkyeNygaard/AI-Safety-Roadmap) repository carries a
-`claims.csv` with per-claim evidence status, next to a graded competition
-submission and a proof. Different field, same discipline. One evidence ledger is a
-habit. Two independent ones is a method.
+- A headline correlation of `-0.774` that I retracted, because the two halves of
+  the comparison were measured at different places in the model. It was comparing
+  apples to oranges and I had not noticed.
+- A "100% accuracy" result, killed by my own control once I ran it.
+- Three "controls" that turned out to be arithmetic. They could not have failed no
+  matter what the model did, so they proved nothing.
+- A feature meant to randomize which feedback the model got, that never actually
+  randomized.
 
-## Scope
+I do the same thing in unrelated work. My [ARC White-Box Estimation
+Challenge](https://github.com/SkyeNygaard/AI-Safety-Roadmap) repository keeps the
+same kind of ledger next to a graded competition entry and a proof. Different
+field, same habit. Doing it once is a habit. Doing it twice, independently, is a
+method, and the method is what I would bring to a project.
 
-This is **one executed study and two pilot repositories**. It is not six projects'
-worth of results, and it does not pretend to be.
-[PROJECT-BRIEFS.md](spar-application/PROJECT-BRIEFS.md) records what I would do on
-each of the six SPAR projects I am applying to. It is deliberately unflattering
-about the three that are proposal-only.
+## What is not here
+
+**Two executed activation experiments and one unfinished control line.** The new
+result is a causal extension; the retained-trace result is a replication. The
+portfolio is now focused on the two Belinda Li projects, and it does not imply
+that residual-stream work is already programmatic-attention deployment.
 
 ## Where to go next
 
-- [`spar-application/`](spar-application/) is **the full write-up.** It covers the
-  gates that passed and the gates I withdrew, states the damage matching honestly,
-  gives the scale ladder, and maps this work onto each of the six projects.
-- [`activation-introspection/`](activation-introspection/) holds the retained-trace
-  study and its apparatus.
-- [`adaptive-monitor-sandbox/`](adaptive-monitor-sandbox/) holds the control
-  sandbox and the Study 3 design.
-- [`AI_ASSISTANCE.md`](AI_ASSISTANCE.md) records what was agent-assisted. Most of
-  it was, including the review pass that found several of the defects listed
-  above. That is a useful check. It is not an independent one.
+- [`spar-application/`](spar-application/) is the full write-up. It covers the
+  checks that passed, the checks I withdrew after realising they were empty, where
+  the comparison is not perfectly fair, and how this maps onto each of the six
+  projects.
+- [`activation-introspection/`](activation-introspection/) contains both executed
+  activation experiments, their raw rows, and the code that runs them.
+- [`adaptive-monitor-sandbox/`](adaptive-monitor-sandbox/) is the second, unfinished
+  line of work: a small world where an AI agent tries to get something past a
+  monitor.
+- [`AI_ASSISTANCE.md`](AI_ASSISTANCE.md) says how much of this was done with AI
+  help. It was a lot, including the review that caught several of the mistakes
+  listed above. That is a useful check, but it is not an independent one.
 
-## Reproducing it
+## Running it yourself
 
-Each subdirectory carries its own `pyproject.toml`, tests, and verification
-contract. Both pass from a fresh clone:
+Each folder has its own setup and its own tests. Both work from a fresh copy:
 
 ```bash
 cd activation-introspection && make setup && make check
 cd ../adaptive-monitor-sandbox && make setup && make check
 ```
 
-Every headline number can be regenerated from committed raw per-trial rows. Config,
-prompt hashes, model revision, and environment are recorded alongside them.
-[AUDIT-MANIFEST.md](spar-application/AUDIT-MANIFEST.md) gives the commands and the
-artifact policy.
+Every number in the new causal result can be rebuilt from committed raw per-trial
+data. The settings, model version, prompts, source digest, and frozen protocol are
+stored next to it. Older artifacts that do not meet that standard are labeled.
+[AUDIT-MANIFEST.md](spar-application/AUDIT-MANIFEST.md) has the commands.
 
-The two code repositories were built separately and merged here with `git
-subtree`, so their individual commit histories are intact. That history records
-the corrections as they happened, and it is part of the evidence.
+The two code folders were built separately and joined here with `git subtree`, so
+each keeps its own history. That history shows the corrections happening as they
+happened, which is part of the point.
 
 ## License
 

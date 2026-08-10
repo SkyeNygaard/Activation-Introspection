@@ -18,6 +18,62 @@ same disclosure.
 
 ## What was agent-assisted, specifically
 
+### Safety-oriented attention localization, 2026-08-10
+
+Agents reframed the research objective around causally auditable activation
+monitoring rather than runtime, designed the downstream path-patching protocol,
+wrote the instrumentation, runner, analyzer, tests, figure, and most of the
+documentation, and executed the local model run. Separate agent passes reviewed
+the code before execution and reconstructed the completed raw artifact without
+using the saved analyzer.
+
+The first frozen smoke launch failed before the model loaded because it did not
+select the project-local model cache; no model output or result artifact existed.
+That protocol is retained. A second protocol discloses the offline-cache repair.
+The resulting screen uses one development concept and one carrier and is labeled
+selection-only throughout. Agent agreement is internal review, not independent
+human validation, and no agent wrote application-form answers.
+
+### Sparse programmatic-attention lowering, 2026-08-10
+
+Agents inspected the released programmatic-attention implementation and proposed
+manually lowering one released positional program before attempting a general
+compiler. They derived the closed form, found the native GPT-2 head-pruning path,
+wrote the operator, inference wrapper, tests, frozen benchmark, raw-data verifier,
+figure, and most of the accompanying documentation. They also executed the local
+CPU run and performed separate code, artifact, and novelty reviews.
+
+The full-grid protocol discloses the small development smokes viewed before its
+freeze. The saved result retains the weak part: the value mixer is much faster,
+but the GPT-2-shaped attention-module integration does not meet the frozen 1.25×
+speed threshold. Agent agreement is still internal review, not independent human
+validation or a second-hardware reproduction. Agents did not write answers for
+the SPAR application form.
+
+### Causal-codebook extension, 2026-08-09
+
+Agents reviewed the two target SPAR project descriptions and closest primary
+papers, proposed the matched-visible causal ICL design, wrote most of the runner,
+analysis, tests, and documentation, and executed the local runs. An adversarial
+pass on V1 found a small target/query-only scale mismatch, test-bank centering,
+incomplete source provenance, and Monte Carlo intervals. Agents then implemented
+the frozen V2 repair-confirmation without changing the model, layer, strength,
+labels, or gates. A two-cell smoke was viewed after the V2 protocol was frozen and
+scored target 2/2; no tuning or stopping decision followed it.
+
+Separate agent passes then audited the V2 causal logic and code, reconstructed
+every statistic directly from the raw rows, and reviewed the novelty boundary.
+The raw-data reconstruction re-tokenized all 18 unique prompts and found no hash,
+position, balance, denominator, score, or exact-interval discrepancy. It also
+replayed deliberately unequal residual norms and found the target/query-only
+query edit bitwise identical in every layout. Agent agreement remains an internal
+check, not independent human validation.
+
+This is not independent human validation. Skye selected the goal and remains
+responsible for deciding whether to retain, publish, or cite the result. Agents did
+not author SPAR application-form answers; this repository is a disclosed research
+artifact, not a substitute for the applicant's own responses.
+
 The validation pass on 2026-08-05 was largely agent-driven. It did the following.
 
 It re-derived every headline number in the retained-trace study from the raw

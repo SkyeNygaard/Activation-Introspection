@@ -164,19 +164,37 @@ def resolve_blocks(model: nn.Module) -> nn.ModuleList:
     raise ValueError(f"Could not locate transformer blocks on {type(model).__name__}")
 
 
-def load(name: str = DEFAULT_MODEL, *, device: torch.device | None = None) -> LoadedModel:
+def loaded_revision(model: LoadedModel) -> str:
+    """Immutable cache revision attached to the model or tokenizer actually loaded."""
+    config = getattr(model.model, "config", None)
+    revision = getattr(config, "_commit_hash", None)
+    tokenizer_kwargs = getattr(model.tokenizer, "init_kwargs", None)
+    if revision is None and isinstance(tokenizer_kwargs, dict):
+        revision = tokenizer_kwargs.get("_commit_hash")
+    return str(revision) if revision else "unknown"
+
+
+def load(
+    name: str = DEFAULT_MODEL,
+    *,
+    device: torch.device | None = None,
+    revision: str | None = None,
+) -> LoadedModel:
     repo = KNOWN_MODELS.get(name, name)
     dev = device or pick_device()
     dtype = pick_dtype(dev)
 
     tokenizer = cast(
         PreTrainedTokenizerBase,
-        AutoTokenizer.from_pretrained(repo),  # type: ignore[no-untyped-call]
+        AutoTokenizer.from_pretrained(repo, revision=revision),  # type: ignore[no-untyped-call]
     )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    model = cast(nn.Module, AutoModelForCausalLM.from_pretrained(repo, dtype=dtype))
+    model = cast(
+        nn.Module,
+        AutoModelForCausalLM.from_pretrained(repo, dtype=dtype, revision=revision),
+    )
     model.to(dev)
     cast(Any, model).eval()
     model.requires_grad_(False)

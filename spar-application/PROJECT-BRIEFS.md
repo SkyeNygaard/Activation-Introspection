@@ -11,42 +11,39 @@ Official project: [Belinda Li, Anthropic](https://www.sparai.org/projects/f26/re
 
 **Question.** Can training make a model’s verbalizations track causally introduced
 activation content on held-out concepts, rather than visible prompt cues or generic
-perturbation artifacts?
+perturbation artifacts? The safety target is reliable monitoring under shortcut
+pressure, not self-description for its own sake.
 
 **Current evidence.** [activation-introspection](../activation-introspection/)
-contains the relevant PyTorch intervention and fine-tuning plumbing, plus **one
-executed study** with a result that speaks directly to this project. On
-Qwen2.5-0.5B, a concept injected into a neutral carrier's KV cache and then
-removed is still usable when the injection is early (0.500 against 0.125 chance
-at layer 2), and at chance by layer 14. But a probe trained only on ordinary text
-recovers that concept from the retained state at **0.958–1.000 for every
-injection depth**.
+now contains an executed controlled instance of the project's zero-training
+question. I selected Qwen2.5-3B layer 9 and strength 1.0 on DEV. After auditing an
+initial artifact, I froze a repaired confirmation without changing those settings
+or the gates, then ran eight fresh concept directions crossed with three fixed
+carrier strings. Four causally edited hidden-state demonstrations teach an
+arbitrary `Q/K` mapping while visible observation content is held fixed: target
+accuracy is 0.891 [0.816, 0.995], against 0.500 for the exactly query-matched arm.
+The target beats the strongest per-position-magnitude-matched random/shuffled
+direction by +0.231 [0.137, 0.286], with 1.000 next-token label-format integrity.
 
-That is the useful part for a training project: **the information is already
-stored perfectly; what is missing is readout.** Training aimed at verbalization
-would not need to make the model retain more. It would need to make a
-late-injected trace reachable. The deficit is also site-specific rather than
-uniform, so a single "train it to introspect" objective applied at one layer
-would be measuring something different depending on where the content entered.
+The earlier retained-trace replication supplies the complementary failure case.
+A naturally trained probe can recover a trace at readout depth after the model's
+own behavioral access has collapsed. Together, the results identify a usable
+in-context interface and a later-depth regime that training would have to repair.
 
-Second, methodological: the original `r = -0.774` headline used mismatched
-injection sites and was retracted, and the executed study is the correctly
-site-matched version of that same comparison.
+**Gap.** The causal ICL result is binary, explicitly elicited, and measured in one
+model/layer. It does not isolate privileged access, use J-space variables, or
+show trained free-form verbalization. The retained-trace schedule remains a
+replication. No result here yet answers whether training generalizes across
+internal variables, layers, or naturally occurring computations.
 
-**Gap.** The executed study is a replication. The schedule is Lindsey's, and the
-early-only depth profile is already published for Llama-3.1-8B. It also does not
-isolate privileged verbalization, does not involve any training, and covers one
-model family at 0.5B–3B. Nothing here separates "the model reports on its state"
-from "a generic classifier over the same state would do as well".
-
-**Smallest authentic experiment.** [Study 1](EXPERIMENTS.md#study-1-causal-use-of-a-retained-activation-trace-executed-2026-08-01)
-is done and passed, so the interface is validated. Next is the symmetric
-[aligned-source experiment](EXPERIMENTS.md#study-2-does-an-own-model-advantage-survive-representational-alignment)
-with two independently adapted siblings, asking whether the apparent benefit of
-reporting on one's *own* activations survives once the coordinate mismatch is
-removed. The executed result constrains its design: it must run at an injection
-site where the reporting channel is still alive, or it will just re-measure the
-readout collapse.
+**Smallest authentic experiment.** Train a readout adapter on the same
+matched-visible, episode-remapped causal task, then test unused directions,
+concepts, layers, and richer multiway/continuous variables. Compare training
+against the frozen 0.891 ICL baseline and query-only/random/shuffled controls. A
+later J-space phase should replace lexical contrast vectors with causally patched
+workspace variables and ask whether the learned verbalizer transfers. Keep the
+symmetric aligned-source experiment as the privileged-access test; do not make it
+the first expensive run.
 
 **Controls, inference, reproducibility.** Transient intervention removed before a
 fresh arbitrary codebook is revealed; carrier-only cache and forced identical
@@ -66,54 +63,65 @@ a retained trace. If a raw own-source gap disappears after alignment, interpret 
 as compatibility mediation. If it survives in both directions, call it residual
 self-specific compatibility under the tested transform, not metacognition.
 
-**Fit: strong engineering/audit fit.** This is the portfolio’s closest match, but
-the proposed v2 result does not exist yet.
+**Fit: executed scoped extension candidate plus a direct training path.** The ICL
+benchmark exists and passed its stated gates; monitoring robustness and
+generalization under training remain untested.
 
 ## 2. Deploying Programmatic Attention in Real Transformers
 
 Official project: [Belinda Li, Anthropic](https://www.sparai.org/projects/f26/reci1DhApjFAtQx7L)
 
-**Question.** Can a human-readable attention program replace a real head while
-preserving its target behavior and offering a measurable inference or training
-efficiency trade-off?
+**Question.** Can a human-readable QK program constrain the causal source of an
+activation report, making it robust to a controlled surface shortcut without
+routing around the declared path? Runtime and training economics are secondary
+deployment questions.
 
 **Current evidence.** The activation repository demonstrates hook-level transformer
-modification. It contains no program synthesis, QK/OV characterization,
-attention-kernel work, or efficiency result.
+modification and now supplies a sharp behavior to preserve. A frozen one-concept,
+one-carrier DEV screen selected query-marker L21/L23 and final-answer L26/L31;
+unexplained all-position paths remain, so these are candidates, not a circuit.
+A separate CPU-fp32 exact lowering of one released GPT-2 positional program is a
+systems appendix: it is not a model speedup or safety result.
 
-**Gap.** Topical familiarity with residual streams is not evidence of the project’s
-core capability: deploying programs inside attention and benchmarking fidelity,
-speed, memory, and trainability.
+**Gap.** No current result shows that readable QK routing improves activation-
+monitor provenance, excludes alternative information paths, or remains faithful
+when a visible cue conflicts with the hidden state.
 
 **Literature boundary.** *Explaining Attention with Program Synthesis* already
 generates executable attention programs, replaces heads in GPT-2/TinyLlama/Llama,
 and measures perplexity and downstream behavior. Replacing one head and showing
 that the model still works would be a replication, not a new deployment result.
 
-**Smallest non-duplicative experiment.** Run an inference-only deployment
-crossover first. Select the head and program on a development corpus, then freeze
-them and implement the program as a genuinely sparse QK path that never
-materializes the dense attention matrix. On locked domains and sequence lengths,
-compare native fused dense attention, a dense implementation of the same program,
-true sparse execution, head ablation, and a complexity-matched random program.
-The discovery target is the **break-even surface** over length, sparsity, fidelity,
-latency, and peak memory, not merely a successful replacement screenshot. A later
-training-path study is separate and only justified if inference deployment works.
+**Smallest non-duplicative experiment.** Stage 1a selected four layer-role pairs.
+Stage 1b freezes those pairs, replicates them across disjoint DEV concepts and
+carriers, and scans their individual heads. Proceed only if 1–4 components
+replicate without format/label-mass collapse and the unexplained envelope is
+accounted for.
 
-**Controls, inference, reproducibility.** Matched inputs and batch shapes; warm-up
-and repeated timing; synchronized device measurements; native-head and head-ablation
-baselines; random and complexity-matched programs; held-out sequence lengths;
-accuracy, output divergence, end-to-end and kernel latency, peak memory, and
-training-step cost. Detect graph breaks and count dense fallbacks. Save the program,
-patch, profiler traces, hardware/software manifest, and raw benchmark runs.
+Stage 2 adds a decoy after the edited marker. Make it predictive during reporter
+training, then independent or reversed at test. Compare matched reporters that
+differ only in QK routing: learned attention, a fixed `query → marker` program,
+wrong-marker/random gather, and programmed-edge ablation. Keep V/O and the output
+readout matched, and make the declared head the reporter's only ingress from the
+subject trace. Test unused concepts, prompt families, mappings, and lengths.
 
-**Stop/go.** Stop the “deployment” claim if the program is only an offline
-description or if benchmarking is not synchronized and reproducible. Proceed if it
-runs in the forward pass and preserves a preregistered fraction of behavior with a
-clear, honestly measured trade-off.
+**Controls, inference, reproducibility.** Exact hidden-state × cue factorial;
+input-only, query-only, wrong-marker, random-gather, and edge-ablation controls;
+multiple independent reporter-training seeds; crossed concept/prompt inference;
+saved logits, routes, checkpoints, protocol, and raw rows. Primary outcomes are
+the hidden-intervention effect, cue-swap effect at fixed hidden state, reversed-cue
+worst-group accuracy, and the fraction of the hidden-state effect removed by
+ablating the declared edge. Runtime and memory belong in a separate appendix.
 
-**Fit: proposal-only.** This could become a credible bridge, but the
-present portfolio should not imply it is already done.
+**Stop/go.** Stop after Stage 1 if influence is diffuse, alternative residual
+paths cannot be excluded, or localization mostly tracks format damage. Proceed
+with a safety claim only if the program-routed reporter retains a preregistered
+hidden-state effect, has cue sensitivity inside an equivalence bound, and loses
+the effect when its declared route is ablated. Runtime gains cannot rescue a
+failed safety gate.
+
+**Fit: safety protocol proposed, not executed.** V2 supplies the causal
+measurement interface; it does not supply the program or robustness result.
 
 ## 3. Faithfulness, Self-Knowledge, and Introspection
 

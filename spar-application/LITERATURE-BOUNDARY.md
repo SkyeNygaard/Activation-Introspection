@@ -1,6 +1,6 @@
 # Literature and novelty boundary
 
-Last checked: **2026-08-01**. This is a targeted audit of the closest primary
+Last checked: **2026-08-09**. This is a targeted audit of the closest primary
 papers and the six official project descriptions, not a systematic review. A
 fresh search, citation chase, and mentor-provided reading list are required before
 locking any claim of novelty.
@@ -28,7 +28,8 @@ The important distinction is:
 - **extension:** changes one identified population, intervention, outcome, or
   deployment constraint while retaining a comparable baseline;
 - **new headline:** requires evidence that the exact estimand and design are not
-  already established. None of the current repositories earns this label.
+  already established. The causal ICL result below is labeled an extension
+  candidate, not a first demonstration.
 
 ## 1 and 3: introspection training, faithfulness, and self-knowledge
 
@@ -36,7 +37,9 @@ Closest work already covers substantial ground:
 
 - [Introspection Fine-Tuning](https://arxiv.org/abs/2607.14111) reports
   sentence-localization and strength-comparison evaluations, affirmative-response
-  confounds, and fine-tuning gains on small models.
+  confounds, fine-tuning gains on small models, and an advantage for semantic
+  vectors over Gaussian controls. The target-versus-random gap here is therefore
+  not itself a novelty claim.
 - [Steering Awareness](https://arxiv.org/abs/2511.21399) already studies held-out
   concepts, vector-construction transfer, layer/position effects, and a distributed
   transformation underlying steering detection.
@@ -81,6 +84,40 @@ Closest work already covers substantial ground:
   verbalized, retained, deliberately manipulated, and supplied to downstream
   computations. Flexible use of a hidden representation is not by itself a new
   construct claim.
+
+### Extension executed 2026-08-09: causal, matched-visible neurofeedback ICL
+
+[*Language Models Can Learn from Their Own
+Activations*](https://arxiv.org/abs/2505.13763) is the closest in-context
+neurofeedback result found in the updated search. It labels activations naturally
+induced by visible sentences. That establishes activation-label ICL, but the
+sentence itself can predict the label; internal state is not causally randomized
+while input is held fixed. The later introspection literature explicitly notes
+this sentence-semantics shortcut.
+
+The executed extension repeats the same visible observation in four demonstrations
+and a query, causally assigns `+v` or `−v` at a marker token, and reverses the
+opaque `Q/K` mapping by episode. All six balanced demonstration orders, two maps,
+and two query signs are enumerated. In a disclosed V2 repair-confirmation, clean
+and query-only arms score exactly 0.500 while a DEV-centered, natural-text-derived
+direction scores 0.891 [0.816, 0.995] on eight concept directions unused in DEV
+or V1 crossed with three fixed carrier strings. Random and coordinate-shuffled
+directions score 0.658 and 0.660. The broad finding is therefore generic causal
+hidden-state codebook learning; the +0.231 [0.137, 0.286] target advantage is
+direction-specific, not yet proven semantic.
+
+Targeted searches for combinations of `in-context activation neurofeedback`,
+`causal hidden-state intervention`, `identical input`, `opaque/random label
+mapping`, and `activation codebook` found no exact matched-visible intervention.
+This is enough to identify the changed axis and call it an **extension candidate**.
+It is not a systematic-review basis for “first,” and appendix/code inspection plus
+backward/forward citation chaining remain required.
+
+Relative to [Training Language Models to Explain Their Own
+Computations](https://arxiv.org/abs/2511.08579), the contribution is a
+matched-visible-observation zero-training instrument that eliminates the visible
+sentence-content shortcut in the project's preceding ICL question, not a
+substitute for trained explanations of rich internal variables.
 
 ### Correction, 2026-08-01: the retained-trace schedule is prior art
 
@@ -161,14 +198,24 @@ replaces heads in GPT-2, TinyLlama, and Llama while measuring perplexity and tas
 performance. A one-head replacement or preservation-of-behavior demo would repeat
 that work.
 
-The non-duplicative systems question in the official [SPAR deployment
-project](https://sparai.org/projects/f26/reci1DhApjFAtQx7L/) is whether a readable
-program can execute as a real sparse QK path with useful inference or training
-economics. The inference-first bridge therefore freezes head/program selection,
-then measures dense fallback, graph breaks, kernel and end-to-end latency, peak
-memory, sequence-length/domain scaling, and the latency–memory–fidelity break-even
-surface. A training-path study is separate. Both are proposal-only until
-implemented.
+Existing work therefore already establishes executable head replacement and
+downstream fidelity. Runtime optimization is useful deployment engineering, but
+it is not the safety contribution proposed here.
+
+The candidate-new safety axis is using programmatic QK as an information-
+provenance intervention for activation reporting under a causally controlled
+shortcut. Prior introspection work identifies input-level confounds, and recent
+activation-oracle work identifies learned readout blind spots; the program-
+synthesis work does not test whether a readable route improves monitor
+faithfulness under cue conflict.
+
+The causal-codebook task supplies the interventionally identified hidden source.
+The study is staged: first localize layer roles on development concepts and stop
+if the causal route is diffuse; only then add a future-position decoy, path
+exclusion, and programmed-edge necessity on held-out data. No such safety result
+exists in this repository. Until a broader search and execution, call this an
+extension candidate, not a first. Kernel behavior, runtime, and memory remain
+appendix diagnostics.
 
 ## 4: in-the-wild AI control
 

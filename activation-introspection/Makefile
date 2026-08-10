@@ -4,7 +4,7 @@ export UV_CACHE_DIR
 HF_HOME ?= $(CURDIR)/hf_cache
 export HF_HOME
 
-.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report
+.PHONY: setup smoke test lint format check clean-cache retained-dev retained-test retained-report codebook-report
 
 setup:
 	uv sync --all-groups
@@ -43,6 +43,12 @@ retained-report:
 	uv run --group analysis python scripts/plot_retained.py \
 	  --raw results/$(RETAINED_RUN)_raw.jsonl \
 	  --summary results/$(RETAINED_RUN)_summary.json --strength 1.0
+
+codebook-report:
+	uv run --group analysis python scripts/analyze_codebook_icl.py \
+	  --raw results/codebook_icl_confirm_v2_raw.jsonl \
+	  --out results/codebook_icl_confirm_v2_summary.json \
+	  --figure figures/causal_codebook_icl.png
 
 test:
 	uv run pytest

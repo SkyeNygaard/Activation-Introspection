@@ -1,5 +1,50 @@
 # activation-introspection
 
+Can a model learn a new name for an internal state from demonstrations when every
+visible observation is the same?
+
+## Causal hidden-state learning without training
+
+`Qwen2.5-3B-Instruct` received four demonstrations whose visible observation text
+was repeated verbatim. At the final marker token, I causally added either `+v` or
+`−v` to the residual stream. Those two hidden states were assigned the opaque
+labels `Q` and `K`, with the assignment reversed in half the episodes. The query
+used the same visible text and one of the two hidden states.
+
+The design exactly enumerates six balanced demonstration orders, two mappings,
+and two query signs: 24 cells for each of eight confirmation concepts and three
+fixed carrier strings. After inspecting an initial held-out artifact, I repaired
+its normalization, centering, provenance, and analysis without changing the
+model, layer, strength, labels, or gates. The repaired protocol was frozen before
+the confirmation. Its exact bootstrap distribution independently resamples
+concepts and carriers; the enumerated cells are nuisance marginalization.
+
+| condition | accuracy | exact crossed-bootstrap 95% interval |
+|---|---:|---:|
+| clean | 0.500 | [0.500, 0.500] |
+| query-only intervention | 0.500 | [0.500, 0.500] |
+| random direction | 0.658 | [0.599, 0.717] |
+| coordinate-shuffled direction | 0.660 | [0.575, 0.760] |
+| **DEV-centered concept direction** | **0.891** | **[0.816, 0.995]** |
+
+![causal hidden-state codebook](figures/causal_codebook_icl.png)
+
+The target-minus-query-only effect is +0.391 [0.316, 0.495]. The target also beats
+the strongest random/shuffled direction by +0.231 [0.137, 0.286]. All arms emit a
+valid label as the unrestricted top token on every trial. On paired queries with
+byte-identical visible prompts and opposite hidden states, the target gets both
+answers right in 0.781 [0.632, 0.990] of pairs.
+
+This supports **in-context learning from causally varied hidden state**, not
+privileged introspection. The concept-direction advantage may reflect semantic
+geometry, causal potency, or anisotropy; the controls are per-position
+magnitude-matched, not damage-yoked. One model, one layer, and one explicit
+elicitation prompt remain a narrow population. Full protocol, novelty boundary,
+hashes, and stop rules:
+[`notes/06-causal-codebook-icl.md`](notes/06-causal-codebook-icl.md).
+
+## Earlier retained-trace replication
+
 Edit a language model's activations, then take the edit away. Can the model still
 use what you did to it?
 
@@ -11,7 +56,7 @@ model's ability to *do anything with it*.
 
 ![storage vs use by injection depth](figures/retained_trace_qwen05b.png)
 
-`Qwen2.5-0.5B-Instruct`, 8 held-out concepts, 6912 trials, run once. Chance is
+`Qwen2.5-0.5B-Instruct`, 8 held-out concepts, 6912 trials. Chance is
 0.125.
 
 | injection layer | 2 | 6 | 10 | 14 | 18 | 22 |
@@ -152,9 +197,8 @@ control that killed it. Catching those is most of the skill.
 
 | Project | Relevance |
 |---|---|
-| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. The result says what training would have to fix: the concept is already stored perfectly, so the deficit is in readout, and it is specific to injection site rather than uniform. |
-| **Faithfulness, Self-Knowledge, and Introspection** (Noah Siegel, Google DeepMind) | Direct fit. A concrete decodable-but-unusable case, with the answer token made impossible to promote by construction. It also comes with the history of retracting an earlier, badly-controlled version of the same claim. |
-| **Deploying Programmatic Attention** (Belinda Li, Anthropic) | Adjacent plumbing only, not evidence for this project. A real bridge would replace selected QK attention with a sparse executable rule and measure quality, latency, and memory against the learned head. |
+| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. The new result is a matched-visible-observation ICL benchmark that eliminates the visible sentence-content shortcut; the earlier replication identifies a depth-dependent readout failure for training to target. |
+| **Deploying Programmatic Attention** (Belinda Li, Anthropic) | DEV progress, not a safety result. A frozen paired screen selected query-marker L21/L23 and final-answer L26/L31 for a disjoint multi-concept head screen. Unexplained paths remain. Only a compact replicated route would justify the false-cue program test. Runtime is appendix-only. |
 
 ### What it does not claim
 
@@ -168,11 +212,10 @@ state of the area, [`notes/01-problem-space.md`](notes/01-problem-space.md) for
 the argument, [`notes/03-lab-notebook.md`](notes/03-lab-notebook.md) for the
 dated record of what broke.
 
-## Status after the 2026-08-01 claim audit
+## Legacy pilot status after the 2026-08-01 claim audit
 
-The apparatus is usable for pilots; the committed numerical results are **not a
-confirmatory result**. The audit found failures in both directions and retracts
-the former headline.
+The older pre-retained-trace numerical results below are **not confirmatory**. The
+audit found failures in both directions and retracts the former headline.
 
 | former claim | audited status |
 |---|---|

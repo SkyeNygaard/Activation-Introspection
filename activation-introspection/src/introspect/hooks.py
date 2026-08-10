@@ -85,6 +85,7 @@ class Intervention:
     positions: Positions = "all"
     mode: Mode = "add"
     normalize: bool = True
+    per_position: bool = False
     label: str = ""
 
     def apply(self, hidden: Tensor, mask: Tensor) -> Tensor:
@@ -99,7 +100,8 @@ class Intervention:
             scale = self.strength
             if self.normalize:
                 # Match the typical residual magnitude at this layer and position.
-                scale = self.strength * selected.norm(dim=-1, keepdim=True).mean().item()
+                norms = selected.norm(dim=-1, keepdim=True)
+                scale = self.strength * (norms if self.per_position else norms.mean().item())
             delta = scale * unit
             edited = delta.expand_as(selected) if self.mode == "replace" else selected + delta
 

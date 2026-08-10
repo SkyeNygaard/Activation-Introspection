@@ -1,6 +1,15 @@
 # Figure artifact status
 
-All current PNGs are **legacy exploratory figures**:
+`attention_localization_dev.png` is a descriptive DEV-selection figure generated
+from the hash-bound localization summary. Stars mark candidates for a disjoint
+head screen; they are not confirmed components.
+
+`causal_codebook_icl.png` is the current V2 repair-confirmation figure. It is
+regenerated from the checksummed raw artifact by `scripts/analyze_codebook_icl.py`;
+its intervals exactly enumerate independent bootstrap resamples of the eight
+fixed concepts and three fixed carrier strings.
+
+All other current PNGs are **legacy exploratory figures**:
 
 - `ift_vs_probe.png` is retracted because its axes use mismatched injection
   sites and its error bars use invalid pseudo-replication. The generating entry

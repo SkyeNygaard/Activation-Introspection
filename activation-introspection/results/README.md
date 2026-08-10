@@ -1,6 +1,41 @@
 # Result artifact status
 
-## Current evidence: the retained-trace study
+## DEV-only attention localization (selection, not confirmation)
+
+`attention_localization_dev_protocol_v2.json` (SHA-256 `27c8af5f…e41427`)
+freezes the one-concept/one-carrier layer-role screen. The 12-row raw artifact
+contains 1,248 patches / 1,284 scored forwards (SHA-256 `530f4f55…d5c1c`);
+the fail-closed summary selects query-marker L21/L23 and final-answer L26/L31.
+Independent reconstruction found no discrepancy. This is development selection,
+not a circuit, QK, or safety result.
+
+## Current evidence: causal opaque-codebook ICL
+
+`codebook_icl_confirm_protocol_v2.json` freezes the repaired model, revision,
+layer, strength, literal stimuli, exact design, generation-source hashes,
+analysis rule, sampling units, and gates. Its SHA-256 is `fbba4892…ffc39`.
+
+`codebook_icl_confirm_v2_raw.jsonl` contains 576 episode rows and all five
+condition scores (2,880 forwards). The paired manifest pins raw SHA-256
+`f45d2ac5…7cf20`, model revision `aa8e725…04d1`, protocol/config/source hashes,
+environment, directions, tokens, and row count.
+`codebook_icl_confirm_v2_summary.json` is regenerated from the raw file by the
+checksummed analyzer, which fails closed on hashes, episode/prompt/token/score
+invariants, and the exact 8 concept × 3 carrier × 24 cell design before
+enumerating all 64,350 crossed-bootstrap resample pairs.
+
+The V2 target accuracy is 0.891 [0.816, 0.995], target minus query-only is +0.391
+[0.316, 0.495], target minus the strongest random/shuffled direction is +0.231
+[0.137, 0.286], and next-token label-format integrity is 1.000. All frozen gates
+pass. The full interpretation and limits are in
+[`../notes/06-causal-codebook-icl.md`](../notes/06-causal-codebook-icl.md).
+
+`codebook_icl_test_*` is the inspected V1 precursor. It remains for provenance,
+but V2 supersedes it for claims after repairing per-position normalization,
+DEV-only centering, transitive source locking, row validation, and exact rather
+than Monte Carlo intervals.
+
+## Earlier current evidence: the retained-trace study
 
 `retained_test_qwen05b_raw.jsonl` and `retained_test_qwen05b_summary.json` are
 **not** legacy artifacts. They are the confirmatory run described in
@@ -20,8 +55,9 @@ release rather than adding it to the tree.
 
 ## Legacy artifacts
 
-Every *other* result file in this directory predates the 2026-08-01 audit and is
-a **legacy exploratory artifact**. In particular:
+Every result file in this directory other than the causal-codebook artifacts and
+the retained-trace files identified above predates the 2026-08-01 audit and is a
+**legacy exploratory artifact**. In particular:
 
 - the IFT JSON files were generated with active evaluation dropout, repeated
   prompt pseudo-units, fixed concept→digit mappings, and invalid cross-layer

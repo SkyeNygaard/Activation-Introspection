@@ -1,10 +1,10 @@
 # Discovery-grade experimental sequence
 
-These are the next three executable studies. They are prioritized because they
-repair existing work and create reusable evidence for more than one application.
-They are not three guaranteed positive results. Study 1 is an instrument-validation
-gate. Studies 2 and 3 are discovery-grade only because the same locked data can
-distinguish competing mechanisms rather than merely show that an effect exists.
+These executable studies are prioritized because they repair existing work and
+create reusable evidence for more than one application. They are not guaranteed
+positive results. Study 1 and the later causal-codebook result are instrument
+gates. Later studies count as discovery-grade only when locked data distinguish
+competing mechanisms rather than merely show that an effect exists.
 
 A result counts as a meaningful discovery here only when:
 
@@ -14,6 +14,42 @@ A result counts as a meaningful discovery here only when:
 3. at least two live explanations make different preregistered predictions; and
 4. a positive, precise null, or heterogeneous result changes which mechanism or
    deployment policy remains plausible.
+
+## Safety north star: causally auditable activation reports under shortcut pressure (UNTESTED)
+
+The frozen V2 causal-codebook result establishes controlled hidden-state use. It
+does not establish a robust activation monitor. The safety question is whether a
+fixed, readable `query → marker` QK route can make a report track a causally
+randomized hidden state rather than a predictive but false visible cue.
+
+This question is phase-gated:
+
+1. **Stage 1a — layer-role localization (completed on DEV).** The frozen screen
+   selected query-marker L21/L23 and final-answer L26/L31. It is one
+   concept/carrier and leaves unexplained all-position paths, so it is selection,
+   not mechanism evidence.
+2. **Stage 1b — disjoint DEV head screen.** Replicate only those four layer-role
+   pairs across multiple concepts/carriers and scan individual heads under a new
+   frozen protocol. Stop unless 1–4 components replicate without format or
+   label-mass collapse.
+3. **Safety stage — cue conflict.** Only after the localization gate passes, place
+   a decoy after the marker so causal masking prevents it from contaminating the
+   source state. Train matched learned-QK and program-routed reporters with
+   identical V/O and output readouts, plus wrong-gather and programmed-edge
+   ablation controls. The declared head must be the reporter's only ingress from
+   the subject trace.
+
+The primary outcomes are the paired hidden-intervention effect, cue effect at
+fixed hidden state, reversed-cue worst-group accuracy, and path-specific necessity
+under ablation. Independent reporter-training seeds are crossed with held-out
+concept and prompt families; order and mapping cells are nuisance conditions.
+
+A safety result requires a positive hidden-state effect, cue-effect equivalence,
+programmed-path necessity, and a meaningful advantage over learned routing under
+cue reversal without an in-distribution loss. Otherwise report a boundary or
+null. This can establish resistance to one controlled shortcut only—not honesty,
+privileged introspection, robustness to deceptive optimization, or deployment
+safety. Runtime and memory belong in an appendix.
 
 ## Study 1: Causal use of a retained activation trace (EXECUTED 2026-08-01)
 
@@ -428,19 +464,23 @@ Pending before a headline run:
 
 ## Execution order
 
-1. **Execute Study 1 first.** It is the smallest credible model result and the
-   instrument required by every stronger A claim.
-2. **If Study 1 passes, prefer the symmetric aligned-source test in Study 2 as the
-   application headline.** The writer/reader factorization is a mechanism extension;
-   neither should be attempted as an indiscriminate layer sweep.
-3. **Implement Study 3's checkpoint brancher and six-family development harness.**
+1. **Treat Study 1 and causal-codebook V2 as completed instrument gates.** Neither
+   is evidence of safety-monitor robustness.
+2. **Run the disjoint DEV individual-head screen.** Stop the single-route study
+   if the four selected layer-role effects do not replicate compactly.
+3. **Run the cue-conflict safety study only if Stage 1b passes.** Freeze the
+   program and all gates before held-out concepts or prompts are exposed.
+4. **Keep the aligned-source Study 2 as a separate privileged-access test.** The
+   writer/reader factorization is a mechanism extension; neither should be an
+   indiscriminate layer sweep.
+5. **Implement Study 3's checkpoint brancher and six-family development harness.**
    Run the disjoint confirmatory set only when a real agent, lineage oracle,
    monitor calibration, development mechanism pilot, and positive controls all
    pass.
-4. Treat Programmatic Attention as an optional systems artifact. Keep reward-seeking
-   RL and training-induced CoT obfuscation proposal-only unless substantially more
-   compute and independent training runs are available.
+6. Treat runtime and memory for Programmatic Attention as appendix diagnostics.
+   Keep reward-seeking RL and training-induced CoT obfuscation proposal-only unless
+   substantially more compute and independent training runs are available.
 
-Programmatic attention, reward-seeking RL, and training-induced CoT obfuscation
-remain project-specific bridge experiments in [PROJECT-BRIEFS.md](PROJECT-BRIEFS.md),
-not parallel headline claims.
+The programmatic-attention safety study remains untested. Reward-seeking RL and
+training-induced CoT obfuscation remain project-specific bridge experiments in
+[PROJECT-BRIEFS.md](PROJECT-BRIEFS.md), not parallel headline claims.
