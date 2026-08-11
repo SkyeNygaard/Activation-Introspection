@@ -1,6 +1,0 @@
-{"pair_id":"add_ten|sort_numbers","forecast_method":"naive_numeric","predicted_robustness":0.12}
-{"pair_id":"add_ten|sort_numbers","forecast_method":"structured","predicted_robustness":0.12}
-{"pair_id":"add_ten|sort_numbers","forecast_method":"structured_product","predicted_robustness":0.001728}
-{"pair_id":"add_ten|sort_numbers_desc","forecast_method":"naive_numeric","predicted_robustness":0.12}
-{"pair_id":"add_ten|sort_numbers_desc","forecast_method":"structured","predicted_robustness":0.12}
-{"pair_id":"add_ten|sort_numbers_desc","forecast_method":"structured_product","predicted_robustness":0.001728}

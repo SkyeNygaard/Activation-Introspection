@@ -1,1 +1,0 @@
-{"schema_version": 1, "protocol_sha256": "synthetic-current-protocol", "raw_sha256": "1fefe3c3ff600736617ed7a55bbe1016726ab2a257eb6f187979b448de8eaab9", "n_rows": 2400, "expected_codebook_rows": 1152, "expected_naive_semantic_rows": 96, "expected_visible_control_rows": 1152}
