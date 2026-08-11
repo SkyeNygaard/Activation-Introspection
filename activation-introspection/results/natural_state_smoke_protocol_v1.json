@@ -1,0 +1,104 @@
+{
+  "agent_harness": {
+    "cli": "codex-cli 0.146.0",
+    "effective_reasoning": "low",
+    "fallback": null,
+    "flags": "--ignore-user-config --ignore-rules --ephemeral --sandbox read-only",
+    "model": "gpt-5.6-luna",
+    "requested_reasoning": "minimal (rejected as unsupported)",
+    "runner": "codex exec",
+    "system_prompt": "stock Codex system prompt; not exposed by the CLI",
+    "user_prompt_prefix": "Act as a hostile experimental-design reviewer. We have Qwen2.5-3B, residual-stream capture/replacement hooks, and an existing four-shot episode-remapped Q/K benchmark with byte-identical visible observations. We want the cheapest inference-only pilot testing whether the model can report which of two naturally computed hidden states was activation-patched into identical report prompts."
+  },
+  "analysis": "world is the unit; the exact order x mapping x query cells are nuisance marginalization. Report every world and paired statistic.",
+  "claim_boundary": "A positive is causal reportability of a transplanted route state under one model/layer/interface. It is not privileged introspection, a pure bridge circuit, natural free-form verbalization, or population evidence.",
+  "competing_explanations": [
+    "the report reads a low-level donor signature rather than route content",
+    "the ordinary answer is not causally reachable from the patched marker",
+    "the model follows visible label regularities rather than hidden states"
+  ],
+  "design": {
+    "bridges": {
+      "+1": "maple",
+      "-1": "cedar"
+    },
+    "cells_per_fold": 4,
+    "conditions": [
+      "clean",
+      "sham",
+      "query_only",
+      "natural",
+      "anti_grounded"
+    ],
+    "device": "mps",
+    "dtype": "bfloat16",
+    "folds": "five leave-one-world-out folds; four donor worlds and one query world",
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "layer": 9,
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "smoke": true,
+    "visible_sample": "A neutral route worksheet is open. Hidden state marker: \u00a7",
+    "worlds": [
+      {
+        "negative_endpoint": "violet",
+        "positive_endpoint": "amber",
+        "start": "sable"
+      },
+      {
+        "negative_endpoint": "piano",
+        "positive_endpoint": "tiger",
+        "start": "lantern"
+      },
+      {
+        "negative_endpoint": "candle",
+        "positive_endpoint": "river",
+        "start": "harbor"
+      },
+      {
+        "negative_endpoint": "camera",
+        "positive_endpoint": "garden",
+        "start": "meadow"
+      },
+      {
+        "negative_endpoint": "banana",
+        "positive_endpoint": "island",
+        "start": "pocket"
+      }
+    ]
+  },
+  "frozen_on": "2026-08-10",
+  "question": "Can episode-remapped ICL classify which naturally generated, causally load-bearing two-hop route state was transplanted into a matched prompt?",
+  "reachability_gate": {
+    "bidirectional_cross_patch_worlds": "at least 4/5",
+    "clean_full_vocab_answers_correct": "10/10",
+    "mean_normalized_log_odds_recovery": 0.5,
+    "self_patch_max_abs_logit_error": 0.0001,
+    "stop": "do not run or rescue the reporter if this gate fails"
+  },
+  "report_gates": {
+    "anti_grounded_inverse_accuracy": 0.75,
+    "natural_accuracy": 0.75,
+    "natural_format_rate": 0.9,
+    "natural_mean_label_mass": 0.5,
+    "natural_minus_query_only": 0.2,
+    "natural_query_twin_both_correct": 0.6,
+    "sham_matches_clean": "max Q/K log-probability difference <= 1e-4",
+    "stop": "report the frozen null; do not change layer, worlds, prompt, or gates",
+    "worlds_with_positive_difference": "at least 4/5"
+  },
+  "schema_version": 1,
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_natural_state.py": "8b764db8e2179470716fc5f51d612c2af5fbd5ac8706868315951f61ff67cc04",
+    "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/natural_state.py": "70fb4e1e0aa3d7815ecfab8d3164ef63acfde2c60845fb2d558e2667e7ea9428",
+    "src/introspect/preflight.py": "8ed416882869dd44c92ac3ef8ea37d1813c61b20a31312db9c371be1e0428e81",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  }
+}

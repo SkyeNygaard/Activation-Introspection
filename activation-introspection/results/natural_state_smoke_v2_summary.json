@@ -1,0 +1,12 @@
+{
+  "reachability": {
+    "bidirectional_cross_patch_worlds": 0,
+    "clean_full_vocab_answers_correct": false,
+    "mean_normalized_log_odds_recovery": -5181250.898185029,
+    "passed": false,
+    "self_patch_max_abs_logit_error": 0.0
+  },
+  "report": null,
+  "schema_version": 1,
+  "status": "stop_reachability_failed"
+}
