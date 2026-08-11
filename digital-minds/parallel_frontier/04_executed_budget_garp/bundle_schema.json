@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "x": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "y": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "couplets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sorted_lists": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "required": [
+    "x",
+    "y",
+    "couplets",
+    "sorted_lists"
+  ],
+  "additionalProperties": false
+}

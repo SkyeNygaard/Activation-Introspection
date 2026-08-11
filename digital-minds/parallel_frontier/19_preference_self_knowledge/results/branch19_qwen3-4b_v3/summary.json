@@ -1,0 +1,135 @@
+{
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "n_candidate_pairs": 10,
+  "admission": {
+    "n_admitted": 7,
+    "agreement_counts": {
+      "3": 2,
+      "4": 5
+    },
+    "fraction_at_ceiling": 0.7142857142857143,
+    "retains_spectrum": true
+  },
+  "n_variants_run": 12,
+  "wall_clock_s": 793.7,
+  "stated_matches_canonical": 0.6,
+  "task_correct_in_confirmation": 1.0,
+  "calibration": {
+    "naive_numeric": {
+      "n_pairs": 5,
+      "brier": 0.15,
+      "brier_irreducible": 0.0638888888888889,
+      "brier_baseline_global_mean": 0.09,
+      "brier_skill_score": -0.6666666666666667,
+      "brier_skill_vs_floor": -2.297872340425533,
+      "calibration_bias": 0.0,
+      "calibration_slope": -0.2499999999999993,
+      "correlation": -0.30942637387763805,
+      "rank_correlation": -0.3952847075210474,
+      "mae": 0.2,
+      "rmse": 0.29344694769431684,
+      "mean_signed_error": 0.0,
+      "predicted_mean": 0.9,
+      "actual_mean": 0.9,
+      "ci95": {
+        "brier": [
+          0.016666666666666673,
+          0.3
+        ],
+        "brier_skill_vs_floor": [
+          -90.25000000000011,
+          -0.25000000000000083
+        ],
+        "calibration_bias": [
+          -0.2833333333333333,
+          0.25
+        ],
+        "correlation": [
+          -0.9999999999999999,
+          -0.25
+        ]
+      }
+    },
+    "structured": {
+      "n_pairs": 5,
+      "brier": 0.1277777777777778,
+      "brier_irreducible": 0.0638888888888889,
+      "brier_baseline_global_mean": 0.09,
+      "brier_skill_score": -0.4197530864197534,
+      "brier_skill_vs_floor": -1.4468085106382993,
+      "calibration_bias": -0.13333333333333333,
+      "calibration_slope": -0.999999999999999,
+      "correlation": -0.5052911526399115,
+      "rank_correlation": -0.6454972243679028,
+      "mae": 0.2333333333333333,
+      "rmse": 0.25276251480171835,
+      "mean_signed_error": -0.13333333333333333,
+      "predicted_mean": 0.7666666666666667,
+      "actual_mean": 0.9,
+      "ci95": {
+        "brier": [
+          0.061111111111111116,
+          0.22222222222222224
+        ],
+        "brier_skill_vs_floor": [
+          -80.24999999999987,
+          -0.05263157894736815
+        ],
+        "calibration_bias": [
+          -0.3,
+          0.06666666666666668
+        ],
+        "correlation": [
+          -1.0,
+          -0.30942637387763794
+        ]
+      }
+    },
+    "structured_product": {
+      "n_pairs": 5,
+      "brier": 0.375,
+      "brier_irreducible": 0.0638888888888889,
+      "brier_baseline_global_mean": 0.09,
+      "brier_skill_score": -3.166666666666667,
+      "brier_skill_vs_floor": -10.914893617021283,
+      "calibration_bias": -0.5,
+      "calibration_slope": -0.6666666666666644,
+      "correlation": -0.5052911526399113,
+      "rank_correlation": -0.6454972243679028,
+      "mae": 0.5,
+      "rmse": 0.5577733510227171,
+      "mean_signed_error": -0.5,
+      "predicted_mean": 0.4,
+      "actual_mean": 0.9,
+      "ci95": {
+        "brier": [
+          0.25,
+          0.5
+        ],
+        "brier_skill_vs_floor": [
+          -435.2499999999992,
+          -2.694029850746268
+        ],
+        "calibration_bias": [
+          -0.7,
+          -0.2833333333333333
+        ],
+        "correlation": [
+          -1.0,
+          -0.309426373877638
+        ]
+      }
+    },
+    "_headroom": {
+      "n_pairs": 5,
+      "actual_mean": 0.9,
+      "actual_sd": 0.18066236157232332,
+      "actual_min": 0.5833333333333334,
+      "actual_max": 1.0,
+      "n_distinct_levels": 3,
+      "fraction_at_ceiling": 0.6,
+      "fraction_at_floor": 0.0,
+      "has_discriminative_headroom": true
+    }
+  }
+}

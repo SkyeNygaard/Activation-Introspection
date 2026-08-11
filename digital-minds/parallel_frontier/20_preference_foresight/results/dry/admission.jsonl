@@ -1,0 +1,10 @@
+{"pair_id":"add_ten|double_numbers","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"add_ten|running_totals","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"add_ten|sort_numbers","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"add_ten|sort_numbers_desc","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"double_numbers|running_totals","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"double_numbers|sort_numbers","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"double_numbers|sort_numbers_desc","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"running_totals|sort_numbers","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"running_totals|sort_numbers_desc","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}
+{"pair_id":"sort_numbers|sort_numbers_desc","branch":"default","required_agreement":3,"preferred":"A","agreement":4,"stability":1.0,"task_correct":0.0,"admitted":true,"reason":"pass"}

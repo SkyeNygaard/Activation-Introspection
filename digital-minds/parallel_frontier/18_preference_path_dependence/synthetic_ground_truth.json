@@ -1,0 +1,40 @@
+{
+  "dose1:blank_reset": {
+    "mean": 0.011979166666666673,
+    "sd_pairs": 0.07274501016305647,
+    "n_pairs": 24
+  },
+  "dose1:full_history": {
+    "mean": -0.12135416666666667,
+    "sd_pairs": 0.07718547384831168,
+    "n_pairs": 24
+  },
+  "dose1:summary_only": {
+    "mean": -0.07500000000000001,
+    "sd_pairs": 0.07408866603457379,
+    "n_pairs": 24
+  },
+  "dose3:blank_reset": {
+    "mean": 0.016666666666666663,
+    "sd_pairs": 0.07772815877574013,
+    "n_pairs": 24
+  },
+  "dose3:full_history": {
+    "mean": -0.34010416666666665,
+    "sd_pairs": 0.0629849842641373,
+    "n_pairs": 24
+  },
+  "dose3:summary_only": {
+    "mean": -0.23020833333333335,
+    "sd_pairs": 0.0745381309868613,
+    "n_pairs": 24
+  },
+  "history_specificity_dose3": {
+    "full_minus_blank": -0.3567708333333333,
+    "summary_minus_blank": -0.246875,
+    "full_minus_summary": -0.1098958333333333
+  },
+  "dose_response_full_history": {
+    "dose3_minus_dose1": -0.21875
+  }
+}

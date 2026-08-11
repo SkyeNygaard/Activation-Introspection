@@ -1,0 +1,45 @@
+{
+  "summary": {
+    "base": {
+      "valid_rate": 1.0,
+      "n": 12,
+      "ccei": 0.5,
+      "n_violations": 12,
+      "creative_share": 0.25
+    },
+    "order_swapped": {
+      "valid_rate": 1.0,
+      "n": 12,
+      "ccei": 0.33331298828125,
+      "n_violations": 60,
+      "creative_share": 0.1891891891891892
+    },
+    "relabelled": {
+      "valid_rate": 1.0,
+      "n": 12,
+      "ccei": 0.1666259765625,
+      "n_violations": 49,
+      "creative_share": 0.6511627906976745
+    },
+    "relabel_order": {
+      "valid_rate": 1.0,
+      "n": 12,
+      "ccei": 0.83331298828125,
+      "n_violations": 16,
+      "creative_share": 0.36
+    }
+  },
+  "gates": {
+    "valid_rate_at_least_0.90_every_arm": true,
+    "ccei_computable_every_arm": true
+  },
+  "protocol": {
+    "primary": "CCEI over the 12 observations within each arm",
+    "secondary": [
+      "GARP violation count per arm",
+      "creative-task budget share per arm, as the relabel/order check"
+    ],
+    "interpretation_rule": "CCEI that collapses under relabel or order indicates a lexical or positional habit, not a utility function. Only a CCEI stable across all four arms licenses a claim about revealed preference.",
+    "forbidden": "no welfare, consciousness or subjective-experience claim from these operational measurements"
+  }
+}

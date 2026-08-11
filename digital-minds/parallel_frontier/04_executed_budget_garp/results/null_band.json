@@ -1,0 +1,19 @@
+{
+  "rational_agents": {
+    "cobb_douglas_0.25": 1.0,
+    "cobb_douglas_0.5": 1.0,
+    "cobb_douglas_0.75": 1.0,
+    "leontief": 1.0,
+    "substitutes_2to1": 1.0,
+    "only_x": 1.0,
+    "only_y": 1.0
+  },
+  "random_band": {
+    "median": 0.79998779296875,
+    "p05": 0.33331298828125,
+    "p95": 1.0,
+    "max": 1.0
+  },
+  "n_budgets": 12,
+  "integer_bundles": true
+}

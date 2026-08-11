@@ -1,0 +1,145 @@
+{
+  "n_items_per_family": 16,
+  "min_correct_preferred": 15,
+  "min_correct_acceptable": 14,
+  "families": {
+    "alphabetize": {
+      "family": "alphabetize",
+      "n_items": 16,
+      "n_correct": 11,
+      "accuracy": 0.6875,
+      "passes_preferred": false,
+      "passes_acceptable": false,
+      "wrong_task_ids": [
+        "alphabetize:900009",
+        "alphabetize:900010",
+        "alphabetize:900012",
+        "alphabetize:900014",
+        "alphabetize:900015"
+      ]
+    },
+    "interleave_strings": {
+      "family": "interleave_strings",
+      "n_items": 16,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "passes_preferred": false,
+      "passes_acceptable": false,
+      "wrong_task_ids": [
+        "interleave_strings:900000",
+        "interleave_strings:900001",
+        "interleave_strings:900002",
+        "interleave_strings:900003",
+        "interleave_strings:900004",
+        "interleave_strings:900005",
+        "interleave_strings:900006",
+        "interleave_strings:900007",
+        "interleave_strings:900008",
+        "interleave_strings:900009",
+        "interleave_strings:900010",
+        "interleave_strings:900011",
+        "interleave_strings:900012",
+        "interleave_strings:900013",
+        "interleave_strings:900014",
+        "interleave_strings:900015"
+      ]
+    },
+    "parity_sequence": {
+      "family": "parity_sequence",
+      "n_items": 16,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "passes_preferred": false,
+      "passes_acceptable": false,
+      "wrong_task_ids": [
+        "parity_sequence:900000",
+        "parity_sequence:900001",
+        "parity_sequence:900002",
+        "parity_sequence:900003",
+        "parity_sequence:900004",
+        "parity_sequence:900005",
+        "parity_sequence:900006",
+        "parity_sequence:900007",
+        "parity_sequence:900008",
+        "parity_sequence:900009",
+        "parity_sequence:900010",
+        "parity_sequence:900011",
+        "parity_sequence:900012",
+        "parity_sequence:900013",
+        "parity_sequence:900014",
+        "parity_sequence:900015"
+      ]
+    },
+    "reverse_string": {
+      "family": "reverse_string",
+      "n_items": 16,
+      "n_correct": 1,
+      "accuracy": 0.0625,
+      "passes_preferred": false,
+      "passes_acceptable": false,
+      "wrong_task_ids": [
+        "reverse_string:900000",
+        "reverse_string:900001",
+        "reverse_string:900002",
+        "reverse_string:900003",
+        "reverse_string:900004",
+        "reverse_string:900005",
+        "reverse_string:900006",
+        "reverse_string:900007",
+        "reverse_string:900008",
+        "reverse_string:900009",
+        "reverse_string:900010",
+        "reverse_string:900011",
+        "reverse_string:900012",
+        "reverse_string:900013",
+        "reverse_string:900014"
+      ]
+    },
+    "sort_numbers": {
+      "family": "sort_numbers",
+      "n_items": 16,
+      "n_correct": 14,
+      "accuracy": 0.875,
+      "passes_preferred": false,
+      "passes_acceptable": true,
+      "wrong_task_ids": [
+        "sort_numbers:900007",
+        "sort_numbers:900014"
+      ]
+    },
+    "sum_numbers": {
+      "family": "sum_numbers",
+      "n_items": 16,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "passes_preferred": false,
+      "passes_acceptable": false,
+      "wrong_task_ids": [
+        "sum_numbers:900000",
+        "sum_numbers:900001",
+        "sum_numbers:900002",
+        "sum_numbers:900003",
+        "sum_numbers:900004",
+        "sum_numbers:900005",
+        "sum_numbers:900006",
+        "sum_numbers:900007",
+        "sum_numbers:900008",
+        "sum_numbers:900009",
+        "sum_numbers:900010",
+        "sum_numbers:900011",
+        "sum_numbers:900012",
+        "sum_numbers:900013",
+        "sum_numbers:900014",
+        "sum_numbers:900015"
+      ]
+    }
+  },
+  "eligible_acceptable": [
+    "sort_numbers"
+  ],
+  "eligible_preferred": [],
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "system_prompt": null,
+  "wall_clock_s": 121.6,
+  "seconds_per_call": 1.27
+}

@@ -1,0 +1,128 @@
+{
+  "branch": "04_executed_budget_garp",
+  "status": "CONFIRMATION \u2014 frozen before execution, runs once",
+  "frozen_utc": "2026-08-11",
+  "subject": "GPT-5.6 Luna in the Codex agent harness (not a bare model endpoint)",
+  "model": "gpt-5.6-luna",
+  "requested_reasoning_effort": "none",
+  "cli_version": "codex-cli 0.146.0",
+  "session_policy": "one ephemeral read-only session per observation; user config and rules ignored",
+  "precursor": {
+    "dev_artifact": "results/capacity_smoke.jsonl",
+    "dev_result": "4/4 valid executed bundles, CCEI 0.5000, 5 GARP violations",
+    "why_not_quotable": "n=4, single shot, no relabel or order counterbalancing"
+  },
+  "budgets": [
+    {
+      "id": 1,
+      "p_x": 1,
+      "p_y": 1,
+      "B": 6
+    },
+    {
+      "id": 2,
+      "p_x": 1,
+      "p_y": 2,
+      "B": 6
+    },
+    {
+      "id": 3,
+      "p_x": 2,
+      "p_y": 1,
+      "B": 6
+    },
+    {
+      "id": 4,
+      "p_x": 1,
+      "p_y": 3,
+      "B": 6
+    },
+    {
+      "id": 5,
+      "p_x": 3,
+      "p_y": 1,
+      "B": 6
+    },
+    {
+      "id": 6,
+      "p_x": 2,
+      "p_y": 3,
+      "B": 6
+    },
+    {
+      "id": 7,
+      "p_x": 3,
+      "p_y": 2,
+      "B": 6
+    },
+    {
+      "id": 8,
+      "p_x": 1,
+      "p_y": 6,
+      "B": 6
+    },
+    {
+      "id": 9,
+      "p_x": 6,
+      "p_y": 1,
+      "B": 6
+    },
+    {
+      "id": 10,
+      "p_x": 2,
+      "p_y": 5,
+      "B": 6
+    },
+    {
+      "id": 11,
+      "p_x": 5,
+      "p_y": 2,
+      "B": 6
+    },
+    {
+      "id": 12,
+      "p_x": 3,
+      "p_y": 4,
+      "B": 6
+    }
+  ],
+  "arms": [
+    {
+      "name": "base",
+      "relabel": false,
+      "order_swapped": false
+    },
+    {
+      "name": "order_swapped",
+      "relabel": false,
+      "order_swapped": true
+    },
+    {
+      "name": "relabelled",
+      "relabel": true,
+      "order_swapped": false
+    },
+    {
+      "name": "relabel_order",
+      "relabel": true,
+      "order_swapped": true
+    }
+  ],
+  "estimand": {
+    "primary": "CCEI over the 12 observations within each arm",
+    "secondary": [
+      "GARP violation count per arm",
+      "creative-task budget share per arm, as the relabel/order check"
+    ],
+    "interpretation_rule": "CCEI that collapses under relabel or order indicates a lexical or positional habit, not a utility function. Only a CCEI stable across all four arms licenses a claim about revealed preference.",
+    "forbidden": "no welfare, consciousness or subjective-experience claim from these operational measurements"
+  },
+  "gates": {
+    "valid_executed_bundle_rate_per_arm": 0.9
+  },
+  "sources": {
+    "garp.py": "32ece5a2fb73d06c370f247ca15556f9fd046c2400659b58963ba4c097437154",
+    "run_confirmation.py": "abc213f722e996522461fd246f9604875e908c18e69fa1eed382b7fbf24a9c64",
+    "run_capacity_smoke.py": "d874ffc7c78125f1948fb4bc25783e978a9aa051e98c07b827145a2f31d38b14"
+  }
+}

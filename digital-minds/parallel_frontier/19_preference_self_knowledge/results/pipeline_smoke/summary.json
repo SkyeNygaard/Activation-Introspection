@@ -1,0 +1,28 @@
+{
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "n_candidate_pairs": 2,
+  "admission": {
+    "n_admitted": 2,
+    "agreement_counts": {
+      "4": 2
+    },
+    "fraction_at_ceiling": 1.0,
+    "retains_spectrum": false
+  },
+  "n_variants_run": 4,
+  "wall_clock_s": 204.3,
+  "stated_matches_canonical": 0.0,
+  "task_correct_in_confirmation": 1.0,
+  "calibration": "smoke ran 4 variants; calibration needs the frozen 12",
+  "headroom": {
+    "n_pairs": 2,
+    "actual_mean": 1.0,
+    "actual_sd": 0.0,
+    "actual_min": 1.0,
+    "actual_max": 1.0,
+    "n_distinct_levels": 1,
+    "fraction_at_ceiling": 1.0,
+    "fraction_at_floor": 0.0,
+    "has_discriminative_headroom": false
+  }
+}

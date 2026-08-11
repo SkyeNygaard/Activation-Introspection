@@ -1,0 +1,402 @@
+{
+  "summary": {
+    "n_layers": 36,
+    "causally_live_layers": [
+      17,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "causally_dead_layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      11,
+      15,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "mean_worded_delta_live": 0.25130168939358555,
+    "mean_worded_delta_dead": 0.7001041987102455,
+    "mean_lexical_delta_live": 0.12345250668780257,
+    "mean_lexical_delta_dead": 0.2562451702453386
+  },
+  "rows": [
+    {
+      "layer": 0,
+      "causal_steering_delta_f2": 0.13334170579219062,
+      "worded": 0.0,
+      "worded_pairs_positive": 0,
+      "worded_random": 0.0,
+      "lexical": 0.0,
+      "lexical_pairs_positive": 0,
+      "lexical_random": 0.0
+    },
+    {
+      "layer": 1,
+      "causal_steering_delta_f2": -0.2765200659923721,
+      "worded": 4.5432774641085416e-05,
+      "worded_pairs_positive": 7,
+      "worded_random": -3.359532820468303e-05,
+      "lexical": 2.9956083380966447e-05,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 9.454183236812241e-05
+    },
+    {
+      "layer": 2,
+      "causal_steering_delta_f2": -0.25884660690280725,
+      "worded": 0.00011840948991448386,
+      "worded_pairs_positive": 10,
+      "worded_random": 7.121024100342765e-05,
+      "lexical": -3.632946027209982e-05,
+      "lexical_pairs_positive": 7,
+      "lexical_random": -3.215327433281345e-05
+    },
+    {
+      "layer": 3,
+      "causal_steering_delta_f2": -0.023352517820967478,
+      "worded": -1.9844945200020447e-05,
+      "worded_pairs_positive": 8,
+      "worded_random": 0.0001202401199407177,
+      "lexical": -0.00027028246404370293,
+      "lexical_pairs_positive": 4,
+      "lexical_random": -0.0003071839532822196
+    },
+    {
+      "layer": 4,
+      "causal_steering_delta_f2": -0.3468277741558268,
+      "worded": -0.0006944056076463312,
+      "worded_pairs_positive": 9,
+      "worded_random": 0.0003860507713397965,
+      "lexical": -0.0006665387809334788,
+      "lexical_pairs_positive": 7,
+      "lexical_random": -5.691260230378248e-05
+    },
+    {
+      "layer": 5,
+      "causal_steering_delta_f2": -0.41423419400598505,
+      "worded": -0.0012748376902891323,
+      "worded_pairs_positive": 5,
+      "worded_random": 0.00034041720937239006,
+      "lexical": -0.0001837968193285633,
+      "lexical_pairs_positive": 9,
+      "lexical_random": -0.00039832793845562264
+    },
+    {
+      "layer": 6,
+      "causal_steering_delta_f2": -0.5675226219555043,
+      "worded": -0.0013237951279734261,
+      "worded_pairs_positive": 6,
+      "worded_random": 0.00024929383653216064,
+      "lexical": -0.0013949659733043518,
+      "lexical_pairs_positive": 6,
+      "lexical_random": -0.0005810652255604509
+    },
+    {
+      "layer": 7,
+      "causal_steering_delta_f2": -0.1534991428079593,
+      "worded": -0.00185525075357873,
+      "worded_pairs_positive": 8,
+      "worded_random": 0.0005030665415688418,
+      "lexical": -0.0015583485801471397,
+      "lexical_pairs_positive": 7,
+      "lexical_random": -0.0005984230592730455
+    },
+    {
+      "layer": 8,
+      "causal_steering_delta_f2": 0.3156236398026522,
+      "worded": -0.004550374171230942,
+      "worded_pairs_positive": 4,
+      "worded_random": -0.0003996951272711158,
+      "lexical": -0.0022476610320154577,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 0.0003348450845805928
+    },
+    {
+      "layer": 9,
+      "causal_steering_delta_f2": 0.42729526846233057,
+      "worded": -0.0019202120893169194,
+      "worded_pairs_positive": 5,
+      "worded_random": -0.0002577320410637185,
+      "lexical": -0.0001267353945877403,
+      "lexical_pairs_positive": 8,
+      "lexical_random": -0.0005901077747694217
+    },
+    {
+      "layer": 10,
+      "causal_steering_delta_f2": 0.5142890698934934,
+      "worded": -0.0014420985826291144,
+      "worded_pairs_positive": 6,
+      "worded_random": -0.0016267135215457529,
+      "lexical": 0.0017914711643243209,
+      "lexical_pairs_positive": 10,
+      "lexical_random": -0.00012334725761320442
+    },
+    {
+      "layer": 11,
+      "causal_steering_delta_f2": 0.1182781934930972,
+      "worded": 0.0002230118407169357,
+      "worded_pairs_positive": 10,
+      "worded_random": -0.002595667290734127,
+      "lexical": 0.001077319320756942,
+      "lexical_pairs_positive": 9,
+      "lexical_random": -0.00026948570302920416
+    },
+    {
+      "layer": 12,
+      "causal_steering_delta_f2": 0.3097247982168483,
+      "worded": 0.001390875200740993,
+      "worded_pairs_positive": 11,
+      "worded_random": 0.002635695884237066,
+      "lexical": 0.002066614426439628,
+      "lexical_pairs_positive": 7,
+      "lexical_random": 0.0002917153251473792
+    },
+    {
+      "layer": 13,
+      "causal_steering_delta_f2": 0.8712934053719437,
+      "worded": 0.00010974472388625145,
+      "worded_pairs_positive": 7,
+      "worded_random": 0.0019686656596604735,
+      "lexical": 0.0037919621245237067,
+      "lexical_pairs_positive": 9,
+      "lexical_random": -0.0027808110316982493
+    },
+    {
+      "layer": 14,
+      "causal_steering_delta_f2": 0.9166292979971331,
+      "worded": 0.0010194197675446048,
+      "worded_pairs_positive": 9,
+      "worded_random": 0.0007161712856031954,
+      "lexical": -0.0009650503634475172,
+      "lexical_pairs_positive": 7,
+      "lexical_random": -0.0007788289076415822
+    },
+    {
+      "layer": 15,
+      "causal_steering_delta_f2": 0.06506119786536146,
+      "worded": 0.008343207562575117,
+      "worded_pairs_positive": 13,
+      "worded_random": -0.004547764576273039,
+      "lexical": -0.0033745907130651176,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 0.0007975059997988865
+    },
+    {
+      "layer": 16,
+      "causal_steering_delta_f2": 0.9988063856112603,
+      "worded": -0.007652364525711164,
+      "worded_pairs_positive": 7,
+      "worded_random": -0.004914214659947902,
+      "lexical": -0.002760156989097595,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 0.002550382137997076
+    },
+    {
+      "layer": 17,
+      "causal_steering_delta_f2": 1.5308382108014484,
+      "worded": -0.026405044249258935,
+      "worded_pairs_positive": 6,
+      "worded_random": -0.009029780980199575,
+      "lexical": -0.002142935525625944,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 0.00019741669530048966
+    },
+    {
+      "layer": 18,
+      "causal_steering_delta_f2": 0.81669024256189,
+      "worded": 0.04160582437179983,
+      "worded_pairs_positive": 13,
+      "worded_random": -0.003931609418941662,
+      "lexical": -0.0024572028778493404,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 0.0009355339570902288
+    },
+    {
+      "layer": 19,
+      "causal_steering_delta_f2": 1.2324565088151758,
+      "worded": 0.04857568739680573,
+      "worded_pairs_positive": 14,
+      "worded_random": -0.04310533741954714,
+      "lexical": 0.001145878341048956,
+      "lexical_pairs_positive": 8,
+      "lexical_random": 0.007195963786216453
+    },
+    {
+      "layer": 20,
+      "causal_steering_delta_f2": 2.3455905425498713,
+      "worded": 0.248029112117365,
+      "worded_pairs_positive": 15,
+      "worded_random": -0.05886738758999854,
+      "lexical": 0.1257027650717646,
+      "lexical_pairs_positive": 16,
+      "lexical_random": -0.022103589435573667
+    },
+    {
+      "layer": 21,
+      "causal_steering_delta_f2": 2.8426316613258678,
+      "worded": 0.22482642997056246,
+      "worded_pairs_positive": 14,
+      "worded_random": -0.021487528108991683,
+      "lexical": 0.1814409545622766,
+      "lexical_pairs_positive": 16,
+      "lexical_random": -0.04693746700650081
+    },
+    {
+      "layer": 22,
+      "causal_steering_delta_f2": 3.9606342783364994,
+      "worded": 0.565475850366056,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.09310315828770399,
+      "lexical": 0.21022282843478024,
+      "lexical_pairs_positive": 16,
+      "lexical_random": -0.021748496568761766
+    },
+    {
+      "layer": 23,
+      "causal_steering_delta_f2": 2.378078154362811,
+      "worded": 0.44730810075998306,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.288648635847494,
+      "lexical": 0.224345549242571,
+      "lexical_pairs_positive": 14,
+      "lexical_random": 0.031473678071051836
+    },
+    {
+      "layer": 24,
+      "causal_steering_delta_f2": 0.3372201318215957,
+      "worded": 0.8224736964330077,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.01204580906778574,
+      "lexical": 0.33791855769231915,
+      "lexical_pairs_positive": 12,
+      "lexical_random": -0.09828634082805365
+    },
+    {
+      "layer": 25,
+      "causal_steering_delta_f2": -0.16262571644983836,
+      "worded": 0.9687153790146112,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.46855617221444845,
+      "lexical": 0.41177609586156905,
+      "lexical_pairs_positive": 14,
+      "lexical_random": -0.001494421623647213
+    },
+    {
+      "layer": 26,
+      "causal_steering_delta_f2": -0.017487317612904008,
+      "worded": 0.7524240724742413,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.13680957211181521,
+      "lexical": 0.435899093747139,
+      "lexical_pairs_positive": 14,
+      "lexical_random": 0.12908730399794877
+    },
+    {
+      "layer": 27,
+      "causal_steering_delta_f2": -0.40366875611471187,
+      "worded": 0.8468614490702748,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.23883517901413143,
+      "lexical": 0.45759037625975907,
+      "lexical_pairs_positive": 15,
+      "lexical_random": -0.0809810790233314
+    },
+    {
+      "layer": 28,
+      "causal_steering_delta_f2": 0.06204624741258158,
+      "worded": 1.1691619586199522,
+      "worded_pairs_positive": 16,
+      "worded_random": -0.0950708044692874,
+      "lexical": 0.43758200760930777,
+      "lexical_pairs_positive": 15,
+      "lexical_random": -0.2543230764567852
+    },
+    {
+      "layer": 29,
+      "causal_steering_delta_f2": 0.12041270708323282,
+      "worded": 0.6075326856225729,
+      "worded_pairs_positive": 16,
+      "worded_random": -0.12229649676010013,
+      "lexical": 0.350423012743704,
+      "lexical_pairs_positive": 14,
+      "lexical_random": 0.10946608940139413
+    },
+    {
+      "layer": 30,
+      "causal_steering_delta_f2": 0.1933094264149986,
+      "worded": 0.4478098154067993,
+      "worded_pairs_positive": 16,
+      "worded_random": 0.2697228165343404,
+      "lexical": 0.21185999875888228,
+      "lexical_pairs_positive": 11,
+      "lexical_random": 0.03398324269801378
+    },
+    {
+      "layer": 31,
+      "causal_steering_delta_f2": -0.016721295191018726,
+      "worded": 0.4995950926095247,
+      "worded_pairs_positive": 16,
+      "worded_random": -0.23546988423913717,
+      "lexical": 0.19512204313650727,
+      "lexical_pairs_positive": 13,
+      "lexical_random": 0.12714199884794652
+    },
+    {
+      "layer": 32,
+      "causal_steering_delta_f2": 0.09000143792582094,
+      "worded": 0.9554401468485594,
+      "worded_pairs_positive": 15,
+      "worded_random": 0.23507945612072945,
+      "lexical": 0.2532684407196939,
+      "lexical_pairs_positive": 10,
+      "lexical_random": -0.13671988062560558
+    },
+    {
+      "layer": 33,
+      "causal_steering_delta_f2": -0.06724860199665272,
+      "worded": 1.620607703924179,
+      "worded_pairs_positive": 16,
+      "worded_random": -1.3540290147066116,
+      "lexical": 0.4980427250266075,
+      "lexical_pairs_positive": 15,
+      "lexical_random": -0.21912741381675005
+    },
+    {
+      "layer": 34,
+      "causal_steering_delta_f2": 0.1041970115093136,
+      "worded": 2.010926816612482,
+      "worded_pairs_positive": 15,
+      "worded_random": 0.02491138130426407,
+      "lexical": 0.6197295561432838,
+      "lexical_pairs_positive": 9,
+      "lexical_random": -0.4146641716361046
+    },
+    {
+      "layer": 35,
+      "causal_steering_delta_f2": 0.0035923315253967303,
+      "worded": 4.8195511251688,
+      "worded_pairs_positive": 16,
+      "worded_random": -2.491523042321205,
+      "lexical": 1.5162328025326133,
+      "lexical_pairs_positive": 16,
+      "lexical_random": -0.1759790456853807
+    }
+  ]
+}
