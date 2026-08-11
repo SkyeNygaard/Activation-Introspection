@@ -249,28 +249,21 @@ The full ledger and the threats in both directions are in
 
 ## What comes next
 
-The retained-trace experiment above was the gate, and it passed at early
-injection sites. That unblocks the study below, with one constraint the result
-imposes: the sibling comparison has to run somewhere the reporting channel is
-still alive. Past the midpoint every arm sits at chance, so a comparison there
-would measure the readout collapse instead of the thing it is meant to measure.
+The in-context and trained reporters above still share their largest limitation:
+every state they report was manufactured by an injected direction. The next gate
+is inference-only transfer to a state the model computed while solving an
+ordinary task.
 
-The next experiment builds two sibling models from one base checkpoint using
-independent, compute-matched adapters. Each sibling then reports on three kinds
-of activation: its own, its sibling's raw, and its sibling's mapped into its own
-coordinates by a frozen orthogonal transform fitted on separate unlabeled text.
+The smallest test patches a two-hop intermediate between matched prompts, first
+requiring the patch to change the ordinary downstream answer. Only then does the
+existing episode-remapped `Q/K` interface ask which hidden state was transplanted.
+A positive extends the result beyond planted directions; a null under a working
+patch bounds the current capability to the artificial interface.
 
-The question is whether an apparent "I read my own activations better than yours"
-advantage survives once the coordinate mismatch is removed. If it vanishes after
-alignment, the advantage was representational compatibility all along. If it
-survives in **both** directions with decodability, reconstruction, damage, and
-format all matched, that is a residual worth reporting, though still only
-"compatibility beyond the transform I happened to test", not metacognition. An
-effect in one direction only is model heterogeneity, and does not get pooled into
-a claim about self-access.
-
-Proposed, not implemented. Stop rules in
-[`notes/04-claim-audit.md`](notes/04-claim-audit.md).
+A first layer-9 marker pilot is implemented and stopped before reporting because
+the patch failed its ordinary-answer reachability gate. Its exact closure scope
+and reopen condition are in
+[`notes/09-natural-state-pilot.md`](notes/09-natural-state-pilot.md).
 
 ## Earlier exploratory sweep: no positive evidence under this instrument
 

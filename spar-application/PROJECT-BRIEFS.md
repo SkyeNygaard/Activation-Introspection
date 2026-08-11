@@ -109,6 +109,14 @@ workspace variables and ask whether the learned verbalizer transfers. Keep the
 symmetric aligned-source experiment as the privileged-access test; do not make it
 the first expensive run.
 
+A first inference-only feasibility attempt now closes one narrow instrument: an
+exact transplant at the route marker after layer 9 did not make the ordinary
+two-hop answer follow the donor bidirectionally in any of five worlds, so the
+frozen stop rule prevented the reporter from running. This is not a natural-state
+reporting null. It means site localization has to pass on disjoint development
+tasks before a fresh report bank is exposed; see
+[`notes/09`](../activation-introspection/notes/09-natural-state-pilot.md).
+
 **Controls, inference, reproducibility.** Transient intervention removed before a
 fresh arbitrary codebook is revealed; carrier-only cache and forced identical
 visible tokens; clean-cache leakage gate; frozen sham-hook plus

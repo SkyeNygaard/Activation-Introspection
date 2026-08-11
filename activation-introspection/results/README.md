@@ -1,5 +1,18 @@
 # Result artifact status
 
+## Natural-state pilot: stopped before reporting
+
+`natural_state_smoke_protocol_v2.json` froze an inference-only feasibility test:
+transplant a naturally computed two-hop route state, require it to change the
+ordinary answer, then reuse the episode-remapped `Q/K` reporter. The first gate
+failed. Clean route answers were 8/10 and cross-patching the layer-9 marker state
+worked bidirectionally in 0/5 worlds. Exact self-patching reproduced the full
+logit vector with maximum error 0.0, so this is a no-reach result for the tested
+site rather than broken replacement plumbing. No reporting rows ran, and this is
+not evidence against natural-state reporting. Full scope and a disclosed
+diagnostic-metric bug are in
+[`../notes/09-natural-state-pilot.md`](../notes/09-natural-state-pilot.md).
+
 ## Sensitivity/specificity trade-off in introspection training
 
 `remap_training_protocol_v2.json` (SHA-256 `f29b479d…be0f0`) freezes the citable

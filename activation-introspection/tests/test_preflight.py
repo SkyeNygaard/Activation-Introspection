@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from introspect.preflight import _RUNNER_RE, available_gib, required_gib
+from introspect.preflight import _RUNNER_RE, _competing_runs, available_gib, required_gib
 
 
 @pytest.mark.parametrize(
@@ -38,6 +38,18 @@ def test_detects_a_runner_however_it_was_invoked(command: str) -> None:
 )
 def test_ignores_non_runners(command: str) -> None:
     assert _RUNNER_RE.search(command) is None
+
+
+def test_competing_runs_excludes_uv_parent_but_keeps_sibling() -> None:
+    output = "\n".join(
+        [
+            "10 1 uv run python scripts/run_natural_state.py --smoke",
+            "20 10 python scripts/run_natural_state.py --smoke",
+            "30 1 python scripts/run_report_training.py --seed 0",
+        ]
+    )
+
+    assert _competing_runs(output, mine=20) == [(30, "run_report_training.py")]
 
 
 def test_training_requires_more_than_inference() -> None:

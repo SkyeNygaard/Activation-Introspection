@@ -65,23 +65,37 @@ def available_gib() -> float:
     return total * page / 2**30
 
 
-def competing_runs() -> list[tuple[int, str]]:
-    """Other processes running an experiment script, excluding this one."""
-    out = subprocess.run(
-        ["ps", "-Ao", "pid=,command="], capture_output=True, text=True, check=True
-    ).stdout
-    mine = os.getpid()
-    found = []
+def _competing_runs(out: str, mine: int) -> list[tuple[int, str]]:
+    processes: dict[int, tuple[int, str]] = {}
     for line in out.splitlines():
-        pid_text, _, command = line.strip().partition(" ")
-        if not pid_text.isdigit() or int(pid_text) == mine:
+        fields = line.strip().split(maxsplit=2)
+        if len(fields) == 3 and fields[0].isdigit() and fields[1].isdigit():
+            processes[int(fields[0])] = (int(fields[1]), fields[2])
+
+    ancestors = {mine}
+    parent = processes.get(mine, (os.getppid(), ""))[0]
+    while parent and parent not in ancestors:
+        ancestors.add(parent)
+        parent = processes.get(parent, (0, ""))[0]
+
+    found = []
+    for pid, (_parent, command) in processes.items():
+        if pid in ancestors:
             continue
         if "python" not in command:
             continue
         match = _RUNNER_RE.search(command)
         if match and "preflight" not in command:
-            found.append((int(pid_text), match.group(1)))
+            found.append((pid, match.group(1)))
     return found
+
+
+def competing_runs() -> list[tuple[int, str]]:
+    """Other runner processes, excluding this process and its launch wrapper."""
+    out = subprocess.run(
+        ["ps", "-Ao", "pid=,ppid=,command="], capture_output=True, text=True, check=True
+    ).stdout
+    return _competing_runs(out, os.getpid())
 
 
 def required_gib(model: str, *, training: bool) -> float:

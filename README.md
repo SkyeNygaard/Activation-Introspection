@@ -295,9 +295,9 @@ method, and the method is what I would bring to a project.
 
 ## What is not here
 
-**More than one training seed.** The trained reporter is a single LoRA run, which
-cannot separate the effect from initialisation luck. Independent seeds are the
-first thing that experiment needs.
+**Natural-state reporting.** Every reporting result above uses an artificial
+residual-stream edit. Nothing yet shows transfer to a state the model computed
+while solving an ordinary task.
 
 **A route to program.** The localization line ran two frozen stages and stopped on
 the second. There is no circuit, no program, and no shortcut-robustness result.
