@@ -81,6 +81,51 @@ for the closest hits.
 | Training loses to a probe ([12](../activation-introspection/notes/12-training-versus-a-probe.md)) | [2608.04347](https://arxiv.org/html/2608.04347) | **Replication with a disagreement**, not a new headline |
 | Class clustering in representation space predicts which hidden rules a four-shot interface can learn ([16](../activation-introspection/notes/16-visible-rule-capacity.md)) | nothing found combining representational clustering with in-context rule-induction success; nearest are [2406.11233](https://arxiv.org/html/2406.11233v1) on irregular in-context decision boundaries and [2502.15823](https://arxiv.org/pdf/2502.15823) on induction failures | **The most likely genuinely new thing here**, and also the least about introspection. Targeted search only; needs the full protocol of step 2 below before the word "new" is used |
 
+### Second search, same day, covering notes 17–18 — and it went badly
+
+Queries: `concept injection evaluation confound probe reads injected vector at
+injection site trivially decodable critique`; `logit lens injected steering vector
+decodable unembedding baseline introspection comparison unfair`.
+
+**Both of notes 17 and 18's conceptual claims are prior art.** Searched after the
+runs, again against this file's own rule.
+
+- **"The injection site is trivially decodable, so the comparison is unfair."**
+  Already a stated criticism in this literature: identifying an injected concept
+  can be achieved by reading out the injected representation, and if a `bread`
+  direction is added at a late layer it is unsurprising that the model can emit
+  the token `bread` — so concept identification may reflect direct logit effects
+  rather than metacognition. **Notes/17's central argument is not new.** What notes
+  17 and 18 add is a *measurement* of it — lens 0.986 against model 0.597, and the
+  depth curve — not the observation.
+- **"Information is used while the lens cannot read it."**
+  [Steerable but Not Decodable: Function Vectors Operate Beyond the Logit
+  Lens](https://arxiv.org/html/2604.02608v2) reports steering succeeding *even when
+  the logit lens cannot decode the correct answer at any intermediate layer*, across
+  12 tasks and 6 models. **That is notes/18's answer-position finding**, established
+  more broadly and with a proper multi-model design. Ours is a single-model
+  instance of a published phenomenon.
+
+The honest summary of the last two runs: **two conceptual claims, both already
+made by others; two measurements, both single-model instances of published
+effects.** The U-shaped legibility curve for injected concept vectors, with the
+model's own identification accuracy as a reference line, is the only part I have
+not found stated elsewhere, and one search is not evidence that it isn't.
+
+### Where that leaves novelty across the whole repository
+
+| candidate | status after two searches |
+|---|---|
+| Clustering of a hidden class predicts whether a four-shot interface can learn it ([16](../activation-introspection/notes/16-visible-rule-capacity.md)) | **Still nothing found.** The only unclaimed thing here — and the least about introspection |
+| Cost criterion with a per-episode adaptive reader, four task shapes, byte-identical twins ([11](../activation-introspection/notes/11-matched-cost-reader.md), [15](../activation-introspection/notes/15-matched-reader-on-content.md)) | Extension candidate. The twin construction is the differentiator |
+| Two-concept discrimination at matched separation ([14](../activation-introspection/notes/14-content-versus-disturbance.md)) | Contested; [2603.05414](https://arxiv.org/pdf/2603.05414) still unread in full |
+| Injection site is a leak ([17](../activation-introspection/notes/17-supervision-is-the-hidden-knob.md), [18](../activation-introspection/notes/18-where-the-lens-fails.md)) | **Prior art.** Measured here, not discovered here |
+| Training loses to a probe ([12](../activation-introspection/notes/12-training-versus-a-probe.md)) | Prior art ([2608.04347](https://arxiv.org/html/2608.04347)) |
+| Shared axis in the bank ([13](../activation-introspection/notes/13-shared-axis-audit.md)) | Prior art ([2603.21396](https://arxiv.org/html/2603.21396v1)); a validity audit of our own setup |
+
+**Four of six candidates are prior art.** That is the correct thing to know before
+an application goes out, and it is the reason this file exists.
+
 ### What this search did not do
 
 Backward and forward citation chaining from any of the papers above; appendix and
