@@ -1,0 +1,57 @@
+{
+  "anchor_describe_gagged": 0.2916666666666667,
+  "anchor_reproduces": true,
+  "best_comparable_accuracy": 0.7083333333333334,
+  "best_comparable_elicitation": "sensory",
+  "by_elicitation": {
+    "associations": {
+      "excluded_from_headline": false,
+      "mentions_target_rate": 0.2916666666666667,
+      "n": 24,
+      "reader_accuracy": 0.5
+    },
+    "describe_free": {
+      "excluded_from_headline": false,
+      "mentions_target_rate": 0.20833333333333334,
+      "n": 24,
+      "reader_accuracy": 0.2916666666666667
+    },
+    "describe_gagged": {
+      "excluded_from_headline": false,
+      "mentions_target_rate": 0.041666666666666664,
+      "n": 24,
+      "reader_accuracy": 0.2916666666666667
+    },
+    "five_guesses": {
+      "excluded_from_headline": true,
+      "mentions_target_rate": 0.3333333333333333,
+      "n": 24,
+      "reader_accuracy": 0.4583333333333333
+    },
+    "name_one": {
+      "excluded_from_headline": false,
+      "mentions_target_rate": 0.125,
+      "n": 24,
+      "reader_accuracy": 0.2916666666666667
+    },
+    "sensory": {
+      "excluded_from_headline": false,
+      "mentions_target_rate": 0.7083333333333334,
+      "n": 24,
+      "reader_accuracy": 0.7083333333333334
+    }
+  },
+  "chance": 0.125,
+  "elapsed_seconds": 181.1,
+  "fraction_of_gap_closed_by_prompting": 1.1102222222222222,
+  "gap_to_forced_choice": -0.04133333333333333,
+  "layer": 9,
+  "leaks": 0,
+  "lens_reference": 0.986,
+  "model": "qwen-3b",
+  "model_forced_choice_reference": 0.667,
+  "notes_20_reader_accuracy": 0.292,
+  "smoke": false,
+  "strength": 2.0,
+  "what_this_is": "Only the elicitation prompt varies. Measures how much of notes/20's reach-versus-say gap was the prompt rather than the model."
+}
