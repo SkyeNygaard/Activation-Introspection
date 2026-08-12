@@ -18,21 +18,13 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import cast
 
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from introspect import models  # noqa: E402
-from introspect.concepts import ConceptVector, build_bank, pairwise_cosines  # noqa: E402
-from introspect.preflight import check as preflight_check  # noqa: E402
-from introspect.report_training import (  # noqa: E402
-    CENTERING_CONCEPTS,
-    EVAL_CONCEPTS,
-    TRAIN_CARRIERS,
-    TRAIN_CONCEPTS,
-)
-from run_trained_vs_probe import (  # noqa: E402
+from run_trained_vs_probe import (
     LAYER,
     MODEL,
     MODEL_REVISION,
@@ -41,11 +33,21 @@ from run_trained_vs_probe import (  # noqa: E402
     _state,
 )
 
+from introspect import models
+from introspect.concepts import ConceptVector, build_bank, pairwise_cosines
+from introspect.preflight import check as preflight_check
+from introspect.report_training import (
+    CENTERING_CONCEPTS,
+    EVAL_CONCEPTS,
+    TRAIN_CARRIERS,
+    TRAIN_CONCEPTS,
+)
+
 OUT = Path("results/bank_audit_v1_summary.json")
 
 
 def _unit(v: torch.Tensor) -> torch.Tensor:
-    return v / (v.norm() + 1e-8)
+    return cast(torch.Tensor, v / (v.norm() + 1e-8))
 
 
 def _cos(a: torch.Tensor, b: torch.Tensor) -> float:

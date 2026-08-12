@@ -20,14 +20,6 @@ from pathlib import Path
 from typing import Any, cast
 
 import torch
-from torch import Tensor
-
-from introspect import models
-from introspect.codebook_icl import CONFIRM_CONCEPTS, CONFIRM_VISIBLE_SAMPLES
-from introspect.concepts import ConceptVector, build_bank
-from introspect.hooks import Intervention, capture, intervene
-from introspect.preflight import check as preflight_check
-from introspect.report_training import CENTERING_CONCEPTS
 from run_zero_shot_identify import (
     ANSWER_PREFIX,
     CHANCE,
@@ -38,6 +30,14 @@ from run_zero_shot_identify import (
     first_token_ids,
     question,
 )
+from torch import Tensor
+
+from introspect import models
+from introspect.codebook_icl import CONFIRM_CONCEPTS, CONFIRM_VISIBLE_SAMPLES
+from introspect.concepts import ConceptVector, build_bank
+from introspect.hooks import Intervention, capture, intervene
+from introspect.preflight import check as preflight_check
+from introspect.report_training import CENTERING_CONCEPTS
 
 STRENGTH = 2.0
 #: notes/17, same injection, model reading its own state at this strength.
@@ -149,7 +149,8 @@ def run(args: argparse.Namespace) -> None:
             if v[s] < MODEL_ACCURACY
         ]
         best_site = {
-            site: max(by_depth.values(), key=lambda v: v[site])[site] for site in ("marker", "final")
+            site: max(by_depth.values(), key=lambda v: v[site])[site]
+            for site in ("marker", "final")
         }
         # The criterion asks whether SOME cheap reader beats the model, so the
         # third party is allowed to pick its best depth and site.

@@ -15,13 +15,14 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import cast
 
 import torch
+from run_visible_rule_screen import MODEL, MODEL_REVISION, RULES
 
 from introspect import models
 from introspect.hooks import capture
 from introspect.preflight import check as preflight_check
-from run_visible_rule_screen import MODEL, MODEL_REVISION, RULES
 
 LAYERS = (9, 18, 27)
 OUT = Path("results/cluster_check_v1_summary.json")
@@ -44,7 +45,7 @@ def embed(model: models.LoadedModel, item: str, layer: int) -> torch.Tensor:
     with capture(model, [layer]) as store:
         model.model(ids)
     v = store.last_token(layer)[0].float()
-    return v / (v.norm() + 1e-8)
+    return cast(torch.Tensor, v / (v.norm() + 1e-8))
 
 
 def separation(a: list[torch.Tensor], b: list[torch.Tensor]) -> float:
@@ -53,6 +54,7 @@ def separation(a: list[torch.Tensor], b: list[torch.Tensor]) -> float:
     Zero means the two classes are no tighter internally than they are to each
     other -- no cluster for a query to fall into.
     """
+
     def mean_pairs(xs: list[torch.Tensor], ys: list[torch.Tensor], same: bool) -> float:
         vals = [
             float(torch.dot(x, y))

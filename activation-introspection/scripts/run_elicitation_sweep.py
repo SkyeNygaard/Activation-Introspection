@@ -18,13 +18,6 @@ import time
 from pathlib import Path
 
 import torch
-
-from introspect import models
-from introspect.codebook_icl import CONFIRM_CONCEPTS, CONFIRM_VISIBLE_SAMPLES
-from introspect.concepts import ConceptVector, build_bank
-from introspect.grading import grade_free_form
-from introspect.preflight import check as preflight_check
-from introspect.report_training import CENTERING_CONCEPTS
 from run_comparator_tiers import (
     LENS_T2,
     MAX_NEW,
@@ -33,8 +26,22 @@ from run_comparator_tiers import (
     STRENGTH,
     inject_prompt_only,
 )
-from run_zero_shot_identify import ANSWER_PREFIX, CHANCE, LAYER, MARKER, MODEL, MODEL_REVISION
-from run_zero_shot_identify import first_token_ids
+from run_zero_shot_identify import (
+    ANSWER_PREFIX,
+    CHANCE,
+    LAYER,
+    MARKER,
+    MODEL,
+    MODEL_REVISION,
+    first_token_ids,
+)
+
+from introspect import models
+from introspect.codebook_icl import CONFIRM_CONCEPTS, CONFIRM_VISIBLE_SAMPLES
+from introspect.concepts import ConceptVector, build_bank
+from introspect.grading import grade_free_form
+from introspect.preflight import check as preflight_check
+from introspect.report_training import CENTERING_CONCEPTS
 
 ELICITATIONS: dict[str, str] = {
     # notes/20's exact wording, naming suppressed. The anchor.

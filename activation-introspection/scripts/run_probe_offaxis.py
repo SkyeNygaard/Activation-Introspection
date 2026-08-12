@@ -21,23 +21,24 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from introspect import models  # noqa: E402
-from introspect.concepts import ConceptVector, build_bank, random_control  # noqa: E402
-from introspect.preflight import check as preflight_check  # noqa: E402
-from introspect.report_training import (  # noqa: E402
-    CENTERING_CONCEPTS,
-    EVAL_CARRIERS,
-    EVAL_CONCEPTS,
-    TRAIN_CARRIERS,
-    TRAIN_CONCEPTS,
-)
-from run_trained_vs_probe import (  # noqa: E402
+from run_trained_vs_probe import (
     LAYER,
     MODEL,
     MODEL_REVISION,
     STRENGTH,
     _fit_logistic,
     _state,
+)
+
+from introspect import models
+from introspect.concepts import ConceptVector, build_bank, random_control
+from introspect.preflight import check as preflight_check
+from introspect.report_training import (
+    CENTERING_CONCEPTS,
+    EVAL_CARRIERS,
+    EVAL_CONCEPTS,
+    TRAIN_CARRIERS,
+    TRAIN_CONCEPTS,
 )
 
 OUT = Path("results/probe_offaxis_v1_summary.json")
@@ -111,7 +112,8 @@ def run() -> None:
         }
 
         results: dict[str, dict[str, float]] = {}
-        per_direction: dict[str, dict[str, float]] = {}
+        # arm -> direction name -> reader -> accuracy.
+        per_direction: dict[str, dict[str, dict[str, float]]] = {}
         for arm, bank in arms.items():
             correct: dict[str, dict[tuple[str, str, int], bool]] = {"centroid": {}, "logistic": {}}
             hits: dict[str, dict[str, int]] = {}
@@ -120,9 +122,7 @@ def run() -> None:
                 for carrier in EVAL_CARRIERS:
                     for sign in (1, -1):
                         state = _state(model, carrier, direction, sign)
-                        c_pred = (
-                            1 if (state - positive).norm() <= (state - negative).norm() else -1
-                        )
+                        c_pred = 1 if (state - positive).norm() <= (state - negative).norm() else -1
                         l_pred = 1 if float(torch.dot(state, weight) + bias) > 0 else -1
                         correct["centroid"][(name, carrier, sign)] = c_pred == sign
                         correct["logistic"][(name, carrier, sign)] = l_pred == sign
@@ -137,8 +137,7 @@ def run() -> None:
                 "logistic_twin_pair": _twin_pair(correct["logistic"]),
             }
             per_direction[arm] = {
-                name: {k: v / h["n"] for k, v in h.items() if k != "n"}
-                for name, h in hits.items()
+                name: {k: v / h["n"] for k, v in h.items() if k != "n"} for name, h in hits.items()
             }
 
         summary = {

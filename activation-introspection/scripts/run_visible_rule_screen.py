@@ -16,8 +16,9 @@ import argparse
 import itertools
 import json
 import time
+from collections.abc import Callable, Iterable
 from pathlib import Path
-from typing import Callable
+from typing import cast
 
 import torch
 
@@ -79,9 +80,7 @@ RULES: dict[str, Callable[[], list[Fold]]] = {
 }
 
 
-def render(
-    demos: list[tuple[str, str]], query: str, rule_is_arithmetic: bool
-) -> str:
+def render(demos: list[tuple[str, str]], query: str, rule_is_arithmetic: bool) -> str:
     noun = "expression" if rule_is_arithmetic else "item"
     lines = [
         f"Each {noun} below has been given the label Q or K by a fixed hidden rule.",
@@ -111,9 +110,7 @@ def score(model: models.LoadedModel, prompt: str, correct: str) -> dict[str, obj
         "predicted": predicted,
         "correct": predicted == correct,
         "format_ok": int(logits.argmax()) in set(ids),
-        "label_mass": float(
-            torch.logsumexp(selected, 0).sub(torch.logsumexp(logits, 0)).exp()
-        ),
+        "label_mass": float(torch.logsumexp(selected, 0).sub(torch.logsumexp(logits, 0)).exp()),
     }
 
 
@@ -124,9 +121,14 @@ def cells() -> list[tuple[tuple[int, ...], int, int]]:
 
 
 def twin_pair(rows: list[dict[str, object]]) -> float:
-    groups: dict[tuple[str, int, tuple, int], list[bool]] = {}
+    groups: dict[tuple[str, int, tuple[object, ...], int], list[bool]] = {}
     for r in rows:
-        key = (str(r["rule"]), int(r["fold"]), tuple(r["order"]), int(r["map"]))  # type: ignore[arg-type]
+        key = (
+            str(r["rule"]),
+            cast(int, r["fold"]),
+            tuple(cast("Iterable[object]", r["order"])),
+            cast(int, r["map"]),
+        )
         groups.setdefault(key, []).append(bool(r["correct"]))
     full = [v for v in groups.values() if len(v) == 2]
     return sum(all(v) for v in full) / len(full) if full else float("nan")
@@ -134,9 +136,9 @@ def twin_pair(rows: list[dict[str, object]]) -> float:
 
 def _self_check() -> None:
     assert len(cells()) == 24, "the design is 6 orders x 2 maps x 2 query classes"
-    a, b, qa, qb = _fold(["x", "y", "z"], ["p", "q", "r"], seen=True)
+    a, _b, qa, _qb = _fold(["x", "y", "z"], ["p", "q", "r"], seen=True)
     assert qa == "x" and qa in a, "seen query must appear in the demonstrations"
-    a, b, qa, qb = _fold(["x", "y", "z"], ["p", "q", "r"], seen=False)
+    a, _b, qa, _qb = _fold(["x", "y", "z"], ["p", "q", "r"], seen=False)
     assert qa == "z" and qa not in a, "unseen query must not appear in them"
 
 
@@ -168,9 +170,7 @@ def run(args: argparse.Namespace) -> None:
                     used = {0: 0, 1: 0}
                     demos = []
                     for which in order:
-                        demos.append(
-                            (pool[which][used[which]], label_a if which == 0 else label_b)
-                        )
+                        demos.append((pool[which][used[which]], label_a if which == 0 else label_b))
                         used[which] += 1
                     query = query_a if query_class == 0 else query_b
                     correct = label_a if query_class == 0 else label_b

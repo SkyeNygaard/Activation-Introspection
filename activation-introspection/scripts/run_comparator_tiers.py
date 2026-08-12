@@ -17,19 +17,12 @@ from __future__ import annotations
 import argparse
 import json
 import time
+from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
+from typing import cast
 
 import torch
-
-from introspect import models
-from introspect.codebook_icl import CONFIRM_CONCEPTS, CONFIRM_VISIBLE_SAMPLES
-from introspect.concepts import ConceptVector, build_bank
-from introspect.grading import grade_free_form
-from introspect.hooks import Intervention, intervene
-from introspect.models import LoadedModel
-from introspect.preflight import check as preflight_check
-from introspect.report_training import CENTERING_CONCEPTS
 from run_zero_shot_identify import (
     ANSWER_PREFIX,
     CHANCE,
@@ -40,6 +33,16 @@ from run_zero_shot_identify import (
     first_token_ids,
     question,
 )
+from torch import Tensor
+
+from introspect import models
+from introspect.codebook_icl import CONFIRM_CONCEPTS, CONFIRM_VISIBLE_SAMPLES
+from introspect.concepts import ConceptVector, build_bank
+from introspect.grading import grade_free_form
+from introspect.hooks import Intervention, intervene
+from introspect.models import LoadedModel
+from introspect.preflight import check as preflight_check
+from introspect.report_training import CENTERING_CONCEPTS
 
 STRENGTH = 2.0
 MAX_NEW = 40
@@ -61,7 +64,9 @@ READER_ASK = (
 
 
 @contextmanager
-def inject_prompt_only(model: LoadedModel, direction: ConceptVector, position: int):
+def inject_prompt_only(
+    model: LoadedModel, direction: ConceptVector, position: int
+) -> Iterator[None]:
     """Edit one absolute prompt position, surviving cached generation.
 
     ``introspect.hooks.intervene`` indexes an explicit position on every forward
@@ -82,7 +87,7 @@ def inject_prompt_only(model: LoadedModel, direction: ConceptVector, position: i
     )
 
     def hook(_mod: object, _inp: object, output: object) -> object:
-        hidden = output[0] if isinstance(output, tuple) else output
+        hidden = cast(Tensor, output[0] if isinstance(output, tuple) else output)
         if hidden.shape[1] <= position:
             return output
         mask = torch.zeros(hidden.shape[1], dtype=torch.bool, device=hidden.device)
@@ -149,14 +154,19 @@ def run(args: argparse.Namespace) -> None:
             free_marker, choice_marker = marker_of(free_ids), marker_of(choice_ids)
 
             for concept in concepts:
+                # B023: `edit` closes over the loop variable, which is a bug only
+                # when the closure outlives the iteration. It is called below in
+                # the same iteration and never stored, so the binding is correct.
+                # Suppressed rather than restructured: this script produced
+                # notes/20's published numbers.
                 def edit(pos: int) -> Intervention:
                     return Intervention(
                         layer=LAYER,
-                        direction=bank[concept].vector,
+                        direction=bank[concept].vector,  # noqa: B023
                         strength=STRENGTH,
                         positions=[pos],
                         per_position=True,
-                        label=f"tier:{concept}",
+                        label=f"tier:{concept}",  # noqa: B023
                     )
 
                 # Forced choice, with the probability it assigns its own answer.
@@ -168,9 +178,7 @@ def run(args: argparse.Namespace) -> None:
 
                 # Free-form report, generated under the same injection.
                 with inject_prompt_only(model, bank[concept], free_marker):
-                    gen = model.generate_ids(
-                        free_ids, max_new_tokens=MAX_NEW, do_sample=False
-                    )
+                    gen = model.generate_ids(free_ids, max_new_tokens=MAX_NEW, do_sample=False)
                 report = model.tokenizer.decode(
                     gen[0][int(free_ids.shape[1]) :], skip_special_tokens=True
                 ).strip()
@@ -197,8 +205,10 @@ def run(args: argparse.Namespace) -> None:
                         "report_leaks_prompt": MARKER in report,
                     }
                 )
-                print(f"{carrier[:16]} | {concept:9} | forced {pick:9} | t1 {reader_pick:9}",
-                      flush=True)
+                print(
+                    f"{carrier[:16]} | {concept:9} | forced {pick:9} | t1 {reader_pick:9}",
+                    flush=True,
+                )
 
         out.parent.mkdir(parents=True, exist_ok=True)
         with out.open("w") as fh:
@@ -207,9 +217,11 @@ def run(args: argparse.Namespace) -> None:
 
         n = len(rows)
         forced = [r for r in rows if r["model_forced_correct"]]
-        conf_right = [float(r["model_confidence_in_own_pick"]) for r in forced]
+        conf_right = [cast(float, r["model_confidence_in_own_pick"]) for r in forced]
         conf_wrong = [
-            float(r["model_confidence_in_own_pick"]) for r in rows if not r["model_forced_correct"]
+            cast(float, r["model_confidence_in_own_pick"])
+            for r in rows
+            if not r["model_forced_correct"]
         ]
         summary = {
             "what_this_is": (
@@ -229,9 +241,7 @@ def run(args: argparse.Namespace) -> None:
                 "model_forced_choice": sum(bool(r["model_forced_correct"]) for r in rows) / n,
                 "model_forced_choice_from_notes_17": MODEL_FORCED_CHOICE,
             },
-            "report_mentions_target_rate": sum(
-                bool(r["report_mentions_target"]) for r in rows
-            ) / n,
+            "report_mentions_target_rate": sum(bool(r["report_mentions_target"]) for r in rows) / n,
             "calibration": {
                 "mean_confidence_when_right": (
                     sum(conf_right) / len(conf_right) if conf_right else float("nan")

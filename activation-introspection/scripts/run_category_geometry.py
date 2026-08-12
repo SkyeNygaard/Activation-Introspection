@@ -57,8 +57,7 @@ OUT = Path("results/category_geometry_v1_summary.json")
 CANDIDATES: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
     "birds_buildings": (
         ("robin", "sparrow", "falcon", "pigeon", "heron", "magpie", "penguin", "owl"),
-        ("cathedral", "museum", "warehouse", "stadium",
-         "cottage", "factory", "castle", "temple"),
+        ("cathedral", "museum", "warehouse", "stadium", "cottage", "factory", "castle", "temple"),
     ),
     "fruit_tools": (
         ("apple", "cherry", "melon", "grape", "peach", "plum", "mango", "lemon"),
@@ -66,8 +65,7 @@ CANDIDATES: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
     ),
     "mammals_vehicles": (
         ("rabbit", "otter", "badger", "squirrel", "wolf", "deer", "bear", "fox"),
-        ("tractor", "ferry", "glider", "scooter",
-         "truck", "submarine", "helicopter", "bicycle"),
+        ("tractor", "ferry", "glider", "scooter", "truck", "submarine", "helicopter", "bicycle"),
     ),
     "body_weather": (
         ("elbow", "thumb", "ankle", "shoulder", "wrist", "knee", "spine", "jaw"),
@@ -128,10 +126,18 @@ def scrambled_null(pool: list[torch.Tensor], *, draws: int = NULL_DRAWS) -> list
 
 def _self_check() -> None:
     """Tight separated clusters generalize; interleaved ones must not."""
-    a = [torch.tensor([1.0, 0.0]), torch.tensor([0.99, 0.14]),
-         torch.tensor([0.98, 0.20]), torch.tensor([1.0, 0.05])]
-    b = [torch.tensor([0.0, 1.0]), torch.tensor([0.14, 0.99]),
-         torch.tensor([0.20, 0.98]), torch.tensor([0.05, 1.0])]
+    a = [
+        torch.tensor([1.0, 0.0]),
+        torch.tensor([0.99, 0.14]),
+        torch.tensor([0.98, 0.20]),
+        torch.tensor([1.0, 0.05]),
+    ]
+    b = [
+        torch.tensor([0.0, 1.0]),
+        torch.tensor([0.14, 0.99]),
+        torch.tensor([0.20, 0.98]),
+        torch.tensor([0.05, 1.0]),
+    ]
     assert loo_centroid(a, b) == 1.0, "tight clusters generalize to held-out members"
 
     x = [a[0], b[0], a[1], b[1]]
@@ -181,9 +187,12 @@ def main() -> None:
             "scrambled_null_p99": p99,
             "passes": observed > p99,
         }
-        print(f"{name:18s} sep={rows[name]['separation']:+.4f} "
-              f"loo={observed:.3f} null_p99={p99:.3f} "
-              f"{'PASS' if observed > p99 else 'fail'}", flush=True)
+        print(
+            f"{name:18s} sep={rows[name]['separation']:+.4f} "
+            f"loo={observed:.3f} null_p99={p99:.3f} "
+            f"{'PASS' if observed > p99 else 'fail'}",
+            flush=True,
+        )
 
     passing = sorted(
         (k for k in rows if rows[k]["passes"]),

@@ -99,14 +99,27 @@ preflight:
 test:
 	uv run pytest
 
+# scripts/run_clustering_prediction.py hashes its own source into
+# results/clustering_prediction_protocol_v1.json, the protocol behind notes/19 --
+# the only prospective test in this repository, thresholds frozen to disk before
+# any accuracy existed. Reformatting it would change that hash and break the
+# provenance of a published artifact, so it is excluded from both ruff passes.
+#
+# The exclusion lives here and NOT in pyproject.toml: pyproject.toml is itself
+# hashed into 57 frozen protocols, and editing it fails
+# tests/test_analyze_attention_localization.py and
+# tests/test_analyze_attention_head_screen.py immediately. Learned the hard way
+# on 2026-08-12. The Makefile is not hash-bound; check before moving this.
+FROZEN_SOURCE = scripts/run_clustering_prediction.py
+
 lint:
-	uv run ruff check .
-	uv run ruff format --check .
+	uv run ruff check --exclude $(FROZEN_SOURCE) .
+	uv run ruff format --check --exclude $(FROZEN_SOURCE) .
 	uv run mypy
 
 format:
-	uv run ruff check --fix .
-	uv run ruff format .
+	uv run ruff check --fix --exclude $(FROZEN_SOURCE) .
+	uv run ruff format --exclude $(FROZEN_SOURCE) .
 
 check: lint test
 

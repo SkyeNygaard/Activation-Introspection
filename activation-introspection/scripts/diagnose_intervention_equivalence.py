@@ -100,23 +100,27 @@ def main() -> None:
                 ep = prepared.episode
                 positions, signs = prepared.state_positions, ep.state_signs
                 old = score(
-                    model, prepared,
+                    model,
+                    prepared,
                     pair_interventions(a, b, positions, signs, strength=strength),
                 )
                 new = score(
-                    model, prepared,
+                    model,
+                    prepared,
                     exemplar_interventions(bank, plan, positions, signs, strength=strength),
                 )
-                rows.append({
-                    "pair": f"{name_a}|{name_b}",
-                    "carrier_sha": "c0",
-                    "cell_base": ep.cell_id.rsplit("q", 1)[0],
-                    "old_predicted": old,
-                    "new_predicted": new,
-                    "agree": old == new,
-                    "old_correct": old == ep.correct_label,
-                    "new_correct": new == ep.correct_label,
-                })
+                rows.append(
+                    {
+                        "pair": f"{name_a}|{name_b}",
+                        "carrier_sha": "c0",
+                        "cell_base": ep.cell_id.rsplit("q", 1)[0],
+                        "old_predicted": old,
+                        "new_predicted": new,
+                        "agree": old == new,
+                        "old_correct": old == ep.correct_label,
+                        "new_correct": new == ep.correct_label,
+                    }
+                )
 
         agreement = sum(bool(r["agree"]) for r in rows) / len(rows)
         old_tp = twin_pair([dict(r, correct=r["old_correct"]) for r in rows])

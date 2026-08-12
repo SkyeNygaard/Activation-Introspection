@@ -147,7 +147,9 @@ def run(args: argparse.Namespace) -> None:
 
             for concept in concepts:
                 # Capacity ceiling: the word in plain text, same eight-way choice.
-                vis_prompt = model.chat(f"{carrier}\n\n" + question(options, concept), ANSWER_PREFIX)
+                vis_prompt = model.chat(
+                    f"{carrier}\n\n" + question(options, concept), ANSWER_PREFIX
+                )
                 vis_ids = first_token_ids(model, vis_prompt, options)
                 vis = model.forward_logits(model.encode(vis_prompt))[0, -1].float().cpu()
                 rows.append(
@@ -212,7 +214,9 @@ def run(args: argparse.Namespace) -> None:
                 if r["arm"] == arm and (strength is None or r["strength"] == strength)
             ]
             return {
-                "accuracy": sum(bool(r["correct"]) for r in sub) / len(sub) if sub else float("nan"),
+                "accuracy": (
+                    sum(bool(r["correct"]) for r in sub) / len(sub) if sub else float("nan")
+                ),
                 "n": len(sub),
             }
 
@@ -252,9 +256,7 @@ def run(args: argparse.Namespace) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--smoke", action="store_true")
-    parser.add_argument(
-        "--out", type=Path, default=Path("results/zero_shot_identify_v1_raw.jsonl")
-    )
+    parser.add_argument("--out", type=Path, default=Path("results/zero_shot_identify_v1_raw.jsonl"))
     run(parser.parse_args())
 
 

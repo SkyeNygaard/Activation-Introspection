@@ -38,6 +38,17 @@ strictly in the middle and never moves. Separately, and more usefully: how much 
 model can *say* about its own state varies 2.4× on prompt wording alone, and the
 intuitive prompt ("name the concept") is among the worst.
 
+**Added 2026-08-12 (notes 22–24), and it sharpens the above.** The one apparent
+exception to the dominance relation — 14 episodes where the model beat the reader
+at weak strength — was a scoring artifact and does not exist. And what looked
+like the model recognising *content* is recognising a *vector it was already
+shown*: move the query exemplar out of the demonstrations and the model drops to
+0.083 on twin pairs, below the 0.25 coin-flip null, while the cheap reader on the
+identical states holds at 0.986. Five instruction wordings do not move it. So the
+model is not merely worse than the outside method — on a task requiring
+generalization it is at the floor, using none of information that is provably
+present.
+
 ---
 
 ## 3. The results that hold, with their numbers
@@ -65,8 +76,36 @@ Model vs a four-shot nearest-centroid reader refitted per episode:
 | random directions | 0.663 | 1.000 | 0 |
 | weak nudge (strength 0.15) | 0.497 | 0.833 | 14 |
 
-**14 episodes in 1728** where the model succeeds and two averages fail. All 14 are
-in the weak regime — the only place the model was ever ahead.
+**Those 14 episodes are gone.** [notes/22](activation-introspection/notes/22-the-weak-arm-was-a-floor-not-a-frontier.md)
+rescored the same saved rows at the protocol's own unit — the twin pair, where a
+cell counts only if both byte-identical members get their opposite labels right —
+and 14 model-only episodes become **1 model-only pair**. At strength 0.15 the
+model scores 1 pair in 144 against a 0.25 null, because in 16 of 24 cells it emits
+one constant label whatever was injected. Row accuracy averages 0.4965, which
+reads as chance and means blind; notes/08 had already recorded that floor. **There
+is no regime where the model is ahead.** Quote the row-level table above only with
+this correction attached.
+
+**Held-out generalization: the model is at the floor**
+([notes/23](activation-introspection/notes/23-held-out-semantic-generalization.md),
+[notes/24](activation-introspection/notes/24-is-the-held-out-failure-the-interface.md)).
+Give every injection position a different exemplar and hold the query exemplar out
+of the demonstrations. Twin-pair accuracy, null 0.25:
+
+| arm | model | reader |
+|---|---:|---:|
+| same exemplar (anchor) | 0.521 | 1.000 |
+| held-out, real categories | **0.083** | 0.986 |
+| held-out, arbitrary groupings | 0.076 | 0.333 |
+
+The model gains nothing from the categories being real; the reader gains
+everything. A geometry gate run first showed layer 9 carries the category cleanly
+(held-out nearest-centroid 1.000 and 0.989 on the two frozen pairs), so this is
+not a capacity failure. Five instruction wordings, development and confirmation
+pairs split before the run: **no cell of ten beats the null**, pooled held-out is
+60/360 = 0.167 against a pooled anchor of 0.681. The wording is not inert —
+telling the model to attend to its own state cuts constant-labelling from 40% to
+25% and lifts the anchor to 0.875 — which is what makes the null decisive.
 
 **The model reads meaning, not just disturbance**
 ([notes/14](activation-introspection/notes/14-content-versus-disturbance.md)).
@@ -136,10 +175,23 @@ violation of that file's own rule.
 [19](activation-introspection/notes/19-clustering-predicts-learnability.md)), and
 the elicitation range ([21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md)).
 
-**Unresolved and important:** [Emergent Introspection in AI is Content-Agnostic](https://arxiv.org/pdf/2603.05414),
-by two authors of the cost-criterion paper this work leans on, is in tension with
-[notes/14](activation-introspection/notes/14-content-versus-disturbance.md).
-**It has not been read in full and must be before notes/14 is described as novel.**
+**Resolved 2026-08-12.** [Emergent Introspection in AI is Content-Agnostic](https://arxiv.org/pdf/2603.05414)
+(Lederman and Mahowald) has now been read in full. It is **not** in tension with
+[notes/14](activation-introspection/notes/14-content-versus-disturbance.md) —
+they score open-ended naming of the injected concept, notes/14 scores forced
+choice between two arbitrary labels, and a model can fail the first while passing
+the second. But it does publish the conclusion
+[notes/23](activation-introspection/notes/23-held-out-semantic-generalization.md)
+reached, from confabulation statistics rather than causally (74.8% of one model's
+wrong guesses are the word "apple"). **Notes 23–24 are independent convergence by
+a stronger method, not a new claim.** The method is the claimable part. Full
+accounting in [`LITERATURE-BOUNDARY.md`](spar-application/LITERATURE-BOUNDARY.md).
+
+[Li et al. 2511.08579](https://arxiv.org/abs/2511.08579) — the top-ranked
+mentor's own paper, and the target of that application's critique question — has
+also now been read in full and is recorded in the same file. **No draft critique
+text exists anywhere in this repository, deliberately:** that writing is under an
+attestation and must be Skye's own.
 
 ---
 
@@ -168,15 +220,30 @@ opposite class than its own.
 
 ## 7. What I would do next, in order
 
-1. **Read [2603.05414](https://arxiv.org/pdf/2603.05414) in full.** It may contradict
-   notes/14. Cheapest thing with the largest effect on what can be claimed.
-2. **Widen the elicitation search.** [notes/21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md)
-   found a 2.4× range over six prompts I wrote. A systematic search establishes
-   whether 0.708 is a ceiling, and it is the baseline introspection *training* has to
-   beat — which no paper appears to establish.
+**Items 1 and 2 below are done as of 2026-08-12.** Both are struck through rather
+than deleted, so the ordering that produced the current state stays visible.
+
+1. ~~**Read [2603.05414](https://arxiv.org/pdf/2603.05414) in full.**~~ Done. See
+   §5 — no contradiction, but it publishes notes/23's conclusion first.
+2. ~~**Widen the elicitation search.**~~ Done, [notes/24](activation-introspection/notes/24-is-the-held-out-failure-the-interface.md).
+   Five wordings on the held-out task, dev/confirmation split before the run. Not
+   one cell of ten beats chance, and the kill rule fired: **stop varying
+   elicitation for this interface.** This also freezes the
+   elicitation-optimised baseline any training study needs — wording buys zero on
+   held-out, so anything training adds is training's.
 3. **Test the clustering gate on a rule set written by someone else.** The weakest
-   link in the only unclaimed result is that I wrote all fourteen rules.
+   link in the only unclaimed result is that I wrote all fourteen rules. Now the
+   top research item, and it needs no GPU beyond a few hundred forward passes.
 4. **Then** natural states, under section 6's conditions.
+
+**The one untested escape hatch on notes/23–24.** Both hold the readout fixed at a
+forced choice between two tokens. Neither tests chain of thought — letting the
+model reason out loud before answering — which needs a generation harness and a
+different scoring rule. Notes/24 states this as a limit rather than smuggling
+past it. It is the only remaining way the held-out negative could turn out to be
+an interface artifact, and it is inference-only. A pre-run note for it is in
+[notes/25](activation-introspection/notes/25-does-reasoning-out-loud-rescue-it.md);
+it has **not** been run.
 
 **Do not:** run more LoRA; add concept pairs or layers for robustness before the
 above; or run the criterion against a comparator with activation access and read

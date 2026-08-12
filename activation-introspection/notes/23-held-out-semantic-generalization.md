@@ -225,3 +225,55 @@ What would change my mind: the same design under an elicitation sweep, or after
 introspection training, showing held-out generalization appear. That is a real
 experiment and it is now the cheapest live descendant of this branch — the
 apparatus, the gate and the controls all already exist.
+
+*(The elicitation sweep ran the same day. Five wordings, nothing above chance:
+[`24`](24-is-the-held-out-failure-the-interface.md).)*
+
+---
+
+## Addendum, 2026-08-12: someone else got here first, from the other direction
+
+Read [*Emergent Introspection in AI is
+Content-Agnostic*](https://arxiv.org/pdf/2603.05414) (Lederman and Mahowald, v2,
+7 Apr 2026) in full after this run. The handoff had it flagged as the paper most
+likely to contradict [`14`](14-content-versus-disturbance.md). It does not. It
+argues for the conclusion **this** note reached, and it published first.
+
+They inject concepts into Qwen3-235B and Llama-3.1-405B, ask "do you detect an
+injected thought, and what is it about?", and argue the mechanism is
+content-agnostic — the model notices *that* something happened without access to
+*what*. Their case is the shape of the wrong answers: **74.8% of Qwen's 4,733
+wrong identifications are the single word "apple"**, and confabulations across
+both models are reliably more concrete, more positive and more common than the
+concept actually injected. Priming lifts identification far more than detection;
+removing the steering during generation kills identification and spares
+detection.
+
+**It is not in tension with `14` because it is not the same measurement.** They
+score open-ended naming, judged by an LLM. `14` scores forced choice between two
+arbitrary labels under four demonstrations, where nothing is ever named. Failing
+to say what was injected and being able to tell two injected states apart are
+compatible, and on the combined evidence both hold.
+
+**Where this note stands relative to theirs.** Their evidence is correlational —
+content-agnosticism inferred from what the wrong guesses look like. This note is
+causal: hold exemplars, strength, prompt and scoring fixed, move only the query
+vector out of the demonstrations, and the ability disappears while a four-shot
+centroid reader on the identical states stays at 0.986. Their design cannot
+separate "the model has no access to the content" from "the model has access and
+lacks the words"; the reader arm here settles it, because the information is
+demonstrably present and trivially extractable and still goes unused.
+
+Their §2 also names, and discards a concurrent result over, the exact confound
+this design removes: a paradigm that "does not clearly distinguish raised
+probability of a concept due to steering from raised probability due to
+introspective recognition". Steering toward `bread` makes a model say `bread`.
+Here the labels are arbitrary and the mapping is re-randomised per episode, so
+steering cannot favour a label.
+
+**What this costs and what it leaves.** The conclusion is not claimable as new —
+say *independent convergence on a published claim, reached by a stronger method*.
+What remains this repository's own is the method: matched separation,
+byte-identical twins, a held-out query exemplar, a geometry gate run first, and a
+cost-matched reader scored on the identical states. That is worth more than the
+conclusion anyway, and it is the honest thing to put in front of a mentor.

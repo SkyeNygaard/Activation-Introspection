@@ -1,0 +1,76 @@
+{
+  "dev_pair": "birds_buildings",
+  "draws": 1,
+  "elapsed_seconds": 96.2,
+  "layer": 9,
+  "max_new_tokens": 400,
+  "model": "qwen-3b",
+  "note": "notes/25",
+  "null_twin_pair": 0.25,
+  "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": true,
+  "table": {
+    "birds_buildings": {
+      "cot_instructed": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 252.5,
+          "n": 2,
+          "parse_rate": 1.0,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.5,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.0
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 208.0,
+          "n": 2,
+          "parse_rate": 1.0,
+          "reader_twin_pair": null,
+          "row_accuracy": 1.0,
+          "truncation_rate": 0.0,
+          "twin_pair": 1.0
+        }
+      },
+      "cot_prefill": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 164.0,
+          "n": 2,
+          "parse_rate": 1.0,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.5,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.0
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 141.0,
+          "n": 2,
+          "parse_rate": 1.0,
+          "reader_twin_pair": null,
+          "row_accuracy": 1.0,
+          "truncation_rate": 0.0,
+          "twin_pair": 1.0
+        }
+      },
+      "forced": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 0.0,
+          "n": 2,
+          "parse_rate": 1.0,
+          "reader_twin_pair": 1.0,
+          "row_accuracy": 0.5,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.0
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 0.0,
+          "n": 2,
+          "parse_rate": 1.0,
+          "reader_twin_pair": 1.0,
+          "row_accuracy": 1.0,
+          "truncation_rate": 0.0,
+          "twin_pair": 1.0
+        }
+      }
+    }
+  }
+}

@@ -106,12 +106,14 @@ class FramedEpisode(Episode):
     def render_user(self) -> str:
         lines = list(FAMILIES[self.family])
         for sign in self.demo_signs:
-            lines.extend([
-                "",
-                "Demonstration:",
-                f"Observation: {self.visible_sample}",
-                f"Label: {self.label_for(sign)}",
-            ])
+            lines.extend(
+                [
+                    "",
+                    "Demonstration:",
+                    f"Observation: {self.visible_sample}",
+                    f"Label: {self.label_for(sign)}",
+                ]
+            )
         lines.extend(["", "Held-out query:", f"Observation: {self.visible_sample}"])
         return "\n".join(lines)
 
@@ -132,7 +134,7 @@ def _self_check() -> None:
     """Every family must keep the injected lines byte-identical to the original."""
     base = exact_episodes("CARRIER TEXT §")[0]
     original = base.render_user()
-    tail = original[original.index("\nDemonstration:"):]
+    tail = original[original.index("\nDemonstration:") :]
     for family in FAMILIES:
         rendered = framed(base, family).render_user()
         assert rendered.count("CARRIER TEXT §") == 5, f"{family} lost an injection site"
@@ -183,10 +185,8 @@ def run(args: argparse.Namespace) -> None:
 
             for draw in range(draws):
                 plans = {
-                    "same_exemplar": assign(
-                        a_names, b_names, draw=draw, same_exemplar=True),
-                    "heldout_semantic": assign(
-                        a_names, b_names, draw=draw, same_exemplar=False),
+                    "same_exemplar": assign(a_names, b_names, draw=draw, same_exemplar=True),
+                    "heldout_semantic": assign(a_names, b_names, draw=draw, same_exemplar=False),
                 }
                 for arm, plan in plans.items():
                     c_a = torch.stack([bank[n].vector for n in plan["demo_a"]]).mean(0)
@@ -201,28 +201,33 @@ def run(args: argparse.Namespace) -> None:
                         for prepared in prepared_by_family[family]:
                             ep = prepared.episode
                             result = episode_row(
-                                model, prepared, bank, plan,
-                                strength=strength, seed=draw,
+                                model,
+                                prepared,
+                                bank,
+                                plan,
+                                strength=strength,
+                                seed=draw,
                             )
-                            rows.append({
-                                "arm": arm,
-                                "family": family,
-                                # twin_pair keys on (pair, carrier, cell_base);
-                                # family and draw must be inside it or twins
-                                # from different conditions collide.
-                                "pair": f"{pair_name}|{family}|draw{draw}",
-                                "category_pair": pair_name,
-                                "draw": draw,
-                                "carrier_sha": carrier_sha,
-                                "cell_id": ep.cell_id,
-                                "cell_base": ep.cell_id.rsplit("q", 1)[0],
-                                "strength": strength,
-                                "query_exemplar": (
-                                    plan["query_a"] if ep.query_sign == 1
-                                    else plan["query_b"]
-                                ),
-                                **result,
-                            })
+                            rows.append(
+                                {
+                                    "arm": arm,
+                                    "family": family,
+                                    # twin_pair keys on (pair, carrier, cell_base);
+                                    # family and draw must be inside it or twins
+                                    # from different conditions collide.
+                                    "pair": f"{pair_name}|{family}|draw{draw}",
+                                    "category_pair": pair_name,
+                                    "draw": draw,
+                                    "carrier_sha": carrier_sha,
+                                    "cell_id": ep.cell_id,
+                                    "cell_base": ep.cell_id.rsplit("q", 1)[0],
+                                    "strength": strength,
+                                    "query_exemplar": (
+                                        plan["query_a"] if ep.query_sign == 1 else plan["query_b"]
+                                    ),
+                                    **result,
+                                }
+                            )
                 print(f"  {pair_name} draw {draw}: {len(rows)} rows", flush=True)
 
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -238,7 +243,8 @@ def run(args: argparse.Namespace) -> None:
                 entry: dict[str, Any] = {}
                 for arm in ARMS:
                     rs = [
-                        r for r in rows
+                        r
+                        for r in rows
                         if r["category_pair"] == pair_name
                         and r["family"] == family
                         and r["arm"] == arm
@@ -258,11 +264,15 @@ def run(args: argparse.Namespace) -> None:
                 table[pair_name][family] = entry
 
         dev = table.get(DEV_PAIR, {})
-        winner = max(
-            dev,
-            key=lambda f: dev[f]["heldout_semantic"]["twin_pair_model"],
-            default=None,
-        ) if dev else None
+        winner = (
+            max(
+                dev,
+                key=lambda f: dev[f]["heldout_semantic"]["twin_pair_model"],
+                default=None,
+            )
+            if dev
+            else None
+        )
 
         summary = {
             "what_this_is": (
@@ -293,9 +303,11 @@ def run(args: argparse.Namespace) -> None:
                 e = table[pair_name].get(family, {})
                 if not e.get("heldout_semantic"):
                     continue
-                print(f"  {family:12s} anchor={e['same_exemplar']['twin_pair_model']:.3f} "
-                      f"heldout={e['heldout_semantic']['twin_pair_model']:.3f} "
-                      f"reader={e['heldout_semantic']['twin_pair_reader']:.3f}")
+                print(
+                    f"  {family:12s} anchor={e['same_exemplar']['twin_pair_model']:.3f} "
+                    f"heldout={e['heldout_semantic']['twin_pair_model']:.3f} "
+                    f"reader={e['heldout_semantic']['twin_pair_reader']:.3f}"
+                )
         print(f"\nselected on development: {winner}")
     finally:
         del model

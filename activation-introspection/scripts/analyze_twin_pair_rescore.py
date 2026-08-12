@@ -45,13 +45,9 @@ def rescore(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
             "row_reader": sum(r[READER] for r in arm_rows) / len(arm_rows),
             "pair_model": sum(model) / len(pairs),
             "pair_reader": sum(reader) / len(pairs),
-            "pair_model_only": sum(
-                m and not d for m, d in zip(model, reader, strict=True)
-            ),
+            "pair_model_only": sum(m and not d for m, d in zip(model, reader, strict=True)),
             "n_cells": len(by_cell),
-            "cells_where_reader_verdict_varies": sum(
-                1 for v in by_cell.values() if len(v) > 1
-            ),
+            "cells_where_reader_verdict_varies": sum(1 for v in by_cell.values() if len(v) > 1),
         }
     return out
 
@@ -75,19 +71,25 @@ def main() -> None:
     table = rescore(rows)
 
     print(f"{raw.name}: {len(rows)} rows\n")
-    print(f"{'arm':16s} {'row:mdl':>8s} {'row:rdr':>8s} "
-          f"{'pair:mdl':>9s} {'pair:rdr':>9s} {'mdl-only':>9s}")
+    print(
+        f"{'arm':16s} {'row:mdl':>8s} {'row:rdr':>8s} "
+        f"{'pair:mdl':>9s} {'pair:rdr':>9s} {'mdl-only':>9s}"
+    )
     for arm, s in table.items():
-        print(f"{arm:16s} {s['row_model']:8.3f} {s['row_reader']:8.3f} "
-              f"{s['pair_model']:9.3f} {s['pair_reader']:9.3f} "
-              f"{s['pair_model_only']:9d}")
+        print(
+            f"{arm:16s} {s['row_model']:8.3f} {s['row_reader']:8.3f} "
+            f"{s['pair_model']:9.3f} {s['pair_reader']:9.3f} "
+            f"{s['pair_model_only']:9d}"
+        )
 
     weak = next((a for a in table if "weak" in a), None)
     if weak:
         const = constant_label_cells(rows, weak)
-        print(f"\n{weak}: {len(const)} of "
-              f"{len({r['cell_id'] for r in rows if r['arm'] == weak})} cells emit "
-              f"a constant label across both query signs")
+        print(
+            f"\n{weak}: {len(const)} of "
+            f"{len({r['cell_id'] for r in rows if r['arm'] == weak})} cells emit "
+            f"a constant label across both query signs"
+        )
         for cell, label, n in const:
             print(f"  {cell:12s} {label}x{n}")
 

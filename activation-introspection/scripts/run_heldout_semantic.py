@@ -77,9 +77,7 @@ MAX_MATCHED_STRENGTH = 6.0
 
 
 @torch.no_grad()
-def build_centered_bank(
-    model: models.LoadedModel, names: list[str]
-) -> dict[str, ConceptVector]:
+def build_centered_bank(model: models.LoadedModel, names: list[str]) -> dict[str, ConceptVector]:
     """Concept vectors centred on an independent bank.
 
     Centring on the evaluation bank's own mean would push the two categories to
@@ -107,8 +105,7 @@ def assign(
         # notes/14's design: one vector per class, reused at the query.
         demo_a = [demo_a[0], demo_a[0]]
         demo_b = [demo_b[0], demo_b[0]]
-        return {"demo_a": demo_a, "demo_b": demo_b,
-                "query_a": demo_a[0], "query_b": demo_b[0]}
+        return {"demo_a": demo_a, "demo_b": demo_b, "query_a": demo_a[0], "query_b": demo_b[0]}
     return {
         "demo_a": demo_a,
         "demo_b": demo_b,
@@ -171,9 +168,7 @@ def episode_row(
     """Score the model and every reader from one forward pass."""
     signs = prepared.episode.state_signs
     positions = prepared.state_positions
-    interventions = exemplar_interventions(
-        bank, plan, positions, signs, strength=strength
-    )
+    interventions = exemplar_interventions(bank, plan, positions, signs, strength=strength)
     if query_only:
         interventions = interventions[-1:]
 
@@ -228,9 +223,7 @@ def _self_check() -> None:
 
     # Each position gets its own exemplar, and the query's is the held-out one.
     bank = {n: ConceptVector(name=n, layer=LAYER, vector=torch.randn(8)) for n in a + b}
-    ivs = exemplar_interventions(
-        bank, plan, (0, 1, 2, 3, 4), (1, -1, 1, -1, 1), strength=1.0
-    )
+    ivs = exemplar_interventions(bank, plan, (0, 1, 2, 3, 4), (1, -1, 1, -1, 1), strength=1.0)
     assert len(ivs) == 5, "one edit per position"
     assert ivs[-1].label.startswith(plan["query_a"]), "query carries the held-out exemplar"
     used = [i.label.split(":")[0] for i in ivs[:4]]
@@ -275,9 +268,7 @@ def run(args: argparse.Namespace) -> None:
         object.__setattr__(model, "dtype", torch.bfloat16)
 
         pairs = chosen[:1] if args.smoke else chosen
-        carriers = (
-            CONFIRM_VISIBLE_SAMPLES[:1] if args.smoke else CONFIRM_VISIBLE_SAMPLES[:2]
-        )
+        carriers = CONFIRM_VISIBLE_SAMPLES[:1] if args.smoke else CONFIRM_VISIBLE_SAMPLES[:2]
         draws = 1 if args.smoke else DRAWS
 
         rows: list[dict[str, object]] = []
@@ -288,8 +279,7 @@ def run(args: argparse.Namespace) -> None:
 
             # Random directions matched to the real exemplars, one per name.
             rand_bank = {
-                n: random_control(bank[n], seed=i)
-                for i, n in enumerate(a_names + b_names)
+                n: random_control(bank[n], seed=i) for i, n in enumerate(a_names + b_names)
             }
 
             for carrier in carriers:
@@ -306,20 +296,29 @@ def run(args: argparse.Namespace) -> None:
                     scram_a, scram_b = scrambled_groups(a_names, b_names, seed=draw)
                     plans: dict[str, tuple[dict[str, Any], dict[str, ConceptVector]]] = {
                         "same_exemplar": (
-                            assign(a_names, b_names, draw=draw, same_exemplar=True), bank),
+                            assign(a_names, b_names, draw=draw, same_exemplar=True),
+                            bank,
+                        ),
                         "heldout_semantic": (
-                            assign(a_names, b_names, draw=draw, same_exemplar=False), bank),
+                            assign(a_names, b_names, draw=draw, same_exemplar=False),
+                            bank,
+                        ),
                         "heldout_scrambled": (
-                            assign(scram_a, scram_b, draw=draw, same_exemplar=False), bank),
+                            assign(scram_a, scram_b, draw=draw, same_exemplar=False),
+                            bank,
+                        ),
                         "heldout_random": (
                             assign(a_names, b_names, draw=draw, same_exemplar=False),
-                            rand_bank),
+                            rand_bank,
+                        ),
                         # Only the query position is edited. With the label
                         # mapping randomized per cell and no demonstrations to
                         # read it from, this is pinned at chance unless
                         # something leaks.
                         "query_only": (
-                            assign(a_names, b_names, draw=draw, same_exemplar=False), bank),
+                            assign(a_names, b_names, draw=draw, same_exemplar=False),
+                            bank,
+                        ),
                     }
                     for arm, (plan, use_bank) in plans.items():
                         # Equalize the distance between the two demonstrated
@@ -342,32 +341,38 @@ def run(args: argparse.Namespace) -> None:
                         for prepared in prepared_all:
                             ep = prepared.episode
                             result = episode_row(
-                                model, prepared, use_bank, plan,
-                                strength=strength, seed=draw,
+                                model,
+                                prepared,
+                                use_bank,
+                                plan,
+                                strength=strength,
+                                seed=draw,
                                 query_only=(arm == "query_only"),
                             )
-                            rows.append({
-                                "arm": arm,
-                                # twin_pair keys on (pair, carrier, cell_base);
-                                # the draw must be inside it or twins from
-                                # different exemplar assignments collide.
-                                "pair": f"{pair_name}|draw{draw}",
-                                "category_pair": pair_name,
-                                "draw": draw,
-                                "carrier_sha": carrier_sha,
-                                "cell_id": ep.cell_id,
-                                "cell_base": ep.cell_id.rsplit("q", 1)[0],
-                                "strength": strength,
-                                "demo_a": plan["demo_a"],
-                                "demo_b": plan["demo_b"],
-                                "query_exemplar": (
-                                    plan["query_a"] if ep.query_sign == 1
-                                    else plan["query_b"]
-                                ),
-                                **result,
-                            })
-                    print(f"  {pair_name} {carrier_sha[:8]} draw {draw}: "
-                          f"{len(rows)} rows", flush=True)
+                            rows.append(
+                                {
+                                    "arm": arm,
+                                    # twin_pair keys on (pair, carrier, cell_base);
+                                    # the draw must be inside it or twins from
+                                    # different exemplar assignments collide.
+                                    "pair": f"{pair_name}|draw{draw}",
+                                    "category_pair": pair_name,
+                                    "draw": draw,
+                                    "carrier_sha": carrier_sha,
+                                    "cell_id": ep.cell_id,
+                                    "cell_base": ep.cell_id.rsplit("q", 1)[0],
+                                    "strength": strength,
+                                    "demo_a": plan["demo_a"],
+                                    "demo_b": plan["demo_b"],
+                                    "query_exemplar": (
+                                        plan["query_a"] if ep.query_sign == 1 else plan["query_b"]
+                                    ),
+                                    **result,
+                                }
+                            )
+                    print(
+                        f"  {pair_name} {carrier_sha[:8]} draw {draw}: {len(rows)} rows", flush=True
+                    )
 
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("\n".join(json.dumps(r, sort_keys=True) for r in rows) + "\n")
@@ -413,9 +418,11 @@ def run(args: argparse.Namespace) -> None:
         summary_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
         print(f"\nwrote {out} and {summary_path}")
         for arm, e in summary["arms"].items():
-            print(f"{arm:18s} pair:model={e['twin_pair_model']:.3f} "
-                  f"pair:reader={e['twin_pair_centroid_euclidean']:.3f} "
-                  f"row:model={e['row_model']:.3f}")
+            print(
+                f"{arm:18s} pair:model={e['twin_pair_model']:.3f} "
+                f"pair:reader={e['twin_pair_centroid_euclidean']:.3f} "
+                f"row:model={e['row_model']:.3f}"
+            )
     finally:
         del model
         torch.mps.empty_cache()

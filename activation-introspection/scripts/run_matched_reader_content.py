@@ -19,6 +19,16 @@ import time
 from pathlib import Path
 
 import torch
+from run_content_vs_disturbance import (
+    LAYER,
+    MODEL,
+    MODEL_REVISION,
+    PAIRS,
+    STRENGTH,
+    matched_strength,
+    pair_interventions,
+)
+from run_matched_reader import _read
 
 from introspect import models
 from introspect.codebook_icl import (
@@ -32,16 +42,6 @@ from introspect.concepts import ConceptVector, build_bank, pairwise_cosines, ran
 from introspect.hooks import capture, intervene
 from introspect.preflight import check as preflight_check
 from introspect.report_training import CENTERING_CONCEPTS
-from run_content_vs_disturbance import (
-    LAYER,
-    MODEL,
-    MODEL_REVISION,
-    PAIRS,
-    STRENGTH,
-    matched_strength,
-    pair_interventions,
-)
-from run_matched_reader import _read
 
 READERS = ("centroid_euclidean", "centroid_cosine", "shuffled_labels")
 ARMS = ("content", "polarity", "random_polarity", "polarity_weak")
@@ -223,9 +223,7 @@ def run(args: argparse.Namespace) -> None:
                 "format_rate": sum(bool(r["model_format_ok"]) for r in subset) / len(subset),
                 "by_pair": {
                     pair: {
-                        "model": sum(
-                            bool(r["model_correct"]) for r in subset if r["pair"] == pair
-                        )
+                        "model": sum(bool(r["model_correct"]) for r in subset if r["pair"] == pair)
                         / len([r for r in subset if r["pair"] == pair]),
                         "reader": sum(
                             bool(r["reader_centroid_euclidean_correct"])

@@ -20,6 +20,7 @@ import argparse
 import json
 import time
 from pathlib import Path
+from typing import cast
 
 import torch
 
@@ -55,7 +56,7 @@ ARMS = ("polarity", "content", "random_pair", "query_only", "clean")
 
 
 def _unit(v: torch.Tensor) -> torch.Tensor:
-    return v / (v.norm() + 1e-8)
+    return cast(torch.Tensor, v / (v.norm() + 1e-8))
 
 
 def matched_strength(a: torch.Tensor, b: torch.Tensor, *, base: float = STRENGTH) -> float:
@@ -133,9 +134,7 @@ def score_pair(
     return {
         "predicted_label": predicted,
         "correct": predicted == p.episode.correct_label,  # type: ignore[attr-defined]
-        "label_mass": float(
-            torch.logsumexp(selected, 0).sub(torch.logsumexp(logits, 0)).exp()
-        ),
+        "label_mass": float(torch.logsumexp(selected, 0).sub(torch.logsumexp(logits, 0)).exp()),
         "format_ok": int(logits.argmax()) in set(label_ids),
     }
 
@@ -268,14 +267,14 @@ def run(args: argparse.Namespace) -> None:
                 "accuracy": sum(bool(r["correct"]) for r in subset) / len(subset),
                 "twin_pair": twin_pair(subset),
                 "format_rate": sum(bool(r["format_ok"]) for r in subset) / len(subset),
-                "mean_label_mass": sum(float(r["label_mass"]) for r in subset) / len(subset),  # type: ignore[arg-type]
+                "mean_label_mass": (
+                    sum(cast(float, r["label_mass"]) for r in subset) / len(subset)
+                ),
                 "n": len(subset),
             }
         by_pair = {
             arm: {
-                pair: sum(
-                    bool(r["correct"]) for r in rows if r["arm"] == arm and r["pair"] == pair
-                )
+                pair: sum(bool(r["correct"]) for r in rows if r["arm"] == arm and r["pair"] == pair)
                 / max(1, len([r for r in rows if r["arm"] == arm and r["pair"] == pair]))
                 for pair in sorted({str(r["pair"]) for r in rows if r["arm"] == arm})
             }

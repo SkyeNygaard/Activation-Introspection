@@ -53,16 +53,62 @@ for the closest hits.
   validity defect in our own bank, which is how the note now frames it.
 - [**Emergent Introspection in AI is
   Content-Agnostic**](https://arxiv.org/pdf/2603.05414) (Lederman and Mahowald),
-  by two authors of the cost-criterion paper this repository leans on. Argues the
-  introspective mechanism is indifferent to which concept is involved.
-  **This is the paper most in tension with
-  [notes/14](../activation-introspection/notes/14-content-versus-disturbance.md)**,
-  which finds two different concepts discriminated at 0.899 against 0.594 for
-  random directions at matched separation. Whether that is a genuine disagreement
-  or two different constructs — a content-agnostic *detection mechanism* is
-  compatible with content-*discrimination* being possible — **cannot be settled
-  from the abstract, and the paper must be read in full before notes/14 is
-  described as novel, surprising, or contradicting anything.**
+  by two authors of the cost-criterion paper this repository leans on.
+  **Read in full 2026-08-12** (v2, 7 Apr 2026), which this file and the handoff
+  both flagged as the highest-priority unread paper. Result: **it is not in
+  tension with [notes/14](../activation-introspection/notes/14-content-versus-disturbance.md),
+  and it independently reaches
+  [notes/23](../activation-introspection/notes/23-held-out-semantic-generalization.md)'s
+  conclusion by a weaker route.**
+
+  What they did: Qwen3-235B and Llama-3.1-405B, 821 concepts, replicating
+  Lindsey's injection-detection prompt — "do you detect an injected thought, and
+  what is it about?". Detection ranges 3.6–53.9% across layers for Qwen and
+  4.3–31.7% for Llama; correct identification is far lower, 1.3–13.9% and
+  0.7–12.9%. Their content-agnostic case is that the *wrong* guesses have nothing
+  to do with what was injected: **74.8% of Qwen's 4,733 wrong identifications are
+  the single word "apple"**, and across both models confabulations are reliably
+  more concrete, more positive and more frequent than the concept actually
+  injected. They add three dissociations — priming the concept word lifts
+  identification far more than detection at every layer, removing the steering
+  during generation kills identification but not detection, and correct guesses
+  arrive later in the token stream than wrong ones. Their own strongest caveat is
+  that the paradigm is highly prompt-sensitive: at many layers a third-person
+  version of the question yields as many "yes" answers as the first-person one,
+  which is a prompt-specific yes-bias and not detection.
+
+  **Why it is a different construct from notes/14.** They measure open-ended
+  *identification* — the model must name the concept, graded by an LLM judge.
+  Notes/14 measures forced-choice *discrimination* between two injected concepts
+  under four in-context demonstrations with arbitrary labels, where the model
+  never names anything. A model can be wholly unable to say what was injected and
+  still tell two injected states apart. Both can be true, and on this evidence
+  both are.
+
+  **Why notes/23 is the stronger form of their own claim.** Their evidence is
+  correlational: they infer content-agnosticism from the *statistics of wrong
+  guesses*. Notes/23 gets there causally — hold the exemplars, strength, prompt
+  and scoring fixed, move only the query vector out of the demonstrations, and the
+  model falls from 0.521 to 0.083 on twin pairs while a four-shot nearest-centroid
+  reader on the identical states holds at 0.986. It gains nothing from the
+  categories being real (0.083 against 0.076 for arbitrary groupings) where the
+  reader gains everything (0.986 against 0.333). Their paper cannot rule out that
+  the model simply lacks the words; notes/23 shows the information is present,
+  trivially extractable, and unused.
+
+  **And they name the confound this design removes.** Their §2 dismisses a
+  concurrent content-sensitive result because its paradigm "does not clearly
+  distinguish raised probability of a concept due to steering from raised
+  probability due to introspective recognition" — steering toward `bread` makes
+  the model say `bread`. In this repository's design the two labels are arbitrary
+  and the mapping is re-randomised every episode, so steering toward a concept
+  cannot favour a label. That confound is removed by construction, which is the
+  one methodological advantage this setup has over theirs.
+
+  **Consequence for what may be claimed.** Notes/14 is not novel and is now
+  bounded by notes/23 in any case. Notes/23 is **independent convergence on a
+  published claim, by a stronger method** — not a new claim. Say that, not
+  "we found models are content-agnostic".
 - [**Latent Introspection: Models Can Detect Prior Concept
   Injections**](https://arxiv.org/html/2602.20031v1) finds the model denies an
   injection in its sampled output while a logit-lens read shows clear detection in
@@ -77,7 +123,8 @@ for the closest hits.
 | result | closest prior work | honest label |
 |---|---|---|
 | Cost-criterion comparison against a **per-episode adaptive** reader, across four task shapes, with visible text byte-identical ([11](../activation-introspection/notes/11-matched-cost-reader.md), [15](../activation-introspection/notes/15-matched-reader-on-content.md)) | criterion from [2508.14802](https://arxiv.org/abs/2508.14802); [2602.20031](https://arxiv.org/html/2602.20031v1) explicitly does **not** run an external-classifier comparison | **Extension candidate.** The criterion is not ours; applying it with an adaptive reader on a design where input-only is pinned at 0.500 by construction is the changed axis |
-| Two-concept discrimination at matched class separation ([14](../activation-introspection/notes/14-content-versus-disturbance.md)) | [2603.05414](https://arxiv.org/pdf/2603.05414), [2512.12411](https://arxiv.org/abs/2512.12411), [2603.21396](https://arxiv.org/html/2603.21396v1) all address content versus disturbance | **Contested, not novel.** The question is live and being argued by several groups. The matched-separation control and the byte-identical twins are the changed axes. **Read 2603.05414 in full before claiming anything** |
+| Two-concept discrimination at matched class separation ([14](../activation-introspection/notes/14-content-versus-disturbance.md)) | [2603.05414](https://arxiv.org/pdf/2603.05414), [2512.12411](https://arxiv.org/abs/2512.12411), [2603.21396](https://arxiv.org/html/2603.21396v1) all address content versus disturbance | **Not novel, and now bounded by [23](../activation-introspection/notes/23-held-out-semantic-generalization.md).** 2603.05414 read in full 2026-08-12: it measures open-ended identification, notes/14 measures forced-choice discrimination, so they are different constructs and there is no contradiction to claim either way |
+| The discriminated thing is a vector already shown, not a category ([23](../activation-introspection/notes/23-held-out-semantic-generalization.md), [24](../activation-introspection/notes/24-is-the-held-out-failure-the-interface.md)) | [2603.05414](https://arxiv.org/pdf/2603.05414) argues the same conclusion from confabulation statistics | **Independent convergence by a stronger method.** They infer content-agnosticism from what the wrong guesses look like; this shows it causally, with the information proven present and extractable by a cost-matched reader on the identical states, and survives a five-wording elicitation sweep. The method is the contribution, not the conclusion |
 | Training loses to a probe ([12](../activation-introspection/notes/12-training-versus-a-probe.md)) | [2608.04347](https://arxiv.org/html/2608.04347) | **Replication with a disagreement**, not a new headline |
 | Class clustering in representation space predicts which hidden rules a four-shot interface can learn ([16](../activation-introspection/notes/16-visible-rule-capacity.md)) | nothing found combining representational clustering with in-context rule-induction success; nearest are [2406.11233](https://arxiv.org/html/2406.11233v1) on irregular in-context decision boundaries and [2502.15823](https://arxiv.org/pdf/2502.15823) on induction failures | **The most likely genuinely new thing here**, and also the least about introspection. Targeted search only; needs the full protocol of step 2 below before the word "new" is used |
 
@@ -118,12 +165,14 @@ not found stated elsewhere, and one search is not evidence that it isn't.
 |---|---|
 | Clustering of a hidden class predicts whether a four-shot interface can learn it ([16](../activation-introspection/notes/16-visible-rule-capacity.md)) | **Still nothing found.** The only unclaimed thing here — and the least about introspection |
 | Cost criterion with a per-episode adaptive reader, four task shapes, byte-identical twins ([11](../activation-introspection/notes/11-matched-cost-reader.md), [15](../activation-introspection/notes/15-matched-reader-on-content.md)) | Extension candidate. The twin construction is the differentiator |
-| Two-concept discrimination at matched separation ([14](../activation-introspection/notes/14-content-versus-disturbance.md)) | Contested; [2603.05414](https://arxiv.org/pdf/2603.05414) still unread in full |
+| Two-concept discrimination at matched separation ([14](../activation-introspection/notes/14-content-versus-disturbance.md)) | **Closed.** [2603.05414](https://arxiv.org/pdf/2603.05414) read in full 2026-08-12; different construct, no contradiction, and notes/14 is bounded by [23](../activation-introspection/notes/23-held-out-semantic-generalization.md) regardless |
+| Held-out exemplar test showing the ability is prototype matching ([23](../activation-introspection/notes/23-held-out-semantic-generalization.md), [24](../activation-introspection/notes/24-is-the-held-out-failure-the-interface.md)) | Convergent with [2603.05414](https://arxiv.org/pdf/2603.05414), reached causally rather than from confabulation statistics. **The design is the claimable part, not the conclusion** |
 | Injection site is a leak ([17](../activation-introspection/notes/17-supervision-is-the-hidden-knob.md), [18](../activation-introspection/notes/18-where-the-lens-fails.md)) | **Prior art.** Measured here, not discovered here |
 | Training loses to a probe ([12](../activation-introspection/notes/12-training-versus-a-probe.md)) | Prior art ([2608.04347](https://arxiv.org/html/2608.04347)) |
 | Shared axis in the bank ([13](../activation-introspection/notes/13-shared-axis-audit.md)) | Prior art ([2603.21396](https://arxiv.org/html/2603.21396v1)); a validity audit of our own setup |
 
-**Four of six candidates are prior art.** That is the correct thing to know before
+**Five of seven candidates are prior art**, counting the held-out result added on
+2026-08-12 as convergent rather than new. That is the correct thing to know before
 an application goes out, and it is the reason this file exists.
 
 ### What this search did not do
@@ -177,6 +226,41 @@ Closest work already covers substantial ground:
   causal activation structure, and token influence, including self-versus-other
   comparisons. It also finds that activation alignment predicts explainer quality
   and that a pretrained projection recovers part of the cross-model deficit.
+
+  **Read in full 2026-08-12.** This is Belinda Li's paper and the one the
+  application's project-1 critique question targets, so the facts are recorded
+  here rather than left to memory. Their Privileged Access Hypothesis is stated
+  as: *models trained to explain their own internal computations can do so more
+  accurately than other models trained to explain them.* Three tasks — feature
+  descriptions, activation patching, input ablation — with interpretability
+  output as ground truth, tens of thousands of training examples, Llama-3.1-8B
+  and Qwen3-8B as explainers. Self-explaining is reported as roughly **a hundred
+  times more sample-efficient** than a nearest-neighbour baseline, matching it at
+  0.8% of the training data.
+
+  Two things in it bear directly on this repository, both stated by the authors
+  themselves rather than found by us:
+
+  1. **Their comparator is another language model, not a cheap reader.** The
+     contrast is self-explanation against other-model explanation and against
+     nearest-neighbour lookup over labelled SAE features. Both explainers receive
+     the target's activations through a learned projection, so this is a fair
+     self-versus-other test — but it is a different question from the cost
+     criterion this repository runs, which asks whether the model beats *any*
+     equal-or-cheaper reader of the same state. [notes/20](../activation-introspection/notes/20-comparator-tiers.md)
+     is the relevant result: what "privileged access" returns is a step function
+     in what the comparator was handed.
+  2. **They report that explainer quality tracks representational similarity**
+     between explainer and target. That is the mundane reading — an explainer does
+     better on activations that live in a space like its own — and it is the same
+     alternative [Reality Check](https://arxiv.org/abs/2605.26242) names as
+     representational compatibility. It is in their own results section, so any
+     critique that raises it is agreeing with them, not catching them.
+
+  **No draft critique text lives in this repository**, here or anywhere else. The
+  application attestation requires that writing to be Skye's own and unassisted;
+  these are checkable facts for accuracy, which is the same standing rule
+  `APPLICATION-PREP.md` sets for the numbers.
 - [Can LLMs Introspect? A Reality
   Check](https://arxiv.org/abs/2605.26242) shows that input-only classifiers can
   match some hidden-state prediction results and explicitly identifies
