@@ -1,0 +1,98 @@
+{
+  "by_rule": {
+    "category": {
+      "accuracy_from_notes_16": 0.885,
+      "layer_18": 0.08073512878682879,
+      "layer_27": 0.06935077160596853,
+      "layer_9": 0.06954390472835963
+    },
+    "first_letter": {
+      "accuracy_from_notes_16": 0.479,
+      "layer_18": 0.004961657855245771,
+      "layer_27": 0.0019414416617817287,
+      "layer_9": 0.000157867454820243
+    },
+    "lexical_seen": {
+      "accuracy_from_notes_16": 0.979,
+      "layer_18": 0.09617088238398239,
+      "layer_27": 0.08128166861004299,
+      "layer_9": 0.21767195024424124
+    },
+    "lexical_unseen": {
+      "accuracy_from_notes_16": 0.49,
+      "layer_18": -0.00016609165403577708,
+      "layer_27": -0.0038903355598449985,
+      "layer_9": 0.008018698129389018
+    },
+    "magnitude": {
+      "accuracy_from_notes_16": 0.729,
+      "layer_18": 0.05443839397695327,
+      "layer_27": 0.04312852521737415,
+      "layer_9": 0.07350452906555596
+    },
+    "parity": {
+      "accuracy_from_notes_16": 0.469,
+      "layer_18": -0.021105022066169293,
+      "layer_27": -0.013598318729135694,
+      "layer_9": -0.023389095233546348
+    }
+  },
+  "layers": [
+    9,
+    18,
+    27
+  ],
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "ranking": {
+    "layer_18": {
+      "by_accuracy": [
+        "category",
+        "magnitude",
+        "lexical_unseen",
+        "first_letter",
+        "parity"
+      ],
+      "by_separation": [
+        "category",
+        "magnitude",
+        "first_letter",
+        "lexical_unseen",
+        "parity"
+      ]
+    },
+    "layer_27": {
+      "by_accuracy": [
+        "category",
+        "magnitude",
+        "lexical_unseen",
+        "first_letter",
+        "parity"
+      ],
+      "by_separation": [
+        "category",
+        "magnitude",
+        "first_letter",
+        "lexical_unseen",
+        "parity"
+      ]
+    },
+    "layer_9": {
+      "by_accuracy": [
+        "category",
+        "magnitude",
+        "lexical_unseen",
+        "first_letter",
+        "parity"
+      ],
+      "by_separation": [
+        "magnitude",
+        "category",
+        "lexical_unseen",
+        "first_letter",
+        "parity"
+      ]
+    }
+  },
+  "what_this_is": "Within-class minus between-class similarity per rule, against the accuracies from notes/16. Measures the cluster account directly."
+}

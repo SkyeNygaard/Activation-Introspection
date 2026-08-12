@@ -72,14 +72,24 @@ does.
 
 **What the evidence says about training, at the scope it was actually measured.**
 One training recipe, one model, one layer, one injection strength, three to four
-seeds, compared against a probe on one concept bank. At that setup the trained
-reporter did not beat the probe. **That is not "training does not close the gap"**
-— an earlier draft of this document said so and it was an overclaim. Four seeds of
-one recipe cannot support a statement about training in general, and the run that
-followed shows why the narrow version is also misleading: measured off the bank's
-shared axis, the probe collapses to chance while the trained model does not.
-Training buys something real. What has been shown is that **it does not buy it in
-the place this apparatus was looking.**
+seeds, on one concept bank. At that setup the trained reporter did not beat a
+probe. **That is not "training does not close the gap"** — an earlier draft of
+this document said so and it was an overclaim. Four seeds of one recipe cannot
+support a statement about training in general.
+
+**A second overclaim, made and retracted the same day.** When the probe was
+scored off the bank's shared axis it collapsed while the trained model held, and
+this document briefly said training buys generality probing cannot have. That
+comparison was unfair: the probe was one weight vector fitted once, while the
+trained model gets four fresh demonstrations and a re-randomised convention every
+episode. Run against a reader that adapts per episode — the cheapest one that can
+use labels at all — **the reader scores 1.000 on exactly those random
+directions.** The generality belongs to per-episode adaptation, not to training.
+
+What survives is narrower and better measured: at a strength where the untrained
+model is blind, training reaches roughly where a two-centroid comparison already
+sat. **Training moves the model toward the cheap reader. Nothing measured here
+shows it moving past.**
 
 ### Why this is worth working on
 
@@ -99,7 +109,10 @@ Stated at the strength the evidence supports, not higher. Full detail in
 |---|---|
 | A model can use a causally injected internal state as an in-context signal, with the visible text held **byte-identical** across items that have opposite correct answers | **Holds.** Structural, not statistical: a learner using only the visible input is pinned at exactly 0.500 by construction, so the standard "it's reading the prompt" objection cannot apply |
 | That ability counts as introspection or privileged access | **Refuted.** A four-example nearest-average reader beats the model on the same items, at 25 consecutive depths through ~70% of the network |
-| Training a model to verbalize its states beats a simple probe fitted on the same states | **Refuted.** The probe wins, 1.000 to 0.927; the adapter's best run only ties |
+| Training a model to verbalize its states beats a simple probe fitted on the same states | **Refuted on this bank.** The probe wins 1.000 to 0.927. A brief claim that this reverses off-axis was itself retracted: the fixed probe was handicapped, and a reader that adapts per episode scores 1.000 there too |
+| The model uses its own state better than a cheap outsider can | **Refuted across four task structures.** Model against a four-shot reader: content 0.899 vs 1.000, polarity 0.917 vs 1.000, random 0.663 vs 1.000, weak 0.497 vs 0.833. **14 episodes in 1728** where the model succeeds and the reader fails |
+| The polarity task measures reading *which concept* is active | **Refuted.** The held-out directions all overlap positively, and the fitted reader is the average concept direction pointing along every one of them at ten times the typical random departure. That task collapses to "pushed along one axis, plus or minus" |
+| The model can tell two different concepts apart at all | **Validated.** 0.899 against 0.594 for random pairs at matched separation, 4 of 4 pairs. So the bank carries recoverable concept-specific structure **as well as** a shared axis — both are true, and the two tasks differ |
 | Training changes what the reporter is sensitive to | **Holds, and it is the most useful result here.** Training extends the detection floor to edits the untrained model is blind to, and destroys the ability to tell a meaningful idea from a meaningless one — trained, the model reports random directions at 0.913–0.955 |
 
 The fourth row is the finding that most directly matters for safety. **A monitor
@@ -134,10 +147,40 @@ known precisely:
 | The reporting interface | 0.891 on pushed-in directions; formatting perfect | **Works** |
 | The hidden rule being reported | **0.533 with the answer written out in plain text and nothing patched at all** | **Fails** |
 
-`Qwen2.5-3B-Instruct` cannot learn the rule "even result → Q, odd result → K"
-from four examples *even when it can see the arithmetic*. So the branch is not
-blocked on the intervention, the site, or the plumbing. It is blocked on the
-model's ability to learn any such rule from four examples.
+`Qwen2.5-3B-Instruct` scored 0.533 on "even result → Q, odd result → K" from four
+examples *with the arithmetic written out*. So the branch is not blocked on the
+intervention, the site, or the plumbing.
+
+**But "the model cannot learn the rule" is the wrong conclusion to draw from it,
+and an earlier draft of this document drew it.** Four examples is very few.
+Language models are not sample-efficient at inducing a rule in context, so a
+failure at four examples is close to uninformative about the model — it is
+mostly a fact about the interface.
+
+**Why the failure still matters, once stated correctly.** The interesting part is
+not that parity failed but that the *injected* task, run through the same
+four-example interface, succeeds at 0.891. The audit in
+[notes/13](../activation-introspection/notes/13-shared-axis-audit.md) explains the
+difference, and it is structural:
+
+| | what the two classes are | what four examples must do |
+|---|---|---|
+| Injected task (works) | one direction and its negation — `+v` and `−v` | locate one axis and pick a side |
+| Parity task (fails) | five unrelated computed states sharing an abstract property | define a category from five members |
+
+These are different learning problems, and four examples is plausibly enough for
+the first and nowhere near enough for the second. The injected task is
+**degenerate** — my own bank audit shows it collapses to the sign of a projection
+onto a single axis — and that degeneracy is what makes it learnable from four
+demonstrations.
+
+**The consequence for the branch.** Naturally computed states do not come in
+`+v` / `−v` pairs. They differ in complicated ways, which means the interface that
+works for injected states may be unable to carry natural ones **regardless of the
+site, the transplant, or the model** — not because the model lacks access, but
+because four demonstrations cannot define a category. That is a much sharper
+account of five failed runs than "the model can't learn the rule", and it changes
+what the next check has to test.
 
 **The cost of finding this out late is the lesson.** Four of the five runs were
 spent on the intervention. The fifth revealed the task had been impossible all
@@ -149,10 +192,52 @@ question with nothing hidden.
 
 ## What is being tried next
 
-Two checks, both cheap, both inference-only. They are ranked above everything else
-because they are the least expensive items available **and** they decide the most.
+Two checks, both cheap, both inference-only. **Check A has now run**; its result is
+recorded below and in [notes/13](../activation-introspection/notes/13-shared-axis-audit.md).
+Check B is redesigned and not yet run.
 
-### A. Is the gap real, or is the concept bank too easy?
+### A. Is the gap real, or is the concept bank too easy? — RUN 2026-08-12
+
+**Answer: the bank was too easy, and in a specific measurable way.** The fitted
+reader is the average concept direction, and that average points positively along
+all eight held-out directions at about ten times chance. All 56 within-bank
+direction pairs are positive. Centering, estimated from eight concepts, reduced
+the shared component without removing it, and the bank was admitted by a screen
+set at 0.5 when the standard for identification claims is near zero.
+
+A follow-up then scored the same readers off that axis. They collapse — 0.479 and
+0.438 — while the trained model holds 0.913–0.955. **That looked like a reversal
+of [notes/12](../activation-introspection/notes/12-training-versus-a-probe.md) and
+was written up as one. It was wrong, and it was retracted the same day**: the
+fixed probe was a handicapped comparator, and a reader that adapts per episode
+scores 1.000 on those directions. See
+[notes/15](../activation-introspection/notes/15-matched-reader-on-content.md).
+
+What survives: the arithmetic of both earlier results, and the structural argument
+that a learner using only the visible text is pinned at 0.500.
+
+### C. Content or disturbance, and the cost criterion — RUN 2026-08-12
+
+Two further runs followed from A. Changing the two classes from one concept and
+its negation to **two different concepts**, and changing nothing else, the model
+scores **0.899** where two random directions at identical separation score
+**0.594** — so it reads content, not merely disturbance, and the polarity task's
+degeneracy does not generalise to this one.
+
+Then the cost criterion, applied to all four task structures with the reader
+refitted inside every episode:
+
+| task | model | cheap reader | model-only episodes |
+|---|---:|---:|---:|
+| polarity | 0.917 | 1.000 | 0 |
+| content | 0.899 | 1.000 | 0 |
+| random | 0.663 | 1.000 | 0 |
+| weak (0.15) | 0.497 | 0.833 | 14 |
+
+**Fourteen episodes in 1728.** The gap in the problem statement is now measured on
+four different task structures rather than one, and it holds on every one.
+
+### The original argument for A, kept as written before the run
 
 The cheap reader recovers concepts it has never seen, perfectly. It could only do
 that if the concept directions all share a large common ingredient — a generic
@@ -180,17 +265,56 @@ of the time and concepts it detects 0% of the time. So this is an **audit of thi
 repository's own concept bank**, which is necessary regardless of what anyone else
 has published.
 
-### B. Can this model learn *any* hidden rule from four examples?
+### B. Is the interface out of examples, or out of capability? — RUN 2026-08-12
 
-**Procedure.** Take a batch of candidate rules — not just odd/even — and ask
-whether the model can learn each from four examples with everything written out in
-plain text and nothing patched. No transplant, no site, no intervention.
+**Answer: neither. It matches on representational similarity.** Screening six
+rules with everything visible and nothing patched, the interface reaches 0.979
+when the query was shown, **0.885 on a semantic category rule applied to a query
+it has never seen**, 0.729 on numeric magnitude, and sits at the floor for
+vowel-versus-consonant (0.479) and parity (0.469) against a no-rule floor of 0.490.
 
-**What each outcome means.** If one rule clears the bar, the natural-state branch
-reopens with a specific rule named and five runs' worth of machinery becomes
-usable again. If none clear it, the branch is dead for a 3B model — which is
-itself a real finding about small models and four-example rule learning — and the
-answer is a larger model, not more patching.
+So it *can* induce a rule and generalise to a new instance. What decides success
+is whether the two classes form clusters the query falls into — and that was then
+**measured** rather than inferred. Class separation in the model's own
+representations is 0.043–0.218 for every rule it learns and −0.023 to 0.008 for
+every rule it fails, with no overlap at any of three depths.
+
+**Parity has consistently negative separation.** Its two classes share operands,
+operators and length, so each expression sits closer to a member of the opposite
+class than its own. It was close to the worst possible choice of hidden rule, and
+five runs were spent on it.
+
+**This reopens the natural-state branch, with conditions.** A semantic-category
+hidden class works through the identical interface. But `category` was picked by
+looking at results, so it is a development selection: any successor must freeze
+the class first, use a fresh bank, keep the visible screen as a gate, and certify
+transplants per item. The branch also gains a cheap prospective gate it never
+had — **measure class separation before spending a bank; below about 0.04, no
+amount of transplant work will help.**
+
+### The original argument for B, kept as written before the run
+
+**Redesigned after a correction.** The original version screened candidate rules
+at four examples. That would not have separated the two explanations, because a
+failure at four examples is expected for almost any category rule and says little
+about the model.
+
+**Procedure.** Two things vary, not one: the **number of demonstrations** (4, 8,
+16, 32) and the **kind of rule** — one axis with two sides, like the injected task
+that works, versus a category spanning unrelated members, like parity. Everything
+written out in plain text, nothing patched, no site, no intervention.
+
+**What each outcome means.**
+
+| Outcome | Reading |
+|---|---|
+| Parity clears the bar at 16 or 32 examples | The branch was starved of demonstrations, not blocked. It reopens with a bigger budget, and five runs of machinery become usable |
+| Category rules fail at every budget, axis rules pass at four | The interface can pick a side of an axis and cannot define a category, at any budget this model will take. Natural states do not come in two-sided pairs, so the branch is closed **for this interface** — and the honest next move is a different way of eliciting the report, not a bigger model |
+| Everything passes at 32 | The reporting design has been running at the wrong budget all along, including the results already published, and those need re-examining before anything else |
+
+The middle outcome is the one that would matter most, because it would mean five
+failed runs were caused by a design choice made at the very start and never
+questioned.
 
 **Cost.** Prompting only. The scoring function already exists; it is currently
 trapped inside a loop that only runs after the transplant checks pass.

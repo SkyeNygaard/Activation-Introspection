@@ -1,0 +1,60 @@
+{
+  "accuracy_by_pair": {
+    "content": {
+      "garden|camera": 1.0
+    },
+    "polarity": {
+      "garden|camera": 1.0
+    },
+    "random_pair": {
+      "garden|camera": 0.5
+    }
+  },
+  "arms": {
+    "clean": {
+      "accuracy": 0.5,
+      "format_rate": 1.0,
+      "mean_label_mass": 0.996971845626831,
+      "n": 2,
+      "twin_pair": 0.0
+    },
+    "content": {
+      "accuracy": 1.0,
+      "format_rate": 1.0,
+      "mean_label_mass": 0.9998979568481445,
+      "n": 2,
+      "twin_pair": 1.0
+    },
+    "polarity": {
+      "accuracy": 1.0,
+      "format_rate": 1.0,
+      "mean_label_mass": 0.9999369978904724,
+      "n": 2,
+      "twin_pair": 1.0
+    },
+    "query_only": {
+      "accuracy": 0.5,
+      "format_rate": 1.0,
+      "mean_label_mass": 0.9729206264019012,
+      "n": 2,
+      "twin_pair": 0.0
+    },
+    "random_pair": {
+      "accuracy": 0.5,
+      "format_rate": 1.0,
+      "mean_label_mass": 0.9994842112064362,
+      "n": 2,
+      "twin_pair": 0.0
+    }
+  },
+  "base_strength": 1.0,
+  "elapsed_seconds": 24.4,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "pairs": [
+    "garden|camera"
+  ],
+  "smoke": true,
+  "what_this_is": "Two concepts instead of one concept and its negation. Separation between the two classes is equalized across arms by construction."
+}

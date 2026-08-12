@@ -160,11 +160,20 @@ is between 8 and 11 times that, and all sixteen are positive.
 | overlap, average training direction to average held-out direction | 0.480 | the two banks share the same common ingredient |
 | length of average training direction | 0.451 | evenly spread directions give 0.354 |
 | length of average held-out direction | 0.459 | same |
-| within-bank overlap, training bank | mean 0.096 | **28 of 28 pairs positive** |
-| within-bank overlap, held-out bank | mean 0.097 | **28 of 28 pairs positive** |
+| within-bank overlap, training bank | mean 0.096 | see correction below |
+| within-bank overlap, held-out bank | mean 0.097 | see correction below |
 
-Fifty-six pairs of concept directions, every single one positive. Under any
-account where centering worked, about half should be negative.
+> **Measurement defect, corrected in [`15`](15-matched-reader-on-content.md).**
+> `run_bank_audit.py` applies `abs()` before counting positives, so its
+> "28 of 28 positive" was true by construction and established nothing.
+> `15` recomputed the **signed** cosines for the held-out bank: 28 of 28 really
+> are positive, mean signed 0.0975 equal to the mean magnitude, minimum **+0.0119**.
+> The conclusion survives; the measurement that appeared to support it did not.
+> The training bank's signed count has not been recomputed and should not be
+> quoted until it is.
+
+Every measured pair in the held-out bank is positive. Under any account where
+centering worked, about half should be negative.
 
 **So the centering did not do its job.** It was estimated from eight concepts and
 it reduced the shared component without removing it. The bank still passed the
@@ -294,6 +303,26 @@ reader and beats the adapter by 0.073. Off that axis it falls to 0.479 and 0.438
 the same place the *untrained* model sits, 0.513 — while the trained adapter holds
 0.913–0.955.
 
+> ## ⚠️ Retracted the same day by [`15`](15-matched-reader-on-content.md)
+>
+> **The paragraph below, and the section after it, drew a conclusion this
+> comparison cannot support.** The fixed probe is one weight vector fitted once on
+> a different bank. The trained adapter receives **four episode-specific
+> demonstrations and a re-randomised label convention on every evaluation
+> episode**. They do not have equal access, so the probe's collapse says nothing
+> about what probing can do in general.
+>
+> [`15`](15-matched-reader-on-content.md) ran the fair comparator — `11`'s
+> four-shot reader, which refits inside each episode — on the same kind of random
+> directions. **It scores 1.000.** The generality belongs to per-episode
+> adaptation, not to training. What this run actually shows is that a *fixed*
+> probe lacks it, which is true and uninteresting.
+>
+> The error is the one this note had just finished diagnosing in `12`: a badly
+> matched comparison fixed at one level and remade at the level above. The
+> original text is kept below rather than edited, because the mistake is the
+> point.
+
 The adapter's advantage off-axis is **about six times larger than the probe's
 advantage on-axis**, and in the opposite direction.
 
@@ -319,13 +348,13 @@ decided the answer.
 
 ## What now stands, across the whole branch
 
-| claim | status after these two runs |
-|---|---|
-| The model reads its own state worse than a cheap outsider, on concept directions | **Stands.** Task is easier than it looked, but easy for both sides, and the model still lost |
-| An input-only learner is pinned at 0.500 by construction | **Stands.** Structural, untouched by any of this |
-| These numbers measure reading *semantic content* | **Refuted.** They measure detection along a single direction |
-| Introspection training is probe distillation and loses to it | **Refuted as stated.** True only on the shared axis; reversed off it |
-| Training buys sensitivity and pays in specificity (`08`) | **Stands, and is now the main result of the branch.** It is the finding that survives every control run against it |
+| claim | status after these two runs | after [`14`](14-content-versus-disturbance.md) and [`15`](15-matched-reader-on-content.md) |
+|---|---|---|
+| The model reads its own state worse than a cheap outsider, on concept directions | **Stands.** Task is easier than it looked, but easy for both sides, and the model still lost | **Stands and broadens.** Also true for content, random directions, and weak strengths |
+| An input-only learner is pinned at 0.500 by construction | **Stands.** Structural, untouched by any of this | Stands |
+| These numbers measure reading *semantic content* | **Refuted.** They measure detection along a single direction | **Partly reinstated.** `14` shows the model tells two different concepts apart at 0.899 against 0.594 for random pairs at matched separation, so the bank carries recoverable concept-specific structure *as well as* a shared axis. The polarity task is still single-axis; the content task is not |
+| Introspection training is probe distillation and loses to it | **Refuted as stated.** True only on the shared axis; reversed off it | The reversal itself is **retracted** — see the box above. A fair adaptive reader scores 1.000 off-axis |
+| Training buys sensitivity and pays in specificity (`08`) | **Stands, and is now the main result of the branch.** It is the finding that survives every control run against it | Stands, with the wording tightened: concept-derived versus magnitude-matched random, not "semantic". And `15` shows the sensitivity training buys reaches roughly where a two-centroid reader already sat |
 
 ## Limits
 

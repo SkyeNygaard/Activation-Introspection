@@ -1,0 +1,116 @@
+{
+  "arms": {
+    "content": {
+      "by_pair": {
+        "garden|camera": {
+          "model": 1.0,
+          "reader": 1.0
+        }
+      },
+      "format_rate": 1.0,
+      "model_accuracy": 1.0,
+      "model_minus_best_fair_reader": 0.0,
+      "n": 2,
+      "paired_vs_centroid_euclidean": {
+        "both": 2,
+        "model_only": 0,
+        "neither": 0,
+        "reader_only": 0
+      },
+      "reader_accuracy": {
+        "centroid_cosine": 1.0,
+        "centroid_euclidean": 1.0,
+        "shuffled_labels": 1.0
+      }
+    },
+    "polarity": {
+      "by_pair": {
+        "garden|camera": {
+          "model": 1.0,
+          "reader": 1.0
+        }
+      },
+      "format_rate": 1.0,
+      "model_accuracy": 1.0,
+      "model_minus_best_fair_reader": 0.0,
+      "n": 2,
+      "paired_vs_centroid_euclidean": {
+        "both": 2,
+        "model_only": 0,
+        "neither": 0,
+        "reader_only": 0
+      },
+      "reader_accuracy": {
+        "centroid_cosine": 1.0,
+        "centroid_euclidean": 1.0,
+        "shuffled_labels": 1.0
+      }
+    },
+    "polarity_weak": {
+      "by_pair": {
+        "garden|camera": {
+          "model": 0.5,
+          "reader": 0.5
+        }
+      },
+      "format_rate": 1.0,
+      "model_accuracy": 0.5,
+      "model_minus_best_fair_reader": 0.0,
+      "n": 2,
+      "paired_vs_centroid_euclidean": {
+        "both": 1,
+        "model_only": 0,
+        "neither": 1,
+        "reader_only": 0
+      },
+      "reader_accuracy": {
+        "centroid_cosine": 0.5,
+        "centroid_euclidean": 0.5,
+        "shuffled_labels": 0.5
+      }
+    },
+    "random_polarity": {
+      "by_pair": {
+        "garden|camera": {
+          "model": 0.5,
+          "reader": 1.0
+        }
+      },
+      "format_rate": 1.0,
+      "model_accuracy": 0.5,
+      "model_minus_best_fair_reader": -0.5,
+      "n": 2,
+      "paired_vs_centroid_euclidean": {
+        "both": 1,
+        "model_only": 0,
+        "neither": 0,
+        "reader_only": 1
+      },
+      "reader_accuracy": {
+        "centroid_cosine": 1.0,
+        "centroid_euclidean": 1.0,
+        "shuffled_labels": 1.0
+      }
+    }
+  },
+  "base_strength": 1.0,
+  "corrected_signed_overlap": {
+    "eval_bank": {
+      "max_signed": 0.1825091540813446,
+      "mean_abs": 0.09748525172472,
+      "mean_signed": 0.09748525172472,
+      "min_signed": 0.011904999613761902,
+      "n": 28,
+      "n_positive_signed": 28
+    },
+    "note": "run_bank_audit.py applied abs() before counting positives, making its n_positive vacuous. These are the signed values."
+  },
+  "criterion": "https://arxiv.org/abs/2508.14802",
+  "elapsed_seconds": 23.9,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": true,
+  "weak_strength": 0.15,
+  "what_this_is": "The equal-or-lower-cost reader from notes/11, applied to the content task from notes/14, with the polarity task run in the same process."
+}

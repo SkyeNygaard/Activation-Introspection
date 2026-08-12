@@ -1,9 +1,93 @@
 # Literature and novelty boundary
 
-Last checked: **2026-08-09**. This is a targeted audit of the closest primary
-papers and the six official project descriptions, not a systematic review. A
-fresh search, citation chase, and mentor-provided reading list are required before
-locking any claim of novelty.
+Last checked: **2026-08-12** for notes 11–16; **2026-08-09** for everything
+earlier. This is a targeted audit of the closest primary papers and the six
+official project descriptions, not a systematic review. A fresh search, citation
+chase, and mentor-provided reading list are required before locking any claim of
+novelty.
+
+> **Rule 5 of this file was broken, and it is recorded rather than repaired
+> quietly.** The rule says to append new papers *before* confirmatory data are
+> inspected. Notes 11 and 12 ran on 2026-08-11 and notes 13–16 on 2026-08-12,
+> all against a file last checked 2026-08-09. The search below was run
+> **after** those results existed. That does not change the numbers, but it
+> means the designs were not informed by the closest prior work, and any
+> novelty statement here is correspondingly weaker than one made in the right
+> order.
+
+## Search of 2026-08-12, covering notes 11-16
+
+Queries run: `linear probe outperforms fine-tuned model self-report introspection
+verbalization probe distillation`; `introspection privileged access equal or lower
+cost third party reader`; `concept injection distinguish two different concepts A
+vs B byte-identical prompt control`; `in-context learning failure classes not
+linearly separable clustering predicts rule induction`. Primary pages inspected
+for the closest hits.
+
+### Papers not previously in this file, and what each does to a claim here
+
+- [**Looking in the Mirror**](https://arxiv.org/html/2608.04347) (5 August 2026,
+  Qwen3-14B and Gemma3-12B) reports that **probes slightly outperform LoRA-based
+  introspection adapters** and that introspection methods "may largely be
+  implementing a relatively simple classifier over internal states". That is
+  [notes/12](../activation-introspection/notes/12-training-versus-a-probe.md)'s
+  interpretation, published four days before this file was last checked and one
+  week before the run. **Note 12 is therefore not a new observation.** It does
+  *disagree* in one place: their probe wins on seen categories and **loses** on
+  unseen ones, where notes/12's probe wins outright on held-out directions. That
+  disagreement is worth reporting; the general claim is not ours to make.
+- [**Detecting the Disturbance / Feeling the Strength but Not the
+  Source**](https://arxiv.org/abs/2512.12411) (Hahami et al.) shows the binary
+  detection paradigm "conflates introspection with a methodological artifact:
+  apparent detection accuracy is entirely explained by global logit shifts", then
+  finds real partial introspection on tasks needing differential sensitivity —
+  localisation at 88%, relative strength at 83% — confined to early-layer
+  injections. Directly relevant to our controls, and its early-layer confinement
+  matches our layer-9 site.
+- [**Mechanisms of Introspective
+  Awareness**](https://arxiv.org/html/2603.21396v1) reports a gate feature firing
+  across concepts detected 97% of the time and concepts detected 0% of the time —
+  **concept-agnostic machinery, measured with sharper tools than
+  [notes/13](../activation-introspection/notes/13-shared-axis-audit.md)'s bank
+  audit.** Note 13's shared axis is therefore not a novel mechanism; it is a
+  validity defect in our own bank, which is how the note now frames it.
+- [**Emergent Introspection in AI is
+  Content-Agnostic**](https://arxiv.org/pdf/2603.05414) (Lederman and Mahowald),
+  by two authors of the cost-criterion paper this repository leans on. Argues the
+  introspective mechanism is indifferent to which concept is involved.
+  **This is the paper most in tension with
+  [notes/14](../activation-introspection/notes/14-content-versus-disturbance.md)**,
+  which finds two different concepts discriminated at 0.899 against 0.594 for
+  random directions at matched separation. Whether that is a genuine disagreement
+  or two different constructs — a content-agnostic *detection mechanism* is
+  compatible with content-*discrimination* being possible — **cannot be settled
+  from the abstract, and the paper must be read in full before notes/14 is
+  described as novel, surprising, or contradicting anything.**
+- [**Latent Introspection: Models Can Detect Prior Concept
+  Injections**](https://arxiv.org/html/2602.20031v1) finds the model denies an
+  injection in its sampled output while a logit-lens read shows clear detection in
+  the residual stream, attenuated in the final layers. **That is the
+  readable-but-unused gap this repository's headline reports**, reached by a
+  different measurement. Independent convergence, and it should be cited as
+  support rather than treated as a scoop — it measures readability with a lens,
+  not against a cost-matched reader.
+
+### Novelty position of each new result, stated conservatively
+
+| result | closest prior work | honest label |
+|---|---|---|
+| Cost-criterion comparison against a **per-episode adaptive** reader, across four task shapes, with visible text byte-identical ([11](../activation-introspection/notes/11-matched-cost-reader.md), [15](../activation-introspection/notes/15-matched-reader-on-content.md)) | criterion from [2508.14802](https://arxiv.org/abs/2508.14802); [2602.20031](https://arxiv.org/html/2602.20031v1) explicitly does **not** run an external-classifier comparison | **Extension candidate.** The criterion is not ours; applying it with an adaptive reader on a design where input-only is pinned at 0.500 by construction is the changed axis |
+| Two-concept discrimination at matched class separation ([14](../activation-introspection/notes/14-content-versus-disturbance.md)) | [2603.05414](https://arxiv.org/pdf/2603.05414), [2512.12411](https://arxiv.org/abs/2512.12411), [2603.21396](https://arxiv.org/html/2603.21396v1) all address content versus disturbance | **Contested, not novel.** The question is live and being argued by several groups. The matched-separation control and the byte-identical twins are the changed axes. **Read 2603.05414 in full before claiming anything** |
+| Training loses to a probe ([12](../activation-introspection/notes/12-training-versus-a-probe.md)) | [2608.04347](https://arxiv.org/html/2608.04347) | **Replication with a disagreement**, not a new headline |
+| Class clustering in representation space predicts which hidden rules a four-shot interface can learn ([16](../activation-introspection/notes/16-visible-rule-capacity.md)) | nothing found combining representational clustering with in-context rule-induction success; nearest are [2406.11233](https://arxiv.org/html/2406.11233v1) on irregular in-context decision boundaries and [2502.15823](https://arxiv.org/pdf/2502.15823) on induction failures | **The most likely genuinely new thing here**, and also the least about introspection. Targeted search only; needs the full protocol of step 2 below before the word "new" is used |
+
+### What this search did not do
+
+Backward and forward citation chaining from any of the papers above; appendix and
+code inspection; a scholarly-index rerun; and the mentor's reading list. Under
+this file's own five-step rule, that means **none of the labels above is a
+novelty claim** — they are scoping judgements about which single design axis
+differs, which is step 3 of 5.
 
 ### Search log for this redesign
 

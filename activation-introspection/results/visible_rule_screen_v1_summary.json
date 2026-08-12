@@ -1,0 +1,47 @@
+{
+  "by_rule": {
+    "category": {
+      "accuracy": 0.8854166666666666,
+      "format_rate": 1.0,
+      "n": 96,
+      "twin_pair": 0.7708333333333334
+    },
+    "first_letter": {
+      "accuracy": 0.4791666666666667,
+      "format_rate": 1.0,
+      "n": 96,
+      "twin_pair": 0.10416666666666667
+    },
+    "lexical_seen": {
+      "accuracy": 0.9791666666666666,
+      "format_rate": 1.0,
+      "n": 96,
+      "twin_pair": 0.9583333333333334
+    },
+    "lexical_unseen": {
+      "accuracy": 0.4895833333333333,
+      "format_rate": 1.0,
+      "n": 96,
+      "twin_pair": 0.08333333333333333
+    },
+    "magnitude": {
+      "accuracy": 0.7291666666666666,
+      "format_rate": 1.0,
+      "n": 96,
+      "twin_pair": 0.4583333333333333
+    },
+    "parity": {
+      "accuracy": 0.46875,
+      "format_rate": 1.0,
+      "n": 96,
+      "twin_pair": 0.041666666666666664
+    }
+  },
+  "ceiling": "lexical_seen",
+  "elapsed_seconds": 111.8,
+  "floor": "lexical_unseen",
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": false,
+  "what_this_is": "Prompting-only screen: can the four-shot Q/K interface induce a rule and apply it to an unseen instance, or only match a shown query?"
+}

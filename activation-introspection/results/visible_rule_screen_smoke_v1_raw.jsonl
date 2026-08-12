@@ -1,0 +1,12 @@
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "Q", "query": "velvet", "query_class": 0, "rule": "lexical_seen"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "K", "query": "marble", "query_class": 1, "rule": "lexical_seen"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "Q", "query": "lantern", "query_class": 0, "rule": "lexical_unseen"}
+{"correct": false, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "Q", "query": "gantry", "query_class": 1, "rule": "lexical_unseen"}
+{"correct": false, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "K", "query": "igloo", "query_class": 0, "rule": "first_letter"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "K", "query": "gravel", "query_class": 1, "rule": "first_letter"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "Q", "query": "badger", "query_class": 0, "rule": "category"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "K", "query": "wrench", "query_class": 1, "rule": "category"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "Q", "query": "7", "query_class": 0, "rule": "magnitude"}
+{"correct": false, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "Q", "query": "3", "query_class": 1, "rule": "magnitude"}
+{"correct": false, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "K", "query": "6+2", "query_class": 0, "rule": "parity"}
+{"correct": true, "fold": 0, "format_ok": true, "label_mass": 1.0, "map": 0, "order": [0, 0, 1, 1], "predicted": "K", "query": "1+2", "query_class": 1, "rule": "parity"}
