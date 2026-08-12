@@ -1,0 +1,25 @@
+{
+  "calibration": {
+    "mean_confidence_when_right": 0.9999998807907104,
+    "mean_confidence_when_wrong": 0.9980807304382324,
+    "n_right": 1,
+    "n_wrong": 1
+  },
+  "chance": 0.125,
+  "elapsed_seconds": 24.7,
+  "layer": 9,
+  "leak_check_reports_containing_marker": 0,
+  "model": "qwen-3b",
+  "n": 2,
+  "report_mentions_target_rate": 0.0,
+  "smoke": true,
+  "strength": 2.0,
+  "tiers": {
+    "T0_prompt_only_by_construction": 0.125,
+    "T1_text_only_reader": 0.0,
+    "T2_logit_lens_from_notes_18": 0.986,
+    "model_forced_choice": 0.5,
+    "model_forced_choice_from_notes_17": 0.667
+  },
+  "what_this_is": "Adds the text-only comparator tier (T1): a reader given the model's own free-form report and no activations. Plus calibration."
+}
