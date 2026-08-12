@@ -11,10 +11,13 @@ from torch import nn
 
 from introspect.models import LoadedModel
 from introspect.natural_state import (
+    ARITH_DEV,
+    ARITH_TEST,
     MARKER,
     NEGATIVE_BRIDGE,
     POSITIVE_BRIDGE,
     ROUTE_WORLDS,
+    ArithTask,
     _validate_replacements,
     patch_residuals,
     unique_substring_token_position,
@@ -152,9 +155,51 @@ def test_replacements_validate_inputs(
         _validate_replacements(layer, positions, states)
 
 
+def test_arithmetic_twins_differ_only_in_parity_and_one_operand() -> None:
+    for bank in (ARITH_DEV, ARITH_TEST):
+        assert len(bank) == 5
+        answers = [task.answer(sign) for task in bank for sign in (1, -1)]
+        assert sorted(answers) == list(range(10))
+        for task in bank:
+            assert task.answer(1) % 2 == 0
+            assert task.answer(-1) % 2 == 1
+            assert task.problem(1) != task.problem(-1)
+            assert task.render_user(1).endswith(task.problem(1))
+    dev = {task.problem(sign) for task in ARITH_DEV for sign in (1, -1)}
+    held_out = {task.problem(sign) for task in ARITH_TEST for sign in (1, -1)}
+    assert dev.isdisjoint(held_out)
+
+
+@pytest.mark.parametrize(
+    ("task", "message"),
+    [
+        ((6, "+", 4, 5), "single-digit"),  # 6 + 5 = 11
+        ((4, "+", 5, 4), "wrong parity"),  # the twins are swapped
+        ((4, "+", 4, 4), "must differ"),
+        ((4, "*", 4, 5), r"\+ or -"),
+    ],
+)
+def test_arithmetic_tasks_validate_their_own_answers(
+    task: tuple[int, str, int, int], message: str
+) -> None:
+    with pytest.raises(ValueError, match=message):
+        ArithTask(*task)
+
+
+def test_layer_selection_takes_the_earliest_passing_anchor() -> None:
+    def screen(*passed: bool) -> dict[int, dict[str, object]]:
+        return {
+            layer: {"passed": ok} for layer, ok in zip(runner.ANCHOR_LAYERS, passed, strict=True)
+        }
+
+    assert runner._select_layer(screen(False, True, True)) == runner.ANCHOR_LAYERS[1]
+    assert runner._select_layer(screen(True, False, False)) == runner.ANCHOR_LAYERS[0]
+    assert runner._select_layer(screen(False, False, False)) is None
+
+
 def test_report_summary_preserves_paired_units_and_frozen_gates() -> None:
     rows: list[dict[str, object]] = []
-    for world in ROUTE_WORLDS:
+    for task in ARITH_TEST:
         for positive_label in ("Q", "K"):
             negative_label = "K" if positive_label == "Q" else "Q"
             for query_sign in (-1, 1):
@@ -172,7 +217,7 @@ def test_report_summary_preserves_paired_units_and_frozen_gates() -> None:
 
                 rows.append(
                     {
-                        "query_world": world.start,
+                        "query_task": task.name,
                         "demo_signs": [-1, -1, 1, 1],
                         "query_sign": query_sign,
                         "positive_label": positive_label,
@@ -182,6 +227,7 @@ def test_report_summary_preserves_paired_units_and_frozen_gates() -> None:
                             "anti_grounded": score("K" if correct == "Q" else "Q"),
                             "clean": score("Q"),
                             "sham": score("Q"),
+                            "visible": score(correct),
                         },
                     }
                 )
@@ -190,16 +236,62 @@ def test_report_summary_preserves_paired_units_and_frozen_gates() -> None:
     metrics = cast(dict[str, Any], summary["metrics"])
 
     assert summary["all_gates_pass"] is True
+    assert summary["visible_capability_passed"] is True
     assert metrics["natural_accuracy"] == 1.0
     assert metrics["query_only_accuracy"] == 0.5
+    assert metrics["visible_accuracy"] == 1.0
     assert metrics["natural_query_twin_both_correct"] == 1.0
     assert metrics["natural_mapping_flip_both_correct"] == 1.0
     assert metrics["anti_grounded_inverse_accuracy"] == 1.0
+    assert set(metrics["by_task"]) == {task.name for task in ARITH_TEST}
+
+
+def test_status_separates_an_uninterpretable_null_from_a_reporting_null() -> None:
+    reachable: dict[str, object] = {"passed": True}
+    passing: dict[str, object] = {"all_gates_pass": True}
+    failed: dict[str, object] = {"all_gates_pass": False, "visible_capability_passed": True}
+    blind: dict[str, object] = {"all_gates_pass": False, "visible_capability_passed": False}
+
+    assert runner._status(None, None, None) == "stop_no_anchor_layer_reachable"
+    assert runner._status(9, {"passed": False}, None) == "stop_test_bank_not_reachable"
+    assert runner._status(9, reachable, passing) == "pilot_pass"
+    assert runner._status(9, reachable, failed) == "stop_reporter_gate_failed"
+    assert runner._status(9, reachable, blind) == "stop_reporter_gate_failed_uninterpretable"
+
+
+def test_named_site_replaces_the_blind_screen_and_never_shares_its_artifacts() -> None:
+    assert runner._anchors(None) == runner.ANCHOR_LAYERS
+    assert runner._anchors(27) == (27,)
+    assert runner._select_layer({27: {"passed": True}}, (27,)) == 27
+    assert runner._select_layer({27: {"passed": False}}, (27,)) is None
+
+    named = [
+        runner._default_output(smoke=False, site=27),
+        runner._default_output(smoke=True, site=27),
+        runner._default_protocol(smoke=False, site=27),
+        runner._default_protocol(smoke=True, site=27),
+        runner._default_output(smoke=False),
+        runner._default_output(smoke=True),
+        runner._default_protocol(smoke=False),
+        runner._default_protocol(smoke=True),
+    ]
+    assert len({path.name for path in named}) == len(named)
+    assert named[0].name == "natural_state_arith_l27_v1_raw.jsonl"
+    assert named[3].name == "natural_state_arith_l27_smoke_protocol_v1.json"
+
+    # A post-hoc site must be recorded as one, or the artifact reads as blind.
+    blind = runner._protocol(smoke=False, site=None)
+    posthoc = runner._protocol(smoke=False, site=27)
+    assert cast(dict[str, Any], posthoc["design"])["anchor_layers"] == [27]
+    assert "post-hoc" in cast(dict[str, Any], posthoc["design"])["layer_selection"]
+    assert "POST-HOC" in cast(str, posthoc["disclosed_precursor"]).upper()
+    assert posthoc["report_gates"] == blind["report_gates"]
+    assert posthoc["interpretation_gate"] == blind["interpretation_gate"]
 
 
 def test_recovery_and_default_outputs_fail_closed() -> None:
     assert runner._normalized_recovery(-2.0, 1.0, 4.0) == 0.5
     with pytest.raises(ValueError, match="too small"):
         runner._normalized_recovery(1.0, 2.0, 1.0)
-    assert runner._default_output(smoke=True).name == "natural_state_smoke_v3_raw.jsonl"
-    assert runner._default_output(smoke=False).name == "natural_state_dev_v1_raw.jsonl"
+    assert runner._default_output(smoke=True).name == "natural_state_arith_smoke_v1_raw.jsonl"
+    assert runner._default_output(smoke=False).name == "natural_state_arith_v1_raw.jsonl"

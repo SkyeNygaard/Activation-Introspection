@@ -1,0 +1,117 @@
+{
+  "config": {
+    "device": "mps",
+    "dtype": "torch.float16",
+    "git_commit": "b818121c2b304c10d7fd0c1d4ea1f6c789fcb353",
+    "git_dirty": true,
+    "injection_layer": 9,
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "n_layers": 36,
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "protocol": {
+      "design": {
+        "concepts": [
+          "garden",
+          "camera",
+          "train",
+          "banana",
+          "eagle",
+          "library",
+          "hammer",
+          "island"
+        ],
+        "injection_layer": 9,
+        "labels": [
+          "Q",
+          "K"
+        ],
+        "model": "qwen-3b",
+        "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+        "read_layers": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "reader": "nearest centroid, Euclidean, four demonstrations",
+        "strength": 1.0,
+        "unit": "episode; the same 576 episodes as the frozen confirmation",
+        "visible_samples": [
+          "A routine maintenance record is open. Hidden state marker: \u00a7",
+          "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: \u00a7",
+          "Nothing changed. Hidden state marker: \u00a7"
+        ]
+      },
+      "frozen_on": "2026-08-11",
+      "prereg_fork": {
+        "primary_statistic": "reader accuracy at the final block, and the deepest block at which the reader still exceeds the model",
+        "reader_beats_model_at_output_layer": "notes/11 survives its own stated limitation. The signal remains linearly available at the last block while the model's use of it does not improve, which localizes the storage/use dissociation instead of asserting it.",
+        "reader_decays_to_model_level": "notes/11's dominance is an artifact of the read site. The model's accuracy then tracks the signal actually available downstream, the privileged-access verdict weakens to 'not established at the injection site', and that limitation becomes the finding."
+      },
+      "question": "Is the four-shot reader's dominance over the model an artifact of reading the residual at the block the injection edits?",
+      "reproduction_gate": {
+        "frozen_target_accuracy": 0.891,
+        "tolerance": 0.05
+      },
+      "role": "adversarial falsification of notes/11, not an extension of it. The hypothesis under attack is this repository's own new result.",
+      "schema_version": 1,
+      "source_files_sha256": {
+        "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+        "scripts/run_matched_reader.py": "27991666e89dc834388622ffbf81c527a50415d964f2dec4c37cf019f4924c8f",
+        "scripts/run_reader_depth.py": "90f21320af1b836a6311165e87584517add50ad42919e8bcd17ab05aa2f9d7cd",
+        "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+        "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+        "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+        "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+        "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+      },
+      "validity_gate": {
+        "pre_injection_reader_at_chance": 0.6,
+        "rule": "blocks strictly below the injection site carry no edit, so the reader there must not exceed 0.60. If it does, the reader is reading something the intervention did not put there and every number here is void."
+      }
+    },
+    "protocol_sha256": "1bbcf73c8f1ae6242e2149a45080885e6632ab2bd637736d542d5e3506697a2a",
+    "python": "3.12.13",
+    "schema_version": 1,
+    "torch": "2.13.0"
+  },
+  "config_sha256": "c7aa299cf8ee1775fddf1b933181e98f0ad1370061962c16a6ce27b3848758d2",
+  "elapsed_seconds": 189.99787282943726,
+  "n_rows": 576,
+  "raw": "reader_depth_v1_raw.jsonl",
+  "raw_sha256": "6d12bd77833f59afde5165c99146438a0fce5fdd509b5eb9bf3536a18d2d206d",
+  "schema_version": 1
+}

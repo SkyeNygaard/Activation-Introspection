@@ -74,6 +74,20 @@ that site and a fresh query bank before running the `Q/K` reporter. An output-re
 answer state would be easier to reach but supports a narrower claim than a genuine
 intermediate, and should be labeled accordingly.
 
+**That successor ran on 2026-08-11.** Its frozen protocol also stopped at
+reachability — the output-ready version fixed the clean-task defect, 10/10 at
+probability 1.000, and still controlled the answer in 0/5 tasks at layers 9, 21
+and 26 — but a post-hoc all-layer localization on the development bank then
+satisfied the condition stated above. From **block 27** the same single-position
+transplant makes the ordinary answer follow the donor in 10/10 transplants; below
+it the state does not carry the answer at all. The layer-9 site tested here was
+not merely a weak choice, it was well below where the answer exists.
+
+A third protocol then froze block 27 and required it to pass the same gate on a
+never-scored held-out bank. It did not — 5/5 on development, 3/5 held out — so
+the reporter has still not run. See
+[`10-output-ready-arithmetic.md`](10-output-ready-arithmetic.md).
+
 ## Artifacts
 
 - V1 stopped protocol: `results/natural_state_smoke_protocol_v1.json`;

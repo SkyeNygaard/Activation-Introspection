@@ -1,6 +1,125 @@
 # Result artifact status
 
-## Natural-state pilot: stopped before reporting
+## Introspection training loses to a difference-of-means probe
+
+`trained_vs_probe_protocol_v2.json` fits readers on the trained reporter's own
+training bank and scores them on its own evaluation bank — eight held-out concept
+directions, three held-out carriers, 24 twin pairs. Both fair readers reach
+**1.0000** twin-pair; the oracle upper bound adds nothing because there is nothing
+left to add; the shuffled-label control sits at 0.5208 row accuracy inside the
+frozen band, with twin-pair 0.125, *below* the 0.25 coin-flip null.
+
+The adapter's published four-seed figure is **0.927, range [0.833, 1.000]**. It is
+therefore **beaten by 0.073**, with its best seed only tying. At this setup, LoRA
+training on activation reports yields a reader strictly worse than the probe one
+would have to fit anyway to generate the supervision.
+
+The protocol argued before the run that the outcome was open, on the grounds that
+a linear reader might not transfer to unseen directions. It transferred
+perfectly, and that reasoning is retracted in the note. The mechanism implied —
+a shared "this state was pushed" axis rather than concept-specific content — is
+labelled **inference, not measurement**, and the cheap check that would settle it
+is named and unrun. Full scope:
+[`../notes/12-training-versus-a-probe.md`](../notes/12-training-versus-a-probe.md).
+
+## The privileged-access criterion: the model is dominated by a cheap reader
+
+`matched_reader_protocol_v3.json` tests the confirmed 0.891 against the field's
+operative definition of introspection ([arXiv 2508.14802](https://arxiv.org/abs/2508.14802)):
+more reliable than a process of equal or lower cost available to a third party.
+On the identical 576 frozen episodes, the same forward pass that scores the model
+captures the five post-injection residual states, and a four-shot nearest-centroid
+reader is fitted on the four demonstrations and asked for the fifth.
+
+The model reproduces its frozen confirmation at **0.8924** (gate: 0.891 ± 0.05).
+The reader scores **1.0000**, on both Euclidean and cosine variants, on all eight
+concepts. The shuffled-label control collapses to **0.5017**. The paired counts
+are the result: **514 both correct, 62 reader-only, and 0 episodes where the model
+is right and the reader is wrong.**
+
+`reader_depth_protocol_v1.json` then attacked that result's own stated first
+limitation — that the reader reads at the block the injection edits. Same
+episodes, same forward pass, reader refitted after **every** block. Blocks 0–8
+give exactly **0.5000** (validity control: nothing is edited yet), blocks **9
+through 32 give exactly 1.0000**, block 33 gives 0.9427, and only blocks 34–35
+fall below the model, to 0.8854 and 0.5920. The frozen verdict fired as
+`dominance_is_a_read_site_artifact` because the *final* block was named the
+primary statistic; that choice was wrong and is corrected in the note, since by
+the last blocks the marker positions are producing their own next-token
+predictions rather than storing the concept. The finding is broader than the test
+intended: the signal is perfectly decodable across **25 consecutive blocks, ~70%
+of depth**, while the model answers at 0.892 throughout.
+
+This does not invalidate the 0.891 — an input-only learner is still pinned at
+exactly 0.500 by construction, which is the point that design was built to make.
+It bounds what the number may be called: the model reads its own state *worse*
+than an outsider does at any of 25 read depths, so no introspection or
+privileged-access language is licensed. Two disclosed precursor protocols carry implementation
+defects that produced no usable result, and a wrong expectation inside the frozen
+v3 protocol is corrected in the note. Full scope and limits:
+[`../notes/11-matched-cost-reader.md`](../notes/11-matched-cost-reader.md).
+
+## Certified-donor natural-state report: an uninterpretable null
+
+`natural_report_l27_protocol_v1.json` certified each of twelve fresh arithmetic
+pairs individually — both transplants must carry the ordinary answer — and ran the
+24-cell reporter on the first five certified pairs in frozen bank order. **Nine of
+twelve certified**, against 9.7 expected at the measured per-transplant rate, so
+the certification design worked. The reporter then ran for the first time in this
+family: natural accuracy **0.500**, query-only **0.500**, difference **0.000**,
+twin-pair **0.000**, with format 1.000, label mass 1.000 and sham reproducing
+clean to 0.000.
+
+It is **not** a reporting null. The frozen interpretation gate — visible capability
+≥ 0.75 — returned **0.533**: the model cannot induce the parity rule with the
+arithmetic written out and nothing patched at all. The blocker is the hidden
+class, not the site, the transplant, or the interface. See
+[`../notes/10-output-ready-arithmetic.md`](../notes/10-output-ready-arithmetic.md).
+
+## Output-ready natural-state pilot: stopped before reporting, on a perfect task
+
+`natural_state_arith_smoke_protocol_v1.json` froze the successor to the route
+pilot below. It transplants the residual at the last pre-answer token of a
+single-digit arithmetic problem the model solves itself, screens three
+prospectively named anchor layers (9, 21, 26) on a development bank, and would
+have run the 24-cell episode-remapped `Q/K` reporter on a disjoint held-out bank
+at the earliest passing layer.
+
+No anchor passed. Clean answers were **10/10 at conditional probability 1.000**
+— the task defect that also afflicted the route pilot is gone — and exact
+self-patching reproduced the full logit vector with maximum error **0.0** at
+every layer, but bidirectional cross-patching controlled the answer in **0/5**
+tasks at all three, with mean normalized recovery +0.001, −0.003 and +0.100.
+Replacing the state at the position that produces the answer does not make the
+answer follow. No reporting row ran, and this is again an instrument result
+rather than evidence about introspective reporting.
+
+The artifact is named `smoke` and is still the citable run: `--smoke` only
+truncates the reporter, which never executed.
+
+`natural_state_arith_site_diagnostic_v1.json` is a **post-hoc, development-bank
+only** all-layer localization, produced by `scripts/diagnose_answer_site.py`. It
+carries no reporting claim and its selected layer is not a pre-registered choice.
+It explains the stop: through block 26 the clean pre-answer state does not favour
+its own answer over its twin's better than chance under a logit lens, and the
+twins differ by under a quarter of the residual norm; from **block 27** the same
+transplant makes the donor's digit the full-vocabulary argmax in **10/10**
+transplants at mean recovery 0.787. The three anchors were one block short of the
+site.
+
+`natural_state_arith_l27_smoke_protocol_v1.json` then froze block 27 as a
+disclosed post-hoc site and changed nothing else. It reproduced the development
+result exactly — 5/5 tasks, recovery 0.787 — and the **held-out bank did not
+confirm: 3/5 tasks** against a frozen 4/5, at recovery 0.697 with clean answers
+10/10. The reporter did not run, and the protocol forbids reselecting a layer.
+Eight of ten held-out transplants worked; both failures were the same direction.
+Pooled over both banks the per-transplant rate is 0.90, at which the 5-task
+"4/5 in both directions" criterion fails about a quarter of the time on its own,
+so the design's bank was too small for the gate it carried. Full scope, both
+stops, and the unused visible capability control are in
+[`../notes/10-output-ready-arithmetic.md`](../notes/10-output-ready-arithmetic.md).
+
+## Natural-state route pilot: stopped before reporting
 
 `natural_state_smoke_protocol_v2.json` froze an inference-only feasibility test:
 transplant a naturally computed two-hop route state, require it to change the

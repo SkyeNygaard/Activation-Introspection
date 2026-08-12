@@ -1,0 +1,29 @@
+{
+  "adapter_mean_twin_pair": 0.927,
+  "adapter_minus_best_fair_reader": -0.07299999999999995,
+  "adapter_seed_range": [
+    0.833,
+    1.0
+  ],
+  "best_fair_reader_twin_pair": 1.0,
+  "gates": {
+    "shuffled_labels_at_chance": true
+  },
+  "n_states": 48,
+  "n_twin_pairs": 24,
+  "row_accuracy": {
+    "centroid": 1.0,
+    "logistic": 1.0,
+    "oracle_direction": 1.0,
+    "shuffled_labels": 0.5208333333333334
+  },
+  "shuffled_labels_twin_pair_descriptive": 0.125,
+  "twin_pair_accuracy": {
+    "centroid": 1.0,
+    "logistic": 1.0,
+    "oracle_direction": 1.0,
+    "shuffled_labels": 0.125
+  },
+  "twin_pair_coin_flip_null": 0.25,
+  "verdict": "training_does_not_exceed_a_probe"
+}

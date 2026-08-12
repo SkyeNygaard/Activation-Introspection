@@ -1,0 +1,56 @@
+{
+  "by_concept": {
+    "banana": {
+      "model": 0.8333333333333334,
+      "reader": 1.0
+    },
+    "camera": {
+      "model": 0.875,
+      "reader": 1.0
+    },
+    "eagle": {
+      "model": 0.9166666666666666,
+      "reader": 1.0
+    },
+    "garden": {
+      "model": 0.9305555555555556,
+      "reader": 1.0
+    },
+    "hammer": {
+      "model": 0.9166666666666666,
+      "reader": 1.0
+    },
+    "island": {
+      "model": 0.8888888888888888,
+      "reader": 1.0
+    },
+    "library": {
+      "model": 0.8888888888888888,
+      "reader": 1.0
+    },
+    "train": {
+      "model": 0.8888888888888888,
+      "reader": 1.0
+    }
+  },
+  "gates": {
+    "reproduces_frozen_confirmation": true,
+    "shuffled_label_reader_at_chance": true
+  },
+  "model_format_rate": 1.0,
+  "model_minus_reader": -0.10763888888888884,
+  "model_target_accuracy": 0.8923611111111112,
+  "n_episodes": 576,
+  "paired_counts": {
+    "both_correct": 514,
+    "model_only": 0,
+    "neither": 0,
+    "reader_only": 62
+  },
+  "reader_accuracy": {
+    "centroid_cosine": 1.0,
+    "centroid_euclidean": 1.0,
+    "shuffled_labels": 0.5017361111111112
+  },
+  "verdict": "no_privileged_access_at_this_site"
+}

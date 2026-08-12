@@ -1,0 +1,36 @@
+{
+  "dev_layer_screen": {
+    "21": {
+      "bank": "dev",
+      "bidirectional_cross_patch_tasks": 0,
+      "clean_full_vocab_answers_correct": true,
+      "layer": 21,
+      "mean_normalized_log_odds_recovery": -0.0027584507036064613,
+      "passed": false,
+      "self_patch_max_abs_logit_error": 0.0
+    },
+    "26": {
+      "bank": "dev",
+      "bidirectional_cross_patch_tasks": 0,
+      "clean_full_vocab_answers_correct": true,
+      "layer": 26,
+      "mean_normalized_log_odds_recovery": 0.10001057800793,
+      "passed": false,
+      "self_patch_max_abs_logit_error": 0.0
+    },
+    "9": {
+      "bank": "dev",
+      "bidirectional_cross_patch_tasks": 0,
+      "clean_full_vocab_answers_correct": true,
+      "layer": 9,
+      "mean_normalized_log_odds_recovery": 0.0012339708993566773,
+      "passed": false,
+      "self_patch_max_abs_logit_error": 0.0
+    }
+  },
+  "report": null,
+  "schema_version": 2,
+  "selected_layer": null,
+  "status": "stop_no_anchor_layer_reachable",
+  "test_bank_reachability": null
+}

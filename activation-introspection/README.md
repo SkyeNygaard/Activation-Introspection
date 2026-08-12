@@ -260,10 +260,37 @@ existing episode-remapped `Q/K` interface ask which hidden state was transplante
 A positive extends the result beyond planted directions; a null under a working
 patch bounds the current capability to the artificial interface.
 
-A first layer-9 marker pilot is implemented and stopped before reporting because
-the patch failed its ordinary-answer reachability gate. Its exact closure scope
-and reopen condition are in
-[`notes/09-natural-state-pilot.md`](notes/09-natural-state-pilot.md).
+Two pilots are implemented, and both stopped before reporting because the patch
+failed its ordinary-answer reachability gate. The first transplanted a two-hop
+route marker at layer 9 on a task the model solved only 8/10 times
+([`notes/09`](notes/09-natural-state-pilot.md)). The second removed both of those
+weaknesses — a perfectly solved arithmetic task, and the output-ready state at the
+position that produces the answer, screened at layers 9, 21 and 26 — and the
+answer still followed the donor in 0/5 tasks at every layer
+([`notes/10`](notes/10-output-ready-arithmetic.md)).
+
+A post-hoc all-layer localization on the development bank then found the site the
+anchors missed, and it is one block past the deepest of them. Through block 26
+the clean state does not favour its own answer over its twin's better than
+chance and the two twin states stay within a quarter of the residual norm of each
+other — there is nothing to transplant. From block 27 the same single-position
+transplant makes the donor's digit the full-vocabulary argmax in 10/10
+transplants at recovery 0.787, which would have passed the frozen gate outright.
+
+The lesson is about anchor placement, and the anchors were not chosen carelessly:
+layer 9 is where every reporting result here was measured, and 21 and 26 are what
+the Stage 1b screen selected. Where a *planted* direction is readable does not
+predict where a *computed* answer lives.
+
+A third run then froze block 27 as a disclosed post-hoc site, changed nothing
+else, and required it to pass the same gate on the never-scored held-out bank.
+Development reproduced at 5/5 and recovery 0.787; the held-out bank came in at
+**3/5** against a frozen 4/5, so the reporter did not run and no reselection is
+permitted. Eight of ten held-out transplants worked, which pooled with
+development is a per-transplant rate of 0.90 — high enough that the real defect
+is a five-task bank carrying a criterion that moves in 20% steps. Reporting
+claims stay bounded to injected directions until a protocol with a larger bank,
+or a multi-block column transplant, is frozen and run.
 
 ## Earlier exploratory sweep: no positive evidence under this instrument
 

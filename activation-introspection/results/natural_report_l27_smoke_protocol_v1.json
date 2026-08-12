@@ -1,0 +1,88 @@
+{
+  "analysis": "the certified pair is the unit; the exact order x mapping x query cells are nuisance marginalization. Report every pair and paired statistic.",
+  "certification_gate": {
+    "clean_full_vocab_answers_correct": "24/24",
+    "minimum_certified_pairs": 5,
+    "pair_certified_when": "both transplants make the donor's answer the full-vocabulary argmax",
+    "pair_selection": "the first 5 certified pairs in frozen bank order. NOT the largest effects: ranking by recovery would select on the manipulation's strength and is forbidden.",
+    "self_patch_max_abs_logit_error": 0.0001,
+    "stop": "fewer than five certified pairs, or any clean answer wrong: stop without reporting. Do not move the site, the bank, or the criterion."
+  },
+  "claim_boundary": "A positive is causal reportability of a transplanted output-ready state under one model, one post-hoc selected site, one interface, and five certified pairs. The site is a development selection, so this is a single-site demonstration rather than a blind confirmation. At block 27 the state already favours its own answer under a logit lens, so the property reported is close to the answer token: this is reporting of a state the model computed, not of a hidden intermediate. It is not privileged introspection, not free-form verbalization, and not population evidence.",
+  "competing_explanations": [
+    "the report reads the donor answer token's identity rather than its parity",
+    "the model follows visible label regularities rather than hidden states",
+    "the transplanted state is close to the answer token itself",
+    "a null reflects failure to induce the parity rule, not failure to read the state; the visible control separates these and gates the reading"
+  ],
+  "design": {
+    "bank": [
+      "7+1|2",
+      "5+3|4",
+      "3+1|2",
+      "2+4|5",
+      "1+3|4",
+      "6+0|1",
+      "8-2|1",
+      "8-4|3",
+      "6-4|5",
+      "5-5|4",
+      "9-1|2",
+      "7-7|6"
+    ],
+    "bank_provenance": "twelve fresh pairs, problems disjoint from both earlier banks",
+    "capture_site": "last pre-answer token of the clean arithmetic prompt",
+    "cells_per_fold": 4,
+    "device": "mps",
+    "dtype": "bfloat16",
+    "folds": "leave-one-out over the 5 certified pairs",
+    "hidden_class": {
+      "+1": "even answer",
+      "-1": "odd answer"
+    },
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "site": 27,
+    "site_provenance": "post-hoc, from the all-layer development localization in natural_state_arith_site_diagnostic_v1.json; not a blind choice",
+    "smoke": true
+  },
+  "disclosed_precursors": [
+    "natural_state_arith_smoke_protocol_v1: blind anchors 9/21/26, stopped at 0/5 tasks. A post-hoc development localization then placed the site at block 27.",
+    "natural_state_arith_l27_smoke_protocol_v1: block 27 named, development 5/5 at recovery 0.787, held-out bank 3/5 against a frozen 4/5. Stopped."
+  ],
+  "frozen_on": "2026-08-11",
+  "interpretation_gate": {
+    "role": "capability control, not a reporting gate. The same episodes with the arithmetic written out and nothing patched. A null counts as a reporting null only if this passes; otherwise the model cannot induce the parity rule at all and the result is an instrument failure.",
+    "visible_accuracy": 0.75
+  },
+  "question": "Can episode-remapped ICL classify the parity of a naturally computed arithmetic answer state, transplanted into a matched report prompt, when every donor state is independently certified to be causally load-bearing?",
+  "report_gates": {
+    "anti_grounded_inverse_accuracy": 0.75,
+    "natural_accuracy": 0.75,
+    "natural_format_rate": 0.9,
+    "natural_mean_label_mass": 0.5,
+    "natural_minus_query_only": 0.2,
+    "natural_query_twin_both_correct": 0.6,
+    "sham_matches_clean": "max Q/K log-probability difference <= 1e-4",
+    "stop": "report the frozen null; do not change site, bank, prompt, or gates",
+    "tasks_with_positive_difference": "at least 4/5",
+    "unchanged_from": "natural_state_arith_smoke_protocol_v1"
+  },
+  "schema_version": 1,
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_natural_report.py": "a25cad0ab724f996d069b456546faf07421c0330f25ccf73043e62ebf32984fe",
+    "scripts/run_natural_state.py": "347049290424fbffbe581f9f5ab536f58d13fdb1fc2970e7ab53844a854b1772",
+    "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/natural_state.py": "0ccd26dc8782d2454a1a27cbca400c7122008b7b60d39a0685be8a92cc07b258",
+    "src/introspect/preflight.py": "57df1d1d6df4fd5e4fbbc4e94afcf63faa1223dc8d9a27a202b14994162c7c65",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  },
+  "what_changed_and_why": "The gate's unit moves from the bank to the pair, after a failure, which is disclosed here rather than presented as a fresh design. The earlier gate passed a bank if at least 4 of 5 pairs transplanted in both directions; at the 0.90 per-transplant rate both earlier runs measured, that criterion fails about a quarter of the time on its own. It is replaced by certifying each pair individually and reporting only on certified pairs. This is not a weaker threshold: the old gate could pass a bank in which 2 of 10 transplants failed, whereas every donor used here has to control the ordinary answer in both directions. What the change buys is estimation, not permission."
+}

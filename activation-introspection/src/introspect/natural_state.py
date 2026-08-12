@@ -10,14 +10,12 @@ from typing import Any
 import torch
 from torch import Tensor
 
-from introspect.codebook_icl import Episode
 from introspect.models import LoadedModel
 
 POSITIVE_BRIDGE = "maple"
 NEGATIVE_BRIDGE = "cedar"
 BRIDGES = (POSITIVE_BRIDGE, NEGATIVE_BRIDGE)
 MARKER = "§"
-ANSWER_PREFIX = "Final:"
 
 
 @dataclass(frozen=True)
@@ -47,6 +45,8 @@ class RouteWorld:
         )
 
 
+#: Frozen stimuli of the stopped two-hop pilot (``notes/09``). The route marker
+#: was not causally load-bearing; these are kept as that artifact's record.
 ROUTE_WORLDS = (
     RouteWorld("sable", "amber", "violet"),
     RouteWorld("lantern", "tiger", "piano"),
@@ -62,18 +62,97 @@ def route_bridge(sign: int) -> str:
     return POSITIVE_BRIDGE if sign == 1 else NEGATIVE_BRIDGE
 
 
-def leave_one_world_assignment(
-    episode: Episode, query_world: RouteWorld
-) -> tuple[tuple[RouteWorld, str], ...]:
-    """Assign four demo worlds and the held-out query to an episode's route signs."""
-    if query_world not in ROUTE_WORLDS:
-        raise ValueError("query world must be one of ROUTE_WORLDS")
-    demo_worlds = tuple(world for world in ROUTE_WORLDS if world != query_world)
-    demos = tuple(
-        (world, route_bridge(sign))
-        for world, sign in zip(demo_worlds, episode.demo_signs, strict=True)
-    )
-    return (*demos, (query_world, route_bridge(episode.query_sign)))
+ARITH_INSTRUCTION = "Compute the result. Reply with a single digit."
+
+
+@dataclass(frozen=True)
+class ArithTask:
+    """Twin single-digit problems whose answers differ, and differ in parity.
+
+    The transplanted state is the residual at the last pre-answer token, which
+    the model computed while solving the problem itself. That state is
+    output-ready rather than a hidden intermediate, which is the point: the
+    two-hop marker it replaces was not causally reachable at all.
+
+    ``sign`` is the hidden class throughout: ``+1`` is an even answer, ``-1`` odd.
+    """
+
+    left: int
+    op: str
+    even_right: int
+    odd_right: int
+
+    def __post_init__(self) -> None:
+        if self.op not in {"+", "-"}:
+            raise ValueError("op must be + or -")
+        if self.even_right == self.odd_right:
+            raise ValueError("the twin problems must differ")
+        for sign, parity in ((1, 0), (-1, 1)):
+            answer = self.answer(sign)
+            if not 0 <= answer <= 9:
+                raise ValueError(f"{self.problem(sign)!r} must have a single-digit answer")
+            if answer % 2 != parity:
+                raise ValueError(f"{self.problem(sign)!r} has the wrong parity for sign {sign:+d}")
+
+    @property
+    def name(self) -> str:
+        return f"{self.left}{self.op}{self.even_right}|{self.odd_right}"
+
+    def right(self, sign: int) -> int:
+        if sign not in {-1, 1}:
+            raise ValueError("parity sign must be -1 or +1")
+        return self.even_right if sign == 1 else self.odd_right
+
+    def answer(self, sign: int) -> int:
+        right = self.right(sign)
+        return self.left + right if self.op == "+" else self.left - right
+
+    def problem(self, sign: int) -> str:
+        return f"{self.left} {self.op} {self.right(sign)}"
+
+    def render_user(self, sign: int) -> str:
+        return f"{ARITH_INSTRUCTION}\n{self.problem(sign)}"
+
+
+#: Development bank: selects the anchor layer, and is never reported on.
+ARITH_DEV = (
+    ArithTask(4, "+", 4, 5),  # 8 / 9
+    ArithTask(3, "+", 3, 4),  # 6 / 7
+    ArithTask(2, "+", 2, 3),  # 4 / 5
+    ArithTask(1, "+", 1, 2),  # 2 / 3
+    ArithTask(9, "-", 9, 8),  # 0 / 1
+)
+
+#: Held-out bank: the reporter's donors. Disjoint problems, same ten answers.
+#: Spent on 2026-08-11 — scored by the block-27 confirmation, so it can no longer
+#: serve as a held-out bank.
+ARITH_TEST = (
+    ArithTask(6, "+", 2, 3),  # 8 / 9
+    ArithTask(5, "+", 1, 2),  # 6 / 7
+    ArithTask(7, "-", 3, 2),  # 4 / 5
+    ArithTask(9, "-", 7, 6),  # 2 / 3
+    ArithTask(4, "-", 4, 3),  # 0 / 1
+)
+
+#: Third bank, twelve pairs, problems disjoint from both banks above. Sized so
+#: that certifying each donor's transplant individually leaves five certified
+#: pairs to report on with room to spare: at the 0.90 per-transplant rate the two
+#: earlier runs measured, a pair certifies with probability 0.81, and twelve
+#: pairs yield at least five with probability above 0.999.
+ARITH_CONFIRM = (
+    ArithTask(7, "+", 1, 2),  # 8 / 9
+    ArithTask(5, "+", 3, 4),  # 8 / 9
+    ArithTask(3, "+", 1, 2),  # 4 / 5
+    ArithTask(2, "+", 4, 5),  # 6 / 7
+    ArithTask(1, "+", 3, 4),  # 4 / 5
+    ArithTask(6, "+", 0, 1),  # 6 / 7
+    ArithTask(8, "-", 2, 1),  # 6 / 7
+    ArithTask(8, "-", 4, 3),  # 4 / 5
+    ArithTask(6, "-", 4, 5),  # 2 / 1
+    ArithTask(5, "-", 5, 4),  # 0 / 1
+    ArithTask(9, "-", 1, 2),  # 8 / 7
+    ArithTask(7, "-", 7, 6),  # 0 / 1
+)
 
 
 def unique_substring_token_position(tokenizer: Any, text: str, substring: str) -> int:

@@ -1,0 +1,26 @@
+{
+  "dev_layer_screen": {
+    "27": {
+      "bank": "dev",
+      "bidirectional_cross_patch_tasks": 5,
+      "clean_full_vocab_answers_correct": true,
+      "layer": 27,
+      "mean_normalized_log_odds_recovery": 0.7872947075601503,
+      "passed": true,
+      "self_patch_max_abs_logit_error": 0.0
+    }
+  },
+  "report": null,
+  "schema_version": 2,
+  "selected_layer": 27,
+  "status": "stop_test_bank_not_reachable",
+  "test_bank_reachability": {
+    "bank": "test",
+    "bidirectional_cross_patch_tasks": 3,
+    "clean_full_vocab_answers_correct": true,
+    "layer": 27,
+    "mean_normalized_log_odds_recovery": 0.6969415521737762,
+    "passed": false,
+    "self_patch_max_abs_logit_error": 0.0
+  }
+}

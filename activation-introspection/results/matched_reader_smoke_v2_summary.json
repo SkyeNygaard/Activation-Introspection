@@ -1,0 +1,28 @@
+{
+  "by_concept": {
+    "garden": {
+      "model": 1.0,
+      "reader": 1.0
+    }
+  },
+  "gates": {
+    "reproduces_frozen_confirmation": false,
+    "shuffled_label_reader_at_chance": false
+  },
+  "model_format_rate": 1.0,
+  "model_minus_reader": 0.0,
+  "model_target_accuracy": 1.0,
+  "n_episodes": 6,
+  "paired_counts": {
+    "both_correct": 6,
+    "model_only": 0,
+    "neither": 0,
+    "reader_only": 0
+  },
+  "reader_accuracy": {
+    "centroid_cosine": 1.0,
+    "centroid_euclidean": 1.0,
+    "shuffled_labels": 1.0
+  },
+  "verdict": "void_did_not_reproduce"
+}

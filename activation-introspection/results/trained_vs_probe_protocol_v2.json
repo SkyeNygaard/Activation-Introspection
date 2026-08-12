@@ -1,0 +1,95 @@
+{
+  "comparator": {
+    "adapter_mean_twin_pair": 0.927,
+    "adapter_seed_range": [
+      0.833,
+      1.0
+    ],
+    "note": "four seeds give a mean and a range, not an interval; a reader inside the range is not distinguishable from the adapter by this evidence"
+  },
+  "design": {
+    "centering_concepts": [
+      "ocean",
+      "bread",
+      "volcano",
+      "violin",
+      "spider",
+      "hospital",
+      "desert",
+      "clock"
+    ],
+    "eval_carriers": [
+      "A neutral status note is displayed. Hidden state marker: \u00a7",
+      "Nothing changed. Hidden state marker: \u00a7",
+      "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: \u00a7"
+    ],
+    "eval_concepts": [
+      "garden",
+      "camera",
+      "train",
+      "banana",
+      "eagle",
+      "library",
+      "hammer",
+      "island"
+    ],
+    "evaluation": "8 eval concepts x 3 eval carriers x 2 signs = 24 twin pairs, the adapter's own evaluation bank",
+    "layer": 9,
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "reader_training_data": "the residual at the marker position under the same sign intervention the adapter trained on: 8 train concepts x 6 train carriers x 2 signs",
+    "readers": [
+      "centroid",
+      "logistic",
+      "oracle_direction",
+      "shuffled_labels"
+    ],
+    "strength": 1.0,
+    "train_carriers": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "A standard archive entry is visible. Hidden state marker: \u00a7",
+      "The shift log has been signed off. Hidden state marker: \u00a7",
+      "An inventory count is pending review. Hidden state marker: \u00a7",
+      "The duty roster is posted on the wall. Hidden state marker: \u00a7",
+      "A blank requisition sits in the tray. Hidden state marker: \u00a7"
+    ],
+    "train_concepts": [
+      "guitar",
+      "harbor",
+      "lantern",
+      "meadow",
+      "satellite",
+      "teapot",
+      "tunnel",
+      "whale"
+    ],
+    "unit": "twin pair; a cell counts only if both signs are read correctly"
+  },
+  "frozen_on": "2026-08-11",
+  "oracle_role": "upper bound only, never a gate. It is told the held-out direction, which no fair third party has, and exists to bracket the adapter.",
+  "prereg_fork": {
+    "probe_at_or_above_adapter_mean": "introspection training does not exceed reading the same states. The 0.927 is then probe-equivalent at best, and the training result must be described as distillation of an available linear signal rather than as taught introspection.",
+    "probe_below_adapter_range": "the trained model generalizes the sign-reading operation to unseen directions in a way a matched linear reader does not. That would be the first result in this repository to survive the equal-or-lower-cost criterion, and it must then be checked against the oracle upper bound before any privileged-access language is used.",
+    "probe_inside_adapter_range": "report as indistinguishable. Do not call it a win for either side."
+  },
+  "question": "Does the trained activation reporter exceed a probe fitted on the same states it trained on, when both are asked about held-out concept directions?",
+  "sanity_gate": {
+    "disclosed_change": "v1 gated on twin-pair accuracy at 0.30. That is miscalibrated: the twin-pair null is 0.25 with SD 0.088 over 24 pairs, so a threshold of 0.30 sits 0.57 SD above the null and fails about a quarter of the time on a perfectly good control. The smoke tripped it at 3/6 pairs, which prompted re-deriving the null rather than accepting the verdict. The statistic moved to the better-powered one before any confirmatory run; twin-pair for the control is still reported, descriptively.",
+    "rule": "a probe fitted on permuted training signs must not read the held-out bank. The gate is on ROW accuracy, over 48 rows, where the coin-flip null is 0.500 with SD 0.072, so the band is about +/- 2 SD.",
+    "shuffled_labels_row_accuracy_band": [
+      0.35,
+      0.65
+    ]
+  },
+  "schema_version": 1,
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_trained_vs_probe.py": "8bd3abeb9b3624057136bddcb06fb6c337779fbc7928be36127e8915f2c24780",
+    "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/report_training.py": "f5286ccba8a03a4fcb0c92e33662b634c434c8f1475d6859e4413f5dd762c56e",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  },
+  "why_this_is_not_a_repeat_of_notes_11": "In notes/11 the reader saw four labelled demonstrations of the same direction it was queried on, and won at 1.000. Here every reader must transfer to eight directions it has never seen, from a bank built to be far from collinear. A linear reader has no guarantee of transferring, so the direction of this result is genuinely open."
+}

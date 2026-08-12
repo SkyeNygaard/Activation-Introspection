@@ -1,0 +1,156 @@
+{
+  "agent_harness": {
+    "cli": "codex-cli 0.146.0",
+    "effective_reasoning": "low",
+    "fallback": null,
+    "flags": "--ignore-user-config --ignore-rules --ephemeral --sandbox read-only",
+    "model": "gpt-5.6-luna",
+    "requested_reasoning": "minimal (rejected as unsupported)",
+    "runner": "codex exec",
+    "system_prompt": "stock Codex system prompt; not exposed by the CLI",
+    "user_prompt_prefix": "Act as a hostile experimental-design reviewer. We have Qwen2.5-3B, residual-stream capture/replacement hooks, and an existing four-shot episode-remapped Q/K benchmark with byte-identical visible observations. We want the cheapest inference-only pilot testing whether the model can report which of two naturally computed hidden states was activation-patched into identical report prompts. Propose exactly one minimal donor task and patch/readout schedule. Require: (1) a causal reachability positive control showing the donor state affects ordinary behavior, (2) a sham or irrelevant-donor control, (3) unrestricted next-token format scoring, (4) disjoint DEV selection and a frozen test, and (5) an explicit kill rule. Identify the strongest alternative explanation that would remain after a positive. Keep the answer under 350 words and do not use tools."
+  },
+  "analysis": "task is the unit; the exact order x mapping x query cells are nuisance marginalization. Report every task and paired statistic.",
+  "claim_boundary": "A positive is causal reportability of a transplanted output-ready state under one model, one selected layer, and one interface. It is deliberately narrower than reporting a hidden intermediate: the donor state is the one the model was about to act on. It is not privileged introspection, natural free-form verbalization, or population evidence. The site is a post-hoc development selection, so a positive is a single-site demonstration rather than a blind confirmation, and the state at this depth already favours its own answer under a logit lens.",
+  "competing_explanations": [
+    "the report reads the donor answer token's identity rather than its parity",
+    "the ordinary answer is not causally reachable from the patched position",
+    "the model follows visible label regularities rather than hidden states",
+    "a null reflects failure to induce the parity rule, not failure to read the state; the visible control exists to separate these and gates the reading",
+    "the transplanted state is close to the answer token itself, so a positive shows reporting of an output-ready state and not of a hidden intermediate"
+  ],
+  "design": {
+    "anchor_layers": [
+      27
+    ],
+    "answer_prefix": "Answer: ",
+    "capture_site": "last pre-answer token of the clean arithmetic prompt",
+    "cells_per_fold": 4,
+    "conditions": [
+      "clean",
+      "sham",
+      "query_only",
+      "natural",
+      "anti_grounded",
+      "visible"
+    ],
+    "dev_tasks": [
+      {
+        "even_right": 4,
+        "left": 4,
+        "odd_right": 5,
+        "op": "+"
+      },
+      {
+        "even_right": 3,
+        "left": 3,
+        "odd_right": 4,
+        "op": "+"
+      },
+      {
+        "even_right": 2,
+        "left": 2,
+        "odd_right": 3,
+        "op": "+"
+      },
+      {
+        "even_right": 1,
+        "left": 1,
+        "odd_right": 2,
+        "op": "+"
+      },
+      {
+        "even_right": 9,
+        "left": 9,
+        "odd_right": 8,
+        "op": "-"
+      }
+    ],
+    "device": "mps",
+    "dtype": "bfloat16",
+    "folds": "five leave-one-task-out folds over the held-out bank",
+    "hidden_class": {
+      "+1": "even answer",
+      "-1": "odd answer"
+    },
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "layer_selection": "block 27, selected post-hoc from the development-bank localization in natural_state_arith_site_diagnostic_v1.json. It is re-confirmed on the development bank here and must independently pass the same gate on the held-out bank before any reporting row runs. No other layer is tested, and no reselection is permitted if it fails.",
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "smoke": true,
+    "test_tasks": [
+      {
+        "even_right": 2,
+        "left": 6,
+        "odd_right": 3,
+        "op": "+"
+      },
+      {
+        "even_right": 1,
+        "left": 5,
+        "odd_right": 2,
+        "op": "+"
+      },
+      {
+        "even_right": 3,
+        "left": 7,
+        "odd_right": 2,
+        "op": "-"
+      },
+      {
+        "even_right": 7,
+        "left": 9,
+        "odd_right": 6,
+        "op": "-"
+      },
+      {
+        "even_right": 4,
+        "left": 4,
+        "odd_right": 3,
+        "op": "-"
+      }
+    ],
+    "visible_sample": "A neutral status note is displayed. Hidden state marker: \u00a7"
+  },
+  "disclosed_precursor": "natural_state_arith_smoke_protocol_v1 screened blind anchors 9, 21 and 26 with these exact stimuli and gates, and stopped: cross-patching controlled 0/5 tasks at every anchor. A post-hoc all-layer localization on the development bank (natural_state_arith_site_diagnostic_v1.json) then showed the pre-answer state does not carry the answer below block 27 and controls it in 10/10 transplants from block 27. THE SITE BELOW IS THAT POST-HOC SELECTION, NOT A BLIND ONE. Nothing else changes: the same stimuli, banks, conditions, gates and stop rule. The held-out bank has never been scored, in that run or the diagnostic.",
+  "frozen_on": "2026-08-11",
+  "interpretation_gate": {
+    "role": "capability control, not a reporting gate. The same episodes with the arithmetic problems written out and no patching. A natural-state null is a reporting null only if this passes; otherwise it is a failure to induce the parity rule and the pilot reports an instrument failure.",
+    "visible_accuracy": 0.75
+  },
+  "question": "Can episode-remapped ICL classify the parity of a naturally computed, causally load-bearing arithmetic answer state transplanted into a matched report prompt?",
+  "reachability_gate": {
+    "applies_to": "each anchor layer on DEV, then the selected layer on the test bank",
+    "bidirectional_cross_patch_tasks": "at least 4/5",
+    "clean_full_vocab_answers_correct": "10/10",
+    "mean_normalized_log_odds_recovery": 0.5,
+    "recovery_estimand": "(patched_margin - recipient_clean_margin) / (donor_clean_margin - recipient_clean_margin); fail if abs(denominator) <= 1e-6",
+    "self_patch_max_abs_logit_error": 0.0001,
+    "stop": "no anchor passes on DEV: close the single-position natural-state transplant family. Selected layer fails on the test bank: stop without reporting rather than reselecting."
+  },
+  "report_gates": {
+    "anti_grounded_inverse_accuracy": 0.75,
+    "natural_accuracy": 0.75,
+    "natural_format_rate": 0.9,
+    "natural_mean_label_mass": 0.5,
+    "natural_minus_query_only": 0.2,
+    "natural_query_twin_both_correct": 0.6,
+    "sham_matches_clean": "max Q/K log-probability difference <= 1e-4",
+    "stop": "report the frozen null; do not change layer, tasks, prompt, or gates",
+    "tasks_with_positive_difference": "at least 4/5"
+  },
+  "schema_version": 2,
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_natural_state.py": "347049290424fbffbe581f9f5ab536f58d13fdb1fc2970e7ab53844a854b1772",
+    "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "src/introspect/natural_state.py": "5de9386e0331b7a5968493b5ec66ab9d5a76c912b214985feca77ff9c27234cb",
+    "src/introspect/preflight.py": "57df1d1d6df4fd5e4fbbc4e94afcf63faa1223dc8d9a27a202b14994162c7c65",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  }
+}

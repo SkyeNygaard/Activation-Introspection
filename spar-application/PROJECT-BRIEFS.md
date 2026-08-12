@@ -109,13 +109,44 @@ workspace variables and ask whether the learned verbalizer transfers. Keep the
 symmetric aligned-source experiment as the privileged-access test; do not make it
 the first expensive run.
 
-A first inference-only feasibility attempt now closes one narrow instrument: an
-exact transplant at the route marker after layer 9 did not make the ordinary
-two-hop answer follow the donor bidirectionally in any of five worlds, so the
-frozen stop rule prevented the reporter from running. This is not a natural-state
-reporting null. It means site localization has to pass on disjoint development
-tasks before a fresh report bank is exposed; see
-[`notes/09`](../activation-introspection/notes/09-natural-state-pilot.md).
+Two inference-only feasibility attempts now close one narrow instrument. An exact
+transplant at the route marker after layer 9 did not make the ordinary two-hop
+answer follow the donor bidirectionally in any of five worlds
+([`notes/09`](../activation-introspection/notes/09-natural-state-pilot.md)). Its
+successor removed the two obvious explanations — it used a task the model solves
+10/10 at probability 1.000, transplanted the output-ready state at the position
+that produces the answer, and screened three prospectively named layers — and
+recovery was +0.001, −0.003 and +0.100 against a frozen 0.5 threshold, with 0/5
+tasks controlled at every layer
+([`notes/10`](../activation-introspection/notes/10-output-ready-arithmetic.md)).
+
+Neither is a natural-state reporting null: the frozen stop rule prevented the
+reporter from running both times. A post-hoc development-bank localization over
+all 36 blocks then found why. Through block 26 the pre-answer state does not
+favour its own answer over its twin's better than chance under a logit lens, and
+the twin states differ by under a quarter of the residual norm — there is nothing
+to transplant. From **block 27** the identical intervention makes the donor's
+digit the full-vocabulary argmax in 10/10 transplants at recovery 0.787, which
+clears the frozen gate outright. The anchors, drawn from the layers where
+*planted* directions are readable, sat one block below where the *computed*
+answer appears.
+
+A third run froze block 27 as a disclosed post-hoc site, changed nothing else, and
+required it to pass the same gate on the never-scored held-out bank. Development
+reproduced at 5/5 and recovery 0.787. The held-out bank returned **3/5** against
+a frozen 4/5, so the reporter did not run and the protocol forbids reselecting a
+layer. Eight of ten held-out transplants worked; pooled with development that is
+a per-transplant rate of 0.90, at which a five-task "4/5 in both directions"
+criterion fails about a quarter of the time by itself. The binding defect is
+therefore bank size, not the site.
+
+Gate 3 — a causally reachable natural state — is not cleared, and the path to it
+is now specific rather than open-ended: ten or twenty twin pairs instead of five
+so the gate measures a rate instead of quantising it, and a donor column across
+blocks 27–33 at the one token instead of a single block, since recovery plateaus
+at 0.78–0.80 there in a way that a partially re-asserted computation would
+produce. Both need a fresh protocol and a third bank; the two existing banks are
+spent.
 
 **Controls, inference, reproducibility.** Transient intervention removed before a
 fresh arbitrary codebook is revealed; carrier-only cache and forced identical
@@ -265,9 +296,21 @@ The pilot also exposed why this distinction is hard in the first place: a probe
 measured at one causal site was compared against behavior at another, and the
 resulting headline had to be retracted.
 
-**Gap.** Nothing here separates introspective self-report from generic
-state-conditioned computation. A classifier handed the same retained state would
-plausibly do as well, and that control has not been run. The study is also a
+**Gap, now closed — and the answer is negative.** That control has been run. On
+the identical 576 episodes behind the 0.891, a four-shot nearest-centroid reader
+given the same five post-injection residual states scores **1.000** while the
+model scores 0.892, with **62 reader-only episodes and zero model-only episodes**.
+Under the field's operative criterion ([arXiv 2508.14802](https://arxiv.org/abs/2508.14802))
+there is no privileged access at this site: the model reads its own state worse
+than an outsider does. The structural contribution of the design survives — an
+input-only learner is still pinned at exactly 0.500 by construction — but the
+introspection reading of the number does not. See
+[notes/11](../activation-introspection/notes/11-matched-cost-reader.md).
+
+This is the result that most directly serves this project, because it is the
+project's own question answered with a measurement rather than an argument, and
+because the 62 failures localize the interesting phenomenon: information linearly
+present in the residual stream that the model itself does not use. The study is also a
 replication of a published effect, and covers one model family.
 
 **Smallest authentic experiment.** [Study 1](EXPERIMENTS.md#study-1-causal-use-of-a-retained-activation-trace-executed-2026-08-01)

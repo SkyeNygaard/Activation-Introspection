@@ -1,0 +1,79 @@
+{
+  "certified_pairs": [
+    "2+4|5",
+    "1+3|4",
+    "6+0|1",
+    "8-2|1",
+    "8-4|3",
+    "6-4|5",
+    "5-5|4",
+    "9-1|2",
+    "7-7|6"
+  ],
+  "clean_full_vocab_answers_correct": true,
+  "n_certified": 9,
+  "report": {
+    "all_gates_pass": false,
+    "gates": {
+      "anti_grounded_inverse_accuracy": false,
+      "natural_accuracy": false,
+      "natural_format_rate": true,
+      "natural_mean_label_mass": true,
+      "natural_minus_query_only": false,
+      "natural_query_twin_both_correct": false,
+      "sham_matches_clean": true,
+      "tasks_with_positive_difference": false
+    },
+    "metrics": {
+      "anti_grounded_inverse_accuracy": 0.5,
+      "by_task": {
+        "1+3|4": {
+          "natural_accuracy": 0.5,
+          "query_only_accuracy": 0.5,
+          "visible_accuracy": 0.5
+        },
+        "2+4|5": {
+          "natural_accuracy": 0.5,
+          "query_only_accuracy": 0.5,
+          "visible_accuracy": 0.5
+        },
+        "6+0|1": {
+          "natural_accuracy": 0.5,
+          "query_only_accuracy": 0.5,
+          "visible_accuracy": 0.5833333333333334
+        },
+        "8-2|1": {
+          "natural_accuracy": 0.5,
+          "query_only_accuracy": 0.5,
+          "visible_accuracy": 0.5416666666666666
+        },
+        "8-4|3": {
+          "natural_accuracy": 0.5,
+          "query_only_accuracy": 0.5,
+          "visible_accuracy": 0.5416666666666666
+        }
+      },
+      "natural_accuracy": 0.5,
+      "natural_format_rate": 1.0,
+      "natural_mapping_flip_both_correct": 0.5,
+      "natural_mean_label_mass": 0.9998115316033364,
+      "natural_minus_query_only": 0.0,
+      "natural_query_twin_both_correct": 0.0,
+      "query_only_accuracy": 0.5,
+      "sham_clean_max_label_logprob_difference": 0.0,
+      "tasks_with_positive_difference": 0,
+      "visible_accuracy": 0.5333333333333333
+    },
+    "visible_capability_passed": false
+  },
+  "reported_pairs": [
+    "2+4|5",
+    "1+3|4",
+    "6+0|1",
+    "8-2|1",
+    "8-4|3"
+  ],
+  "schema_version": 1,
+  "site": 27,
+  "status": "report_null_uninterpretable"
+}

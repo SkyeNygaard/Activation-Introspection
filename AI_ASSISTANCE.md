@@ -34,6 +34,65 @@ The resulting screen uses one development concept and one carrier and is labeled
 selection-only throughout. Agent agreement is internal review, not independent
 human validation, and no agent wrote application-form answers.
 
+### Matched-cost third-party reader, 2026-08-11
+
+An agent proposed, pre-registered and ran the control that refutes the
+introspection reading of this repository's headline number. The pre-registered
+interpretation was written before the run and says in the artifact that the
+expected direction is unflattering to the headline, specifically so the negative
+could not be reframed afterwards. It was negative, and by a complete dominance
+relation.
+
+Two of the agent's own implementation defects are on the record because it caught
+both: a crash in per-concept aggregation that voided the first frozen protocol,
+and a shuffled-label control that scored a perfect 1.000 in smoke because the
+permutation seed only varied within a carrier. The second is the more instructive
+— an agent less inclined to look would have read 1.000 as a working control. A
+wrong probability calculation inside the frozen protocol is also corrected in the
+note rather than left standing.
+
+### Output-ready natural-state transplant, 2026-08-11
+
+An agent designed and ran the successor to the stopped route pilot: it chose the
+arithmetic twin stimuli and the parity class, moved the capture site to the last
+pre-answer token, added the three-anchor layer screen with a frozen
+earliest-passing selection rule, wrote the disjoint held-out bank, the visible
+capability control, the tests, and this note, and executed the local run.
+
+Two decisions belong on the record because they cut against a positive. The
+tokenizer check that set the answer format was run before the model was loaded,
+and it found that Qwen2 splits a leading space from a digit, so the first
+plausible prompt would have scored a space token rather than an answer. And the
+frozen stop rule was allowed to fire: the screen failed at all three anchors, no
+reporting row ran, and the null was written up rather than rescued by extending
+the layer list. The all-layer localization that follows the frozen result is
+labelled post-hoc, is development-bank only, and carries no reporting claim; the
+agent proposed running it and the reasons are stated in the note rather than left
+implicit.
+
+That diagnostic found the site one block past the deepest anchor, which makes the
+labelling load-bearing rather than decorative. An agent that had chosen block 27
+after seeing this and then run the reporter would have produced a number that
+looks pre-registered and is not. Instead the agent froze a third protocol naming
+block 27 as an explicitly post-hoc site, changed nothing else, and required it to
+pass the same gate on the never-scored held-out bank first. It did not — 5/5 on
+development, 3/5 held out — so the reporter still has not run, and the note says
+so rather than reselecting a layer.
+
+The post-mortem in that note argues the five-task bank was too small for the gate
+it carried. That argument was made after seeing the failure, is labelled as such,
+and does not convert the stop into a pass. Some prose written before the
+diagnostic returned claimed the transplant fails everywhere tested; that was
+corrected in the same session, and the corrected documents are what is committed.
+
+The agent also noticed, while waiting for the GPU, that the memory preflight's
+competing-run detector only matches scripts named `run_*.py` and had missed a
+live model job with another name. That gap was flagged rather than silently
+patched, because the preflight's hash is recorded in the protocol just frozen.
+
+Agent agreement remains internal review, not independent human validation. No
+agent wrote SPAR application-form answers.
+
 ### Sparse programmatic-attention lowering, 2026-08-10
 
 Agents inspected the released programmatic-attention implementation and proposed

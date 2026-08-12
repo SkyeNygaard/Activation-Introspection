@@ -1,0 +1,70 @@
+{
+  "criterion": "arXiv 2508.14802: introspection requires being more reliable than a process of equal or lower computational cost available to a third party. The reader here is strictly lower cost: O(n*d) arithmetic on five 2048-vectors against 27 remaining transformer blocks.",
+  "design": {
+    "centering": "DEV-concept mean subtracted, exactly as the frozen confirmation",
+    "concepts": [
+      "garden",
+      "camera",
+      "train",
+      "banana",
+      "eagle",
+      "library",
+      "hammer",
+      "island"
+    ],
+    "labels": [
+      "Q",
+      "K"
+    ],
+    "layer": 9,
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "reader_information": "the five residual states captured at the injection site in the same forward pass that scored the model, plus the four demonstration labels",
+    "readers": [
+      "centroid_euclidean",
+      "centroid_cosine",
+      "shuffled_labels"
+    ],
+    "strength": 1.0,
+    "unit": "episode; paired model-versus-reader on identical episodes",
+    "visible_samples": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: \u00a7",
+      "Nothing changed. Hidden state marker: \u00a7"
+    ]
+  },
+  "frozen_on": "2026-08-11",
+  "known_asymmetries": [
+    "the model must also parse the prompt, apply the episode's remapped label convention, and emit a correctly formatted token; the reader does none of these and is scored only on the state-to-label decision",
+    "the reader sees the post-injection state directly, which is the access a third party is stipulated to have under the criterion, not an unfair extra",
+    "a reader this cheap cannot be beaten by making it richer, so a model win would need the opposite check: that richer readers do not close the gap"
+  ],
+  "prereg_interpretation": {
+    "model_above_reader": "the model extracts something the cheapest matched reader does not. Report the paired margin; do not call it privileged access without also ruling out that a slightly richer reader closes the gap.",
+    "note": "written before the run precisely because the expected direction is unflattering to the headline number",
+    "reader_at_or_above_model": "no privileged access at this site under the stated criterion. The 0.891 is evidence that a causally injected hidden state is usable as an in-context channel, NOT that the model reads it better than an outside reader can. This is the expected outcome and is not a failed run."
+  },
+  "question": "On the episodes that produced 0.891, does the model's in-context report exceed a four-shot reader given the same five residual states at the same site?",
+  "reader_sanity_gate": {
+    "rule": "permuting the four demonstration labels must collapse the reader to chance; otherwise the reader is exploiting something other than the labelled states",
+    "shuffled_labels_accuracy_band": [
+      0.35,
+      0.65
+    ]
+  },
+  "reproduction_gate": {
+    "frozen_target_accuracy": 0.891,
+    "rule": "the re-scored target arm must land within tolerance of the frozen confirmation, or this is not the same experiment and the comparison is void",
+    "tolerance": 0.05
+  },
+  "schema_version": 1,
+  "source_files_sha256": {
+    "pyproject.toml": "915ece7290f107690abd34cccfe7feb7e63e48047d18c31ca607bf3e860027cf",
+    "scripts/run_matched_reader.py": "1fd0af400a659ede3ee2ca2c81ca821e59c9757124dbd8af093b034cba78960b",
+    "src/introspect/codebook_icl.py": "f77ecbdd2b53a3ad65a66e213a11acfb86bab9dc1ad901a30c9a67ef35cafcae",
+    "src/introspect/concepts.py": "64c2bba6ec704fa1b900b84d979d8faa15679054fe10bff74e4fa806cfc9a749",
+    "src/introspect/hooks.py": "7b7d1195670b195a5c1ad1f37a224ffeac93b95a7c80300d65bd3b80d3385139",
+    "src/introspect/models.py": "ab2b6aedc9c39b865e09f833a8eb50904cd60392fa8b61ba8eb3233ab30429d0",
+    "uv.lock": "4a63b11e7e62b76d3a0e766c06e5a0d8ac624d5230c96de2b2ca76c4a3d459fb"
+  }
+}

@@ -32,7 +32,16 @@ import re
 import subprocess
 
 #: Peak driver memory in GiB, from measurements on this machine at bfloat16.
-_PEAK_GIB = {"qwen-0.5b": 2.03, "qwen-1.5b": 3.99, "qwen-3b": 6.91, "qwen-7b": 14.3}
+#: qwen3-4b is the one entry not measured directly -- it is the ``1.10 + 1.88 *
+#: params_B`` fit evaluated at 4.02B. Replace it with a measured peak once a 4B
+#: run has completed.
+_PEAK_GIB = {
+    "qwen-0.5b": 2.03,
+    "qwen-1.5b": 3.99,
+    "qwen-3b": 6.91,
+    "qwen3-4b": 8.66,
+    "qwen-7b": 14.3,
+}
 
 #: LoRA parameters, Adam moments and stored activations roughly double the
 #: forward-only peak. Measured 7.2 GiB peak for a 3B training run against a
