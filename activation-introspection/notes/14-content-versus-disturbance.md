@@ -115,6 +115,14 @@ it needs a proper search against the as-built design before any novelty claim.
 
 # Result: it is content, and the disturbance account does not explain it
 
+> **Bounded by [`23`](23-held-out-semantic-generalization.md).** The result below
+> stands: two concepts are discriminated far better than two random directions.
+> But the same two vectors appear in the demonstrations and the query here, and
+> `23` showed that is what carries it. Hold the exemplars fixed and move only the
+> query vector out of the demonstrations and the model drops from 0.521 to 0.083
+> on twin pairs while a four-shot reader holds at 0.986. Read "content" below as
+> **prototype matching on a vector already shown**, not as semantic abstraction.
+
 Run **2026-08-12**. 1224 episodes, 379 seconds. Artifacts:
 `results/content_vs_disturbance_v1_raw.jsonl`,
 `results/content_vs_disturbance_v1_summary.json`. Runner:

@@ -1,0 +1,150 @@
+{
+  "candidates": {
+    "birds_buildings": {
+      "exemplars": {
+        "a": [
+          "robin",
+          "sparrow",
+          "falcon",
+          "pigeon",
+          "heron",
+          "magpie",
+          "penguin",
+          "owl"
+        ],
+        "b": [
+          "cathedral",
+          "museum",
+          "warehouse",
+          "stadium",
+          "cottage",
+          "factory",
+          "castle",
+          "temple"
+        ]
+      },
+      "loo_centroid": 1.0,
+      "passes": true,
+      "scrambled_null_mean": 0.500109375,
+      "scrambled_null_p99": 0.7041666666666667,
+      "separation": 0.1336900990302508
+    },
+    "body_weather": {
+      "exemplars": {
+        "a": [
+          "elbow",
+          "thumb",
+          "ankle",
+          "shoulder",
+          "wrist",
+          "knee",
+          "spine",
+          "jaw"
+        ],
+        "b": [
+          "thunder",
+          "drizzle",
+          "blizzard",
+          "breeze",
+          "fog",
+          "hail",
+          "monsoon",
+          "frost"
+        ]
+      },
+      "loo_centroid": 0.9885416666666667,
+      "passes": true,
+      "scrambled_null_mean": 0.506703125,
+      "scrambled_null_p99": 0.746875,
+      "separation": 0.14793633992875194
+    },
+    "fruit_tools": {
+      "exemplars": {
+        "a": [
+          "apple",
+          "cherry",
+          "melon",
+          "grape",
+          "peach",
+          "plum",
+          "mango",
+          "lemon"
+        ],
+        "b": [
+          "wrench",
+          "chisel",
+          "drill",
+          "saw",
+          "pliers",
+          "mallet",
+          "screwdriver",
+          "axe"
+        ]
+      },
+      "loo_centroid": 0.9645833333333333,
+      "passes": true,
+      "scrambled_null_mean": 0.5044479166666667,
+      "scrambled_null_p99": 0.68125,
+      "separation": 0.1509323821602655
+    },
+    "mammals_vehicles": {
+      "exemplars": {
+        "a": [
+          "rabbit",
+          "otter",
+          "badger",
+          "squirrel",
+          "wolf",
+          "deer",
+          "bear",
+          "fox"
+        ],
+        "b": [
+          "tractor",
+          "ferry",
+          "glider",
+          "scooter",
+          "truck",
+          "submarine",
+          "helicopter",
+          "bicycle"
+        ]
+      },
+      "loo_centroid": 0.93125,
+      "passes": true,
+      "scrambled_null_mean": 0.5008489583333333,
+      "scrambled_null_p99": 0.721875,
+      "separation": 0.09958628595839919
+    }
+  },
+  "centered_on": [
+    "ocean",
+    "bread",
+    "volcano",
+    "violin",
+    "spider",
+    "hospital",
+    "desert",
+    "clock"
+  ],
+  "elapsed_seconds": 253.9,
+  "frozen_choice": [
+    "birds_buildings",
+    "body_weather"
+  ],
+  "gate": "a pair passes if loo_centroid exceeds the 99th percentile of its own scrambled null; the two best passing pairs are frozen into the behavioural run, and the arbitrary arm is matched to their between-class distance",
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "null": {
+    "draws": 200,
+    "method": "the same sixteen vectors regrouped arbitrarily; real norms and anisotropy, no category structure"
+  },
+  "passing_ranked": [
+    "birds_buildings",
+    "body_weather",
+    "fruit_tools",
+    "mammals_vehicles"
+  ],
+  "what_this_is": "Capacity gate for notes/23. Whether category structure is present at the injection site at all, before asking whether the model can report it. No generation."
+}

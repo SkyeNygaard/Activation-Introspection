@@ -1,0 +1,154 @@
+{
+  "carrier_sha": "d28ef1f1ff333e1a",
+  "development_pair": "birds_buildings",
+  "draws": 3,
+  "elapsed_seconds": 488.8,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_rows": 1440,
+  "notes_23_reference": {
+    "heldout_semantic": 0.083,
+    "same_exemplar": 0.521
+  },
+  "selected_on_development": "two_groups",
+  "smoke": false,
+  "table": {
+    "birds_buildings": {
+      "baseline": {
+        "heldout_minus_anchor": -0.6666666666666666,
+        "heldout_semantic": {
+          "row_model": 0.5138888888888888,
+          "twin_pair_model": 0.027777777777777776,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.8472222222222222,
+          "twin_pair_model": 0.6944444444444444,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "eliminate": {
+        "heldout_minus_anchor": -0.861111111111111,
+        "heldout_semantic": {
+          "row_model": 0.5,
+          "twin_pair_model": 0.05555555555555555,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.9583333333333334,
+          "twin_pair_model": 0.9166666666666666,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "generalize": {
+        "heldout_minus_anchor": -0.7222222222222223,
+        "heldout_semantic": {
+          "row_model": 0.5694444444444444,
+          "twin_pair_model": 0.1388888888888889,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.9305555555555556,
+          "twin_pair_model": 0.8611111111111112,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "introspect": {
+        "heldout_minus_anchor": -0.7222222222222223,
+        "heldout_semantic": {
+          "row_model": 0.5277777777777778,
+          "twin_pair_model": 0.1111111111111111,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.9166666666666666,
+          "twin_pair_model": 0.8333333333333334,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "two_groups": {
+        "heldout_minus_anchor": -0.44444444444444453,
+        "heldout_semantic": {
+          "row_model": 0.5694444444444444,
+          "twin_pair_model": 0.16666666666666666,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.8055555555555556,
+          "twin_pair_model": 0.6111111111111112,
+          "twin_pair_reader": 1.0
+        }
+      }
+    },
+    "body_weather": {
+      "baseline": {
+        "heldout_minus_anchor": -0.33333333333333337,
+        "heldout_semantic": {
+          "row_model": 0.5833333333333334,
+          "twin_pair_model": 0.16666666666666666,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.75,
+          "twin_pair_model": 0.5,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "eliminate": {
+        "heldout_minus_anchor": -0.3055555555555556,
+        "heldout_semantic": {
+          "row_model": 0.625,
+          "twin_pair_model": 0.25,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 0.7777777777777778,
+          "twin_pair_model": 0.5555555555555556,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "generalize": {
+        "heldout_minus_anchor": -0.41666666666666674,
+        "heldout_semantic": {
+          "row_model": 0.5833333333333334,
+          "twin_pair_model": 0.16666666666666666,
+          "twin_pair_reader": 0.9444444444444444
+        },
+        "same_exemplar": {
+          "row_model": 0.7916666666666666,
+          "twin_pair_model": 0.5833333333333334,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "introspect": {
+        "heldout_minus_anchor": -0.36111111111111105,
+        "heldout_semantic": {
+          "row_model": 0.6527777777777778,
+          "twin_pair_model": 0.3055555555555556,
+          "twin_pair_reader": 0.9722222222222222
+        },
+        "same_exemplar": {
+          "row_model": 0.8333333333333334,
+          "twin_pair_model": 0.6666666666666666,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "two_groups": {
+        "heldout_minus_anchor": -0.3055555555555556,
+        "heldout_semantic": {
+          "row_model": 0.6388888888888888,
+          "twin_pair_model": 0.2777777777777778,
+          "twin_pair_reader": 0.9444444444444444
+        },
+        "same_exemplar": {
+          "row_model": 0.7916666666666666,
+          "twin_pair_model": 0.5833333333333334,
+          "twin_pair_reader": 1.0
+        }
+      }
+    }
+  },
+  "twin_pair_coin_flip_null": 0.25,
+  "what_this_is": "notes/24. Only the instruction wording varies; exemplars, injection, strength, episodes, readout and scoring are notes/23's."
+}

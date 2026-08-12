@@ -1,0 +1,48 @@
+{
+  "carrier_sha": "d28ef1f1ff333e1a",
+  "development_pair": "birds_buildings",
+  "draws": 1,
+  "elapsed_seconds": 34.8,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_rows": 8,
+  "notes_23_reference": {
+    "heldout_semantic": 0.083,
+    "same_exemplar": 0.521
+  },
+  "selected_on_development": "baseline",
+  "smoke": true,
+  "table": {
+    "birds_buildings": {
+      "baseline": {
+        "heldout_minus_anchor": -1.0,
+        "heldout_semantic": {
+          "row_model": 0.5,
+          "twin_pair_model": 0.0,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 1.0,
+          "twin_pair_model": 1.0,
+          "twin_pair_reader": 1.0
+        }
+      },
+      "generalize": {
+        "heldout_minus_anchor": -1.0,
+        "heldout_semantic": {
+          "row_model": 0.5,
+          "twin_pair_model": 0.0,
+          "twin_pair_reader": 1.0
+        },
+        "same_exemplar": {
+          "row_model": 1.0,
+          "twin_pair_model": 1.0,
+          "twin_pair_reader": 1.0
+        }
+      }
+    }
+  },
+  "twin_pair_coin_flip_null": 0.25,
+  "what_this_is": "notes/24. Only the instruction wording varies; exemplars, injection, strength, episodes, readout and scoring are notes/23's."
+}

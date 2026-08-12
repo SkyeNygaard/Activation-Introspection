@@ -1,0 +1,10 @@
+{
+  "agreement_rate": 1.0,
+  "elapsed_seconds": 71.9,
+  "n_episodes": 96,
+  "new_builder_twin_pair": 0.7916666666666666,
+  "notes_14_content_twin_pair": 0.799,
+  "old_builder_twin_pair": 0.7916666666666666,
+  "verdict": "builders equivalent; anchor shortfall is the exemplars",
+  "what_this_is": "Is the per-position intervention builder equivalent to notes/14's?"
+}

@@ -43,6 +43,27 @@ elicitation prompt remain a narrow population. Full protocol, novelty boundary,
 hashes, and stop rules:
 [`notes/06-causal-codebook-icl.md`](notes/06-causal-codebook-icl.md).
 
+**That ambiguity is now resolved, and it is the narrow reading.**
+[`notes/23`](notes/23-held-out-semantic-generalization.md) gave every injection
+position a different exemplar and held the query exemplar out of the
+demonstrations. The model falls from 0.521 to 0.083 on twin pairs — below the 0.25
+coin-flip null, at the constant-label floor — while a four-shot nearest-centroid
+reader on the identical states holds at 0.986. It gains nothing from the
+categories being real (0.083 against 0.076 for arbitrary groupings of the same
+vectors) where the reader gains everything (0.986 against 0.333). The effect is
+**prototype matching on a vector already shown**, not recovery of semantic
+structure.
+
+That negative is not an artifact of one prompt.
+[`notes/24`](notes/24-is-the-held-out-failure-the-interface.md) swept five
+instruction wordings, development and confirmation pairs split before the run.
+The wording demonstrably works — telling the model to attend to its own internal
+state cuts constant-labelling from 40% to 25% and lifts the anchor to 0.875 — and
+it buys nothing at all on held-out generalization: **no cell of ten beats the 0.25
+coin-flip null**, and pooled held-out is 60/360 = 0.167 against a pooled anchor of
+0.681. This freezes the elicitation-optimized baseline that any training study
+needs: on this task, wording buys zero, so anything training adds is training's.
+
 ## Earlier retained-trace replication
 
 Edit a language model's activations, then take the edit away. Can the model still

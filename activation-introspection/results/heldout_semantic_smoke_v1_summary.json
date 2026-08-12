@@ -1,0 +1,67 @@
+{
+  "arms": {
+    "heldout_random": {
+      "format_rate": 1.0,
+      "n": 2,
+      "row_centroid_cosine": 0.5,
+      "row_centroid_euclidean": 0.5,
+      "row_model": 0.5,
+      "row_shuffled_labels": 0.5,
+      "twin_pair_centroid_cosine": 0.0,
+      "twin_pair_centroid_euclidean": 0.0,
+      "twin_pair_model": 0.0,
+      "twin_pair_model_minus_reader": 0.0,
+      "twin_pair_shuffled_labels": 0.0
+    },
+    "heldout_scrambled": {
+      "format_rate": 1.0,
+      "n": 2,
+      "row_centroid_cosine": 0.5,
+      "row_centroid_euclidean": 0.5,
+      "row_model": 0.0,
+      "row_shuffled_labels": 0.5,
+      "twin_pair_centroid_cosine": 0.0,
+      "twin_pair_centroid_euclidean": 0.0,
+      "twin_pair_model": 0.0,
+      "twin_pair_model_minus_reader": 0.0,
+      "twin_pair_shuffled_labels": 0.0
+    },
+    "heldout_semantic": {
+      "format_rate": 1.0,
+      "n": 2,
+      "row_centroid_cosine": 1.0,
+      "row_centroid_euclidean": 1.0,
+      "row_model": 0.5,
+      "row_shuffled_labels": 1.0,
+      "twin_pair_centroid_cosine": 1.0,
+      "twin_pair_centroid_euclidean": 1.0,
+      "twin_pair_model": 0.0,
+      "twin_pair_model_minus_reader": -1.0,
+      "twin_pair_shuffled_labels": 1.0
+    },
+    "same_exemplar": {
+      "format_rate": 1.0,
+      "n": 2,
+      "row_centroid_cosine": 1.0,
+      "row_centroid_euclidean": 1.0,
+      "row_model": 1.0,
+      "row_shuffled_labels": 1.0,
+      "twin_pair_centroid_cosine": 1.0,
+      "twin_pair_centroid_euclidean": 1.0,
+      "twin_pair_model": 1.0,
+      "twin_pair_model_minus_reader": 0.0,
+      "twin_pair_shuffled_labels": 1.0
+    }
+  },
+  "category_pairs": [
+    "birds_buildings"
+  ],
+  "draws": 1,
+  "elapsed_seconds": 34.7,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_rows": 8,
+  "smoke": true,
+  "what_this_is": "notes/23. Every injection position carries a different exemplar; the query exemplar appears in no demonstration. Primary metric is twin-pair accuracy, per notes/22."
+}

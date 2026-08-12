@@ -1,0 +1,81 @@
+{
+  "arms": {
+    "heldout_random": {
+      "format_rate": 1.0,
+      "n": 288,
+      "row_centroid_cosine": 0.5277777777777778,
+      "row_centroid_euclidean": 0.5173611111111112,
+      "row_model": 0.4930555555555556,
+      "row_shuffled_labels": 0.5590277777777778,
+      "twin_pair_centroid_cosine": 0.05555555555555555,
+      "twin_pair_centroid_euclidean": 0.0763888888888889,
+      "twin_pair_model": 0.013888888888888888,
+      "twin_pair_model_minus_reader": -0.0625,
+      "twin_pair_shuffled_labels": 0.1736111111111111
+    },
+    "heldout_scrambled": {
+      "format_rate": 1.0,
+      "n": 288,
+      "row_centroid_cosine": 0.6284722222222222,
+      "row_centroid_euclidean": 0.625,
+      "row_model": 0.5208333333333334,
+      "row_shuffled_labels": 0.4826388888888889,
+      "twin_pair_centroid_cosine": 0.3333333333333333,
+      "twin_pair_centroid_euclidean": 0.3333333333333333,
+      "twin_pair_model": 0.0763888888888889,
+      "twin_pair_model_minus_reader": -0.2569444444444444,
+      "twin_pair_shuffled_labels": 0.027777777777777776
+    },
+    "heldout_semantic": {
+      "format_rate": 1.0,
+      "n": 288,
+      "row_centroid_cosine": 0.9930555555555556,
+      "row_centroid_euclidean": 0.9930555555555556,
+      "row_model": 0.5416666666666666,
+      "row_shuffled_labels": 0.6006944444444444,
+      "twin_pair_centroid_cosine": 0.9861111111111112,
+      "twin_pair_centroid_euclidean": 0.9861111111111112,
+      "twin_pair_model": 0.08333333333333333,
+      "twin_pair_model_minus_reader": -0.9027777777777778,
+      "twin_pair_shuffled_labels": 0.2916666666666667
+    },
+    "query_only": {
+      "format_rate": 1.0,
+      "n": 288,
+      "row_centroid_cosine": 0.5,
+      "row_centroid_euclidean": 0.5,
+      "row_model": 0.5,
+      "row_shuffled_labels": 0.5,
+      "twin_pair_centroid_cosine": 0.0,
+      "twin_pair_centroid_euclidean": 0.0,
+      "twin_pair_model": 0.013888888888888888,
+      "twin_pair_model_minus_reader": 0.013888888888888888,
+      "twin_pair_shuffled_labels": 0.0
+    },
+    "same_exemplar": {
+      "format_rate": 1.0,
+      "n": 288,
+      "row_centroid_cosine": 1.0,
+      "row_centroid_euclidean": 1.0,
+      "row_model": 0.7604166666666666,
+      "row_shuffled_labels": 0.7569444444444444,
+      "twin_pair_centroid_cosine": 1.0,
+      "twin_pair_centroid_euclidean": 1.0,
+      "twin_pair_model": 0.5208333333333334,
+      "twin_pair_model_minus_reader": -0.47916666666666663,
+      "twin_pair_shuffled_labels": 0.5763888888888888
+    }
+  },
+  "category_pairs": [
+    "birds_buildings",
+    "body_weather"
+  ],
+  "draws": 3,
+  "elapsed_seconds": 491.4,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_rows": 1440,
+  "smoke": false,
+  "what_this_is": "notes/23. Every injection position carries a different exemplar; the query exemplar appears in no demonstration. Primary metric is twin-pair accuracy, per notes/22."
+}
