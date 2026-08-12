@@ -5,6 +5,11 @@ currently have, what is missing, the smallest authentic portfolio experiment,
 the controls/inference/reproducibility package, and the condition under which I
 would stop or proceed.
 
+**Original research is being done for projects 1 and 3 only.** The other four
+briefs are written from work already finished and are not receiving new runs. The
+reasoning, the shared problem statement behind 1 and 3, and what is being tried
+next are in [RESEARCH-DIRECTION.md](RESEARCH-DIRECTION.md).
+
 ## 1. Introspection Training for Verbalization Activations
 
 Official project: [Belinda Li, Anthropic](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz)
