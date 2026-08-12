@@ -1,0 +1,28 @@
+I am building a benchmark of "hidden rule" items for an in-context learning task.
+
+Each item is a binary distinction between two classes of English words, with three
+example words per class. A model will be shown some examples labelled by class and
+asked to classify a new one.
+
+Produce EXACTLY 14 such items. Requirements:
+
+1. Three words per class, six words per item. Ordinary English words (or numerals).
+2. The two classes must be cleanly separable by the stated distinction, with no
+   word belonging to both.
+3. Span a wide range of KINDS of distinction. Include some of each:
+   - meaning-based (what the words refer to)
+   - spelling or letter-pattern based
+   - grammatical (form or inflection)
+   - numeric or quantitative
+   - sound or pronunciation based
+4. Vary the difficulty. Include some you would consider obvious and some subtle.
+5. Give each item a short snake_case name.
+
+Do NOT reuse any of these, which are already in the benchmark:
+colour_temp, body_vs_furniture, liquid_vs_solid, vehicle_vs_plant, sentiment,
+letter_count, ends_in_e, double_letter, multiple_of_three, prime,
+abstract_vs_concrete, singular_vs_plural, past_vs_present, latin_vs_germanic
+
+Output ONLY a JSON object, no prose, of the form:
+
+{"items": [{"name": "...", "distinction": "...", "kind": "meaning|spelling|grammatical|numeric|sound", "class_a": ["w","w","w"], "class_b": ["w","w","w"]}]}
