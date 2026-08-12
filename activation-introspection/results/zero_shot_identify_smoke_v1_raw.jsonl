@@ -1,0 +1,8 @@
+{"arm": "model_clean", "carrier": "A routine maintenance re", "concept": "-", "correct": false, "predicted": "eagle", "strength": 0.0}
+{"arm": "lens_clean", "carrier": "A routine maintenance re", "concept": "-", "correct": false, "predicted": "banana", "strength": 0.0}
+{"arm": "model_visible", "carrier": "A routine maintenance re", "concept": "garden", "correct": true, "predicted": "garden", "strength": 0.0}
+{"arm": "model_injected", "carrier": "A routine maintenance re", "concept": "garden", "correct": false, "predicted": "eagle", "strength": 1.0}
+{"arm": "lens_injected", "carrier": "A routine maintenance re", "concept": "garden", "correct": true, "predicted": "garden", "strength": 1.0}
+{"arm": "model_visible", "carrier": "A routine maintenance re", "concept": "camera", "correct": true, "predicted": "camera", "strength": 0.0}
+{"arm": "model_injected", "carrier": "A routine maintenance re", "concept": "camera", "correct": true, "predicted": "camera", "strength": 1.0}
+{"arm": "lens_injected", "carrier": "A routine maintenance re", "concept": "camera", "correct": true, "predicted": "camera", "strength": 1.0}

@@ -1,0 +1,43 @@
+{
+  "arms": {
+    "lens_clean_bias": {
+      "accuracy": 0.0,
+      "n": 1
+    },
+    "lens_injected": {
+      "accuracy": 1.0,
+      "n": 2
+    },
+    "model_clean_bias": {
+      "accuracy": 0.0,
+      "n": 1
+    },
+    "model_injected": {
+      "accuracy": 0.5,
+      "n": 2
+    },
+    "model_visible_ceiling": {
+      "accuracy": 1.0,
+      "n": 2
+    }
+  },
+  "by_strength": {
+    "1.0": {
+      "lens_injected": {
+        "accuracy": 1.0,
+        "n": 2
+      },
+      "model_injected": {
+        "accuracy": 0.5,
+        "n": 2
+      }
+    }
+  },
+  "chance": 0.125,
+  "elapsed_seconds": 22.5,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": true,
+  "what_this_is": "Eight-way identification of an injected concept with no demonstrations, against a label-free logit-lens read of the same state."
+}
