@@ -1,0 +1,87 @@
+{
+  "chance_cosine_one_pair": 0.02209708691207961,
+  "d_model": 2048,
+  "evenly_spread_null_for_mean_direction": 0.3535533905932738,
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_train_states": 96,
+  "reader_to_heldout_direction": {
+    "centroid": {
+      "max": 0.24292176961898804,
+      "mean": 0.22013503313064575,
+      "mean_abs": 0.22013503313064575,
+      "min": 0.19041597843170166,
+      "n": 8,
+      "n_positive": 8
+    },
+    "logistic": {
+      "max": 0.2314559519290924,
+      "mean": 0.20850740373134613,
+      "mean_abs": 0.20850740373134613,
+      "min": 0.17075085639953613,
+      "n": 8,
+      "n_positive": 8
+    },
+    "per_direction": {
+      "banana": {
+        "centroid": 0.22249653935432434,
+        "logistic": 0.2041061669588089
+      },
+      "camera": {
+        "centroid": 0.24292176961898804,
+        "logistic": 0.22481486201286316
+      },
+      "eagle": {
+        "centroid": 0.23132368922233582,
+        "logistic": 0.22080856561660767
+      },
+      "garden": {
+        "centroid": 0.24034452438354492,
+        "logistic": 0.2314559519290924
+      },
+      "hammer": {
+        "centroid": 0.20832499861717224,
+        "logistic": 0.20013828575611115
+      },
+      "island": {
+        "centroid": 0.19643142819404602,
+        "logistic": 0.193010613322258
+      },
+      "library": {
+        "centroid": 0.19041597843170166,
+        "logistic": 0.17075085639953613
+      },
+      "train": {
+        "centroid": 0.22882148623466492,
+        "logistic": 0.22297392785549164
+      }
+    }
+  },
+  "shared_axis": {
+    "cos_centroid_weight_to_train_mean": 0.9999974966049194,
+    "cos_train_mean_to_eval_mean": 0.48008567094802856,
+    "eval_mean_unit_norm": 0.45858433842658997,
+    "train_mean_unit_norm": 0.45141032338142395
+  },
+  "strength": 1.0,
+  "what_this_is": "Geometry audit of the concept banks behind notes/12. No training, no reporting task, no new claim about the model.",
+  "within_bank_overlap": {
+    "eval": {
+      "max": 0.1825091540813446,
+      "mean": 0.09748525172472,
+      "mean_abs": 0.09748525172472,
+      "min": 0.011904999613761902,
+      "n": 28,
+      "n_positive": 28
+    },
+    "train": {
+      "max": 0.16954421997070312,
+      "mean": 0.0963628739118576,
+      "mean_abs": 0.0963628739118576,
+      "min": 0.015765687450766563,
+      "n": 28,
+      "n_positive": 28
+    }
+  }
+}

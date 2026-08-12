@@ -1,0 +1,98 @@
+{
+  "arms": {
+    "concept": {
+      "centroid_row": 1.0,
+      "centroid_twin_pair": 1.0,
+      "logistic_row": 1.0,
+      "logistic_twin_pair": 1.0
+    },
+    "random": {
+      "centroid_row": 0.4791666666666667,
+      "centroid_twin_pair": 0.4166666666666667,
+      "logistic_row": 0.4375,
+      "logistic_twin_pair": 0.0
+    }
+  },
+  "layer": 9,
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "per_direction_row_accuracy": {
+    "concept": {
+      "banana": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "camera": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "eagle": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "garden": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "hammer": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "island": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "library": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      },
+      "train": {
+        "centroid": 1.0,
+        "logistic": 1.0
+      }
+    },
+    "random": {
+      "random[banana]": {
+        "centroid": 0.0,
+        "logistic": 0.0
+      },
+      "random[camera]": {
+        "centroid": 1.0,
+        "logistic": 0.5
+      },
+      "random[eagle]": {
+        "centroid": 0.0,
+        "logistic": 0.5
+      },
+      "random[garden]": {
+        "centroid": 0.0,
+        "logistic": 0.5
+      },
+      "random[hammer]": {
+        "centroid": 1.0,
+        "logistic": 0.5
+      },
+      "random[island]": {
+        "centroid": 0.16666666666666666,
+        "logistic": 0.5
+      },
+      "random[library]": {
+        "centroid": 1.0,
+        "logistic": 0.5
+      },
+      "random[train]": {
+        "centroid": 0.6666666666666666,
+        "logistic": 0.5
+      }
+    }
+  },
+  "reference_from_notes_08": {
+    "trained_adapters_on_random": [
+      0.955,
+      0.913
+    ],
+    "untrained_model_on_random": 0.513
+  },
+  "strength": 1.0,
+  "what_this_is": "The fixed readers from notes/12, scored on magnitude-matched random directions as well as concept directions. No training."
+}
