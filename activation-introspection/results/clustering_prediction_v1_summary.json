@@ -1,0 +1,131 @@
+{
+  "accuracy_threshold": 0.6,
+  "by_rule": {
+    "abstract_vs_concrete": {
+      "accuracy": 0.9583333333333334,
+      "mean_separation": 0.12442915831451064,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.9166666666666666
+    },
+    "body_vs_furniture": {
+      "accuracy": 1.0,
+      "mean_separation": 0.09251019689771867,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 1.0
+    },
+    "colour_temp": {
+      "accuracy": 0.6666666666666666,
+      "mean_separation": 0.026865131325191933,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.3333333333333333
+    },
+    "double_letter": {
+      "accuracy": 0.5416666666666666,
+      "mean_separation": 0.00510700405747803,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.08333333333333333
+    },
+    "ends_in_e": {
+      "accuracy": 0.4583333333333333,
+      "mean_separation": -0.022072053066006386,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.08333333333333333
+    },
+    "latin_vs_germanic": {
+      "accuracy": 0.75,
+      "mean_separation": 0.14871025885696762,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.5
+    },
+    "letter_count": {
+      "accuracy": 0.7916666666666666,
+      "mean_separation": 0.022549736554975847,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.5833333333333334
+    },
+    "liquid_vs_solid": {
+      "accuracy": 0.875,
+      "mean_separation": 0.03945403021794772,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.75
+    },
+    "multiple_of_three": {
+      "accuracy": 0.5,
+      "mean_separation": -0.05435153400456457,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.08333333333333333
+    },
+    "past_vs_present": {
+      "accuracy": 0.5833333333333334,
+      "mean_separation": -0.025126179059346554,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.16666666666666666
+    },
+    "prime": {
+      "accuracy": 0.625,
+      "mean_separation": -0.02812977521507824,
+      "observed_learnable": true,
+      "predicted_learnable": false,
+      "prediction_correct": false,
+      "twin_pair": 0.25
+    },
+    "sentiment": {
+      "accuracy": 1.0,
+      "mean_separation": 0.09050626666457566,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 1.0
+    },
+    "singular_vs_plural": {
+      "accuracy": 0.6666666666666666,
+      "mean_separation": -0.050018252597914814,
+      "observed_learnable": true,
+      "predicted_learnable": false,
+      "prediction_correct": false,
+      "twin_pair": 0.3333333333333333
+    },
+    "vehicle_vs_plant": {
+      "accuracy": 0.7083333333333334,
+      "mean_separation": 0.06501775952400989,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.4166666666666667
+    }
+  },
+  "chance_correct": 7.0,
+  "elapsed_seconds": 63.3,
+  "misses": [
+    "prime",
+    "singular_vs_plural"
+  ],
+  "model": "qwen-3b",
+  "n_correct_predictions": 12,
+  "n_rules": 14,
+  "protocol": "results/clustering_prediction_protocol_v1.json",
+  "protocol_sha256": "3716bf2c6f4175df076356c6ace1b655b22ea35280d18b438086cbf79a6b0272",
+  "separation_threshold": 0.02,
+  "smoke": false,
+  "what_this_is": "Frozen predictions from class separation, scored against measured accuracy. notes/19."
+}

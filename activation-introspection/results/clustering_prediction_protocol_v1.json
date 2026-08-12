@@ -1,0 +1,119 @@
+{
+  "accuracy_threshold": 0.6,
+  "frozen_at": "2026-08-12T09:49:54",
+  "layers": [
+    9,
+    18,
+    27
+  ],
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_predicted_learnable": 8,
+  "n_rules": 14,
+  "predictions": {
+    "abstract_vs_concrete": {
+      "layer_18": 0.13593874706162346,
+      "layer_27": 0.1312594181961484,
+      "layer_9": 0.10608930968576008,
+      "mean_separation": 0.12442915831451064,
+      "predicted_learnable": true
+    },
+    "body_vs_furniture": {
+      "layer_18": 0.07903067270914721,
+      "layer_27": 0.08209060629208886,
+      "layer_9": 0.11640931169191993,
+      "mean_separation": 0.09251019689771867,
+      "predicted_learnable": true
+    },
+    "colour_temp": {
+      "layer_18": 0.014661096864276413,
+      "layer_27": 0.016385287046432606,
+      "layer_9": 0.04954901006486678,
+      "mean_separation": 0.026865131325191933,
+      "predicted_learnable": true
+    },
+    "double_letter": {
+      "layer_18": 0.0074232750468784525,
+      "layer_27": 0.010536736912197475,
+      "layer_9": -0.002638999786641838,
+      "mean_separation": 0.00510700405747803,
+      "predicted_learnable": false
+    },
+    "ends_in_e": {
+      "layer_18": -0.021797269582748413,
+      "layer_27": -0.019149919350941902,
+      "layer_9": -0.02526897026432884,
+      "mean_separation": -0.022072053066006386,
+      "predicted_learnable": false
+    },
+    "latin_vs_germanic": {
+      "layer_18": 0.14670686589346982,
+      "layer_27": 0.12279357843928873,
+      "layer_9": 0.1766303322381443,
+      "mean_separation": 0.14871025885696762,
+      "predicted_learnable": true
+    },
+    "letter_count": {
+      "layer_18": 0.02612547079722083,
+      "layer_27": 0.023654020494884853,
+      "layer_9": 0.017869718372821863,
+      "mean_separation": 0.022549736554975847,
+      "predicted_learnable": true
+    },
+    "liquid_vs_solid": {
+      "layer_18": 0.04517984721395696,
+      "layer_27": 0.03221999936633635,
+      "layer_9": 0.04096224407354987,
+      "mean_separation": 0.03945403021794772,
+      "predicted_learnable": true
+    },
+    "multiple_of_three": {
+      "layer_18": -0.05827770299381674,
+      "layer_27": -0.04332667258050704,
+      "layer_9": -0.061450226439369926,
+      "mean_separation": -0.05435153400456457,
+      "predicted_learnable": false
+    },
+    "past_vs_present": {
+      "layer_18": -0.022311031818390004,
+      "layer_27": -0.01728096935484147,
+      "layer_9": -0.03578653600480819,
+      "mean_separation": -0.025126179059346554,
+      "predicted_learnable": false
+    },
+    "prime": {
+      "layer_18": -0.019541336430443645,
+      "layer_27": -0.02316235833697844,
+      "layer_9": -0.04168563087781263,
+      "mean_separation": -0.02812977521507824,
+      "predicted_learnable": false
+    },
+    "sentiment": {
+      "layer_18": 0.08603792389233911,
+      "layer_27": 0.08901994095908272,
+      "layer_9": 0.09646093514230514,
+      "mean_separation": 0.09050626666457566,
+      "predicted_learnable": true
+    },
+    "singular_vs_plural": {
+      "layer_18": -0.032088687022527096,
+      "layer_27": -0.011606305837631226,
+      "layer_9": -0.10635976493358612,
+      "mean_separation": -0.050018252597914814,
+      "predicted_learnable": false
+    },
+    "vehicle_vs_plant": {
+      "layer_18": 0.06882399982876253,
+      "layer_27": 0.05770648519198107,
+      "layer_9": 0.06852279355128604,
+      "mean_separation": 0.06501775952400989,
+      "predicted_learnable": true
+    }
+  },
+  "separation_threshold": 0.02,
+  "source_sha256": {
+    "run_clustering_prediction.py": "08e065bde5206bb79987bdc6759eefcf302e5e7cf5154fcfbdbd3858d16e4f58"
+  },
+  "thresholds_derived_from": "notes/16 gaps: separation 0.008-0.043, accuracy 0.490-0.729",
+  "what_this_is": "Predictions of rule learnability from class separation alone, frozen before any accuracy was measured. notes/19."
+}
