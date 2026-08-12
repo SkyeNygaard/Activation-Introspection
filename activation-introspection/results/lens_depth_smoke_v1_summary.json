@@ -1,0 +1,266 @@
+{
+  "best_per_site": {
+    "final": 0.5,
+    "marker": 1.0
+  },
+  "by_depth": {
+    "10": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "11": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "12": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "13": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "14": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "15": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "16": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "17": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "18": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "19": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "20": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "21": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "22": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "23": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "24": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "25": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "26": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "27": {
+      "final": 0.0,
+      "marker": 1.0
+    },
+    "28": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "29": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "30": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "31": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "32": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "33": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "34": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "35": {
+      "final": 0.5,
+      "marker": 1.0
+    },
+    "9": {
+      "final": 0.0,
+      "marker": 1.0
+    }
+  },
+  "chance": 0.125,
+  "depths_where_lens_below_model": [
+    {
+      "depth": "9",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "10",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "11",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "12",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "13",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "14",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "15",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "16",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "17",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "18",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "19",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "20",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "21",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "22",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "23",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "24",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "25",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "26",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "27",
+      "lens": 0.0,
+      "site": "final"
+    },
+    {
+      "depth": "28",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "29",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "30",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "31",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "32",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "33",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "34",
+      "lens": 0.5,
+      "site": "final"
+    },
+    {
+      "depth": "35",
+      "lens": 0.5,
+      "site": "final"
+    }
+  ],
+  "elapsed_seconds": 22.5,
+  "injection_layer": 9,
+  "model": "qwen-3b",
+  "model_accuracy_from_notes_17": 0.667,
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_blocks": 36,
+  "n_depths_below_model": 27,
+  "smoke": true,
+  "strength": 2.0,
+  "third_party_best_over_all_depths": 1.0,
+  "verdict": "criterion_unsatisfiable_at_every_depth",
+  "what_this_is": "Logit-lens identification accuracy at every block from the injection site to the last, against the model's own 0.667 from notes/17."
+}
