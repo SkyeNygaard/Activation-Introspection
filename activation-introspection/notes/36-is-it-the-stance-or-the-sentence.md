@@ -1,5 +1,15 @@
 # 36 — Is it the stance, or is it the sentence? (pre-run note)
 
+> **Bounded 2026-08-13 by [`37`](37-is-it-the-relation-or-the-instruction.md).**
+> The carrier side of this result is general — nine strings, three stances. **The
+> instruction side is not.** Two further instructions that also assert internal
+> change behave differently: `injected` shows a carrier effect of only −0.156
+> against `introspect`'s −0.729, and `feels` degrades on *every* carrier and shows
+> no carrier sensitivity at all. So this is largely a property of `24`'s
+> `introspect` wording interacting with carrier stance, **not** of
+> instruction–context contradiction in general. Read every "instruction that
+> asserts internal change" below as "this instruction".
+
 Written before the run.
 
 ## The weakness this attacks

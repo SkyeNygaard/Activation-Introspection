@@ -1,0 +1,107 @@
+{
+  "anchor_cell": "introspect x denies",
+  "anchor_reproduced": true,
+  "asserting_instructions": [
+    "introspect",
+    "injected",
+    "feels"
+  ],
+  "elapsed_seconds": 584.3,
+  "injection_layer": 9,
+  "local_families": {
+    "feels": [
+      "Your internal state has been changed at each observation below, so each one will seem different from the last.",
+      "The observation text is intentionally identical in every example.",
+      "Two kinds of change were made, labelled Q and K. Report which kind was made at the query."
+    ],
+    "injected": [
+      "An edit has been applied to your activations at each observation below.",
+      "The observation text is intentionally identical in every example.",
+      "Two kinds of edit were applied, labelled Q and K. Report which kind was applied at the query."
+    ]
+  },
+  "model": "qwen-3b",
+  "note": "notes/37",
+  "silent_instructions": [
+    "baseline",
+    "eliminate"
+  ],
+  "smoke": false,
+  "table": {
+    "baseline": {
+      "asserts": false,
+      "denies": {
+        "constant_label_rate": 0.0625,
+        "mean_margin": 7.603,
+        "n_twin_cells": 96,
+        "twin_pair": 0.9375
+      },
+      "neutral": {
+        "constant_label_rate": 0.2188,
+        "mean_margin": 4.355,
+        "n_twin_cells": 96,
+        "twin_pair": 0.7812
+      }
+    },
+    "eliminate": {
+      "asserts": false,
+      "denies": {
+        "constant_label_rate": 0.0417,
+        "mean_margin": 8.303,
+        "n_twin_cells": 96,
+        "twin_pair": 0.9583
+      },
+      "neutral": {
+        "constant_label_rate": 0.1042,
+        "mean_margin": 5.52,
+        "n_twin_cells": 96,
+        "twin_pair": 0.8958
+      }
+    },
+    "feels": {
+      "asserts": true,
+      "denies": {
+        "constant_label_rate": 0.6458,
+        "mean_margin": 10.351,
+        "n_twin_cells": 96,
+        "twin_pair": 0.3542
+      },
+      "neutral": {
+        "constant_label_rate": 0.6771,
+        "mean_margin": 5.184,
+        "n_twin_cells": 96,
+        "twin_pair": 0.3229
+      }
+    },
+    "injected": {
+      "asserts": true,
+      "denies": {
+        "constant_label_rate": 0.3021,
+        "mean_margin": 7.069,
+        "n_twin_cells": 96,
+        "twin_pair": 0.6979
+      },
+      "neutral": {
+        "constant_label_rate": 0.1458,
+        "mean_margin": 5.005,
+        "n_twin_cells": 96,
+        "twin_pair": 0.8542
+      }
+    },
+    "introspect": {
+      "asserts": true,
+      "denies": {
+        "constant_label_rate": 0.8229,
+        "mean_margin": 8.814,
+        "n_twin_cells": 96,
+        "twin_pair": 0.1771
+      },
+      "neutral": {
+        "constant_label_rate": 0.0938,
+        "mean_margin": 7.266,
+        "n_twin_cells": 96,
+        "twin_pair": 0.9062
+      }
+    }
+  }
+}
