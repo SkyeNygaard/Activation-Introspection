@@ -114,6 +114,19 @@ asked "is concept X active," it answers a different question, "did something mov
 at layer 9." An adversary with any displacement at that site gets a positive
 report.
 
+> **Extended 2026-08-12 by [`29`](29-can-abstention-recover-selectivity.md), and it
+> is worse than this note says.** The obvious repair for a monitor with false
+> alarms is to let it abstain when unsure — Anthropic's
+> [Introspection Adapters](https://arxiv.org/pdf/2604.16812) names exactly that as
+> a candidate fix for the same problem. It does not work here. Dropping the
+> least-confident reports **narrows** the gap between real concepts and random
+> directions, from 0.059 to 0.013 for `fixed` and 0.099 to 0.019 for `remap`,
+> replicated on held-out seeds. The untrained model goes the opposite way — its gap
+> nearly doubles, 0.232 to 0.455. So training does not merely make the monitor
+> wrong about what it detected; **it makes it most confident exactly where it is
+> wrong**, and abstention removes the discrimination that was left rather than
+> recovering it.
+
 ### The hypothesis this study was built to test, and which failed
 
 Protocol v1 predicted that training under a fixed convention would damage the

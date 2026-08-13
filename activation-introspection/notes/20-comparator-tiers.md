@@ -130,6 +130,16 @@ the model can *reach*, not what it can *say*, and the gap between those is large
 
 ## Calibration, recorded for the first time here
 
+> **Withdrawn 2026-08-12 by [`29`](29-can-abstention-recover-selectivity.md).** The
+> conclusion below is wrong, and it is wrong because of the statistic, not the
+> data. A difference of means is the wrong instrument for a number squashed against
+> 1.0. Ranked rather than averaged, the same 24 rows give AUROC 0.969 and the top
+> 12 are 12 for 12 — and on 2,016 rows this note never touched, confidence ranks
+> correct self-reports above incorrect ones at AUROC 0.675 (base) and 0.891
+> (trained), replicated on held-out seeds. **The model does know which of its
+> self-reports to distrust.** What survives below is the measurement; what is
+> withdrawn is "confidence is not usable as a filter".
+
 | | mean confidence in its own answer | n |
 |---|---:|---:|
 | when right | **0.998** | 16 |
@@ -141,6 +151,10 @@ its correct self-reports from its incorrect ones, so confidence is not usable as
 filter on self-report. For monitoring that matters more than the accuracy number —
 a channel that is wrong 33% of the time and cannot flag which 33% is worse than one
 that is wrong more often and knows it.
+
+*(The final sentence still stands as a statement about what matters. It is the
+factual claim above it — that this channel cannot flag which 33% — that `29`
+refutes.)*
 
 ## Epistemic status
 

@@ -59,6 +59,25 @@ these.**
 | [Refusal in Language Models Is Mediated by a Single Direction](https://arxiv.org/abs/2406.11717) (Arditi et al.) | **The method any refusal-ablation experiment here would use.** Must be read before proposing one |
 | [Mechanisms of Introspective Awareness — code](https://github.com/safety-research/introspection-mechanisms) | Their appendices/code are where a matched-magnitude control would hide if one exists |
 
+## Selective prediction — the literature crossed in on 2026-08-12
+
+Searched because [notes/29](../activation-introspection/notes/29-can-abstention-recover-selectivity.md)
+imports this machinery. **Two separate clusters with nothing joining them**, which
+is the gap notes/29 occupies.
+
+| paper | depth | what it establishes |
+|---|---|---|
+| [Calibrating LLMs for Selective Prediction](https://openreview.net/forum?id=JJPAy8mvrQ) | abstract | Risk-coverage optimisation for LLM *task answers*. The standard framing |
+| [Uncertainty-Aware Abstention with Provable Guarantees](https://arxiv.org/pdf/2607.04430) | listed | Abstention with alignment guarantees. Task answers again |
+| [LLM Abstention Can Be a Prompt Artifact](https://arxiv.org/pdf/2507.16199) | listed | Abstention may reflect prompt framing rather than genuine uncertainty — a direct caution for any abstention result, including notes/29 |
+| [Same-Model Self-Verification as a Conditional Confidence Signal](https://arxiv.org/pdf/2605.02915) | listed | Self-verification improves risk-coverage. Closest in spirit; still about answers, not about self-reports of internal state |
+
+**Nothing found applies selective prediction to introspective self-reports.**
+Every introspection paper in the table above reports accuracy and false-positive
+rate at full coverage. That is the opening notes/29 uses, and it is also why the
+result should be labelled an extension: the tool is standard, only the target is
+new.
+
 ## What the 2026-08-12 search did and did not do
 
 **Did:** nine papers fetched and read to the depths above; an arXiv API sweep

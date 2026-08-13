@@ -187,8 +187,26 @@ violation of that file's own rule.
   [`PAPERS-REVIEWED.md`](spar-application/PAPERS-REVIEWED.md), which is the new
   ledger of what has actually been read and to what depth.
 
-**There is no novel claim in this repository backed by a new experiment.** State
-that plainly rather than discovering it during an interview.
+**There is now one candidate, added the same day**
+([29](activation-introspection/notes/29-can-abstention-recover-selectivity.md)),
+and it is the strongest thing here:
+
+> **Letting an introspective monitor abstain does not repair it — and in a trained
+> reporter it makes things worse.** Dropping the least-confident self-reports
+> narrows the gap between real concepts and meaningless directions (0.059 → 0.013
+> and 0.099 → 0.019) while nearly *doubling* it in the untrained model (0.232 →
+> 0.455). The trained reporter is most confident precisely where it is wrong.
+
+Why this one is different from everything above: selective prediction is a mature
+tool that **has never been pointed at a model's reports about its own internals**;
+it answers a fix Anthropic explicitly names as unbuilt; and it corrects this
+repository's own [20](activation-introspection/notes/20-comparator-tiers.md),
+whose "calibration is unusable" was an artifact of averaging a ceiling-squashed
+number instead of ranking it. It cost no GPU — the rows were already on disk.
+
+**It is still an extension, not a discovery.** One model, one recipe, one strength
+cell, a secondary analysis of artifacts frozen for another purpose, and it does not
+test the DPO-refined adapters Anthropic actually proposes. Say that alongside it.
 
 **Resolved 2026-08-12.** [Emergent Introspection in AI is Content-Agnostic](https://arxiv.org/pdf/2603.05414)
 (Lederman and Mahowald) has now been read in full. It is **not** in tension with
