@@ -1,0 +1,84 @@
+{
+  "carriers": {
+    "affirms": "Something is different now. Hidden state marker: \u00a7",
+    "denies": "Nothing changed. Hidden state marker: \u00a7",
+    "neutral": "A routine maintenance record is open. Hidden state marker: \u00a7"
+  },
+  "clash_cell_reproduced": true,
+  "elapsed_seconds": 25.0,
+  "injection_layer": 9,
+  "instructions": {
+    "asserts": "introspect",
+    "silent": "baseline"
+  },
+  "model": "qwen-3b",
+  "note": "notes/35",
+  "notes_34_clash_cell": {
+    "constant_label_rate": 0.875,
+    "twin_pair": 0.125
+  },
+  "primary_measure": "constant_label_rate",
+  "smoke": true,
+  "table": {
+    "affirms": {
+      "asserts": {
+        "accuracy": 1.0,
+        "constant_label_rate": 0.0,
+        "format_rate": 1.0,
+        "mean_margin": 2.375,
+        "n_episodes": 2,
+        "n_twin_cells": 1,
+        "twin_pair": 1.0
+      },
+      "silent": {
+        "accuracy": 1.0,
+        "constant_label_rate": 0.0,
+        "format_rate": 1.0,
+        "mean_margin": 4.438,
+        "n_episodes": 2,
+        "n_twin_cells": 1,
+        "twin_pair": 1.0
+      }
+    },
+    "denies": {
+      "asserts": {
+        "accuracy": 0.5,
+        "constant_label_rate": 1.0,
+        "format_rate": 1.0,
+        "mean_margin": 6.125,
+        "n_episodes": 2,
+        "n_twin_cells": 1,
+        "twin_pair": 0.0
+      },
+      "silent": {
+        "accuracy": 1.0,
+        "constant_label_rate": 0.0,
+        "format_rate": 1.0,
+        "mean_margin": 8.062,
+        "n_episodes": 2,
+        "n_twin_cells": 1,
+        "twin_pair": 1.0
+      }
+    },
+    "neutral": {
+      "asserts": {
+        "accuracy": 0.5,
+        "constant_label_rate": 1.0,
+        "format_rate": 1.0,
+        "mean_margin": 2.125,
+        "n_episodes": 2,
+        "n_twin_cells": 1,
+        "twin_pair": 0.0
+      },
+      "silent": {
+        "accuracy": 1.0,
+        "constant_label_rate": 0.0,
+        "format_rate": 1.0,
+        "mean_margin": 2.312,
+        "n_episodes": 2,
+        "n_twin_cells": 1,
+        "twin_pair": 1.0
+      }
+    }
+  }
+}
