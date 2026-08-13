@@ -51,9 +51,21 @@ from introspect.report_training import CENTERING_CONCEPTS
 #: `denies` and `neutral` are verbatim the strings notes/34 used. `affirms` is new
 #: and deliberately short, so that stance is not confounded with length.
 CARRIERS = {
-    "denies": "Nothing changed. Hidden state marker: §",
-    "neutral": "A routine maintenance record is open. Hidden state marker: §",
-    "affirms": "Something is different now. Hidden state marker: §",
+    "denies": (
+        "Nothing changed. Hidden state marker: §",
+        "The state is exactly as it was before. Hidden state marker: §",
+        "No alteration has been made here. Hidden state marker: §",
+    ),
+    "neutral": (
+        "A routine maintenance record is open. Hidden state marker: §",
+        "The afternoon shift log sits on the desk. Hidden state marker: §",
+        "A printed inventory list lies nearby. Hidden state marker: §",
+    ),
+    "affirms": (
+        "Something is different now. Hidden state marker: §",
+        "The state has been altered from before. Hidden state marker: §",
+        "An adjustment has been made here. Hidden state marker: §",
+    ),
 }
 
 #: notes/24's families. `baseline` makes no claim about internal state;
@@ -113,32 +125,39 @@ def run(args: argparse.Namespace) -> None:
         pairs = PAIRS[:1] if args.smoke else PAIRS
         rows: list[dict[str, object]] = []
 
-        for stance, carrier in CARRIERS.items():
-            eps = exact_episodes(carrier)
-            if args.smoke:
-                eps = eps[:2]
-            for instr, family in INSTRUCTIONS.items():
-                preps = [prepare_episode(model, framed(e, family)) for e in eps]
-                for a_name, b_name in pairs:
-                    pos, neg = bank[a_name], bank[b_name]
-                    strength = matched_strength(pos.vector, neg.vector)
-                    for prep in preps:
-                        r = score_with_margin(model, prep, pos, neg, strength=strength)
-                        rows.append(
-                            {
-                                "carrier_stance": stance,
-                                "instruction_stance": instr,
-                                "carrier_sha": hashlib.sha256(carrier.encode()).hexdigest()[:16],
-                                # stance pair must be inside the twin key or cells from
-                                # different conditions collide.
-                                "pair": f"{a_name}|{b_name}|{stance}|{instr}",
-                                "cell_base": prep.episode.cell_id.rsplit("q", 1)[0],
-                                "cell_id": prep.episode.cell_id,
-                                "strength": strength,
-                                **r,
-                            }
-                        )
-                print(f"  {stance} x {instr} done ({time.time() - started:.0f}s)", flush=True)
+        for stance, strings in CARRIERS.items():
+            for si, carrier in enumerate(strings[:1] if args.smoke else strings):
+                eps = exact_episodes(carrier)
+                if args.smoke:
+                    eps = eps[:2]
+                for instr, family in INSTRUCTIONS.items():
+                    preps = [prepare_episode(model, framed(e, family)) for e in eps]
+                    for a_name, b_name in pairs:
+                        pos, neg = bank[a_name], bank[b_name]
+                        strength = matched_strength(pos.vector, neg.vector)
+                        for prep in preps:
+                            r = score_with_margin(model, prep, pos, neg, strength=strength)
+                            rows.append(
+                                {
+                                    "carrier_stance": stance,
+                                    "carrier_index": si,
+                                    "instruction_stance": instr,
+                                    "carrier_sha": hashlib.sha256(carrier.encode()).hexdigest()[
+                                        :16
+                                    ],
+                                    # stance pair must be inside the twin key or cells from
+                                    # different conditions collide.
+                                    "pair": f"{a_name}|{b_name}|{stance}{si}|{instr}",
+                                    "cell_base": prep.episode.cell_id.rsplit("q", 1)[0],
+                                    "cell_id": prep.episode.cell_id,
+                                    "strength": strength,
+                                    **r,
+                                }
+                            )
+                    print(
+                        f"  {stance}[{si}] x {instr} done ({time.time() - started:.0f}s)",
+                        flush=True,
+                    )
 
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("\n".join(json.dumps(r, sort_keys=True) for r in rows) + "\n")
@@ -163,6 +182,26 @@ def run(args: argparse.Namespace) -> None:
                     "format_rate": round(sum(bool(r["format_ok"]) for r in sub) / len(sub), 4),
                 }
 
+        per_string: dict[str, Any] = {}
+        for stance, strings in CARRIERS.items():
+            for si in range(len(strings)):
+                for instr in INSTRUCTIONS:
+                    sub = [
+                        r
+                        for r in rows
+                        if r["carrier_stance"] == stance
+                        and r["carrier_index"] == si
+                        and r["instruction_stance"] == instr
+                    ]
+                    if not sub:
+                        continue
+                    const, n_cells = constant_label_rate(sub)
+                    per_string[f"{stance}[{si}]/{instr}"] = {
+                        "constant_label_rate": round(const, 4),
+                        "twin_pair": round(twin_pair_rate(sub), 4),
+                        "n_twin_cells": n_cells,
+                    }
+
         clash = table["denies"]["asserts"]
         reproduced = (
             clash["constant_label_rate"] > KILL_CONSTANT_RATE
@@ -178,6 +217,7 @@ def run(args: argparse.Namespace) -> None:
             "notes_34_clash_cell": {"constant_label_rate": 42 / 48, "twin_pair": 0.125},
             "clash_cell_reproduced": reproduced,
             "table": table,
+            "per_string": per_string,
             "smoke": bool(args.smoke),
             "elapsed_seconds": round(time.time() - started, 1),
         }
