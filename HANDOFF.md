@@ -264,23 +264,40 @@ than deleted, so the ordering that produced the current state stays visible.
    elicitation for this interface.** This also freezes the
    elicitation-optimised baseline any training study needs — wording buys zero on
    held-out, so anything training adds is training's.
-3. **Test the clustering gate on a rule set written by someone else.** The weakest
-   link in the only unclaimed result is that I wrote all fourteen rules. Now the
-   top research item, and it needs no GPU beyond a few hundred forward passes.
-4. **Then** natural states, under section 6's conditions.
+3. ~~**Test the clustering gate on a rule set written by someone else.**~~ Done,
+   and it **failed**: [notes/26](activation-introspection/notes/26-someone-elses-rules.md).
+   Fourteen rules written by a model blind to the hypothesis, thresholds imported
+   rather than refitted. Rank agreement 0.403 against 0.785, permutation p = 0.078,
+   and the usable half — a green light at 8 for 8 — fell to 4 of 7. That closed the
+   only unclaimed candidate.
+4. ~~**Chain of thought as the last escape hatch on notes/23–24.**~~ Done, and it
+   **did not answer the question**:
+   [notes/25](activation-introspection/notes/25-does-reasoning-out-loud-rescue-it.md).
+   Letting the model reason out loud collapsed the anchor task from 0.694 to about
+   0.33, so held-out is uninterpretable. The kill rule was **held, not fired** —
+   scoring a broken instrument is not a result. The fix is named there:
+   [notes/20](activation-introspection/notes/20-comparator-tiers.md)'s two-stage
+   tier never shows the model the letters `Q` and `K` at all.
 
-**The one untested escape hatch on notes/23–24.** Both hold the readout fixed at a
-forced choice between two tokens. Neither tests chain of thought — letting the
-model reason out loud before answering — which needs a generation harness and a
-different scoring rule. Notes/24 states this as a limit rather than smuggling
-past it. It is the only remaining way the held-out negative could turn out to be
-an interface artifact, and it is inference-only. A pre-run note for it is in
-[notes/25](activation-introspection/notes/25-does-reasoning-out-loud-rescue-it.md);
-it has **not** been run.
+**Where the live work is now.**
+
+5. **[notes/29](activation-introspection/notes/29-can-abstention-recover-selectivity.md)
+   is the strongest thing here and it is finished.** Selective prediction pointed at
+   introspective self-reports for the first time. It withdrew notes/20, extended
+   notes/08, and answered a fix Anthropic names as unbuilt — negatively. **The
+   obvious next step is the one this machine cannot run:** the same measurement on
+   the DPO-refined adapters that paper actually proposes, which are trained to
+   prefer accurate reports over plausible ones. That is a proposal, not a run.
+6. **[notes/30](activation-introspection/notes/30-does-it-know-it-is-about-to-be-wrong.md)
+   is the natural-states branch, redesigned to remove what killed it.** Section 6's
+   conditions were about finding a hidden class that clumps. This design has **no
+   hidden class**: the state is whatever the model has mid-multiplication, and the
+   two outcomes are right and wrong, with arithmetic as ground truth. If it works it
+   is the first result here on a state the model computed itself.
 
 **Do not:** run more LoRA; add concept pairs or layers for robustness before the
-above; or run the criterion against a comparator with activation access and read
-anything into it.
+above; run the criterion against a comparator with activation access and read
+anything into it; or quote the clustering gate — it did not replicate.
 
 ---
 
