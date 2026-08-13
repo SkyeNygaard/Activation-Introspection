@@ -1,0 +1,97 @@
+{
+  "anchor": {
+    "none_content_accuracy": 0.8958333333333334,
+    "notes_14_published": 0.899,
+    "within_tolerance": true
+  },
+  "elapsed_seconds": 222.3,
+  "injection_layer": 9,
+  "model": "qwen-3b",
+  "note": "notes/33",
+  "prompt_family": "introspect",
+  "refusal_gate": {
+    "baseline_refusal_heldout": 1.0,
+    "chosen_layer": 10,
+    "chosen_refusal": 0.0,
+    "gate_passed": true,
+    "refusal_after_ablation_by_layer": {
+      "layer_10": 0.0,
+      "layer_14": 0.75,
+      "layer_18": 0.0,
+      "layer_22": 0.0,
+      "layer_26": 0.0
+    }
+  },
+  "smoke": false,
+  "table": {
+    "ablate": {
+      "content": {
+        "accuracy": 0.8020833333333334,
+        "format_rate": 1.0,
+        "mean_margin": 2.9309895833333335,
+        "n": 96,
+        "twin_pair": 0.6041666666666666
+      },
+      "random_pair": {
+        "accuracy": 0.59375,
+        "format_rate": 1.0,
+        "mean_margin": 1.8268229166666667,
+        "n": 96,
+        "twin_pair": 0.1875
+      },
+      "selectivity_gap_by_coverage": {
+        "0.2": 0.8,
+        "0.4": 0.6842,
+        "0.6": 0.5517,
+        "0.8": 0.5263,
+        "1.0": 0.4167
+      }
+    },
+    "none": {
+      "content": {
+        "accuracy": 0.8958333333333334,
+        "format_rate": 1.0,
+        "mean_margin": 4.510416666666667,
+        "n": 96,
+        "twin_pair": 0.7916666666666666
+      },
+      "random_pair": {
+        "accuracy": 0.65625,
+        "format_rate": 1.0,
+        "mean_margin": 2.8463541666666665,
+        "n": 96,
+        "twin_pair": 0.3125
+      },
+      "selectivity_gap_by_coverage": {
+        "0.2": 0.7,
+        "0.4": 0.6842,
+        "0.6": 0.5862,
+        "0.8": 0.5263,
+        "1.0": 0.4792
+      }
+    },
+    "prompt": {
+      "content": {
+        "accuracy": 0.9479166666666666,
+        "format_rate": 1.0,
+        "mean_margin": 7.63671875,
+        "n": 96,
+        "twin_pair": 0.8958333333333334
+      },
+      "random_pair": {
+        "accuracy": 0.6979166666666666,
+        "format_rate": 0.9166666666666666,
+        "mean_margin": 4.869791666666667,
+        "n": 96,
+        "twin_pair": 0.4166666666666667
+      },
+      "selectivity_gap_by_coverage": {
+        "0.2": 0.6,
+        "0.4": 0.6842,
+        "0.6": 0.6207,
+        "0.8": 0.6579,
+        "1.0": 0.4792
+      }
+    }
+  }
+}

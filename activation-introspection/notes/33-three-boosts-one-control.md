@@ -120,3 +120,91 @@ mattered. Instructions land without changing what is available.
 Three conditions × two arms × four concept pairs × 24 episodes = 576 episodes,
 plus the direction build and its gate. Inference only, no training, one model
 load. About fifteen minutes.
+
+---
+
+# Result: a clean pattern, and not enough data to believe it yet
+
+Run **2026-08-13**, 576 episodes. Artifacts: `results/three_boosts_v1_raw.jsonl`,
+`results/three_boosts_v1_summary.json`.
+
+**Anchor passes.** The `none` arm gives content accuracy 0.896 against `14`'s
+published 0.899. Format rate 1.000 in every cell.
+
+## The point estimates
+
+Twin-pair accuracy, 48 pairs per cell:
+
+| condition | content | random | **gap** | mean margin |
+|---|---:|---:|---:|---:|
+| `none` | 0.792 | 0.312 | **+0.479** | 4.51 |
+| `prompt` | 0.896 | 0.417 | **+0.479** | 7.64 |
+| `ablate` | 0.604 | 0.188 | +0.417 | 2.93 |
+
+**Prompting lifts both arms by exactly the same amount** — content +0.104, random
++0.104 — and the selectivity gap is unchanged to three decimals. Confidence rises
+substantially (margin 4.51 → 7.64), so the prompt is doing something real to the
+model's certainty.
+
+Set against training, from [`08`](08-sensitivity-specificity-tradeoff.md) and
+[`31`](31-why-training-inverts-abstention.md), the pattern is a clean three-way
+dissociation:
+
+| boost | selectivity gap | abstention |
+|---|---|---|
+| `prompt` (inference-time) | **unchanged**, 0.479 → 0.479 | works: gap widens to +0.600 |
+| `ablate` (inference-time) | roughly unchanged, and not a boost | works: gap widens to +0.800 |
+| **training** (weights) | **collapses**, 0.232 → 0.045 | **inverts**: gap narrows to 0.019 |
+
+Training is the odd one out on **both** axes, and it is the only boost that
+changes weights. That is exactly what `31`'s mechanism predicts: training installs
+a new capability — reading any displacement's direction cleanly — which is
+indifferent to meaning, while an inference-time intervention scales what is
+already there and keeps the meaning-sensitivity with it.
+
+## And now the part that matters
+
+**None of the individual comparisons is significant.** Bootstrap, 48 twin pairs
+per cell:
+
+| comparison | estimate | 95% CI |
+|---|---:|---|
+| prompt − none, content | +0.104 | **[−0.042, +0.250]** |
+| prompt − none, random | +0.104 | **[−0.083, +0.292]** |
+| **change in selectivity gap** | **+0.000** | **[−0.229, +0.250]** |
+
+The gap change is exactly zero as a point estimate, and its interval is wide
+enough to contain training's −0.187. **So this run cannot distinguish "prompting
+preserves selectivity" from "prompting collapses it exactly as much as training
+does."** The dissociation above is a pattern in point estimates, not an
+established finding, and describing it as one would be the error this repository
+keeps catching.
+
+I am recording it as **suggestive and underpowered**, and the numbers that make it
+suggestive — two arms moving by the identical +0.104, a gap change of 0.000 — are
+the kind of tidiness that regresses.
+
+## My prediction, scored
+
+I predicted prompting and ablation preserve selectivity while training does not,
+at 55/45 and held weakly. **The point estimates match exactly.** But I claimed a
+weak prior and the data are too weak to promote it, so this scores as *consistent
+with*, not *confirmed*.
+
+## What fixes it, and it is cheap
+
+The design uses one carrier. `CONFIRM_VISIBLE_SAMPLES` has **three**. Running all
+three triples n to 144 twin pairs per cell and shrinks every interval above by
+about 42% — enough to separate a preserved gap from training's collapse.
+
+That is [`34`](34-three-boosts-powered.md), and it is the obvious next run rather
+than a new idea. **A pattern this clean deserves either confirmation or death, and
+at 48 pairs it gets neither.**
+
+## Limits
+
+One model, one layer, four concept pairs, one carrier. The training comparison is
+against `08` and `31`'s separate runs rather than a head-to-head arm, because the
+adapters were never saved. The abstention curves are computed on 48 pairs and are
+correspondingly noisy at low coverage — the `ablate` arm's +0.800 at 20% coverage
+rests on about 10 cells.

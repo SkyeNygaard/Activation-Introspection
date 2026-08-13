@@ -63,6 +63,10 @@ PROMPT_FAMILY = "introspect"
 
 COVERAGES = (1.0, 0.8, 0.6, 0.4, 0.2)
 
+#: notes/33 ran one carrier and every interval included zero. notes/34 runs all
+#: three, tripling n to 144 twin pairs per cell and shrinking intervals ~42%.
+ALL_CARRIERS = True
+
 #: notes/14 published this. The `none` arm must land within 0.10 of it.
 NOTES_14_CONTENT_ACCURACY = 0.899
 ANCHOR_TOLERANCE = 0.10
@@ -146,53 +150,63 @@ def run(args: argparse.Namespace) -> None:
             for n, cv in raw.items()
         }
 
-        carrier = CONFIRM_VISIBLE_SAMPLES[0]
-        carrier_sha = hashlib.sha256(carrier.encode()).hexdigest()[:16]
-        base_episodes = exact_episodes(carrier)
-        if args.smoke:
-            base_episodes = base_episodes[:2]
+        carriers = (
+            CONFIRM_VISIBLE_SAMPLES[:1]
+            if (args.smoke or not ALL_CARRIERS)
+            else CONFIRM_VISIBLE_SAMPLES
+        )
+        by_carrier = {}
+        for carrier in carriers:
+            eps = exact_episodes(carrier)
+            if args.smoke:
+                eps = eps[:2]
+            by_carrier[hashlib.sha256(carrier.encode()).hexdigest()[:16]] = eps
 
         # `prompt` differs only in the instruction header; every line carrying an
         # injection site is byte-identical, so the input-only control still holds.
         prepared = {
-            "plain": [prepare_episode(model, e) for e in base_episodes],
-            "framed": [prepare_episode(model, framed(e, PROMPT_FAMILY)) for e in base_episodes],
+            sha: {
+                "plain": [prepare_episode(model, e) for e in eps],
+                "framed": [prepare_episode(model, framed(e, PROMPT_FAMILY)) for e in eps],
+            }
+            for sha, eps in by_carrier.items()
         }
 
         rows: list[dict[str, object]] = []
         pairs = PAIRS[:1] if args.smoke else PAIRS
         for cond in CONDITIONS:
-            preps = prepared["framed"] if cond == "prompt" else prepared["plain"]
-            for a_name, b_name in pairs:
-                a, b = bank[a_name], bank[b_name]
-                for arm in ARMS:
-                    if arm == "content":
-                        pos, neg = a, b
-                    else:
-                        pos = random_control(a, seed=hash(a_name) % 10000)
-                        neg = random_control(b, seed=hash(b_name) % 10000)
-                    strength = matched_strength(pos.vector, neg.vector)
-                    for prep in preps:
-                        if cond == "ablate":
-                            with ablate(model, direction):
-                                r = score_with_margin(model, prep, pos, neg, strength=strength)
+            for carrier_sha, per in prepared.items():
+                preps = per["framed"] if cond == "prompt" else per["plain"]
+                for a_name, b_name in pairs:
+                    a, b = bank[a_name], bank[b_name]
+                    for arm in ARMS:
+                        if arm == "content":
+                            pos, neg = a, b
                         else:
-                            r = score_with_margin(model, prep, pos, neg, strength=strength)
-                        rows.append(
-                            {
-                                "condition": cond,
-                                "arm": arm,
-                                # condition must be inside the twin key or cells from
-                                # different conditions collide.
-                                "pair": f"{a_name}|{b_name}|{cond}",
-                                "carrier_sha": carrier_sha,
-                                "cell_base": prep.episode.cell_id.rsplit("q", 1)[0],
-                                "cell_id": prep.episode.cell_id,
-                                "strength": strength,
-                                **r,
-                            }
-                        )
-            print(f"  {cond} done ({time.time() - started:.0f}s)", flush=True)
+                            pos = random_control(a, seed=hash(a_name) % 10000)
+                            neg = random_control(b, seed=hash(b_name) % 10000)
+                        strength = matched_strength(pos.vector, neg.vector)
+                        for prep in preps:
+                            if cond == "ablate":
+                                with ablate(model, direction):
+                                    r = score_with_margin(model, prep, pos, neg, strength=strength)
+                            else:
+                                r = score_with_margin(model, prep, pos, neg, strength=strength)
+                            rows.append(
+                                {
+                                    "condition": cond,
+                                    "arm": arm,
+                                    # condition must be inside the twin key or cells from
+                                    # different conditions collide.
+                                    "pair": f"{a_name}|{b_name}|{cond}",
+                                    "carrier_sha": carrier_sha,
+                                    "cell_base": prep.episode.cell_id.rsplit("q", 1)[0],
+                                    "cell_id": prep.episode.cell_id,
+                                    "strength": strength,
+                                    **r,
+                                }
+                            )
+                print(f"  {cond} done ({time.time() - started:.0f}s)", flush=True)
 
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("\n".join(json.dumps(r, sort_keys=True) for r in rows) + "\n")
