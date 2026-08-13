@@ -1,5 +1,56 @@
 # Result artifact status
 
+## Programmatic attention: the lever is coverage and context, not kernels
+
+`head_budget_protocol_v1.json` asks the cheapest question nobody had asked of the
+programmatic-attention workstream: **a head that has been deleted costs nothing,
+so how fast does GPT-2 get if you just delete them?** That is a hard ceiling on
+any program, however well written. Three arms — unmodified, k heads deleted per
+layer, k heads replaced by the exact lowering of the released first-token program
+fused into one projection in and one out — across 7 coverages, 5 lengths, 2
+devices, 3,150 paired timing blocks. Both gates pass.
+
+**The exact lowering captures 96–100% of the deletion ceiling on the processor
+and 90–99% on the graphics chip.** The project brief's reading of the earlier
+1.089× — *"the algebra was never the bottleneck; partial-head projection and
+dispatch are"* — is therefore wrong, and this is the fused implementation that
+brief proposed as the fix. The earlier number was small because **one head of
+twelve is a small share of the work**: three heads buys 1.19×, ten buys 2.09×.
+Break-even for the 1.25× the earlier study missed is **34% coverage** at 1024
+tokens, and unreachable at any coverage at 64 or 128 tokens.
+
+Three of my five pre-run predictions were wrong, all understating the ceiling,
+because I estimated it by counting multiplications and the explicit attention
+implementation does not spend its time there. Scope:
+[`../notes/27-how-much-can-a-free-head-possibly-buy.md`](../notes/27-how-much-can-a-free-head-possibly-buy.md).
+
+## Half the apparent gain belongs to the baseline, not the program
+
+`head_budget_axes_protocol_v1.json` flips the three choices the study above fixed
+arbitrarily: it drops GPT-2's vocabulary projection from the timed region, runs
+against the standard fast attention implementation as well as the explicit one,
+and goes to 4096 tokens. **Quote `head_budget_axes_v2_*`, not `_v1_*`** — the
+first execution failed its own `ceiling_bounds_program` gate, having been
+contaminated by other work running on the machine during its first four cells.
+The v1 artifacts are kept with that gate recorded false. `head_budget_axes_short_*`
+holds the matched-length rerun used to isolate the vocabulary-projection axis.
+
+**The headline: against the attention implementation people actually deploy,
+roughly half the advantage disappears** — 46% of it at high coverage and 1024
+tokens, 54% at 4096. The pitch for programmatic attention is that it avoids
+building the big square score matrix, but the standard fast implementation
+already does exactly that, so measuring against the explicit one — as both the
+earlier benchmark and the study above did — compares against something nobody
+runs. Removing the vocabulary projection moves the other way and is worth up to
+26 points. Context length is the one axis where the idea is winning and had not
+flattened at 4096.
+
+Under the most realistic conditions available here, at the 25% coverage the
+source literature uses, the exact lowering delivers **1.06× at 1024 tokens and
+1.13× at 4096** — against a reported ~16% average perplexity cost for that same
+coverage. Scope:
+[`../notes/28-three-ways-the-ceiling-could-be-wrong.md`](../notes/28-three-ways-the-ceiling-could-be-wrong.md).
+
 ## Introspection training loses to a difference-of-means probe
 
 `trained_vs_probe_protocol_v2.json` fits readers on the trained reporter's own
