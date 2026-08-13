@@ -116,17 +116,28 @@ separation by construction** at 0.594; 4 of 4 pairs.
 Same state, same reader, wording only: `sensory` 0.708, `associations` 0.500,
 `name_one` **0.292** (tied with a prompt that forbade naming).
 
-**Clustering predicts learnability** ([notes/16](activation-introspection/notes/16-visible-rule-capacity.md),
-[notes/19](activation-introspection/notes/19-clustering-predicts-learnability.md)).
-Whether the four-shot interface can learn a hidden rule is predicted by whether the
-rule's classes clump in representation space. **12 of 14 predictions correct with
-thresholds frozen to disk before any accuracy existed** — the only prospective test
-in the repository. Positive clumping meant learnable **8 for 8**; negative meant not
-learnable 4 of 6. Use it as a green light, not a veto.
+**Clustering predicts learnability — DID NOT REPLICATE, do not quote**
+([notes/16](activation-introspection/notes/16-visible-rule-capacity.md),
+[notes/19](activation-introspection/notes/19-clustering-predicts-learnability.md),
+[notes/26](activation-introspection/notes/26-someone-elses-rules.md)).
+`19` scored 12 of 14 with thresholds frozen to disk before any accuracy existed —
+still the only prospective test here, and it stands as measured. But `26` reran it
+on fourteen rules written by a model blind to the hypothesis: **rank agreement
+0.403 against 0.785, permutation p = 0.078, and the usable half — positive clumping
+means learnable, 8 for 8 — fell to 4 of 7.** The green light was the whole
+recommendation and it is a coin flip on rules Skye did not write. What is retracted
+is the generalisation, not the measurement.
 
-**Calibration is unusable** ([notes/20](activation-introspection/notes/20-comparator-tiers.md)).
-Confidence 0.998 when right, 0.928 when wrong. A 0.07 gap across a 100% accuracy
-gap, so confidence cannot filter self-report.
+**Calibration — WITHDRAWN, and it reverses**
+([notes/20](activation-introspection/notes/20-comparator-tiers.md),
+[notes/29](activation-introspection/notes/29-can-abstention-recover-selectivity.md)).
+`20` read a 0.07 gap between mean confidence when right (0.998) and wrong (0.928)
+as absence of signal. That is a difference of means on a number squashed against
+1.0. Ranked instead, confidence orders correct self-reports above incorrect ones at
+**AUROC 0.675 (base) and 0.891 (trained)** on held-out seeds. **The model does know
+which of its self-reports to distrust** — and `29` also shows that acting on it
+does not help: abstention *narrows* the concept-versus-noise gap in a trained
+reporter while nearly doubling it in an untrained one.
 
 **Training** ([notes/07](activation-introspection/notes/07-trained-activation-reporter.md),
 [notes/08](activation-introspection/notes/08-sensitivity-specificity-tradeoff.md)).
