@@ -1,0 +1,25 @@
+{
+  "auroc": {
+    "margin": 0.7248664400194269,
+    "probe": 0.6596648858669257,
+    "product_size_alone": 0.6342277804759592,
+    "verbal": 0.6787882467217096
+  },
+  "cost_note": "The probe is fitted on a training split of the model's own errors; the model is asked cold. This is NOT a cost-matched comparison and no conclusion may be phrased as one. Stated in notes/30 before the run.",
+  "digit_size": "2x2",
+  "elapsed_seconds": 194.7,
+  "gate_b_passed": true,
+  "gate_b_probe_threshold": 0.55,
+  "hard_only": true,
+  "layer": 9,
+  "min_product": 2000,
+  "model": "qwen-3b",
+  "n_problems": 400,
+  "n_test": 200,
+  "note": "notes/30",
+  "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": false,
+  "task_accuracy": 0.7025,
+  "verbal_is_constant_responder": true,
+  "verbal_yes_rate": 0.0
+}

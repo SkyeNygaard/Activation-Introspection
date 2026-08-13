@@ -1,0 +1,400 @@
+{"a": 59, "answer": 3422, "answer_text": "3422", "b": 58, "correct": true, "index": 0, "margin": 15.375, "truth": 3422, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 51, "answer": 2295, "answer_text": "2295", "b": 45, "correct": true, "index": 1, "margin": 17.4375, "truth": 2295, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 33, "answer": 2475, "answer_text": "2475", "b": 75, "correct": true, "index": 2, "margin": 14.8125, "probe_score": 3.5926296710968018, "truth": 2475, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 70, "answer": 2100, "answer_text": "2100", "b": 30, "correct": true, "index": 3, "margin": 18.0, "probe_score": 14.82931137084961, "truth": 2100, "verbal_says_yes": false, "verbal_yes_minus_no": -3.5}
+{"a": 29, "answer": 2407, "answer_text": "2407", "b": 83, "correct": true, "index": 4, "margin": 17.5, "probe_score": -4.166233062744141, "truth": 2407, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 96, "answer": 6720, "answer_text": "6720", "b": 70, "correct": true, "index": 5, "margin": 18.625, "truth": 6720, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 98, "answer": 8076, "answer_text": "8076", "b": 82, "correct": false, "index": 6, "margin": 5.875, "probe_score": -4.7862958908081055, "truth": 8036, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 95, "answer": 8550, "answer_text": "8550", "b": 90, "correct": true, "index": 7, "margin": 15.625, "truth": 8550, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 39, "answer": 2583, "answer_text": "2583", "b": 67, "correct": false, "index": 8, "margin": 12.9375, "probe_score": -15.143290519714355, "truth": 2613, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 76, "answer": 4028, "answer_text": "4028", "b": 53, "correct": true, "index": 9, "margin": 2.0, "truth": 4028, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 96, "answer": 5280, "answer_text": "5280", "b": 55, "correct": true, "index": 10, "margin": 15.0, "truth": 5280, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 87, "answer": 5220, "answer_text": "5220", "b": 60, "correct": true, "index": 11, "margin": 14.625, "truth": 5220, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 61, "answer": 3111, "answer_text": "3111", "b": 51, "correct": true, "index": 12, "margin": 17.125, "probe_score": 7.110121250152588, "truth": 3111, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 54, "answer": 4644, "answer_text": "4644", "b": 86, "correct": true, "index": 13, "margin": 14.375, "probe_score": 2.2942404747009277, "truth": 4644, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 81, "answer": 5832, "answer_text": "5832", "b": 72, "correct": true, "index": 14, "margin": 10.5, "probe_score": -0.3500681519508362, "truth": 5832, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 44, "answer": 2904, "answer_text": "2904", "b": 66, "correct": true, "index": 15, "margin": 17.625, "probe_score": -4.896440029144287, "truth": 2904, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 88, "answer": 2728, "answer_text": "2728", "b": 31, "correct": true, "index": 16, "margin": 14.0, "truth": 2728, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 46, "answer": 3246, "answer_text": "3246", "b": 71, "correct": false, "index": 17, "margin": 16.625, "truth": 3266, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 65, "answer": 6175, "answer_text": "6175", "b": 95, "correct": true, "index": 18, "margin": 8.75, "probe_score": 5.774978160858154, "truth": 6175, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 69, "answer": 4830, "answer_text": "4830", "b": 70, "correct": true, "index": 19, "margin": 15.625, "probe_score": 3.2426133155822754, "truth": 4830, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 39, "answer": 2847, "answer_text": "2847", "b": 73, "correct": true, "index": 20, "margin": 14.5, "truth": 2847, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 89, "answer": 5893, "answer_text": "5893", "b": 67, "correct": false, "index": 21, "margin": 7.0, "truth": 5963, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 63, "answer": 4857, "answer_text": "4857", "b": 79, "correct": false, "index": 22, "margin": 13.625, "truth": 4977, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 63, "answer": 2394, "answer_text": "2394", "b": 38, "correct": true, "index": 23, "margin": 16.6875, "truth": 2394, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 41, "answer": 2256, "answer_text": "2256", "b": 56, "correct": false, "index": 24, "margin": 19.0, "truth": 2296, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 37, "answer": 2849, "answer_text": "2849", "b": 77, "correct": true, "index": 25, "margin": 14.0625, "probe_score": -0.8913230895996094, "truth": 2849, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 78, "answer": 2886, "answer_text": "2886", "b": 37, "correct": true, "index": 26, "margin": 12.9375, "truth": 2886, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 81, "answer": 5184, "answer_text": "5184", "b": 64, "correct": true, "index": 27, "margin": 15.75, "truth": 5184, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 86, "answer": 8170, "answer_text": "8170", "b": 95, "correct": true, "index": 28, "margin": 9.75, "probe_score": -1.163360595703125, "truth": 8170, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 83, "answer": 2988, "answer_text": "2988", "b": 36, "correct": true, "index": 29, "margin": 8.375, "truth": 2988, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 42, "answer": 4158, "answer_text": "4158", "b": 99, "correct": true, "index": 30, "margin": 13.5, "probe_score": 1.7423553466796875, "truth": 4158, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 64, "answer": 4608, "answer_text": "4608", "b": 72, "correct": true, "index": 31, "margin": 17.375, "probe_score": -2.780215263366699, "truth": 4608, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 37, "answer": 2368, "answer_text": "2368", "b": 64, "correct": true, "index": 32, "margin": 16.0625, "truth": 2368, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 55, "answer": 2255, "answer_text": "2255", "b": 41, "correct": true, "index": 33, "margin": 18.0, "truth": 2255, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 74, "answer": 4292, "answer_text": "4292", "b": 58, "correct": true, "index": 34, "margin": 14.375, "probe_score": 5.63117790222168, "truth": 4292, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 91, "answer": 2184, "answer_text": "2184", "b": 24, "correct": true, "index": 35, "margin": 19.25, "probe_score": 12.684492111206055, "truth": 2184, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 72, "answer": 6336, "answer_text": "6336", "b": 88, "correct": true, "index": 36, "margin": 15.875, "truth": 6336, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 38, "answer": 2662, "answer_text": "2662", "b": 69, "correct": false, "index": 37, "margin": 13.0, "truth": 2622, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 57, "answer": 5358, "answer_text": "5358", "b": 94, "correct": true, "index": 38, "margin": 14.875, "truth": 5358, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 78, "answer": 5973, "answer_text": "5973", "b": 79, "correct": false, "index": 39, "margin": 3.25, "probe_score": -11.514934539794922, "truth": 6162, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 98, "answer": 2862, "answer_text": "2862", "b": 29, "correct": false, "index": 40, "margin": 13.4375, "probe_score": 5.689481735229492, "truth": 2842, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 75, "answer": 4935, "answer_text": "4935", "b": 69, "correct": false, "index": 41, "margin": 7.0, "truth": 5175, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 36, "answer": 2448, "answer_text": "2448", "b": 68, "correct": true, "index": 42, "margin": 16.0, "truth": 2448, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 68, "answer": 5984, "answer_text": "5984", "b": 88, "correct": true, "index": 43, "margin": 7.375, "probe_score": 5.186591148376465, "truth": 5984, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 98, "answer": 5390, "answer_text": "5390", "b": 55, "correct": true, "index": 44, "margin": 15.375, "truth": 5390, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 22, "answer": 2090, "answer_text": "2090", "b": 95, "correct": true, "index": 45, "margin": 14.125, "truth": 2090, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 33, "answer": 3168, "answer_text": "3168", "b": 96, "correct": true, "index": 46, "margin": 15.5, "truth": 3168, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 97, "answer": 8088, "answer_text": "8088", "b": 84, "correct": false, "index": 47, "margin": 2.25, "probe_score": -1.4820462465286255, "truth": 8148, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 83, "answer": 4671, "answer_text": "4671", "b": 57, "correct": false, "index": 48, "margin": 12.5, "probe_score": -7.629425048828125, "truth": 4731, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 66, "answer": 2178, "answer_text": "2178", "b": 33, "correct": true, "index": 49, "margin": 15.625, "probe_score": -3.72031307220459, "truth": 2178, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 44, "answer": 2728, "answer_text": "2728", "b": 62, "correct": true, "index": 50, "margin": 18.1875, "truth": 2728, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 35, "answer": 3430, "answer_text": "3430", "b": 98, "correct": true, "index": 51, "margin": 16.625, "probe_score": 9.861542701721191, "truth": 3430, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 81, "answer": 2531, "answer_text": "2531", "b": 31, "correct": false, "index": 52, "margin": 16.1875, "probe_score": 4.724997043609619, "truth": 2511, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 34, "answer": 2652, "answer_text": "2652", "b": 78, "correct": true, "index": 53, "margin": 15.3125, "probe_score": 4.003961086273193, "truth": 2652, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 82, "answer": 5332, "answer_text": "5332", "b": 66, "correct": false, "index": 54, "margin": 15.125, "truth": 5412, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 43, "answer": 3182, "answer_text": "3182", "b": 74, "correct": true, "index": 55, "margin": 16.0, "truth": 3182, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 49, "answer": 2891, "answer_text": "2891", "b": 59, "correct": true, "index": 56, "margin": 15.25, "probe_score": -1.2922581434249878, "truth": 2891, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 88, "answer": 5632, "answer_text": "5632", "b": 64, "correct": true, "index": 57, "margin": 12.25, "probe_score": -4.691253662109375, "truth": 5632, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 93, "answer": 6789, "answer_text": "6789", "b": 73, "correct": true, "index": 58, "margin": 16.375, "truth": 6789, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 69, "answer": 5619, "answer_text": "5619", "b": 81, "correct": false, "index": 59, "margin": 15.625, "truth": 5589, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 51, "answer": 3315, "answer_text": "3315", "b": 65, "correct": true, "index": 60, "margin": 16.625, "truth": 3315, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 97, "answer": 3686, "answer_text": "3686", "b": 38, "correct": true, "index": 61, "margin": 12.125, "probe_score": 2.7487149238586426, "truth": 3686, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 94, "answer": 3572, "answer_text": "3572", "b": 38, "correct": true, "index": 62, "margin": 14.75, "probe_score": 4.185434818267822, "truth": 3572, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 55, "answer": 3985, "answer_text": "3985", "b": 73, "correct": false, "index": 63, "margin": 5.625, "truth": 4015, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 76, "answer": 7296, "answer_text": "7296", "b": 96, "correct": true, "index": 64, "margin": 10.625, "probe_score": 3.2901129722595215, "truth": 7296, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 45, "answer": 4389, "answer_text": "4389", "b": 97, "correct": false, "index": 65, "margin": 14.125, "truth": 4365, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 32, "answer": 2144, "answer_text": "2144", "b": 67, "correct": true, "index": 66, "margin": 17.5, "probe_score": -6.449542999267578, "truth": 2144, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 93, "answer": 2139, "answer_text": "2139", "b": 23, "correct": true, "index": 67, "margin": 15.5, "probe_score": 1.4737515449523926, "truth": 2139, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 27, "answer": 2376, "answer_text": "2376", "b": 88, "correct": true, "index": 68, "margin": 16.375, "truth": 2376, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 82, "answer": 6888, "answer_text": "6888", "b": 84, "correct": true, "index": 69, "margin": 5.875, "probe_score": -5.305412769317627, "truth": 6888, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 62, "answer": 3720, "answer_text": "3720", "b": 60, "correct": true, "index": 70, "margin": 15.125, "truth": 3720, "verbal_says_yes": false, "verbal_yes_minus_no": -4.0}
+{"a": 28, "answer": 2660, "answer_text": "2660", "b": 95, "correct": true, "index": 71, "margin": 16.5, "truth": 2660, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 91, "answer": 7098, "answer_text": "7098", "b": 78, "correct": true, "index": 72, "margin": 9.125, "probe_score": -3.7081432342529297, "truth": 7098, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 43, "answer": 3311, "answer_text": "3311", "b": 77, "correct": true, "index": 73, "margin": 16.625, "truth": 3311, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 66, "answer": 6264, "answer_text": "6264", "b": 96, "correct": false, "index": 74, "margin": 15.875, "truth": 6336, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 36, "answer": 3456, "answer_text": "3456", "b": 96, "correct": true, "index": 75, "margin": 15.625, "truth": 3456, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 65, "answer": 4225, "answer_text": "4225", "b": 65, "correct": true, "index": 76, "margin": 8.875, "truth": 4225, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 49, "answer": 3596, "answer_text": "3596", "b": 74, "correct": false, "index": 77, "margin": 16.75, "probe_score": 1.2020618915557861, "truth": 3626, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 44, "answer": 2860, "answer_text": "2860", "b": 65, "correct": true, "index": 78, "margin": 18.4375, "probe_score": -0.5668463706970215, "truth": 2860, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 93, "answer": 2325, "answer_text": "2325", "b": 25, "correct": true, "index": 79, "margin": 14.9375, "probe_score": 8.604384422302246, "truth": 2325, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 84, "answer": 5880, "answer_text": "5880", "b": 70, "correct": true, "index": 80, "margin": 10.75, "probe_score": 10.699048042297363, "truth": 5880, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 96, "answer": 6312, "answer_text": "6312", "b": 67, "correct": false, "index": 81, "margin": 15.1875, "truth": 6432, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 40, "answer": 2280, "answer_text": "2280", "b": 57, "correct": true, "index": 82, "margin": 17.25, "truth": 2280, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 66, "answer": 4422, "answer_text": "4422", "b": 67, "correct": true, "index": 83, "margin": 14.5, "probe_score": -16.303674697875977, "truth": 4422, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 72, "answer": 4044, "answer_text": "4044", "b": 57, "correct": false, "index": 84, "margin": 9.25, "truth": 4104, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 73, "answer": 3849, "answer_text": "3849", "b": 53, "correct": false, "index": 85, "margin": 11.0, "probe_score": -0.8635531663894653, "truth": 3869, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 91, "answer": 8736, "answer_text": "8736", "b": 96, "correct": true, "index": 86, "margin": 11.75, "probe_score": -4.335864067077637, "truth": 8736, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 44, "answer": 3632, "answer_text": "3632", "b": 82, "correct": false, "index": 87, "margin": 16.375, "probe_score": -0.9087778329849243, "truth": 3608, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 48, "answer": 3192, "answer_text": "3192", "b": 67, "correct": false, "index": 88, "margin": 17.0, "truth": 3216, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 45, "answer": 3825, "answer_text": "3825", "b": 85, "correct": true, "index": 89, "margin": 15.125, "truth": 3825, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 44, "answer": 3388, "answer_text": "3388", "b": 77, "correct": true, "index": 90, "margin": 16.375, "truth": 3388, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 26, "answer": 2132, "answer_text": "2132", "b": 82, "correct": true, "index": 91, "margin": 5.625, "truth": 2132, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 97, "answer": 2910, "answer_text": "2910", "b": 30, "correct": true, "index": 92, "margin": 16.5, "probe_score": 10.535041809082031, "truth": 2910, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 77, "answer": 3542, "answer_text": "3542", "b": 46, "correct": true, "index": 93, "margin": 14.25, "probe_score": -3.891303539276123, "truth": 3542, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 77, "answer": 5417, "answer_text": "5417", "b": 71, "correct": false, "index": 94, "margin": 12.625, "probe_score": -10.678810119628906, "truth": 5467, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 69, "answer": 2662, "answer_text": "2662", "b": 38, "correct": false, "index": 95, "margin": 14.9375, "probe_score": 3.5688042640686035, "truth": 2622, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 81, "answer": 5448, "answer_text": "5448", "b": 68, "correct": false, "index": 96, "margin": 15.375, "truth": 5508, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 45, "answer": 2700, "answer_text": "2700", "b": 60, "correct": true, "index": 97, "margin": 19.25, "truth": 2700, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 48, "answer": 4368, "answer_text": "4368", "b": 92, "correct": false, "index": 98, "margin": 15.125, "truth": 4416, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 35, "answer": 2735, "answer_text": "2735", "b": 79, "correct": false, "index": 99, "margin": 14.0, "probe_score": -3.1305010318756104, "truth": 2765, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 68, "answer": 2312, "answer_text": "2312", "b": 34, "correct": true, "index": 100, "margin": 15.25, "truth": 2312, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 37, "answer": 2072, "answer_text": "2072", "b": 56, "correct": true, "index": 101, "margin": 7.75, "truth": 2072, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 85, "answer": 3655, "answer_text": "3655", "b": 43, "correct": true, "index": 102, "margin": 16.625, "probe_score": -1.6688108444213867, "truth": 3655, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 66, "answer": 4686, "answer_text": "4686", "b": 71, "correct": true, "index": 103, "margin": 16.0625, "probe_score": -15.67708969116211, "truth": 4686, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 84, "answer": 4200, "answer_text": "4200", "b": 50, "correct": true, "index": 104, "margin": 17.375, "probe_score": 19.348621368408203, "truth": 4200, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 54, "answer": 3456, "answer_text": "3456", "b": 64, "correct": true, "index": 105, "margin": 16.375, "truth": 3456, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 54, "answer": 4320, "answer_text": "4320", "b": 80, "correct": true, "index": 106, "margin": 16.5, "probe_score": 8.767646789550781, "truth": 4320, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 38, "answer": 1954, "answer_text": "1954", "b": 53, "correct": false, "index": 107, "margin": 9.75, "truth": 2014, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 54, "answer": 2322, "answer_text": "2322", "b": 43, "correct": true, "index": 108, "margin": 18.1875, "probe_score": 5.002255439758301, "truth": 2322, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 90, "answer": 5760, "answer_text": "5760", "b": 64, "correct": true, "index": 109, "margin": 14.5, "truth": 5760, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 39, "answer": 2652, "answer_text": "2652", "b": 68, "correct": true, "index": 110, "margin": 12.1875, "probe_score": -2.238093852996826, "truth": 2652, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 24, "answer": 2112, "answer_text": "2112", "b": 88, "correct": true, "index": 111, "margin": 18.75, "probe_score": 15.041814804077148, "truth": 2112, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 69, "answer": 4899, "answer_text": "4899", "b": 71, "correct": true, "index": 112, "margin": 15.0, "probe_score": -7.65864372253418, "truth": 4899, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 72, "answer": 3600, "answer_text": "3600", "b": 50, "correct": true, "index": 113, "margin": 18.25, "probe_score": 11.370363235473633, "truth": 3600, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 93, "answer": 5985, "answer_text": "5985", "b": 65, "correct": false, "index": 114, "margin": 1.375, "probe_score": -1.6973680257797241, "truth": 6045, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 46, "answer": 4508, "answer_text": "4508", "b": 98, "correct": true, "index": 115, "margin": 15.5625, "truth": 4508, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 31, "answer": 2976, "answer_text": "2976", "b": 96, "correct": true, "index": 116, "margin": 0.5, "truth": 2976, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 97, "answer": 6864, "answer_text": "6864", "b": 72, "correct": false, "index": 117, "margin": 8.75, "probe_score": -3.305870771408081, "truth": 6984, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 62, "answer": 5796, "answer_text": "5796", "b": 93, "correct": false, "index": 118, "margin": 11.25, "truth": 5766, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 74, "answer": 3108, "answer_text": "3108", "b": 42, "correct": true, "index": 119, "margin": 16.0, "probe_score": -2.845205783843994, "truth": 3108, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 55, "answer": 4730, "answer_text": "4730", "b": 86, "correct": true, "index": 120, "margin": 13.1875, "truth": 4730, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 56, "answer": 3988, "answer_text": "3988", "b": 73, "correct": false, "index": 121, "margin": 2.5, "probe_score": -14.18336009979248, "truth": 4088, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 39, "answer": 3294, "answer_text": "3294", "b": 86, "correct": false, "index": 122, "margin": 16.4375, "probe_score": 3.1691696643829346, "truth": 3354, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 66, "answer": 2970, "answer_text": "2970", "b": 45, "correct": true, "index": 123, "margin": 17.5, "truth": 2970, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 63, "answer": 4671, "answer_text": "4671", "b": 73, "correct": false, "index": 124, "margin": 16.1875, "truth": 4599, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 25, "answer": 2150, "answer_text": "2150", "b": 86, "correct": true, "index": 125, "margin": 11.875, "probe_score": 9.419557571411133, "truth": 2150, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 22, "answer": 2068, "answer_text": "2068", "b": 94, "correct": true, "index": 126, "margin": 14.625, "probe_score": 2.8656444549560547, "truth": 2068, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 99, "answer": 4257, "answer_text": "4257", "b": 43, "correct": true, "index": 127, "margin": 15.0, "probe_score": 1.4574122428894043, "truth": 4257, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 78, "answer": 4758, "answer_text": "4758", "b": 61, "correct": true, "index": 128, "margin": 15.3125, "probe_score": -3.2002055644989014, "truth": 4758, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 63, "answer": 2772, "answer_text": "2772", "b": 44, "correct": true, "index": 129, "margin": 18.4375, "probe_score": 15.339616775512695, "truth": 2772, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 92, "answer": 4468, "answer_text": "4468", "b": 49, "correct": false, "index": 130, "margin": 17.25, "truth": 4508, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 56, "answer": 4256, "answer_text": "4256", "b": 76, "correct": true, "index": 131, "margin": 14.0, "probe_score": -3.4933176040649414, "truth": 4256, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 71, "answer": 2485, "answer_text": "2485", "b": 35, "correct": true, "index": 132, "margin": 15.125, "truth": 2485, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 78, "answer": 4988, "answer_text": "4988", "b": 66, "correct": false, "index": 133, "margin": 1.0, "truth": 5148, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 97, "answer": 2134, "answer_text": "2134", "b": 22, "correct": true, "index": 134, "margin": 17.9375, "truth": 2134, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 62, "answer": 2666, "answer_text": "2666", "b": 43, "correct": true, "index": 135, "margin": 17.75, "truth": 2666, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 77, "answer": 3850, "answer_text": "3850", "b": 50, "correct": true, "index": 136, "margin": 15.375, "truth": 3850, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 98, "answer": 7252, "answer_text": "7252", "b": 74, "correct": true, "index": 137, "margin": 14.75, "probe_score": -5.689623832702637, "truth": 7252, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 71, "answer": 2698, "answer_text": "2698", "b": 38, "correct": true, "index": 138, "margin": 14.4375, "truth": 2698, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 74, "answer": 4662, "answer_text": "4662", "b": 63, "correct": true, "index": 139, "margin": 14.0625, "probe_score": -5.46169376373291, "truth": 4662, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 88, "answer": 4752, "answer_text": "4752", "b": 54, "correct": true, "index": 140, "margin": 11.75, "probe_score": -10.941777229309082, "truth": 4752, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 54, "answer": 2376, "answer_text": "2376", "b": 44, "correct": true, "index": 141, "margin": 18.375, "truth": 2376, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 44, "answer": 3964, "answer_text": "3964", "b": 91, "correct": false, "index": 142, "margin": 10.75, "probe_score": 4.875938415527344, "truth": 4004, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 76, "answer": 4180, "answer_text": "4180", "b": 55, "correct": true, "index": 143, "margin": 12.875, "truth": 4180, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 97, "answer": 6556, "answer_text": "6556", "b": 68, "correct": false, "index": 144, "margin": 14.6875, "probe_score": -8.224052429199219, "truth": 6596, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 29, "answer": 2591, "answer_text": "2591", "b": 89, "correct": false, "index": 145, "margin": 15.625, "probe_score": 2.6280770301818848, "truth": 2581, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 72, "answer": 2304, "answer_text": "2304", "b": 32, "correct": true, "index": 146, "margin": 16.3125, "probe_score": 10.227298736572266, "truth": 2304, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 83, "answer": 5146, "answer_text": "5146", "b": 62, "correct": true, "index": 147, "margin": 15.1875, "truth": 5146, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 85, "answer": 5185, "answer_text": "5185", "b": 61, "correct": true, "index": 148, "margin": 13.75, "probe_score": -1.3101773262023926, "truth": 5185, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 25, "answer": 2300, "answer_text": "2300", "b": 92, "correct": true, "index": 149, "margin": 15.125, "truth": 2300, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 79, "answer": 4267, "answer_text": "4267", "b": 53, "correct": false, "index": 150, "margin": 14.25, "truth": 4187, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 42, "answer": 3570, "answer_text": "3570", "b": 85, "correct": true, "index": 151, "margin": 17.0, "probe_score": -3.6688804626464844, "truth": 3570, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 62, "answer": 3224, "answer_text": "3224", "b": 52, "correct": true, "index": 152, "margin": 15.75, "truth": 3224, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 72, "answer": 4320, "answer_text": "4320", "b": 60, "correct": true, "index": 153, "margin": 16.875, "truth": 4320, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 68, "answer": 3728, "answer_text": "3728", "b": 56, "correct": false, "index": 154, "margin": 16.0, "truth": 3808, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 89, "answer": 6466, "answer_text": "6466", "b": 74, "correct": false, "index": 155, "margin": 12.4375, "truth": 6586, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 68, "answer": 2176, "answer_text": "2176", "b": 32, "correct": true, "index": 156, "margin": 16.5625, "probe_score": 8.315568923950195, "truth": 2176, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 66, "answer": 6468, "answer_text": "6468", "b": 98, "correct": true, "index": 157, "margin": 16.75, "probe_score": -8.353259086608887, "truth": 6468, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 59, "answer": 3127, "answer_text": "3127", "b": 53, "correct": true, "index": 158, "margin": 6.625, "probe_score": -1.950578212738037, "truth": 3127, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 79, "answer": 7821, "answer_text": "7821", "b": 99, "correct": true, "index": 159, "margin": 18.5, "truth": 7821, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 89, "answer": 7120, "answer_text": "7120", "b": 80, "correct": true, "index": 160, "margin": 15.875, "truth": 7120, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 53, "answer": 4982, "answer_text": "4982", "b": 94, "correct": true, "index": 161, "margin": 7.5, "probe_score": 5.367154121398926, "truth": 4982, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 71, "answer": 5316, "answer_text": "5316", "b": 76, "correct": false, "index": 162, "margin": 17.5625, "truth": 5396, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 52, "answer": 4056, "answer_text": "4056", "b": 78, "correct": true, "index": 163, "margin": 3.875, "probe_score": 5.059057235717773, "truth": 4056, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 90, "answer": 7830, "answer_text": "7830", "b": 89, "correct": false, "index": 164, "margin": 8.625, "probe_score": 6.06979513168335, "truth": 8010, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 31, "answer": 2046, "answer_text": "2046", "b": 66, "correct": true, "index": 165, "margin": 6.25, "probe_score": 0.4502848982810974, "truth": 2046, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 66, "answer": 5958, "answer_text": "5958", "b": 93, "correct": false, "index": 166, "margin": 2.375, "truth": 6138, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 28, "answer": 1984, "answer_text": "1984", "b": 73, "correct": false, "index": 167, "margin": 0.375, "truth": 2044, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 49, "answer": 4459, "answer_text": "4459", "b": 91, "correct": true, "index": 168, "margin": 16.125, "truth": 4459, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 70, "answer": 2940, "answer_text": "2940", "b": 42, "correct": true, "index": 169, "margin": 10.875, "truth": 2940, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 95, "answer": 8075, "answer_text": "8075", "b": 85, "correct": true, "index": 170, "margin": 3.875, "truth": 8075, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 69, "answer": 6237, "answer_text": "6237", "b": 93, "correct": false, "index": 171, "margin": 17.9375, "probe_score": -6.4000678062438965, "truth": 6417, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 68, "answer": 3264, "answer_text": "3264", "b": 48, "correct": true, "index": 172, "margin": 16.625, "probe_score": 4.082425117492676, "truth": 3264, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 95, "answer": 7140, "answer_text": "7140", "b": 76, "correct": false, "index": 173, "margin": 10.75, "truth": 7220, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 65, "answer": 4550, "answer_text": "4550", "b": 70, "correct": true, "index": 174, "margin": 17.25, "truth": 4550, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 30, "answer": 2520, "answer_text": "2520", "b": 84, "correct": true, "index": 175, "margin": 17.75, "probe_score": 8.515462875366211, "truth": 2520, "verbal_says_yes": false, "verbal_yes_minus_no": -4.0}
+{"a": 55, "answer": 4510, "answer_text": "4510", "b": 82, "correct": true, "index": 176, "margin": 14.0, "probe_score": 1.8331695795059204, "truth": 4510, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 33, "answer": 2310, "answer_text": "2310", "b": 70, "correct": true, "index": 177, "margin": 16.375, "probe_score": 9.601781845092773, "truth": 2310, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 94, "answer": 3384, "answer_text": "3384", "b": 36, "correct": true, "index": 178, "margin": 15.0, "truth": 3384, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 50, "answer": 2750, "answer_text": "2750", "b": 55, "correct": true, "index": 179, "margin": 19.0, "truth": 2750, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 62, "answer": 4154, "answer_text": "4154", "b": 67, "correct": true, "index": 180, "margin": 12.25, "probe_score": -13.660357475280762, "truth": 4154, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 47, "answer": 4428, "answer_text": "4428", "b": 94, "correct": false, "index": 181, "margin": 14.9375, "truth": 4418, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 31, "answer": 2418, "answer_text": "2418", "b": 78, "correct": true, "index": 182, "margin": 17.25, "probe_score": 2.1626768112182617, "truth": 2418, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 83, "answer": 8227, "answer_text": "8227", "b": 99, "correct": false, "index": 183, "margin": 17.0, "truth": 8217, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 43, "answer": 2047, "answer_text": "2047", "b": 49, "correct": false, "index": 184, "margin": 14.5, "truth": 2107, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 61, "answer": 5978, "answer_text": "5978", "b": 98, "correct": true, "index": 185, "margin": 2.375, "truth": 5978, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 86, "answer": 4300, "answer_text": "4300", "b": 50, "correct": true, "index": 186, "margin": 15.5, "probe_score": 3.0140843391418457, "truth": 4300, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 98, "answer": 3724, "answer_text": "3724", "b": 38, "correct": true, "index": 187, "margin": 12.25, "truth": 3724, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 89, "answer": 8128, "answer_text": "8128", "b": 92, "correct": false, "index": 188, "margin": 4.25, "truth": 8188, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 46, "answer": 3726, "answer_text": "3726", "b": 81, "correct": true, "index": 189, "margin": 16.5, "probe_score": 1.6057584285736084, "truth": 3726, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 83, "answer": 5524, "answer_text": "5524", "b": 68, "correct": false, "index": 190, "margin": 14.75, "truth": 5644, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 44, "answer": 3704, "answer_text": "3704", "b": 86, "correct": false, "index": 191, "margin": 14.875, "probe_score": -2.6840851306915283, "truth": 3784, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 55, "answer": 3740, "answer_text": "3740", "b": 68, "correct": true, "index": 192, "margin": 16.625, "probe_score": 1.1963473558425903, "truth": 3740, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 60, "answer": 4980, "answer_text": "4980", "b": 83, "correct": true, "index": 193, "margin": 6.75, "probe_score": -2.255218744277954, "truth": 4980, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 64, "answer": 3840, "answer_text": "3840", "b": 60, "correct": true, "index": 194, "margin": 16.25, "probe_score": 11.199593544006348, "truth": 3840, "verbal_says_yes": false, "verbal_yes_minus_no": -3.25}
+{"a": 94, "answer": 5170, "answer_text": "5170", "b": 55, "correct": true, "index": 195, "margin": 14.625, "probe_score": 0.6199088096618652, "truth": 5170, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 98, "answer": 8624, "answer_text": "8624", "b": 88, "correct": true, "index": 196, "margin": 17.25, "truth": 8624, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 44, "answer": 3960, "answer_text": "3960", "b": 90, "correct": true, "index": 197, "margin": 10.375, "truth": 3960, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 89, "answer": 2225, "answer_text": "2225", "b": 25, "correct": true, "index": 198, "margin": 13.75, "truth": 2225, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 84, "answer": 3276, "answer_text": "3276", "b": 39, "correct": true, "index": 199, "margin": 16.5, "probe_score": 1.3954763412475586, "truth": 3276, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 90, "answer": 8280, "answer_text": "8280", "b": 92, "correct": true, "index": 200, "margin": 16.375, "probe_score": 1.4745285511016846, "truth": 8280, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 28, "answer": 2192, "answer_text": "2192", "b": 79, "correct": false, "index": 201, "margin": 13.3125, "probe_score": -4.906444072723389, "truth": 2212, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 49, "answer": 2401, "answer_text": "2401", "b": 49, "correct": true, "index": 202, "margin": 13.875, "truth": 2401, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 49, "answer": 3185, "answer_text": "3185", "b": 65, "correct": true, "index": 203, "margin": 11.5, "truth": 3185, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 94, "answer": 6580, "answer_text": "6580", "b": 70, "correct": true, "index": 204, "margin": 19.0, "truth": 6580, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 75, "answer": 3825, "answer_text": "3825", "b": 51, "correct": true, "index": 205, "margin": 16.0, "truth": 3825, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 72, "answer": 6192, "answer_text": "6192", "b": 86, "correct": true, "index": 206, "margin": 15.625, "probe_score": -4.00803279876709, "truth": 6192, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 79, "answer": 3239, "answer_text": "3239", "b": 41, "correct": true, "index": 207, "margin": 16.4375, "truth": 3239, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 85, "answer": 4845, "answer_text": "4845", "b": 57, "correct": true, "index": 208, "margin": 9.625, "probe_score": -5.878520488739014, "truth": 4845, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 68, "answer": 2720, "answer_text": "2720", "b": 40, "correct": true, "index": 209, "margin": 20.375, "truth": 2720, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 89, "answer": 2492, "answer_text": "2492", "b": 28, "correct": true, "index": 210, "margin": 13.125, "probe_score": 3.8384153842926025, "truth": 2492, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 71, "answer": 5882, "answer_text": "5882", "b": 82, "correct": false, "index": 211, "margin": 13.0, "truth": 5822, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 41, "answer": 3280, "answer_text": "3280", "b": 80, "correct": true, "index": 212, "margin": 17.0, "probe_score": 7.40825080871582, "truth": 3280, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 79, "answer": 2765, "answer_text": "2765", "b": 35, "correct": true, "index": 213, "margin": 15.1875, "probe_score": -1.7759666442871094, "truth": 2765, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 51, "answer": 4182, "answer_text": "4182", "b": 82, "correct": true, "index": 214, "margin": 14.625, "truth": 4182, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 46, "answer": 2112, "answer_text": "2112", "b": 48, "correct": false, "index": 215, "margin": 14.8125, "probe_score": 5.516757965087891, "truth": 2208, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 84, "answer": 7056, "answer_text": "7056", "b": 84, "correct": true, "index": 216, "margin": 12.0, "probe_score": 11.682647705078125, "truth": 7056, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 34, "answer": 2924, "answer_text": "2924", "b": 86, "correct": true, "index": 217, "margin": 10.875, "truth": 2924, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 33, "answer": 2046, "answer_text": "2046", "b": 62, "correct": true, "index": 218, "margin": 1.75, "probe_score": 4.318297863006592, "truth": 2046, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 88, "answer": 7832, "answer_text": "7832", "b": 89, "correct": true, "index": 219, "margin": 11.125, "probe_score": -9.564451217651367, "truth": 7832, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 49, "answer": 3903, "answer_text": "3903", "b": 87, "correct": false, "index": 220, "margin": 0.0, "probe_score": 5.0382208824157715, "truth": 4263, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 38, "answer": 2280, "answer_text": "2280", "b": 60, "correct": true, "index": 221, "margin": 15.25, "truth": 2280, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 89, "answer": 7672, "answer_text": "7672", "b": 88, "correct": false, "index": 222, "margin": 13.125, "truth": 7832, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 75, "answer": 4500, "answer_text": "4500", "b": 60, "correct": true, "index": 223, "margin": 16.5, "truth": 4500, "verbal_says_yes": false, "verbal_yes_minus_no": -3.75}
+{"a": 85, "answer": 3960, "answer_text": "3960", "b": 48, "correct": false, "index": 224, "margin": 1.0, "probe_score": 8.607595443725586, "truth": 4080, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 45, "answer": 3855, "answer_text": "3855", "b": 87, "correct": false, "index": 225, "margin": 13.625, "probe_score": -1.6580348014831543, "truth": 3915, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 52, "answer": 2392, "answer_text": "2392", "b": 46, "correct": true, "index": 226, "margin": 17.0625, "truth": 2392, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 38, "answer": 3458, "answer_text": "3458", "b": 91, "correct": true, "index": 227, "margin": 15.375, "truth": 3458, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 54, "answer": 2970, "answer_text": "2970", "b": 55, "correct": true, "index": 228, "margin": 9.375, "probe_score": 2.9160268306732178, "truth": 2970, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 66, "answer": 3082, "answer_text": "3082", "b": 47, "correct": false, "index": 229, "margin": 8.75, "truth": 3102, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 37, "answer": 3253, "answer_text": "3253", "b": 89, "correct": false, "index": 230, "margin": 16.8125, "truth": 3293, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 95, "answer": 5895, "answer_text": "5895", "b": 61, "correct": false, "index": 231, "margin": 10.5, "truth": 5795, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 79, "answer": 5962, "answer_text": "5962", "b": 78, "correct": false, "index": 232, "margin": 2.25, "truth": 6162, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 86, "answer": 5728, "answer_text": "5728", "b": 68, "correct": false, "index": 233, "margin": 12.125, "truth": 5848, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 68, "answer": 5044, "answer_text": "5044", "b": 78, "correct": false, "index": 234, "margin": 9.25, "probe_score": -0.2081754207611084, "truth": 5304, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 74, "answer": 4386, "answer_text": "4386", "b": 59, "correct": false, "index": 235, "margin": 14.625, "probe_score": -7.4878830909729, "truth": 4366, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 93, "answer": 7181, "answer_text": "7181", "b": 77, "correct": false, "index": 236, "margin": 10.875, "truth": 7161, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 88, "answer": 6160, "answer_text": "6160", "b": 70, "correct": true, "index": 237, "margin": 14.0625, "truth": 6160, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 90, "answer": 8730, "answer_text": "8730", "b": 97, "correct": true, "index": 238, "margin": 16.375, "probe_score": 1.8410766124725342, "truth": 8730, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 34, "answer": 3332, "answer_text": "3332", "b": 98, "correct": true, "index": 239, "margin": 16.125, "probe_score": 3.1816155910491943, "truth": 3332, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 33, "answer": 2804, "answer_text": "2804", "b": 88, "correct": false, "index": 240, "margin": 5.75, "probe_score": 6.304112434387207, "truth": 2904, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 82, "answer": 5948, "answer_text": "5948", "b": 74, "correct": false, "index": 241, "margin": 1.0, "probe_score": -2.2198004722595215, "truth": 6068, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 85, "answer": 5100, "answer_text": "5100", "b": 60, "correct": true, "index": 242, "margin": 14.375, "truth": 5100, "verbal_says_yes": false, "verbal_yes_minus_no": -3.75}
+{"a": 79, "answer": 3160, "answer_text": "3160", "b": 40, "correct": true, "index": 243, "margin": 18.5, "probe_score": 8.234060287475586, "truth": 3160, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 92, "answer": 2300, "answer_text": "2300", "b": 25, "correct": true, "index": 244, "margin": 16.75, "probe_score": 5.236517906188965, "truth": 2300, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 36, "answer": 2916, "answer_text": "2916", "b": 81, "correct": true, "index": 245, "margin": 15.25, "truth": 2916, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 78, "answer": 3822, "answer_text": "3822", "b": 49, "correct": true, "index": 246, "margin": 14.0, "probe_score": -7.108513832092285, "truth": 3822, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 62, "answer": 4650, "answer_text": "4650", "b": 75, "correct": true, "index": 247, "margin": 16.375, "truth": 4650, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 77, "answer": 3984, "answer_text": "3984", "b": 52, "correct": false, "index": 248, "margin": 1.125, "probe_score": -3.8279871940612793, "truth": 4004, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 84, "answer": 3444, "answer_text": "3444", "b": 41, "correct": true, "index": 249, "margin": 17.625, "probe_score": 7.72230863571167, "truth": 3444, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 55, "answer": 4985, "answer_text": "4985", "b": 93, "correct": false, "index": 250, "margin": 0.625, "probe_score": -4.090483665466309, "truth": 5115, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 53, "answer": 3021, "answer_text": "3021", "b": 57, "correct": true, "index": 251, "margin": 6.5, "truth": 3021, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 37, "answer": 3552, "answer_text": "3552", "b": 96, "correct": true, "index": 252, "margin": 13.75, "probe_score": -2.4398045539855957, "truth": 3552, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 46, "answer": 1970, "answer_text": "1970", "b": 45, "correct": false, "index": 253, "margin": 3.375, "probe_score": 9.294044494628906, "truth": 2070, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 70, "answer": 3430, "answer_text": "3430", "b": 49, "correct": true, "index": 254, "margin": 17.625, "truth": 3430, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 85, "answer": 7820, "answer_text": "7820", "b": 92, "correct": true, "index": 255, "margin": 15.375, "truth": 7820, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 41, "answer": 3894, "answer_text": "3894", "b": 94, "correct": false, "index": 256, "margin": 13.375, "probe_score": 3.9105820655822754, "truth": 3854, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 59, "answer": 5192, "answer_text": "5192", "b": 88, "correct": true, "index": 257, "margin": 3.75, "truth": 5192, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 86, "answer": 4592, "answer_text": "4592", "b": 52, "correct": false, "index": 258, "margin": 13.625, "probe_score": -7.446201801300049, "truth": 4472, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 43, "answer": 2881, "answer_text": "2881", "b": 67, "correct": true, "index": 259, "margin": 16.5625, "probe_score": -14.048168182373047, "truth": 2881, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 81, "answer": 5670, "answer_text": "5670", "b": 70, "correct": true, "index": 260, "margin": 11.125, "truth": 5670, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 98, "answer": 7056, "answer_text": "7056", "b": 72, "correct": true, "index": 261, "margin": 10.875, "probe_score": -12.468084335327148, "truth": 7056, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 59, "answer": 4493, "answer_text": "4493", "b": 77, "correct": false, "index": 262, "margin": 14.375, "truth": 4543, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 75, "answer": 4050, "answer_text": "4050", "b": 54, "correct": true, "index": 263, "margin": 4.625, "probe_score": -1.2598278522491455, "truth": 4050, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 85, "answer": 4760, "answer_text": "4760", "b": 56, "correct": true, "index": 264, "margin": 11.0, "probe_score": -3.746461868286133, "truth": 4760, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 81, "answer": 2349, "answer_text": "2349", "b": 29, "correct": true, "index": 265, "margin": 12.875, "truth": 2349, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 98, "answer": 4076, "answer_text": "4076", "b": 42, "correct": false, "index": 266, "margin": 14.375, "truth": 4116, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 87, "answer": 5622, "answer_text": "5622", "b": 66, "correct": false, "index": 267, "margin": 13.0, "truth": 5742, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 76, "answer": 3876, "answer_text": "3876", "b": 51, "correct": true, "index": 268, "margin": 14.75, "truth": 3876, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 86, "answer": 2454, "answer_text": "2454", "b": 29, "correct": false, "index": 269, "margin": 12.125, "truth": 2494, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 99, "answer": 2376, "answer_text": "2376", "b": 24, "correct": true, "index": 270, "margin": 16.5625, "probe_score": 15.257874488830566, "truth": 2376, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 44, "answer": 2816, "answer_text": "2816", "b": 64, "correct": true, "index": 271, "margin": 18.5625, "truth": 2816, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 97, "answer": 4064, "answer_text": "4064", "b": 42, "correct": false, "index": 272, "margin": 5.5, "probe_score": 6.279645919799805, "truth": 4074, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 93, "answer": 3999, "answer_text": "3999", "b": 43, "correct": true, "index": 273, "margin": 1.25, "probe_score": -0.4296238422393799, "truth": 3999, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 51, "answer": 4590, "answer_text": "4590", "b": 90, "correct": true, "index": 274, "margin": 16.625, "probe_score": 12.516189575195312, "truth": 4590, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 66, "answer": 5952, "answer_text": "5952", "b": 92, "correct": false, "index": 275, "margin": 4.5, "truth": 6072, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 60, "answer": 3840, "answer_text": "3,840", "b": 68, "correct": false, "index": 276, "margin": 4.75, "truth": 4080, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 41, "answer": 2460, "answer_text": "2460", "b": 60, "correct": true, "index": 277, "margin": 17.5, "truth": 2460, "verbal_says_yes": false, "verbal_yes_minus_no": -4.0}
+{"a": 78, "answer": 7350, "answer_text": "7350", "b": 95, "correct": false, "index": 278, "margin": 17.625, "probe_score": -7.606290340423584, "truth": 7410, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 52, "answer": 4732, "answer_text": "4732", "b": 91, "correct": true, "index": 279, "margin": 15.875, "truth": 4732, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 60, "answer": 5220, "answer_text": "5220", "b": 87, "correct": true, "index": 280, "margin": 17.0, "truth": 5220, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 87, "answer": 4638, "answer_text": "4638", "b": 54, "correct": false, "index": 281, "margin": 13.4375, "truth": 4698, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 72, "answer": 2448, "answer_text": "2448", "b": 34, "correct": true, "index": 282, "margin": 16.375, "probe_score": 0.3764524459838867, "truth": 2448, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 88, "answer": 6608, "answer_text": "6608", "b": 76, "correct": false, "index": 283, "margin": 12.5625, "probe_score": -4.981907844543457, "truth": 6688, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 45, "answer": 2340, "answer_text": "2340", "b": 52, "correct": true, "index": 284, "margin": 18.3125, "probe_score": 7.064824104309082, "truth": 2340, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 60, "answer": 3420, "answer_text": "3420", "b": 57, "correct": true, "index": 285, "margin": 17.125, "probe_score": 1.6169980764389038, "truth": 3420, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 42, "answer": 3360, "answer_text": "3360", "b": 80, "correct": true, "index": 286, "margin": 18.25, "probe_score": 13.323620796203613, "truth": 3360, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 95, "answer": 3135, "answer_text": "3135", "b": 33, "correct": true, "index": 287, "margin": 15.625, "truth": 3135, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 43, "answer": 3610, "answer_text": "3610", "b": 85, "correct": false, "index": 288, "margin": 15.875, "truth": 3655, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 71, "answer": 5478, "answer_text": "5478", "b": 78, "correct": false, "index": 289, "margin": 18.0, "truth": 5538, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 89, "answer": 5785, "answer_text": "5785", "b": 65, "correct": true, "index": 290, "margin": 12.375, "probe_score": -4.7996907234191895, "truth": 5785, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 30, "answer": 2940, "answer_text": "2940", "b": 98, "correct": true, "index": 291, "margin": 9.25, "probe_score": 8.444546699523926, "truth": 2940, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 97, "answer": 6208, "answer_text": "6208", "b": 64, "correct": true, "index": 292, "margin": 14.5, "truth": 6208, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 65, "answer": 2600, "answer_text": "2600", "b": 40, "correct": true, "index": 293, "margin": 18.5625, "probe_score": 15.10468578338623, "truth": 2600, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 41, "answer": 2378, "answer_text": "2378", "b": 58, "correct": true, "index": 294, "margin": 17.8125, "probe_score": -1.4630975723266602, "truth": 2378, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 65, "answer": 5895, "answer_text": "5895", "b": 91, "correct": false, "index": 295, "margin": 10.75, "probe_score": 6.053889274597168, "truth": 5915, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 84, "answer": 5124, "answer_text": "5124", "b": 61, "correct": true, "index": 296, "margin": 13.875, "truth": 5124, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 70, "answer": 6230, "answer_text": "6230", "b": 89, "correct": true, "index": 297, "margin": 12.625, "truth": 6230, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 38, "answer": 2262, "answer_text": "2262", "b": 59, "correct": false, "index": 298, "margin": 13.125, "truth": 2242, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 71, "answer": 4970, "answer_text": "4970", "b": 70, "correct": true, "index": 299, "margin": 7.75, "truth": 4970, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 83, "answer": 2241, "answer_text": "2241", "b": 27, "correct": true, "index": 300, "margin": 14.6875, "probe_score": 0.8583915829658508, "truth": 2241, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 94, "answer": 3008, "answer_text": "3008", "b": 32, "correct": true, "index": 301, "margin": 10.25, "probe_score": 13.218571662902832, "truth": 3008, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 65, "answer": 4930, "answer_text": "4930", "b": 78, "correct": false, "index": 302, "margin": 10.75, "probe_score": -3.728212356567383, "truth": 5070, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 60, "answer": 5460, "answer_text": "5460", "b": 91, "correct": true, "index": 303, "margin": 14.25, "probe_score": 10.631065368652344, "truth": 5460, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 53, "answer": 5164, "answer_text": "5164", "b": 98, "correct": false, "index": 304, "margin": 13.0, "probe_score": 4.235603332519531, "truth": 5194, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 87, "answer": 8526, "answer_text": "8526", "b": 98, "correct": true, "index": 305, "margin": 18.25, "truth": 8526, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 99, "answer": 7524, "answer_text": "7524", "b": 76, "correct": true, "index": 306, "margin": 18.375, "probe_score": -1.6310580968856812, "truth": 7524, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 93, "answer": 2604, "answer_text": "2604", "b": 28, "correct": true, "index": 307, "margin": 14.6875, "probe_score": 8.314846992492676, "truth": 2604, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 29, "answer": 2262, "answer_text": "2262", "b": 78, "correct": true, "index": 308, "margin": 14.4375, "truth": 2262, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 65, "answer": 4935, "answer_text": "4935", "b": 79, "correct": false, "index": 309, "margin": 8.5, "probe_score": -10.742301940917969, "truth": 5135, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 79, "answer": 4976, "answer_text": "4976", "b": 64, "correct": false, "index": 310, "margin": 6.625, "probe_score": 0.9384194612503052, "truth": 5056, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 84, "answer": 4536, "answer_text": "4536", "b": 54, "correct": true, "index": 311, "margin": 13.75, "truth": 4536, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 79, "answer": 7415, "answer_text": "7415", "b": 95, "correct": false, "index": 312, "margin": 17.75, "probe_score": -4.419524192810059, "truth": 7505, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 32, "answer": 3136, "answer_text": "3136", "b": 98, "correct": true, "index": 313, "margin": 16.875, "truth": 3136, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 48, "answer": 4704, "answer_text": "4704", "b": 98, "correct": true, "index": 314, "margin": 15.125, "truth": 4704, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 87, "answer": 2349, "answer_text": "2349", "b": 27, "correct": true, "index": 315, "margin": 13.375, "probe_score": -0.9116396307945251, "truth": 2349, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 68, "answer": 2380, "answer_text": "2380", "b": 35, "correct": true, "index": 316, "margin": 15.0, "truth": 2380, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 58, "answer": 4388, "answer_text": "4388", "b": 76, "correct": false, "index": 317, "margin": 13.75, "probe_score": -3.2986295223236084, "truth": 4408, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 72, "answer": 3528, "answer_text": "3528", "b": 49, "correct": true, "index": 318, "margin": 16.875, "probe_score": -5.051924228668213, "truth": 3528, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 77, "answer": 2618, "answer_text": "2618", "b": 34, "correct": true, "index": 319, "margin": 15.3125, "probe_score": 1.4361172914505005, "truth": 2618, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 58, "answer": 5220, "answer_text": "5220", "b": 90, "correct": true, "index": 320, "margin": 3.75, "truth": 5220, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 79, "answer": 4935, "answer_text": "4935", "b": 65, "correct": false, "index": 321, "margin": 0.375, "truth": 5135, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 92, "answer": 9036, "answer_text": "9036", "b": 98, "correct": false, "index": 322, "margin": 5.875, "probe_score": -2.6018757820129395, "truth": 9016, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 92, "answer": 4600, "answer_text": "4600", "b": 50, "correct": true, "index": 323, "margin": 18.125, "truth": 4600, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 65, "answer": 3185, "answer_text": "3185", "b": 49, "correct": true, "index": 324, "margin": 13.5, "truth": 3185, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 62, "answer": 3638, "answer_text": "3638", "b": 59, "correct": false, "index": 325, "margin": 16.125, "probe_score": -11.047231674194336, "truth": 3658, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 82, "answer": 3116, "answer_text": "3116", "b": 38, "correct": true, "index": 326, "margin": 15.5, "truth": 3116, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 62, "answer": 2046, "answer_text": "2046", "b": 33, "correct": true, "index": 327, "margin": 3.5, "truth": 2046, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 62, "answer": 4464, "answer_text": "4464", "b": 72, "correct": true, "index": 328, "margin": 16.5, "truth": 4464, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 82, "answer": 8036, "answer_text": "8036", "b": 98, "correct": true, "index": 329, "margin": 11.0, "probe_score": 3.353947639465332, "truth": 8036, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 96, "answer": 4704, "answer_text": "4704", "b": 49, "correct": true, "index": 330, "margin": 16.25, "probe_score": -2.7155327796936035, "truth": 4704, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 34, "answer": 2380, "answer_text": "2380", "b": 70, "correct": true, "index": 331, "margin": 15.8125, "truth": 2380, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 23, "answer": 1981, "answer_text": "1981", "b": 87, "correct": false, "index": 332, "margin": 1.5, "probe_score": 3.0654447078704834, "truth": 2001, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 86, "answer": 7514, "answer_text": "7514", "b": 89, "correct": false, "index": 333, "margin": 16.75, "probe_score": -13.819873809814453, "truth": 7654, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 95, "answer": 3040, "answer_text": "3040", "b": 32, "correct": true, "index": 334, "margin": 14.875, "probe_score": 9.2526273727417, "truth": 3040, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 29, "answer": 2146, "answer_text": "2146", "b": 74, "correct": true, "index": 335, "margin": 16.875, "truth": 2146, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 56, "answer": 4628, "answer_text": "4628", "b": 83, "correct": false, "index": 336, "margin": 14.25, "truth": 4648, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 81, "answer": 5751, "answer_text": "5751", "b": 71, "correct": true, "index": 337, "margin": 11.125, "truth": 5751, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 97, "answer": 8827, "answer_text": "8827", "b": 91, "correct": true, "index": 338, "margin": 4.75, "probe_score": 0.2946195602416992, "truth": 8827, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 63, "answer": 2268, "answer_text": "2268", "b": 36, "correct": true, "index": 339, "margin": 15.6875, "probe_score": 11.40883731842041, "truth": 2268, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 62, "answer": 4854, "answer_text": "4854", "b": 77, "correct": false, "index": 340, "margin": 15.5, "truth": 4774, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 42, "answer": 4032, "answer_text": "4032", "b": 96, "correct": true, "index": 341, "margin": 13.375, "truth": 4032, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 99, "answer": 8910, "answer_text": "8910", "b": 90, "correct": true, "index": 342, "margin": 6.5, "probe_score": 6.424943923950195, "truth": 8910, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 35, "answer": 3185, "answer_text": "3185", "b": 91, "correct": true, "index": 343, "margin": 15.375, "truth": 3185, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 70, "answer": 5740, "answer_text": "5740", "b": 82, "correct": true, "index": 344, "margin": 14.75, "probe_score": -0.4081222414970398, "truth": 5740, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 89, "answer": 6388, "answer_text": "6388", "b": 72, "correct": false, "index": 345, "margin": 11.8125, "probe_score": 0.9491192102432251, "truth": 6408, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 22, "answer": 2134, "answer_text": "2134", "b": 97, "correct": true, "index": 346, "margin": 16.75, "truth": 2134, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 40, "answer": 2680, "answer_text": "2680", "b": 67, "correct": true, "index": 347, "margin": 18.375, "probe_score": -3.660147190093994, "truth": 2680, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 60, "answer": 4500, "answer_text": "4500", "b": 75, "correct": true, "index": 348, "margin": 18.25, "truth": 4500, "verbal_says_yes": false, "verbal_yes_minus_no": -3.75}
+{"a": 98, "answer": 7840, "answer_text": "7840", "b": 80, "correct": true, "index": 349, "margin": 19.75, "probe_score": 1.8707070350646973, "truth": 7840, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 77, "answer": 4982, "answer_text": "4982", "b": 66, "correct": false, "index": 350, "margin": 9.5, "truth": 5082, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 63, "answer": 3339, "answer_text": "3339", "b": 53, "correct": true, "index": 351, "margin": 15.625, "truth": 3339, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 73, "answer": 3212, "answer_text": "3212", "b": 44, "correct": true, "index": 352, "margin": 15.875, "probe_score": 5.780447483062744, "truth": 3212, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 70, "answer": 2170, "answer_text": "2170", "b": 31, "correct": true, "index": 353, "margin": 16.625, "truth": 2170, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 94, "answer": 2350, "answer_text": "2350", "b": 25, "correct": true, "index": 354, "margin": 16.125, "truth": 2350, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 77, "answer": 3619, "answer_text": "3619", "b": 47, "correct": true, "index": 355, "margin": 15.125, "truth": 3619, "verbal_says_yes": false, "verbal_yes_minus_no": -7.5}
+{"a": 32, "answer": 2688, "answer_text": "2688", "b": 84, "correct": true, "index": 356, "margin": 18.125, "probe_score": 10.556121826171875, "truth": 2688, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 60, "answer": 2040, "answer_text": "2040", "b": 34, "correct": true, "index": 357, "margin": 6.875, "probe_score": 9.159443855285645, "truth": 2040, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 67, "answer": 2727, "answer_text": "2727", "b": 41, "correct": false, "index": 358, "margin": 18.1875, "truth": 2747, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 53, "answer": 3180, "answer_text": "3180", "b": 60, "correct": true, "index": 359, "margin": 16.5, "truth": 3180, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 91, "answer": 3367, "answer_text": "3367", "b": 37, "correct": true, "index": 360, "margin": 15.625, "truth": 3367, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 65, "answer": 6435, "answer_text": "6435", "b": 99, "correct": true, "index": 361, "margin": 15.625, "truth": 6435, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 37, "answer": 2479, "answer_text": "2479", "b": 67, "correct": true, "index": 362, "margin": 14.875, "probe_score": -4.908947944641113, "truth": 2479, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 88, "answer": 5816, "answer_text": "5816", "b": 67, "correct": false, "index": 363, "margin": 11.75, "truth": 5896, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 69, "answer": 4554, "answer_text": "4554", "b": 66, "correct": true, "index": 364, "margin": 13.875, "truth": 4554, "verbal_says_yes": false, "verbal_yes_minus_no": -7.75}
+{"a": 92, "answer": 8372, "answer_text": "8372", "b": 91, "correct": true, "index": 365, "margin": 8.875, "probe_score": -1.341070532798767, "truth": 8372, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 93, "answer": 4783, "answer_text": "4783", "b": 51, "correct": false, "index": 366, "margin": 16.0, "truth": 4743, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 97, "answer": 4857, "answer_text": "4857", "b": 51, "correct": false, "index": 367, "margin": 10.375, "probe_score": 4.155005931854248, "truth": 4947, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 94, "answer": 9306, "answer_text": "9306", "b": 99, "correct": true, "index": 368, "margin": 13.875, "truth": 9306, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 74, "answer": 4588, "answer_text": "4588", "b": 62, "correct": true, "index": 369, "margin": 14.875, "truth": 4588, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 35, "answer": 2940, "answer_text": "2940", "b": 84, "correct": true, "index": 370, "margin": 12.875, "truth": 2940, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 41, "answer": 3013, "answer_text": "3013", "b": 73, "correct": false, "index": 371, "margin": 8.125, "truth": 2993, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 86, "answer": 8428, "answer_text": "8428", "b": 98, "correct": true, "index": 372, "margin": 17.25, "probe_score": 0.19491112232208252, "truth": 8428, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 30, "answer": 2430, "answer_text": "2430", "b": 81, "correct": true, "index": 373, "margin": 18.125, "truth": 2430, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 90, "answer": 6840, "answer_text": "6840", "b": 76, "correct": true, "index": 374, "margin": 16.0, "truth": 6840, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 43, "answer": 3628, "answer_text": "3628", "b": 86, "correct": false, "index": 375, "margin": 16.125, "probe_score": 1.1270771026611328, "truth": 3698, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 35, "answer": 2035, "answer_text": "2035", "b": 59, "correct": false, "index": 376, "margin": 1.125, "truth": 2065, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 36, "answer": 3072, "answer_text": "3072", "b": 87, "correct": false, "index": 377, "margin": 5.875, "probe_score": 1.3162181377410889, "truth": 3132, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 93, "answer": 4464, "answer_text": "4464", "b": 48, "correct": true, "index": 378, "margin": 16.375, "probe_score": 3.465420961380005, "truth": 4464, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 33, "answer": 2409, "answer_text": "2409", "b": 73, "correct": true, "index": 379, "margin": 15.5, "truth": 2409, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 64, "answer": 2752, "answer_text": "2752", "b": 43, "correct": true, "index": 380, "margin": 19.1875, "probe_score": 12.223026275634766, "truth": 2752, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 85, "answer": 5605, "answer_text": "5605", "b": 67, "correct": false, "index": 381, "margin": 12.5, "probe_score": -12.223196983337402, "truth": 5695, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 74, "answer": 2368, "answer_text": "2368", "b": 32, "correct": true, "index": 382, "margin": 15.3125, "truth": 2368, "verbal_says_yes": false, "verbal_yes_minus_no": -6.25}
+{"a": 50, "answer": 2150, "answer_text": "2150", "b": 43, "correct": true, "index": 383, "margin": 17.25, "probe_score": 10.485917091369629, "truth": 2150, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 73, "answer": 3985, "answer_text": "3985", "b": 55, "correct": false, "index": 384, "margin": 2.125, "truth": 4015, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 57, "answer": 3078, "answer_text": "3078", "b": 54, "correct": true, "index": 385, "margin": 1.875, "truth": 3078, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 81, "answer": 3564, "answer_text": "3564", "b": 44, "correct": true, "index": 386, "margin": 18.0, "truth": 3564, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 62, "answer": 2418, "answer_text": "2418", "b": 39, "correct": true, "index": 387, "margin": 15.8125, "truth": 2418, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 61, "answer": 2867, "answer_text": "2867", "b": 47, "correct": true, "index": 388, "margin": 17.75, "probe_score": 2.961385726928711, "truth": 2867, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 21, "answer": 2037, "answer_text": "2037", "b": 97, "correct": true, "index": 389, "margin": 7.25, "probe_score": 1.0543891191482544, "truth": 2037, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 30, "answer": 2190, "answer_text": "2190", "b": 73, "correct": true, "index": 390, "margin": 18.875, "probe_score": -3.661874532699585, "truth": 2190, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 73, "answer": 3723, "answer_text": "3723", "b": 51, "correct": true, "index": 391, "margin": 15.875, "truth": 3723, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}
+{"a": 83, "answer": 2324, "answer_text": "2324", "b": 28, "correct": true, "index": 392, "margin": 15.6875, "probe_score": 6.1248273849487305, "truth": 2324, "verbal_says_yes": false, "verbal_yes_minus_no": -7.25}
+{"a": 34, "answer": 3264, "answer_text": "3264", "b": 96, "correct": true, "index": 393, "margin": 15.125, "probe_score": 2.797189474105835, "truth": 3264, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 52, "answer": 2808, "answer_text": "2808", "b": 54, "correct": true, "index": 394, "margin": 16.0, "probe_score": 5.304011344909668, "truth": 2808, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 43, "answer": 2752, "answer_text": "2752", "b": 64, "correct": true, "index": 395, "margin": 18.3125, "probe_score": 2.4411401748657227, "truth": 2752, "verbal_says_yes": false, "verbal_yes_minus_no": -6.5}
+{"a": 89, "answer": 3065, "answer_text": "3065", "b": 35, "correct": false, "index": 396, "margin": 12.5, "probe_score": -3.41802978515625, "truth": 3115, "verbal_says_yes": false, "verbal_yes_minus_no": -7.0}
+{"a": 79, "answer": 4740, "answer_text": "4740", "b": 60, "correct": true, "index": 397, "margin": 16.25, "truth": 4740, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 76, "answer": 6228, "answer_text": "6228", "b": 83, "correct": false, "index": 398, "margin": 15.1875, "probe_score": -10.86954116821289, "truth": 6308, "verbal_says_yes": false, "verbal_yes_minus_no": -8.0}
+{"a": 72, "answer": 4680, "answer_text": "4680", "b": 65, "correct": true, "index": 399, "margin": 15.75, "probe_score": -2.95651912689209, "truth": 4680, "verbal_says_yes": false, "verbal_yes_minus_no": -6.75}

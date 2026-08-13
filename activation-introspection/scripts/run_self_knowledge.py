@@ -60,6 +60,13 @@ GATE_A_N = 60
 GATE_B_AUROC = 0.55
 
 N_PROBLEMS = 400
+
+#: notes/30 confirmation. The development run found the model's signal beats
+#: problem size only inside the hardest third, and that band was chosen by looking.
+#: --hard-only regenerates fresh problems restricted to that regime so the same
+#: comparison can be made once, pre-registered, on data never seen.
+HARD_MIN_PRODUCT = 2000
+CONFIRM_SEED = 4242
 TRAIN_FRACTION = 0.5
 MAX_NEW = 12
 SEED = 0
@@ -72,14 +79,18 @@ VERBAL_ASK = (
 )
 
 
-def problems(size: tuple[int, int], n: int, seed: int) -> list[tuple[int, int]]:
+def problems(
+    size: tuple[int, int], n: int, seed: int, min_product: int = 0
+) -> list[tuple[int, int]]:
     rng = random.Random(seed)
     lo_a, hi_a = 10 ** (size[0] - 1), 10 ** size[0] - 1
     lo_b, hi_b = 10 ** (size[1] - 1), 10 ** size[1] - 1
     seen: set[tuple[int, int]] = set()
-    out = []
+    out: list[tuple[int, int]] = []
     while len(out) < n:
         p = (rng.randint(lo_a, hi_a), rng.randint(lo_b, hi_b))
+        if p[0] * p[1] < min_product:
+            continue
         if p not in seen:
             seen.add(p)
             out.append(p)
@@ -145,7 +156,7 @@ def fit_probe(states: list[torch.Tensor], labels: list[bool], epochs: int = 300)
         opt.zero_grad()
         loss = torch.nn.functional.binary_cross_entropy_with_logits(x @ w, y)
         loss = loss + 1e-3 * (w * w).sum()
-        loss.backward()
+        loss.backward()  # type: ignore[no-untyped-call]
         opt.step()
     return w.detach()
 
@@ -196,12 +207,18 @@ def run(args: argparse.Namespace) -> None:
         model.model.to(torch.bfloat16)
         object.__setattr__(model, "dtype", torch.bfloat16)
 
-        size = (2, 1) if args.smoke else gate_a(model)
-        n = 24 if args.smoke else N_PROBLEMS
+        if args.hard_only:
+            size, n = (2, 2), N_PROBLEMS
+            seed, min_product = CONFIRM_SEED, HARD_MIN_PRODUCT
+            print(f"confirmation mode: 2x2, product >= {HARD_MIN_PRODUCT}", flush=True)
+        else:
+            size = (2, 1) if args.smoke else gate_a(model)
+            n = 24 if args.smoke else N_PROBLEMS
+            seed, min_product = SEED, 0
         rows: list[dict[str, Any]] = []
         states: list[torch.Tensor] = []
 
-        for i, (a, b) in enumerate(problems(size, n, seed=SEED)):
+        for i, (a, b) in enumerate(problems(size, n, seed=seed, min_product=min_product)):
             ans = ask_answer(model, a, b)
             verbal = ask_verbal(model, a, b)
             states.append(ans.pop("state"))
@@ -225,7 +242,7 @@ def run(args: argparse.Namespace) -> None:
 
         cut = int(len(rows) * TRAIN_FRACTION)
         idx = list(range(len(rows)))
-        random.Random(SEED).shuffle(idx)
+        random.Random(seed).shuffle(idx)
         train, test = idx[:cut], idx[cut:]
         w = fit_probe([states[i] for i in train], [rows[i]["correct"] for i in train])
         scores = probe_scores(w, [states[i] for i in test], [states[i] for i in train])
@@ -236,6 +253,11 @@ def run(args: argparse.Namespace) -> None:
         pos = [r for r in held if r["correct"]]
         neg = [r for r in held if not r["correct"]]
         ladder = {
+            # The control notes/30 did not pre-register and should have: a feature
+            # needing no access to the model at all. Bigger sums are harder.
+            "product_size_alone": auroc(
+                [-(r["a"] * r["b"]) for r in pos], [-(r["a"] * r["b"]) for r in neg]
+            ),
             "probe": auroc([r["probe_score"] for r in pos], [r["probe_score"] for r in neg]),
             "margin": auroc([r["margin"] for r in pos], [r["margin"] for r in neg]),
             "verbal": auroc(
@@ -255,6 +277,8 @@ def run(args: argparse.Namespace) -> None:
             "revision": MODEL_REVISION,
             "layer": LAYER,
             "digit_size": f"{size[0]}x{size[1]}",
+            "hard_only": bool(args.hard_only),
+            "min_product": min_product,
             "n_problems": len(rows),
             "n_test": len(held),
             "task_accuracy": acc,
@@ -287,6 +311,11 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--smoke", action="store_true")
+    p.add_argument(
+        "--hard-only",
+        action="store_true",
+        help="notes/30 confirmation: fresh seed, products >= HARD_MIN_PRODUCT",
+    )
     run(p.parse_args())
 
 

@@ -142,3 +142,214 @@ If Gate A cannot find a digit size in the usable band — if the model is either
 perfect or at chance at every size tried — then two-digit multiplication is the
 wrong task and the right move is to change the task, not to run a sweep whose
 outcome is fixed by ceiling or floor effects.
+
+---
+
+# Result: the pre-registered analysis is negative, and there is a lead under it
+
+Run **2026-08-12**, 251 seconds, 400 problems. Artifacts:
+`results/self_knowledge_v1_raw.jsonl`, `results/self_knowledge_v1_summary.json`.
+
+Gate A swept and froze: 2×1 gave 0.883, 2×2 gave 0.750, 3×2 gave 0.350. **2×2
+chosen.** Full run accuracy 0.780, test split n = 200 with 151 correct. Gate B
+passed — the probe reaches 0.778, so the state does carry impending failure and a
+null here would have meant something.
+
+## The kill rule fires, at the opposite end from the one I guarded
+
+**The model said "Yes, I'll get it right" on 2 problems out of 400.** A yes-rate of
+**0.005**, on a task it then got right 78% of the time.
+
+I wrote the kill rule expecting the opposite — a model that claims it will succeed
+at everything. It does the reverse and just as uselessly. **As a stated prediction
+the verbal tier is worthless**, and not merely uninformative: it is confidently,
+almost uniformly wrong in the pessimistic direction. Anyone reading the model's
+actual words would conclude it fails at nearly everything.
+
+## The pre-registered comparison, and the boring explanation that beats it
+
+AUROC against correctness on the held-out split, all three tiers as declared:
+
+| tier | AUROC |
+|---|---:|
+| verbal (yes-minus-no logit gap) | 0.805 |
+| probe on activations | 0.778 |
+| answer margin | 0.678 |
+
+Verbal above probe by 0.027, **95% CI [−0.048, 0.103]** — indistinguishable.
+
+Then the control this design did not have, and should have:
+
+| | AUROC |
+|---|---:|
+| **the size of the multiplication, alone** | **0.819** |
+| size of the second operand alone | 0.722 |
+
+**A feature computable without any access to the model at all beats every tier.**
+Bigger sums are harder; the model, the probe and the margin are all substantially
+tracking that, and so is anyone with a calculator.
+
+**On the pre-registered analysis, this shows no introspection.** That is the
+result, and it is the one that goes in the ledger.
+
+## What this exposes about the design, which is the real lesson
+
+The injected-state work in this repository is interpretable because of a
+structural control: the visible text is byte-identical across items with opposite
+correct answers, so **an input-only learner is pinned at exactly 0.500 by
+construction**, not statistically. Notes [11](11-matched-cost-reader.md) and
+[14](14-content-versus-disturbance.md) lean on that in every claim.
+
+A natural-state design cannot have it. The input *is* the thing that varies, and
+the input predicts the outcome. So the moment this branch escaped the
+"everything is planted" limitation, it lost the control that made the planted work
+mean anything. **That is a deeper reason the natural-state branch is hard than the
+clumping problem [16](16-visible-rule-capacity.md) diagnosed**, and it was not
+visible until a design got far enough to hit it.
+
+## The lead, disclosed as post-hoc
+
+Problem size explains a lot. It does not obviously explain everything, so I
+stratified the test split into thirds by product size and looked within. **This was
+decided after seeing the numbers above and it is therefore not a result.**
+
+The easy third is useless — 65 of 66 correct, so its AUROC rests on one negative.
+The hard third is the informative one, near-balanced at 36 correct and 31 wrong:
+
+| within the hard third (n = 67) | AUROC |
+|---|---:|
+| **verbal** | **0.838** |
+| probe | 0.727 |
+| product size alone | 0.620 |
+| answer margin | 0.611 |
+
+**Verbal minus product-size = 0.218, 95% CI [0.058, 0.385]**, excluding zero.
+
+So on the hardest third of problems, where difficulty no longer separates success
+from failure, the model's internal yes-versus-no signal still ranks its own
+correctness — better than problem size, and better than a probe trained on its own
+errors.
+
+If that survives confirmation it is the first place in this repository where the
+model beats its comparators, and it is on a state the model computed itself.
+
+**It has not survived anything yet.** The band was chosen by looking. That is the
+error [13](13-shared-axis-audit.md) and [15](15-matched-reader-on-content.md) made
+and the reason [24](24-is-the-held-out-failure-the-interface.md) and
+[29](29-can-abstention-recover-selectivity.md) declare splits in advance.
+
+## Confirmation, specified before it runs
+
+**Written before the confirmation run. One comparison, one number, no choices left.**
+
+Fresh problems from a different seed (4242), 2×2 digits restricted to products of
+**2,000 or more** — the regime the hard third occupied, fixed now rather than
+found later. Same model, same layer, same three tiers, same split fraction, same
+scoring.
+
+**The single pre-registered test: does the verbal signal's AUROC exceed
+product-size-alone's, with a bootstrap 95% interval excluding zero?**
+
+- **Yes** → the lead confirms. The model has usable prospective self-knowledge on a
+  state it computed itself, beyond what task difficulty explains, and it is the
+  first comparator win in this repository.
+- **No** → the lead was an artifact of choosing a band after seeing the data. The
+  pre-registered negative above stands alone and this branch closes.
+
+Nothing else from this run will be reported as a finding. Product-size-alone is now
+computed by the runner in every mode, so the control that was missing cannot go
+missing again.
+
+I expect this to **fail to confirm**, roughly 60/40. Selecting the most favourable
+of three bands and then finding a difference at n = 67 is exactly the shape of
+thing that regresses, and today has already produced two leads that evaporated —
+`25`'s exemplar-naming anecdote and `29`'s margin-carries-selectivity signal.
+
+---
+
+# Confirmation: it fails, and the branch closes
+
+Run **2026-08-12**, 195 seconds, 400 fresh problems at seed 4242, products ≥ 2,000.
+Artifacts: `results/self_knowledge_confirm_v1_raw.jsonl`,
+`results/self_knowledge_confirm_v1_summary.json`. Task accuracy 0.703, test split
+n = 200 with 142 correct. Gate B passed again.
+
+**Verbal yes-rate: 0.000.** The model said it would fail on all four hundred
+problems, and got 70% of them right.
+
+| tier | development (hard third) | confirmation |
+|---|---:|---:|
+| verbal | 0.838 | **0.679** |
+| answer margin | 0.611 | 0.725 |
+| probe | 0.727 | 0.660 |
+| **product size alone** | 0.620 | **0.634** |
+
+**The pre-registered test: verbal minus product-size = 0.045, 95% CI
+[−0.065, 0.150].** The interval includes zero. Development was 0.218, CI
+[0.058, 0.385].
+
+**Fails to confirm.** Per the rule written before the run: the lead was an artifact
+of choosing a band after seeing the data, the pre-registered negative stands alone,
+and **this branch closes.**
+
+The tiers are now indistinguishable from each other and from a calculator: 0.634 to
+0.725 across four predictors, with the ordering scrambled from development — the
+answer margin came top this time, having been bottom before. That is what a set of
+measurements looks like when nothing is driving them apart.
+
+## What this branch established, which is not nothing
+
+**Negative, and it is the real one:** on a state this model computed itself, its
+prospective self-knowledge does not exceed what problem difficulty already
+explains. The information is in the state — the probe found it, Gate B passed
+twice — and the model's report adds nothing on top of a feature a person could
+compute with a calculator and no access to the model at all.
+
+**Methodological, and it is more valuable:** the injected-state work here is
+interpretable because visible text is byte-identical across items with opposite
+answers, pinning an input-only learner at exactly 0.500 **by construction**. A
+natural-state design cannot have that control, because the input is what varies and
+the input predicts the outcome. Escaping "everything is planted" costs the very
+control that made the planted results mean anything. **Anyone attempting natural
+states needs an answer to that before they start**, and it is a harder problem than
+the clumping issue [16](16-visible-rule-capacity.md) diagnosed.
+
+**One observation that held across both runs**, and is the only thing here I would
+repeat: the model's *words* are worthless — a yes-rate of 0.005 and then 0.000
+while succeeding 78% and 70% of the time — while the *distribution behind* those
+words carries real signal. That is the same shape
+[29](29-can-abstention-recover-selectivity.md) found by a completely different
+route on the same day. Two independent instances is not a finding, but it is the
+most repeatable pattern in this repository.
+
+## Predictions, scored
+
+I predicted the confirmation would fail, 60/40. **Right**, and for the stated
+reason. My original tier prediction (margin > probe > verbal, verbal at 0.50–0.58)
+was wrong in development and wrong again here in a different direction, which is
+its own evidence that nothing stable is being measured.
+
+## My prediction, scored
+
+I predicted verbal at 0.50–0.58 with a yes-rate above 0.9, and the ladder coming
+out margin > probe > verbal.
+
+**Wrong on almost every count.** The yes-rate was 0.005, the opposite extreme. The
+ladder came out verbal > probe > margin, exactly reversed. Verbal reached 0.805
+where I said 0.50–0.58.
+
+What I was right about is narrow and worth keeping: **the model's words are
+useless.** I expected that to show up as a flat AUROC and it showed up as a
+constant responder whose underlying signal is fine. That is the same shape as
+[29](29-can-abstention-recover-selectivity.md), found twice in one day by two
+different routes: **what the model says about itself is worthless, and the
+distribution behind what it says is not.**
+
+## Limits
+
+One model, one task, one layer, one difficulty band chosen by a gate. The probe is
+fitted on 200 examples against a 2048-dimensional state, so it is a weak probe and
+"verbal beats probe" is partly a statement about probe quality. The cost asymmetry
+declared before the run still holds and runs the *other* way here — the probe was
+given a training set and still lost. And the verbal signal is a logit gap, not
+anything the model says; the words themselves are, as recorded above, worthless.
