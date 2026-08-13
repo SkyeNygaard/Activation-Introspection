@@ -1,0 +1,132 @@
+{
+  "accuracy_threshold": 0.6,
+  "frozen_at": "2026-08-12T20:28:33",
+  "layers": [
+    9,
+    18,
+    27
+  ],
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "n_predicted_learnable": 7,
+  "n_rules": 14,
+  "predictions": {
+    "all_vowels_present": {
+      "layer_18": 0.03992612494362735,
+      "layer_27": 0.04274094104766846,
+      "layer_9": 0.032054087354077276,
+      "mean_separation": 0.0382403844484577,
+      "predicted_learnable": true
+    },
+    "alphabetical_letters": {
+      "layer_18": 0.0001326253016789014,
+      "layer_27": 0.011995497677061318,
+      "layer_9": -0.006049568454424559,
+      "mean_separation": 0.0020261848414385533,
+      "predicted_learnable": false
+    },
+    "comparative_vs_superlative": {
+      "layer_18": 0.07022875216272151,
+      "layer_27": 0.07964126931296456,
+      "layer_9": 0.11259883311059737,
+      "mean_separation": 0.08748961819542782,
+      "predicted_learnable": true
+    },
+    "even_vs_odd": {
+      "layer_18": -0.03261767162217033,
+      "layer_27": -0.023881544669469235,
+      "layer_9": -0.050120244423548344,
+      "mean_separation": -0.03553982023839597,
+      "predicted_learnable": false
+    },
+    "fibonacci_number": {
+      "layer_18": -0.04124108950297045,
+      "layer_27": -0.02769196364614701,
+      "layer_9": -0.05755896369616198,
+      "mean_separation": -0.04216400561509315,
+      "predicted_learnable": false
+    },
+    "flightless_vs_flying_bird": {
+      "layer_18": 0.015104452768961552,
+      "layer_27": 0.013439036077923183,
+      "layer_9": 0.04017619126372862,
+      "mean_separation": 0.02290656003687112,
+      "predicted_learnable": true
+    },
+    "nominative_vs_accusative": {
+      "layer_18": 0.07213428285386825,
+      "layer_27": 0.04281759924358797,
+      "layer_9": 0.10458111763000488,
+      "mean_separation": 0.07317766657582037,
+      "predicted_learnable": true
+    },
+    "perfect_square": {
+      "layer_18": -0.056100861893759846,
+      "layer_27": -0.0381768577628665,
+      "layer_9": -0.06091605954700052,
+      "mean_separation": -0.05173125973454229,
+      "predicted_learnable": false
+    },
+    "regular_vs_irregular_past": {
+      "layer_18": 0.034020089440875534,
+      "layer_27": 0.022555308209525227,
+      "layer_9": 0.04108843869633144,
+      "mean_separation": 0.0325546121155774,
+      "predicted_learnable": true
+    },
+    "renewable_vs_fossil_source": {
+      "layer_18": 0.019165774186452267,
+      "layer_27": 0.017572416199578278,
+      "layer_9": 0.0378528866502974,
+      "mean_separation": 0.02486369234544265,
+      "predicted_learnable": true
+    },
+    "reptile_vs_amphibian": {
+      "layer_18": 0.05357740653885723,
+      "layer_27": 0.036332835753758785,
+      "layer_9": 0.022701846228705524,
+      "mean_separation": 0.037537362840440514,
+      "predicted_learnable": true
+    },
+    "silent_initial": {
+      "layer_18": 0.012873288657930249,
+      "layer_27": 0.016539497507942924,
+      "layer_9": 0.01850065092245734,
+      "mean_separation": 0.015971145696110172,
+      "predicted_learnable": false
+    },
+    "spelling_palindrome": {
+      "layer_18": 0.0060640308592053715,
+      "layer_27": 0.008920888106028202,
+      "layer_9": -0.0025115857521693097,
+      "mean_separation": 0.004157777737688088,
+      "predicted_learnable": false
+    },
+    "stress_position": {
+      "layer_18": 0.0025435520542992363,
+      "layer_27": 0.0065355698267618445,
+      "layer_9": 0.008901776538954853,
+      "mean_separation": 0.005993632806671978,
+      "predicted_learnable": false
+    }
+  },
+  "primary_metric": "Spearman rank agreement between mean_separation and accuracy across all fourteen rules. Pre-committed in notes/26 before any accuracy existed, because the binary count depends on how the outcome classes happen to balance. notes/19's rank agreement was 0.785.",
+  "replicates": "results/clustering_prediction_protocol_v1.json",
+  "rule_prompt_sha256": "23343e49c98dced648e6f95b5a667d71fddd7bd177ebc48136e3befa91c6c533",
+  "rule_source": {
+    "author_blind_to_hypothesis": true,
+    "generated_at": "2026-08-12",
+    "invocation": "codex exec --ignore-user-config --ignore-rules -s read-only --skip-git-repo-check -c project_doc_max_bytes=0",
+    "prompt_file": "results/clustering_replication_rule_prompt.txt",
+    "reasoning_effort": "none",
+    "session_id": "019ff82e-d08b-7660-90c4-dcda20840fcd",
+    "tool": "codex-cli 0.146.0",
+    "verified_by": "All 14 distinctions checked for correctness by hand before any measurement. Correctness only -- not whether they would pass."
+  },
+  "separation_threshold": 0.02,
+  "source_sha256": {
+    "run_clustering_replication.py": "51a878949791c09099d54b6a114d86586ed08951a208f84e65dfe75018b93b65"
+  },
+  "thresholds_derived_from": "notes/16 gaps, via notes/19. Imported from run_clustering_prediction, not restated here, so they cannot drift.",
+  "what_this_is": "notes/26. Predictions of rule learnability from class separation alone, frozen before any accuracy was measured, on fourteen rules written by a model blind to the hypothesis. Replication of notes/19."
+}

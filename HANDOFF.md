@@ -170,10 +170,25 @@ violation of that file's own rule.
 - "Injection site is trivially decodable" → an already-stated criticism
 - "Used but lens-illegible" → [Steerable but Not Decodable](https://arxiv.org/html/2604.02608v2)
 
-**Still unclaimed after two searches:** the clustering→learnability result
-([16](activation-introspection/notes/16-visible-rule-capacity.md),
-[19](activation-introspection/notes/19-clustering-predicts-learnability.md)), and
-the elicitation range ([21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md)).
+**Nothing is both unclaimed and standing.** As of 2026-08-12:
+
+- The clustering→learnability result was the only unclaimed candidate, and
+  [26](activation-introspection/notes/26-someone-elses-rules.md) **failed to
+  replicate it** on rules written by a model blind to the hypothesis. Rank
+  agreement 0.403 against 0.785, permutation p = 0.078, and the usable half — a
+  green light at 8 for 8 — fell to 4 of 7. Do not put it in an application.
+- The elicitation range ([21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md))
+  is still unclaimed and still standing. One model, one setup, so it is an
+  observation rather than a law — but nobody appears to have written it down, and
+  it bears directly on Belinda Li's question about verbalization without training.
+- The sensitivity/specificity trade-off ([08](activation-introspection/notes/08-sensitivity-specificity-tradeoff.md))
+  had **never been novelty-checked at all** and now has been: three of its four
+  parts are prior art, and the conjunction is an extension. See
+  [`PAPERS-REVIEWED.md`](spar-application/PAPERS-REVIEWED.md), which is the new
+  ledger of what has actually been read and to what depth.
+
+**There is no novel claim in this repository backed by a new experiment.** State
+that plainly rather than discovering it during an interview.
 
 **Resolved 2026-08-12.** [Emergent Introspection in AI is Content-Agnostic](https://arxiv.org/pdf/2603.05414)
 (Lederman and Mahowald) has now been read in full. It is **not** in tension with

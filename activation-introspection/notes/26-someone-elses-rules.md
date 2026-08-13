@@ -155,3 +155,116 @@ overlapping `19`'s, the set would be worthless and the right move would be to
 regenerate rather than measure. Checked: all correct, no name reused, and only two
 words (`walked`, `painted`) appear in both sets, in a rule with a different
 distinction.
+
+---
+
+# Result: it does not replicate. The green light is gone.
+
+Run **2026-08-12**, two phases, 85.6 seconds. Predictions frozen before any
+accuracy existed: `results/clustering_replication_protocol_v1.json`. Results:
+`results/clustering_replication_v1_raw.jsonl` and `..._summary.json`.
+
+| rule | separation | predicted | accuracy | |
+|---|---:|:---:|---:|---|
+| `comparative_vs_superlative` | +0.0875 | learnable | 0.792 | ✓ |
+| `nominative_vs_accusative` | +0.0732 | learnable | 0.625 | ✓ |
+| `all_vowels_present` | +0.0382 | learnable | 0.708 | ✓ |
+| **`reptile_vs_amphibian`** | +0.0375 | learnable | **0.542** | **✗** |
+| **`regular_vs_irregular_past`** | +0.0326 | learnable | **0.542** | **✗** |
+| `renewable_vs_fossil_source` | +0.0249 | learnable | 0.750 | ✓ |
+| **`flightless_vs_flying_bird`** | +0.0229 | learnable | **0.542** | **✗** |
+| **`silent_initial`** | +0.0160 | not | **0.792** | **✗** |
+| `stress_position` | +0.0060 | not | 0.458 | ✓ |
+| **`spelling_palindrome`** | +0.0042 | not | **0.667** | **✗** |
+| **`alphabetical_letters`** | +0.0020 | not | **0.667** | **✗** |
+| `even_vs_odd` | −0.0355 | not | 0.542 | ✓ |
+| `fibonacci_number` | −0.0422 | not | 0.417 | ✓ |
+| `perfect_square` | −0.0517 | not | 0.583 | ✓ |
+
+## The pre-committed metric
+
+**Rank agreement 0.403, against `19`'s 0.785.** Roughly half.
+
+A permutation test — shuffle the accuracies against the separations 200,000 times
+— puts this at **p = 0.078**. On this rule set, the relationship between how well
+a rule's classes clump and whether the model learns it is **not distinguishable
+from no relationship at all.**
+
+The binary count, reported second as the note requires: **8 of 14.** The set came
+out evenly balanced — 7 rules learnable, 7 not — so the majority-class baseline is
+7. **The measure beats guessing by one rule.**
+
+## What actually died
+
+`19`'s conclusion was not the 12/14. It was this, and it was the part that made
+the measure useful:
+
+> Positive separation → learnable: **8 for 8.** A strong green light.
+> Negative separation → not learnable: 4 of 6. A weak red light.
+> So use it to *proceed* with confidence, and treat a negative reading as a
+> warning rather than a veto.
+
+On rules I did not write, positive separation → learnable is **4 of 7**. That is a
+coin flip. **The green light is gone**, and it was the whole recommendation.
+
+What survived is the half `19` called weak. All three rules with clearly negative
+separation — the numeric ones — were correctly predicted unlearnable, 3 for 3. The
+two highest-separation rules were both correct. The failures are all in the middle:
+of the eight rules between +0.002 and +0.038, four hit and four missed.
+
+## The honest alternative explanation, and why it does not rescue it
+
+This rule set is harder and more bunched than `19`'s. Accuracy spans 0.417 to
+0.792 here against 0.458 to 1.000 there, and **8 of 14 rules land within 0.10 of
+the 0.60 threshold**. `19`'s thresholds were placed in empty gaps in `16`'s data;
+here there is no gap to place them in. So the binary score is noisier by
+construction, and some of the drop from 12 to 8 is that, not the measure failing.
+
+That argument does not touch the primary metric. Rank agreement uses no threshold
+at all, and it still halved and still is not significant. **This is why the metric
+was pre-committed** — had I chosen after the fact, the binary count with a
+compression caveat attached would have been the flattering read available, and it
+would have been wrong.
+
+I will not quote a threshold fitted to these data. `19` made that rule explicit
+about its own 14/14-at-0.68, and it applies here.
+
+## My prediction, scored
+
+I predicted rank agreement **0.5–0.8** and a binary count of **10 or 11**, with
+the sound rules as the misses.
+
+**Both numbers are wrong.** 0.403 is below my range and 8 is below my count. I
+expected a drop and got a larger one. On the misses I was half right: `silent_initial`
+missed, `stress_position` did not, and the other five misses are spread across
+meaning, spelling and grammar with no pattern I can name.
+
+The reasoning was also wrong in an instructive way. I expected regression because
+`19`'s rules were written by someone holding the hypothesis. That predicts a
+*modest* drop. A fall to non-significance says something stronger: on a rule set
+chosen without the hypothesis in mind, there may be no usable relationship here.
+
+## What this closes
+
+**The clustering gate is not a design tool.** It was the only result in this
+repository unclaimed by anyone else, and the one thing it was good for — a cheap
+green light before spending a bank — does not survive contact with rules I did not
+choose.
+
+`19` is not retracted. Its 12 of 14 stands as measured, with its predictions
+genuinely frozen in advance. What is retracted is the **generalisation**: that the
+measure predicts learnability for hidden rules in general. It predicted
+learnability for fourteen rules I wrote.
+
+That is the difference between a result and a tool, and it is worth more than the
+tool would have been. **This is the outcome the pre-run note named as a good one
+to buy for a few hundred forward passes**, and it cost 86 seconds.
+
+## Limits
+
+One model, one layer, one interface, one externally-authored rule set of fourteen.
+A second external set could land differently, and the compression problem above is
+real — a set spanning a wider accuracy range would be a fairer test of the binary
+threshold, though not of the rank agreement. The rule author was one model through
+one tool; a different author might produce a set the measure handles better, which
+is exactly the sensitivity this note exists to expose.

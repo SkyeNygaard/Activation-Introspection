@@ -1,0 +1,140 @@
+{
+  "accuracy_threshold": 0.6,
+  "by_rule": {
+    "all_vowels_present": {
+      "accuracy": 0.7083333333333334,
+      "mean_separation": 0.0382403844484577,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.4166666666666667
+    },
+    "alphabetical_letters": {
+      "accuracy": 0.6666666666666666,
+      "mean_separation": 0.0020261848414385533,
+      "observed_learnable": true,
+      "predicted_learnable": false,
+      "prediction_correct": false,
+      "twin_pair": 0.3333333333333333
+    },
+    "comparative_vs_superlative": {
+      "accuracy": 0.7916666666666666,
+      "mean_separation": 0.08748961819542782,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.5833333333333334
+    },
+    "even_vs_odd": {
+      "accuracy": 0.5416666666666666,
+      "mean_separation": -0.03553982023839597,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.08333333333333333
+    },
+    "fibonacci_number": {
+      "accuracy": 0.4166666666666667,
+      "mean_separation": -0.04216400561509315,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.0
+    },
+    "flightless_vs_flying_bird": {
+      "accuracy": 0.5416666666666666,
+      "mean_separation": 0.02290656003687112,
+      "observed_learnable": false,
+      "predicted_learnable": true,
+      "prediction_correct": false,
+      "twin_pair": 0.25
+    },
+    "nominative_vs_accusative": {
+      "accuracy": 0.625,
+      "mean_separation": 0.07317766657582037,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.25
+    },
+    "perfect_square": {
+      "accuracy": 0.5833333333333334,
+      "mean_separation": -0.05173125973454229,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.16666666666666666
+    },
+    "regular_vs_irregular_past": {
+      "accuracy": 0.5416666666666666,
+      "mean_separation": 0.0325546121155774,
+      "observed_learnable": false,
+      "predicted_learnable": true,
+      "prediction_correct": false,
+      "twin_pair": 0.08333333333333333
+    },
+    "renewable_vs_fossil_source": {
+      "accuracy": 0.75,
+      "mean_separation": 0.02486369234544265,
+      "observed_learnable": true,
+      "predicted_learnable": true,
+      "prediction_correct": true,
+      "twin_pair": 0.5
+    },
+    "reptile_vs_amphibian": {
+      "accuracy": 0.5416666666666666,
+      "mean_separation": 0.037537362840440514,
+      "observed_learnable": false,
+      "predicted_learnable": true,
+      "prediction_correct": false,
+      "twin_pair": 0.25
+    },
+    "silent_initial": {
+      "accuracy": 0.7916666666666666,
+      "mean_separation": 0.015971145696110172,
+      "observed_learnable": true,
+      "predicted_learnable": false,
+      "prediction_correct": false,
+      "twin_pair": 0.5833333333333334
+    },
+    "spelling_palindrome": {
+      "accuracy": 0.6666666666666666,
+      "mean_separation": 0.004157777737688088,
+      "observed_learnable": true,
+      "predicted_learnable": false,
+      "prediction_correct": false,
+      "twin_pair": 0.3333333333333333
+    },
+    "stress_position": {
+      "accuracy": 0.4583333333333333,
+      "mean_separation": 0.005993632806671978,
+      "observed_learnable": false,
+      "predicted_learnable": false,
+      "prediction_correct": true,
+      "twin_pair": 0.08333333333333333
+    }
+  },
+  "elapsed_seconds": 85.6,
+  "majority_class_baseline": 7,
+  "misses": [
+    "reptile_vs_amphibian",
+    "flightless_vs_flying_bird",
+    "spelling_palindrome",
+    "alphabetical_letters",
+    "regular_vs_irregular_past",
+    "silent_initial"
+  ],
+  "model": "qwen-3b",
+  "n_correct_predictions": 8,
+  "n_observed_learnable": 7,
+  "n_positive_separation": 7,
+  "n_rules": 14,
+  "notes_19_rank_agreement": 0.785,
+  "positive_separation_learnable": 4,
+  "primary_rank_agreement": 0.40315403741382155,
+  "protocol": "results/clustering_replication_protocol_v1.json",
+  "protocol_sha256": "b1a013452ff15cfdcee14ad84b4f6a2191e83b0efd3c57d273dd401824ac2b26",
+  "separation_threshold": 0.02,
+  "smoke": false,
+  "what_this_is": "notes/26. notes/19's frozen clustering gate, scored on fourteen rules written by a model blind to the hypothesis."
+}
