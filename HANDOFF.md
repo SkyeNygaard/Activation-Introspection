@@ -112,6 +112,17 @@ telling the model to attend to its own state cuts constant-labelling from 40% to
 Two different concepts discriminated at 0.899; two random directions at **identical
 separation by construction** at 0.594; 4 of 4 pairs.
 
+**An elicitation prompt can destroy the readout it was meant to improve**
+([notes/35](activation-introspection/notes/35-when-the-prompt-contradicts-the-page.md),
+[notes/36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md)).
+Tell the model something was added to its internal state, on a carrier text that
+says nothing changed, and twin-pair accuracy falls below the coin-flip null — on
+all three denying strings, while six neutral and affirming strings are untouched.
+Interaction **−0.715, CI [−0.812, −0.611]**. The failure is a *confident* collapse
+to one label: constant-labelling 0.104 → 0.826 with mean confidence rising. **The
+best-established result here**, and an instance of a published phenomenon rather
+than a new one.
+
 **Elicitation dominates** ([notes/21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md)).
 Same state, same reader, wording only: `sensory` 0.708, `associations` 0.500,
 `name_one` **0.292** (tied with a prompt that forbade naming).
