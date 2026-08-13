@@ -1,0 +1,188 @@
+{
+  "carriers": {
+    "affirms": [
+      "Something is different now. Hidden state marker: \u00a7",
+      "The state has been altered from before. Hidden state marker: \u00a7",
+      "An adjustment has been made here. Hidden state marker: \u00a7"
+    ],
+    "denies": [
+      "Nothing changed. Hidden state marker: \u00a7",
+      "The state is exactly as it was before. Hidden state marker: \u00a7",
+      "No alteration has been made here. Hidden state marker: \u00a7"
+    ],
+    "neutral": [
+      "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "The afternoon shift log sits on the desk. Hidden state marker: \u00a7",
+      "A printed inventory list lies nearby. Hidden state marker: \u00a7"
+    ]
+  },
+  "clash_cell_reproduced": true,
+  "elapsed_seconds": 515.1,
+  "injection_layer": 9,
+  "instructions": {
+    "asserts": "introspect",
+    "silent": "baseline"
+  },
+  "model": "qwen-3b",
+  "note": "notes/35",
+  "notes_34_clash_cell": {
+    "constant_label_rate": 0.875,
+    "twin_pair": 0.125
+  },
+  "per_string": {
+    "affirms[0]/asserts": {
+      "constant_label_rate": 0.1458,
+      "n_twin_cells": 48,
+      "twin_pair": 0.8542
+    },
+    "affirms[0]/silent": {
+      "constant_label_rate": 0.0625,
+      "n_twin_cells": 48,
+      "twin_pair": 0.9375
+    },
+    "affirms[1]/asserts": {
+      "constant_label_rate": 0.2292,
+      "n_twin_cells": 48,
+      "twin_pair": 0.7708
+    },
+    "affirms[1]/silent": {
+      "constant_label_rate": 0.2083,
+      "n_twin_cells": 48,
+      "twin_pair": 0.7917
+    },
+    "affirms[2]/asserts": {
+      "constant_label_rate": 0.1042,
+      "n_twin_cells": 48,
+      "twin_pair": 0.8958
+    },
+    "affirms[2]/silent": {
+      "constant_label_rate": 0.1042,
+      "n_twin_cells": 48,
+      "twin_pair": 0.8958
+    },
+    "denies[0]/asserts": {
+      "constant_label_rate": 0.875,
+      "n_twin_cells": 48,
+      "twin_pair": 0.125
+    },
+    "denies[0]/silent": {
+      "constant_label_rate": 0.0,
+      "n_twin_cells": 48,
+      "twin_pair": 1.0
+    },
+    "denies[1]/asserts": {
+      "constant_label_rate": 0.7708,
+      "n_twin_cells": 48,
+      "twin_pair": 0.2292
+    },
+    "denies[1]/silent": {
+      "constant_label_rate": 0.125,
+      "n_twin_cells": 48,
+      "twin_pair": 0.875
+    },
+    "denies[2]/asserts": {
+      "constant_label_rate": 0.8333,
+      "n_twin_cells": 48,
+      "twin_pair": 0.1667
+    },
+    "denies[2]/silent": {
+      "constant_label_rate": 0.1875,
+      "n_twin_cells": 48,
+      "twin_pair": 0.8125
+    },
+    "neutral[0]/asserts": {
+      "constant_label_rate": 0.1042,
+      "n_twin_cells": 48,
+      "twin_pair": 0.8958
+    },
+    "neutral[0]/silent": {
+      "constant_label_rate": 0.2083,
+      "n_twin_cells": 48,
+      "twin_pair": 0.7917
+    },
+    "neutral[1]/asserts": {
+      "constant_label_rate": 0.0833,
+      "n_twin_cells": 48,
+      "twin_pair": 0.9167
+    },
+    "neutral[1]/silent": {
+      "constant_label_rate": 0.2292,
+      "n_twin_cells": 48,
+      "twin_pair": 0.7708
+    },
+    "neutral[2]/asserts": {
+      "constant_label_rate": 0.2708,
+      "n_twin_cells": 48,
+      "twin_pair": 0.7083
+    },
+    "neutral[2]/silent": {
+      "constant_label_rate": 0.1042,
+      "n_twin_cells": 48,
+      "twin_pair": 0.8958
+    }
+  },
+  "primary_measure": "constant_label_rate",
+  "smoke": false,
+  "table": {
+    "affirms": {
+      "asserts": {
+        "accuracy": 0.9201,
+        "constant_label_rate": 0.1597,
+        "format_rate": 1.0,
+        "mean_margin": 8.069,
+        "n_episodes": 288,
+        "n_twin_cells": 144,
+        "twin_pair": 0.8403
+      },
+      "silent": {
+        "accuracy": 0.9375,
+        "constant_label_rate": 0.125,
+        "format_rate": 1.0,
+        "mean_margin": 6.211,
+        "n_episodes": 288,
+        "n_twin_cells": 144,
+        "twin_pair": 0.875
+      }
+    },
+    "denies": {
+      "asserts": {
+        "accuracy": 0.5868,
+        "constant_label_rate": 0.8264,
+        "format_rate": 1.0,
+        "mean_margin": 8.624,
+        "n_episodes": 288,
+        "n_twin_cells": 144,
+        "twin_pair": 0.1736
+      },
+      "silent": {
+        "accuracy": 0.9479,
+        "constant_label_rate": 0.1042,
+        "format_rate": 1.0,
+        "mean_margin": 6.972,
+        "n_episodes": 288,
+        "n_twin_cells": 144,
+        "twin_pair": 0.8958
+      }
+    },
+    "neutral": {
+      "asserts": {
+        "accuracy": 0.9167,
+        "constant_label_rate": 0.1528,
+        "format_rate": 1.0,
+        "mean_margin": 6.851,
+        "n_episodes": 288,
+        "n_twin_cells": 144,
+        "twin_pair": 0.8403
+      },
+      "silent": {
+        "accuracy": 0.9097,
+        "constant_label_rate": 0.1806,
+        "format_rate": 1.0,
+        "mean_margin": 4.543,
+        "n_episodes": 288,
+        "n_twin_cells": 144,
+        "twin_pair": 0.8194
+      }
+    }
+  }
+}

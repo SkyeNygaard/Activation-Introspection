@@ -90,3 +90,97 @@ episodes. Inference only, one model load, about half an hour.
 
 Nothing — this is the cheapest possible test of the single largest weakness in the
 one clean result here, and every outcome above changes what may be said.
+
+---
+
+# Result: it is the stance. Nine strings, perfect separation.
+
+Run **2026-08-13**, 1,728 episodes, 144 twin cells per stance × instruction.
+Artifacts: `results/prompt_clash_v2_raw.jsonl`,
+`results/prompt_clash_v2_summary.json`.
+
+**Anchor holds**: `35`'s original string reproduces its own collapse.
+
+Twin-pair accuracy, per string, `silent` → `asserts`:
+
+| carrier string | silent | asserts | drop |
+|---|---:|---:|---:|
+| **`denies`** "Nothing changed." | 1.000 | 0.125 | **−0.875** |
+| **`denies`** "The state is exactly as it was before." | 0.875 | 0.229 | **−0.646** |
+| **`denies`** "No alteration has been made here." | 0.812 | 0.167 | **−0.646** |
+| `neutral` "A routine maintenance record is open." | 0.792 | 0.896 | +0.104 |
+| `neutral` "The afternoon shift log sits on the desk." | 0.771 | 0.917 | +0.146 |
+| `neutral` "A printed inventory list lies nearby." | 0.896 | 0.708 | −0.188 |
+| `affirms` "Something is different now." | 0.938 | 0.854 | −0.083 |
+| `affirms` "The state has been altered from before." | 0.792 | 0.771 | −0.021 |
+| `affirms` "An adjustment has been made here." | 0.896 | 0.896 | 0.000 |
+
+**All three denials collapse below the 0.25 coin-flip null. None of the six others
+comes close.** Perfect separation across nine strings.
+
+Pooled, 144 twin cells per cell:
+
+| stance | effect of the instruction | 95% CI |
+|---|---:|---|
+| `denies` | **−0.722** | **[−0.799, −0.639]** |
+| `neutral` | +0.021 | [−0.069, +0.111] |
+| `affirms` | −0.035 | [−0.118, +0.049] |
+
+**Interaction −0.715, 95% CI [−0.812, −0.611].**
+
+## What this establishes
+
+**The effect belongs to the stance, not to the sentence.** That was the one hole
+`35` named in itself, and it is now closed with three strings per stance at matched
+length and register. Neutral and affirming carriers are untouched by the same
+instruction — both intervals comfortably contain zero.
+
+So the claim stands at its full strength:
+
+> An instruction asserting that something was added to the model's internal state
+> **destroys the readout on any carrier text that denies change**, converting a
+> near-perfect forced choice into a confident constant response. It leaves
+> carriers that are neutral or that agree with it alone.
+
+## My prediction, scored
+
+I predicted all three would collapse but **not equally**, at 60/40, with the stark
+original collapsing hardest and discursive denials milder — and said that if so,
+"directness of contradiction" would be the finer-grained claim.
+
+**The count is right and the gradient is barely there.** The original drops 0.875
+and the two discursive denials drop 0.646 each — identical to one another, and all
+three land below chance. There is a hint that the starkest string is worst, on a
+difference of 0.23 with intervals I have not computed per-string and would not
+trust at 48 cells each.
+
+**So the directness sub-claim is not supported.** Denying change discursively is
+about as destructive as denying it in three words, and I should not have expected
+otherwise: the model is not weighing rhetorical force, it is resolving a
+contradiction.
+
+The pooled interaction also shrank from `35`'s −0.885 to −0.715, exactly as adding
+two less-extreme members of a class should. `35`'s number was the best case, not
+the typical one.
+
+## Where this leaves the repository
+
+This is now **the most solidly established result here**: nine strings, a
+pre-registered per-string test, matched length, a reproduced anchor, and an
+interaction whose interval is nowhere near zero.
+
+It is still, as [`35`](35-when-the-prompt-contradicts-the-page.md) records, an
+**instance of a published phenomenon** — instruction–context conflict degrading
+behaviour is prior art. What is ours is the application and the caution: an
+introspection elicitation prompt is subject to it, the failure mode is a
+*confident* collapse to one label rather than visible degradation, and the pooled
+averages this literature reports its prompting gains as would hide it completely.
+
+## Limits
+
+One model, one instruction family, three concept pairs' worth of carriers per
+stance, one injection layer. The instruction family is `24`'s `introspect`
+wording; whether other introspection prompts that assert internal change do the
+same is untested, and that is now the sharpest remaining hole rather than the
+carrier one. Nothing here says the effect exists at the scales where the published
+prompting gains were measured.

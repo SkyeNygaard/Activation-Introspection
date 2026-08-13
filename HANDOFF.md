@@ -201,7 +201,21 @@ violation of that file's own rule.
   [`PAPERS-REVIEWED.md`](spar-application/PAPERS-REVIEWED.md), which is the new
   ledger of what has actually been read and to what depth.
 
-**There is now one candidate, added the same day**
+**The best-established result here is now [36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md),
+added 2026-08-13.** An instruction asserting that something was added to the
+model's internal state **destroys the readout on any carrier text that denies
+change** — twin-pair accuracy collapses below the coin-flip null on all three
+denying strings, while neutral and affirming carriers are untouched. Interaction
+−0.715, 95% CI [−0.812, −0.611], across nine strings with length matched and the
+per-string test declared in advance.
+
+It is an **instance of a published phenomenon** (instruction–context conflict) and
+must be labelled that way. What is ours is the application: an introspection
+elicitation prompt is subject to it, the failure is a *confident* collapse to one
+label rather than visible degradation, and the pooled averages this literature
+reports prompting gains as (0.3% → 39.9%, 10.8% → 63.8%) would hide it entirely.
+
+**There is also one candidate from 2026-08-12**
 ([29](activation-introspection/notes/29-can-abstention-recover-selectivity.md)),
 and it is the strongest thing here:
 
