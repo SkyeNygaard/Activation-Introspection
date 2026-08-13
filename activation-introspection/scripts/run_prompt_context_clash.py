@@ -31,7 +31,7 @@ import json
 import sys
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import torch
 
@@ -178,7 +178,7 @@ def run(args: argparse.Namespace) -> None:
                     "constant_label_rate": round(const, 4),
                     "twin_pair": round(twin_pair_rate(sub), 4),
                     "accuracy": round(sum(bool(r["correct"]) for r in sub) / len(sub), 4),
-                    "mean_margin": round(sum(float(r["margin"]) for r in sub) / len(sub), 3),
+                    "mean_margin": round(sum(cast(float, r["margin"]) for r in sub) / len(sub), 3),
                     "format_rate": round(sum(bool(r["format_ok"]) for r in sub) / len(sub), 4),
                 }
 

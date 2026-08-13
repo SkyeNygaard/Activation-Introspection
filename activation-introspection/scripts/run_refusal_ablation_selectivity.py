@@ -100,7 +100,9 @@ HARMLESS = (
 
 #: Split before anything runs. The direction is built on train and the gate is
 #: scored on test, so a direction that only works where it was fitted is caught.
-TRAIN, TEST = slice(0, 12), slice(12, 16)
+N_TRAIN = 12
+HARMFUL_TRAIN, HARMFUL_TEST = HARMFUL[:N_TRAIN], HARMFUL[N_TRAIN:]
+HARMLESS_TRAIN = HARMLESS[:N_TRAIN]
 
 #: Layers to consider for the direction. Arditi et al. sweep all and pick one.
 CANDIDATE_LAYERS = (10, 14, 18, 22, 26)
@@ -186,13 +188,13 @@ def refusal_rate(
 
 def build_direction(model: models.LoadedModel) -> tuple[int, Tensor, dict[str, Any]]:
     """Difference-in-means per layer; pick the one that most reduces refusal."""
-    base_rate = refusal_rate(model, HARMFUL[TEST], None)
+    base_rate = refusal_rate(model, HARMFUL_TEST, None)
     print(f"  baseline refusal on held-out harmful: {base_rate:.2f}", flush=True)
     table: dict[str, float] = {}
     best: tuple[int, Tensor, float] | None = None
     for layer in CANDIDATE_LAYERS:
-        d = mean_state(model, HARMFUL[TRAIN], layer) - mean_state(model, HARMLESS[TRAIN], layer)
-        rate = refusal_rate(model, HARMFUL[TEST], d)
+        d = mean_state(model, HARMFUL_TRAIN, layer) - mean_state(model, HARMLESS_TRAIN, layer)
+        rate = refusal_rate(model, HARMFUL_TEST, d)
         table[f"layer_{layer}"] = rate
         print(f"  layer {layer}: refusal after ablation {rate:.2f}", flush=True)
         if best is None or rate < best[2]:

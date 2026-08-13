@@ -29,7 +29,7 @@ import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import torch
 
@@ -197,7 +197,7 @@ def run(args: argparse.Namespace) -> None:
                     "constant_label_rate": round(const, 4),
                     "twin_pair": round(twin_pair_rate(sub), 4),
                     "n_twin_cells": n_cells,
-                    "mean_margin": round(sum(float(r["margin"]) for r in sub) / len(sub), 3),
+                    "mean_margin": round(sum(cast(float, r["margin"]) for r in sub) / len(sub), 3),
                 }
 
         anchor = table[ANCHOR[0]][ANCHOR[1]]

@@ -31,7 +31,7 @@ import json
 import sys
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import torch
 
@@ -221,7 +221,7 @@ def run(args: argparse.Namespace) -> None:
                     "accuracy": sum(bool(r["correct"]) for r in sub) / len(sub),
                     "twin_pair": twin_pair(sub),
                     "format_rate": sum(bool(r["format_ok"]) for r in sub) / len(sub),
-                    "mean_margin": sum(float(r["margin"]) for r in sub) / len(sub),
+                    "mean_margin": sum(cast(float, r["margin"]) for r in sub) / len(sub),
                 }
             # The abstention curve: does the gap reopen or close as the least
             # confident cells are dropped? notes/29 and notes/31 turn on this.
