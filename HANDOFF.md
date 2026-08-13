@@ -189,9 +189,12 @@ violation of that file's own rule.
   agreement 0.403 against 0.785, permutation p = 0.078, and the usable half — a
   green light at 8 for 8 — fell to 4 of 7. Do not put it in an application.
 - The elicitation range ([21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md))
-  is still unclaimed and still standing. One model, one setup, so it is an
-  observation rather than a law — but nobody appears to have written it down, and
-  it bears directly on Belinda Li's question about verbalization without training.
+  **is prior art, established 2026-08-12.**
+  [Latent Introspection](https://arxiv.org/html/2602.20031) swept 16 prompting
+  conditions and moved detection from 0.3% to 39.9%, ceiling 84.0%, in February
+  2026. notes/21's 2.4× over six prompts is the same claim, smaller and later. The
+  paper was in this repository's own literature list at abstract depth and the
+  sweep — their *first* listed contribution — was missed.
 - The sensitivity/specificity trade-off ([08](activation-introspection/notes/08-sensitivity-specificity-tradeoff.md))
   had **never been novelty-checked at all** and now has been: three of its four
   parts are prior art, and the conjunction is an extension. See

@@ -1,3 +1,21 @@
+> **Prior art, established 2026-08-13.** The finding below — that elicitation
+> wording moves self-report a great deal, and that a single-prompt introspection
+> null is therefore uninterpretable — is published.
+> [Latent Introspection](https://arxiv.org/html/2602.20031) (February 2026) swept
+> **16 prompting conditions** and moved detection from 0.3% to 39.9%, with a
+> ceiling of 84.0%; "detection accuracy varies dramatically across prompting
+> conditions" is one of their figure captions and the sweep is their *first* listed
+> contribution. This note's 2.4× over six prompts I wrote is the same claim, less
+> systematic and five months later. Lindsey's original also flags that "results
+> likely depend, potentially significantly, on the choice of prompt".
+>
+> The measurement stands and the retraction of `20`'s headline that it produced
+> stands. What does not stand is any suggestion that the *phenomenon* was found
+> here. That paper sat in this repository's literature list at abstract depth from
+> 2026-08-05, and the sweep was missed — which is why
+> [`PAPERS-REVIEWED.md`](../../spar-application/PAPERS-REVIEWED.md) now records
+> reading depth.
+
 # Pre-run note: I narrowed the channel I then measured
 
 Written **2026-08-12, before the run.**

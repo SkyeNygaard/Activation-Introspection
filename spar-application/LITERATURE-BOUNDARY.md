@@ -174,7 +174,9 @@ not found stated elsewhere, and one search is not evidence that it isn't.
 | Training loses to a probe ([12](../activation-introspection/notes/12-training-versus-a-probe.md)) | Prior art ([2608.04347](https://arxiv.org/html/2608.04347)) |
 | Shared axis in the bank ([13](../activation-introspection/notes/13-shared-axis-audit.md)) | Prior art ([2603.21396](https://arxiv.org/html/2603.21396v1)); a validity audit of our own setup |
 
-**Five of seven candidates are prior art**, counting the held-out result added on
+**Note 21's elicitation range is prior art too, found 2026-08-12.** [Latent Introspection](https://arxiv.org/html/2602.20031) sweeps 16 prompting conditions and moves detection from 0.3% to 39.9% to a ceiling of 84.0%, with "detection accuracy varies dramatically across prompting conditions" as a figure caption. That is notes/21's claim, more systematically and five months earlier. The repository had this paper at abstract depth and missed it.
+
+**Six of seven candidates are prior art**, counting the held-out result added on
 2026-08-12 as convergent rather than new. That is the correct thing to know before
 an application goes out, and it is the reason this file exists.
 
