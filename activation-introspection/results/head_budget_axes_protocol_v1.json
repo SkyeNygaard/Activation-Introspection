@@ -1,0 +1,67 @@
+{
+  "analysis": {
+    "break_even_coverage": "for each attention implementation, arm and length, the smallest k/12 at which the paired median speedup reaches the target, by linear interpolation between measured k values; null when no measured k reaches it",
+    "paired_bootstrap": {
+      "draws": 10000,
+      "estimand": "median of paired per-block stock_ns / arm_ns ratios",
+      "interval": "fixed-seed percentile bootstrap over timing-block pairs",
+      "seed": 20260812
+    }
+  },
+  "claim_boundary": "If all gates pass, this study establishes, for GPT-2 small's transformer stack in eval mode on full-sequence uncached forwards on the Apple graphics backend at batch 1, how the deleted-head speed ceiling and the fused programmatic arm change when (a) the vocabulary projection is excluded from the timed region, (b) the fast fused attention implementation replaces the explicit one, and (c) sequence length runs past the released position table. It does not establish anything about output quality, perplexity or downstream behavior; nothing about cached decoding, training, CPU, CUDA, other model sizes or other programs; and past 1024 tokens the position table is replaced with a randomly initialized larger one, so those cells are GPT-2's arithmetic at that length and not a working long-context model.",
+  "design": {
+    "arms": {
+      "program": "the same k heads pruned, then replaced by one fused path per layer: a single value projection of width k*64, torch.lerp(V[:, :1], V, 0.01), and a single output projection back to 768",
+      "prune": "PreTrainedModel.prune_heads removes heads 0..k-1 from every layer. Free-head ceiling: no program can cost less than a head that is not there",
+      "stock": "unmodified stack; the paired denominator in every block"
+    },
+    "attention_implementations": [
+      "eager",
+      "sdpa"
+    ],
+    "batch": 1,
+    "device": "mps",
+    "k_values": [
+      3,
+      6,
+      10
+    ],
+    "lengths": [
+      512,
+      1024,
+      2048,
+      4096
+    ],
+    "model": "gpt2 (124M, 12 layers, 12 heads, hidden 768, head_dim 64) transformer stack only, no language-model head. eval mode, use_cache=False",
+    "position_table": "lengths past the released 1024 require a larger position table. It is replaced by an nn.Embedding of the longest tested length, filled at GPT-2's own initializer_range, with the released 1024 rows copied in. Per-token arithmetic is unchanged; output is meaningless, as the deleted-head arm's already is. Both arms are stopwatches",
+    "shape_check": "every arm's hidden states are checked finite and correctly shaped once per cell before timing. No numerical equivalence to stock is expected or required",
+    "timing": {
+      "blocks": 9,
+      "input": "random token ids in [0, 50257) at the frozen seed, identical across arms within a cell",
+      "iteration_calibration": "double iterations until the slower arm's block exceeds minimum_slower_block_ns",
+      "minimum_slower_block_ns": 100000000,
+      "order": "paired blocks alternating stock-first and arm-first",
+      "seed": 20260812,
+      "synchronization": "torch.mps.synchronize immediately before and after every block",
+      "warmups": 5
+    }
+  },
+  "frozen_at_utc": "2026-08-12T20:40:00Z",
+  "gates": {
+    "all_arms_finite": "every arm produces finite, correctly shaped hidden states at every cell",
+    "ceiling_bounds_program": "at every cell the pruned arm's paired median speedup is at least the program arm's, within bootstrap overlap. A violation means the timing harness is wrong",
+    "target_note": "the same threshold frozen before the earlier single-head integration benchmark, reused so all three studies are comparable",
+    "target_speedup": 1.25
+  },
+  "prior_observation": {
+    "disclosure": "This protocol and notes/28 were written while notes/27 was still executing. Four progress lines of notes/27 had been seen: the processor deleted-head arm at k=1 for lengths 64, 128, 256, 512 and k=2 for 64, 128, 256, all between 1.02x and 1.07x. No batch-8 cell, no graphics-chip cell, no programmatic-arm cell and nothing above k=2 existed yet. The three axes tested here came from re-reading the notes/27 design, not from its output, which is why they are frozen now rather than after. One further disclosure: a three-block smoke of this runner at eager, k=3, 2048 tokens may be executed before the full grid to check the enlarged position table and the memory footprint, and its numbers will be recorded here before the full run if so. No result-dependent setting, gate, threshold, k value, length or stopping rule is permitted after this file is frozen.",
+    "smoke_result": "Recorded as promised above. The first smoke attempt CRASHED: enlarging the position table is not sufficient, because the explicit attention path also reads a precomputed lower-triangular mask buffer sized to the released 1024 positions. The runner was fixed to enlarge that buffer too, which is a correctness fix to an arm that could not run at all, not a result-dependent change. The repeated three-block smoke at k=3, 2048 tokens then passed both gates and its four numbers were seen: explicit-attention deleted 1.2395x and programmatic 1.2338x, fast-attention deleted 1.1224x and programmatic 1.0900x. Those four cells are part of the frozen grid and were therefore observed before the full run. They bear on prediction 2 in notes/28, which should be discounted accordingly. No gate, threshold, k value, length or stopping rule was changed after seeing them.",
+    "status": "written during notes/27's run, before its results were available"
+  },
+  "question": "notes/27 measured the deleted-head speed ceiling with GPT-2's vocabulary projection in the denominator, against the explicit attention implementation, at no more than 1024 tokens. Each of those three choices pushes the answer in a known direction. This flips all three, one axis at a time.",
+  "schema_version": 1,
+  "source_files_sha256": {
+    "scripts/run_head_budget_axes.py": "01060b7042db599b5eeb3309c11cd935f69a954a896a316485a2096d327a1177"
+  },
+  "title": "Three ways the head-budget ceiling could be wrong"
+}

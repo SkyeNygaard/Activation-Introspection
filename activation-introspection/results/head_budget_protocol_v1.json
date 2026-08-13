@@ -1,0 +1,87 @@
+{
+  "analysis": {
+    "break_even_coverage": "for each device/batch/length, the smallest k/12 at which the arm's paired median speedup reaches the target, by linear interpolation between measured k values; reported as unreachable when no measured k reaches it and the k=10 value is below it",
+    "paired_bootstrap": {
+      "draws": 10000,
+      "estimand": "median of paired per-block stock_ns / arm_ns ratios",
+      "interval": "fixed-seed percentile bootstrap over timing-block pairs",
+      "seed": 20260812
+    }
+  },
+  "claim_boundary": "If all gates pass, this study establishes, for GPT-2 small in eval mode on full-sequence uncached forwards at the listed shapes and devices, (a) the end-to-end wall-clock speedup from deleting k of 12 heads in every layer, which upper-bounds any programmatic replacement of the same k heads, (b) the end-to-end speedup actually delivered by the fused k-head exact lowering of the released first-token program, and (c) the smallest head coverage at which a 1.25x end-to-end speedup is reachable. It does not establish anything about output quality, perplexity, or downstream behavior of either arm; nothing about cached/incremental decoding, training, other model sizes, other programs, CUDA, or multi-threaded CPU; and the deleted-head arm is a stopwatch, not a deployable model.",
+  "design": {
+    "arms": {
+      "program": "the same k heads are pruned, then replaced by one fused path per layer: a single value projection of width k*64, torch.lerp(V[:, :1], V, 0.01), and a single output projection back to 768. This is the exact O(TD) lowering of the released first-token program, applied to k heads at once",
+      "prune": "PreTrainedModel.prune_heads removes heads 0..k-1 from every layer. Free-head ceiling: no program can cost less than a head that is not there",
+      "stock": "unmodified model; the paired denominator in every block"
+    },
+    "grid": {
+      "cpu": {
+        "batches": [
+          1
+        ],
+        "dtypes": [
+          "float32"
+        ],
+        "intraop_threads": 1
+      },
+      "mps": {
+        "batches": [
+          1,
+          8
+        ],
+        "dtypes": [
+          "float32"
+        ]
+      }
+    },
+    "head_choice": "heads 0..k-1 in every layer. Arbitrary and deliberate: every head in a layer costs the same time, so which heads are chosen cannot affect a timing result. It does affect output quality, which this study does not measure",
+    "k_values": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      10
+    ],
+    "lengths": [
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "model": "gpt2 (124M, 12 layers, 12 heads, hidden 768, head_dim 64), attn_implementation=eager, eval mode, use_cache=False",
+    "shape_check": "every arm's output logits are checked finite and correctly shaped once per cell before timing. No numerical equivalence to stock is expected or required: both arms deliberately change what the model computes",
+    "timing": {
+      "blocks": 15,
+      "input": "random token ids in [0, 50257) at the frozen seed, identical across arms within a cell",
+      "iteration_calibration": "double iterations until the slower arm's block exceeds minimum_slower_block_ns",
+      "minimum_slower_block_ns": 100000000,
+      "order": "paired blocks alternating stock-first and arm-first",
+      "seed": 20260812,
+      "synchronization": "torch.mps.synchronize immediately before and after every MPS block; CPU is eager",
+      "warmups": 5
+    }
+  },
+  "frozen_at_utc": "2026-08-12T20:05:00Z",
+  "gates": {
+    "all_arms_finite": "every arm produces finite, correctly shaped logits at every cell",
+    "ceiling_bounds_program": "at every cell, the pruned arm's paired median speedup is at least the program arm's, within bootstrap overlap. A violation means the timing harness is wrong, because a deleted head cannot cost more than a replaced one",
+    "reference_coverage": 3,
+    "reference_coverage_note": "k=3 of 12 is 25% of heads, the coverage at which Hayes, Li and Andreas report a 16% average perplexity increase. It is the coverage the surrounding literature actually proposes",
+    "target_note": "1.25x is not chosen here. It is the threshold frozen before the earlier single-head integration benchmark (results/programmatic_attention_protocol_v1.json), which that study missed at 1.089x. Reusing it is what makes the two studies comparable",
+    "target_speedup": 1.25
+  },
+  "prior_observation": {
+    "disclosure": "Two things were observed before this file was frozen, both recorded here rather than silently. FIRST, grid sizing: GPT-2 small was downloaded and three unpaired forward passes were timed on each device (cpu B=1 T=128/1024, B=8 T=1024; mps the same), purely so the run would fit in the promised half hour. Those numbers were 48.7/587.2/5079.8 ms on cpu and 20.9/131.2/1091.0 ms on mps. That changed the plan in notes/27 in exactly one way: batch 8 was dropped from the cpu grid, because a single-threaded batch-8 sweep would have cost about 35 minutes on its own and single-threaded batch-8 is not a deployment regime. Batch 8 is retained on mps. SECOND, a runner smoke: one three-block cell at cpu, B=1, T=128, k=3 was executed to check the harness, and its two speedup numbers were seen -- pruned 1.0668x, program 1.0390x, both gates passing. So one cell of the grid was observed before freezing, at the shortest length and the smallest device arm. It is consistent with prediction 1 in notes/27 and with prediction 4, and anyone weighing those predictions should discount them by exactly that much. No result-dependent setting, gate, threshold, k value, length, or stopping rule was changed after seeing it, and none is permitted after this file is frozen.",
+    "status": "smoke-informed, not pristine preregistration"
+  },
+  "question": "A programmatic attention head cannot be cheaper than a head that has been deleted outright. This measures the deleted-head ceiling on end-to-end GPT-2 speed as a function of how many heads per layer are replaced, and how far the existing exact lowering falls below that ceiling.",
+  "schema_version": 1,
+  "source_files_sha256": {
+    "scripts/run_head_budget.py": "2e44b3e6fbcfda3ed0ed9dddf4a57d05b62d3056c2b9008966b8f30c8fb99f42"
+  },
+  "title": "How much of GPT-2's running time is one attention head worth?"
+}

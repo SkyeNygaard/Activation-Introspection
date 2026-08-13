@@ -1,0 +1,508 @@
+{
+  "break_even": [
+    {
+      "arm": "program",
+      "attention": "eager",
+      "coverage_for_target": 0.6510456836001582,
+      "length": 512
+    },
+    {
+      "arm": "program",
+      "attention": "eager",
+      "coverage_for_target": 0.43209750313891226,
+      "length": 1024
+    },
+    {
+      "arm": "prune",
+      "attention": "eager",
+      "coverage_for_target": 0.45350207504907253,
+      "length": 512
+    },
+    {
+      "arm": "prune",
+      "attention": "eager",
+      "coverage_for_target": 0.3387577978173253,
+      "length": 1024
+    },
+    {
+      "arm": "program",
+      "attention": "sdpa",
+      "coverage_for_target": null,
+      "length": 512
+    },
+    {
+      "arm": "program",
+      "attention": "sdpa",
+      "coverage_for_target": 0.7985338863778808,
+      "length": 1024
+    },
+    {
+      "arm": "prune",
+      "attention": "sdpa",
+      "coverage_for_target": 0.61202855015959,
+      "length": 512
+    },
+    {
+      "arm": "prune",
+      "attention": "sdpa",
+      "coverage_for_target": 0.5118969480654361,
+      "length": 1024
+    }
+  ],
+  "cells": [
+    {
+      "arm": "program",
+      "arm_median_ms": 28.35390625,
+      "attention": "eager",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 4,
+      "k": 3,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.069385020767744,
+        1.0764305179766376
+      ],
+      "paired_median_speedup": 1.0733034830080543,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 30.387302
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 69.402375,
+      "attention": "eager",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 2,
+      "k": 3,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.1206313760876339,
+        1.1306458160666524
+      ],
+      "paired_median_speedup": 1.1261989812532192,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 78.0624585
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 25.80729175,
+      "attention": "eager",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 4,
+      "k": 6,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.1675367720814402,
+        1.1771887878813319
+      ],
+      "paired_median_speedup": 1.174058827486327,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 30.25025
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 59.723521,
+      "attention": "eager",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 2,
+      "k": 6,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.292804430061859,
+        1.3014152161125079
+      ],
+      "paired_median_speedup": 1.2961642699210432,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 77.5819585
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 22.537948,
+      "attention": "eager",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 4,
+      "k": 10,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.33424245689498,
+        1.347221910330519
+      ],
+      "paired_median_speedup": 1.3416486822102378,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 30.2682605
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 47.154125,
+      "attention": "eager",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 2,
+      "k": 10,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.6512423334482824,
+        1.705823588673586
+      ],
+      "paired_median_speedup": 1.6544973960101896,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 77.870292
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 26.9564375,
+      "attention": "eager",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 4,
+      "k": 3,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.1243673241317589,
+        1.1360672135068055
+      ],
+      "paired_median_speedup": 1.1319000002544035,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 30.459
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 66.666521,
+      "attention": "eager",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 2,
+      "k": 3,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.1618310091037793,
+        1.1675509715764676
+      ],
+      "paired_median_speedup": 1.1640038954660878,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 77.648625
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 24.02027075,
+      "attention": "eager",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 4,
+      "k": 6,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.262789288312233,
+        1.2900852380333832
+      ],
+      "paired_median_speedup": 1.276984515629883,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 30.57327075
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 55.7220835,
+      "attention": "eager",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 2,
+      "k": 6,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.4004636061392068,
+        1.4104262166346344
+      ],
+      "paired_median_speedup": 1.406225161227162,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 78.133104
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 19.6117605,
+      "attention": "eager",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 4,
+      "k": 10,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.5349869190593242,
+        1.5691170689010805
+      ],
+      "paired_median_speedup": 1.5471412211454856,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 30.3079375
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 41.1785835,
+      "attention": "eager",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 2,
+      "k": 10,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.87418709278135,
+        1.9014996430149413
+      ],
+      "paired_median_speedup": 1.8902394259980153,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 77.8411875
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 24.90040625,
+      "attention": "sdpa",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 4,
+      "k": 3,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.0179366223859598,
+        1.0366806192035238
+      ],
+      "paired_median_speedup": 1.0316410500330693,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 25.62364575
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 54.077958,
+      "attention": "sdpa",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 2,
+      "k": 3,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.0517116778424784,
+        1.062428192049264
+      ],
+      "paired_median_speedup": 1.0591792358913696,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 57.2281665
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 23.17828125,
+      "attention": "sdpa",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 8,
+      "k": 6,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.0905153384761472,
+        1.1057076745731451
+      ],
+      "paired_median_speedup": 1.0937144821728315,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 25.2561355
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 51.022521,
+      "attention": "sdpa",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 2,
+      "k": 6,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.1257479809749111,
+        1.1361092271549376
+      ],
+      "paired_median_speedup": 1.1317975076923534,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 57.6995625
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 21.902354,
+      "attention": "sdpa",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 4,
+      "k": 10,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.153801980028872,
+        1.174151942116737
+      ],
+      "paired_median_speedup": 1.1676069901112218,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 25.44385425
+    },
+    {
+      "arm": "program",
+      "arm_median_ms": 45.8170835,
+      "attention": "sdpa",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 2,
+      "k": 10,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.2586027789436234,
+        1.2735142012619667
+      ],
+      "paired_median_speedup": 1.2637786078859254,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 58.107021
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 23.558052,
+      "attention": "sdpa",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 4,
+      "k": 3,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.0661342356331653,
+        1.0915385663391466
+      ],
+      "paired_median_speedup": 1.0822423157058996,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 25.49552075
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 51.1625205,
+      "attention": "sdpa",
+      "coverage": 0.25,
+      "finite": true,
+      "iterations": 2,
+      "k": 3,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.0996903445212745,
+        1.1059343052203312
+      ],
+      "paired_median_speedup": 1.1015249238942402,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 56.3485
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 21.38022925,
+      "attention": "sdpa",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 4,
+      "k": 6,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.1797442529782505,
+        1.1984368746473506
+      ],
+      "paired_median_speedup": 1.1838296234440358,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 25.40777075
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 45.8370625,
+      "attention": "sdpa",
+      "coverage": 0.5,
+      "finite": true,
+      "iterations": 2,
+      "k": 6,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.2373662014354878,
+        1.2466366667763555
+      ],
+      "paired_median_speedup": 1.2412958654959023,
+      "reaches_target": false,
+      "shaped": true,
+      "stock_median_ms": 56.919
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 18.62977075,
+      "attention": "sdpa",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 4,
+      "k": 10,
+      "length": 512,
+      "paired_bootstrap_95": [
+        1.367223802947749,
+        1.3993494741122259
+      ],
+      "paired_median_speedup": 1.3807150794630636,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 25.63375
+    },
+    {
+      "arm": "prune",
+      "arm_median_ms": 38.5404585,
+      "attention": "sdpa",
+      "coverage": 0.8333333333333334,
+      "finite": true,
+      "iterations": 2,
+      "k": 10,
+      "length": 1024,
+      "paired_bootstrap_95": [
+        1.472183910581899,
+        1.4883373824933943
+      ],
+      "paired_median_speedup": 1.4851717025655682,
+      "reaches_target": true,
+      "shaped": true,
+      "stock_median_ms": 57.1779795
+    }
+  ],
+  "claim_boundary": "If all gates pass, this study establishes, for GPT-2 small's transformer stack on the Apple graphics backend at batch 1 and lengths at or below the released position table, the deleted-head ceiling and fused programmatic speedup with the vocabulary projection excluded from the timed region, under both attention implementations. Compared against the matching cells of head_budget_v1_summary.json it isolates the effect of that exclusion alone. It establishes nothing about quality, cached decoding, training, CPU, CUDA, other model sizes, other programs, or lengths past 1024.",
+  "environment": {
+    "chip": "Apple M4 Pro",
+    "git_dirty": true,
+    "git_revision": "bc527e5c4e4be7ba834bf6357ca04803ba50eb55",
+    "intraop_threads": 8,
+    "model_identifier": "Mac16,8",
+    "mps_available": true,
+    "physical_memory": "24 GB",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "python": "3.12.13",
+    "torch": "2.13.0",
+    "transformers": "4.57.6"
+  },
+  "gates": {
+    "all_arms_finite": true,
+    "ceiling_bounds_program": true
+  },
+  "n_raw_rows": 360,
+  "protocol_sha256": "0f736bc7d56dae7e5c5882905133b9bd3ca052f8ed921a6ec2113b08c3a7239b",
+  "raw_sha256": "3d0603f9f2971959db874a0b1b7a1398b548353b1ebb1cb5e66101fcde30db0b",
+  "schema_version": 1
+}

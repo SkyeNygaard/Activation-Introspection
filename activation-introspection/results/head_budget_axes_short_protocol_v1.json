@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "title": "The vocabulary projection axis, with nothing else changed",
+  "frozen_at_utc": "2026-08-12T20:55:00Z",
+  "question": "head_budget_axes_protocol_v1 cannot cleanly measure the effect of removing GPT-2's vocabulary projection, because every one of its cells also enlarges the causal-mask buffer to 4096 so that the long cells can run, and the explicit attention path slices that buffer on every layer. This runs the identical grid capped at 1024 tokens, where no enlargement happens, so the only difference from notes/27 is the vocabulary projection.",
+  "claim_boundary": "If all gates pass, this study establishes, for GPT-2 small's transformer stack on the Apple graphics backend at batch 1 and lengths at or below the released position table, the deleted-head ceiling and fused programmatic speedup with the vocabulary projection excluded from the timed region, under both attention implementations. Compared against the matching cells of head_budget_v1_summary.json it isolates the effect of that exclusion alone. It establishes nothing about quality, cached decoding, training, CPU, CUDA, other model sizes, other programs, or lengths past 1024.",
+  "design": {
+    "model": "gpt2 (124M, 12 layers, 12 heads, hidden 768, head_dim 64) transformer stack only, no language-model head. eval mode, use_cache=False",
+    "device": "mps",
+    "batch": 1,
+    "attention_implementations": ["eager", "sdpa"],
+    "k_values": [3, 6, 10],
+    "lengths": [512, 1024],
+    "position_table": "unchanged. Every length here is within the released 1024, so the runner's enlargement branch does not fire and neither the position table nor the causal-mask buffer is touched. That is the entire point of this variant",
+    "arms": {
+      "stock": "unmodified stack; the paired denominator in every block",
+      "prune": "PreTrainedModel.prune_heads removes heads 0..k-1 from every layer",
+      "program": "the same k heads pruned, then replaced by one fused path per layer: a single value projection of width k*64, torch.lerp(V[:, :1], V, 0.01), and a single output projection back to 768"
+    },
+    "timing": {
+      "blocks": 15,
+      "warmups": 5,
+      "order": "paired blocks alternating stock-first and arm-first",
+      "minimum_slower_block_ns": 100000000,
+      "iteration_calibration": "double iterations until the slower arm's block exceeds minimum_slower_block_ns",
+      "synchronization": "torch.mps.synchronize immediately before and after every block",
+      "seed": 20260812,
+      "input": "random token ids in [0, 50257) at the frozen seed, identical across arms within a cell"
+    },
+    "shape_check": "every arm's hidden states are checked finite and correctly shaped once per cell before timing"
+  },
+  "analysis": {
+    "paired_bootstrap": {
+      "estimand": "median of paired per-block stock_ns / arm_ns ratios",
+      "interval": "fixed-seed percentile bootstrap over timing-block pairs",
+      "draws": 10000,
+      "seed": 20260812
+    },
+    "break_even_coverage": "for each attention implementation, arm and length, the smallest k/12 at which the paired median speedup reaches the target, by linear interpolation between measured k values; null when no measured k reaches it",
+    "comparison": "the eager cells here are compared to the mps batch-1 cells of head_budget_v1_summary.json at matching arm, k and length. Both are the same stack on the same device with the same attention implementation and the same untouched buffers; the only difference is that notes/27 also timed the vocabulary projection at every position. The difference between them is therefore the effect of that projection and nothing else"
+  },
+  "gates": {
+    "target_speedup": 1.25,
+    "all_arms_finite": "every arm produces finite, correctly shaped hidden states at every cell",
+    "ceiling_bounds_program": "at every cell the pruned arm's paired median speedup is at least the program arm's, within bootstrap overlap"
+  },
+  "prior_observation": {
+    "status": "frozen after seeing nine progress lines of the long-context run, and written because of them",
+    "disclosure": "This variant exists because of something seen in head_budget_axes_v1's progress output: its explicit-attention deleted-head cell at k=3 and 1024 tokens came out at 1.0879x, BELOW the 1.131x that notes/27 measured for the same arm, device, batch and length. Removing a large fixed cost from the denominator can only raise a speedup, so that ordering is impossible unless something else changed -- and something did: every cell of that run enlarges the causal-mask buffer to 4096 so the long cells can run at all, and the explicit path slices that buffer every layer. This variant removes that difference by staying within 1024. The prediction, recorded now: the eager cells here will come out ABOVE the matching notes/27 cells, and if they instead reproduce roughly 1.088x then the enlarged buffer is not the explanation and I do not yet have one. No gate, threshold, k value or length was chosen from any result; the grid is head_budget_axes_protocol_v1's with the two long lengths dropped."
+  },
+  "source_files_sha256": {
+    "scripts/run_head_budget_axes.py": "01060b7042db599b5eeb3309c11cd935f69a954a896a316485a2096d327a1177"
+  }
+}
