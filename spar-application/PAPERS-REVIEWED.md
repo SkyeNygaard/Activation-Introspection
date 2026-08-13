@@ -78,6 +78,21 @@ rate at full coverage. That is the opening notes/29 uses, and it is also why the
 result should be labelled an extension: the tool is standard, only the target is
 new.
 
+## Instruction–context conflict — searched 2026-08-13 for notes/35
+
+| paper | depth | what it settles here |
+|---|---|---|
+| [Three Regimes of Context-Parametric Conflict](https://arxiv.org/html/2605.11574) | listed | Conflict between parametric knowledge and provided context, with a predictive framework |
+| [Task Competence Is Not Instruction Following](https://arxiv.org/html/2607.19608) | listed | Small models fail to comply when instructions conflict with their usual task behaviour |
+| [Instruction-Tuned LMs Cannot Sample from Distributions They Can Describe](https://arxiv.org/html/2607.25292v1) | listed | Instruction tuning amplifies collapse to a single output |
+
+**Verdict: instruction–context conflict degrading behaviour is prior art**, so
+[notes/35](../activation-introspection/notes/35-when-the-prompt-contradicts-the-page.md)
+must not be presented as a new phenomenon. What it adds is the application —
+an *introspection elicitation* prompt is subject to it, the failure mode is a
+confident collapse to one label, and it is invisible in the pooled averages this
+literature reports gains as. Extension and caution, not discovery.
+
 ## What the 2026-08-12 search did and did not do
 
 **Did:** nine papers fetched and read to the depths above; an arXiv API sweep

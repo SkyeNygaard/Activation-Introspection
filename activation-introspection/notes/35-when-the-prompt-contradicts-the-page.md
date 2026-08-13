@@ -108,3 +108,101 @@ Inference only, no training, one model load. About ten minutes.
 If `affirms` cannot be written at a length and register comparable to `denies`,
 stance and length stay confounded and the design cannot separate them. Checked
 when the strings are written, not after.
+
+---
+
+# Result: confirmed, confined to one cell, and it is an instance of something
+# already known
+
+Run **2026-08-13**, 576 episodes, 48 twin cells per condition. Artifacts:
+`results/prompt_clash_v1_raw.jsonl`, `results/prompt_clash_v1_summary.json`.
+
+| carrier | instruction | constant-label | twin-pair | accuracy | mean confidence |
+|---|---|---:|---:|---:|---:|
+| `denies` | `silent` | **0.000** | **1.000** (48/48) | 1.000 | 7.43 |
+| **`denies`** | **`asserts`** | **0.875** | **0.125** (6/48) | 0.562 | **10.72** |
+| `neutral` | `silent` | 0.208 | 0.792 (38/48) | 0.896 | 4.51 |
+| `neutral` | `asserts` | 0.104 | 0.896 (43/48) | 0.948 | 7.64 |
+| `affirms` | `silent` | 0.062 | 0.938 (45/48) | 0.969 | 5.66 |
+| `affirms` | `asserts` | 0.146 | 0.854 (41/48) | 0.927 | 8.80 |
+
+Effect of adding the instruction, per carrier:
+
+| carrier | change | 95% CI |
+|---|---:|---|
+| `denies` | **−0.875** | **[−0.958, −0.771]** |
+| `neutral` | +0.104 | [−0.042, +0.250] |
+| `affirms` | −0.083 | [−0.208, +0.042] |
+
+**Interaction: −0.885, 95% CI [−1.010, −0.750].**
+
+## What this establishes
+
+**The collapse is confined to exactly one cell, and it is the predicted one.**
+48 of 48 becomes 6 of 48 where the instruction contradicts the page. Where the
+carrier is neutral the same instruction is mildly *helpful*; where the carrier
+agrees with it, mildly harmful and nowhere near significance.
+
+Three alternatives are ruled out:
+
+- **"That carrier is just hard."** It is the *easiest* — 48/48, zero constant
+  labelling, without the instruction.
+- **"That carrier is short."** `affirms` is the same length and register and shows
+  no collapse. Stance, not length.
+- **"The instruction is simply bad here."** It helps on `neutral` and costs 0.083
+  on `affirms`.
+
+**And confidence rises in every `asserts` cell** — 7.43 → 10.72, 4.51 → 7.64,
+5.66 → 8.80. The instruction reliably makes the model more certain. On the
+contradicting carrier it makes it more certain while destroying the readout. The
+model is not confused; it is confidently answering a different question.
+
+My prediction was collapse confined to `denies` × `asserts` at 70/30, with
+`affirms` fine. **Confirmed on every particular**, including the length control I
+was least sure of.
+
+## The honest novelty position, checked before claiming
+
+**Instruction–context conflict degrading model behaviour is well-studied prior
+art.** Searched 2026-08-13:
+[Three Regimes of Context-Parametric Conflict](https://arxiv.org/html/2605.11574),
+[Task Competence Is Not Instruction Following](https://arxiv.org/html/2607.19608)
+on small models failing when instructions conflict with task behaviour, and
+[Instruction-Tuned LMs Cannot Sample from Distributions They Can Describe](https://arxiv.org/html/2607.25292v1)
+on instruction tuning amplifying collapse to a single output. Semantically
+coherent distractor text collapsing accuracy is also documented.
+
+**So the phenomenon is not new and must not be presented as new.** What this adds
+is narrower and is a methodological caution rather than a discovery:
+
+> An **introspection elicitation prompt** is subject to it, the failure mode is a
+> confident collapse to one label rather than a visible degradation, and it is
+> invisible in the pooled averages this literature reports its gains as.
+
+The prompting boosts in the introspection literature are single numbers over a set
+of inputs — 0.3% → 39.9%, 10.8% → 63.8%. This is a worked example of a prompt that
+would show a gain on average while silently taking one input class from perfect to
+below chance. Nobody in that literature reports a per-input breakdown, and this is
+a concrete reason to.
+
+**Label: extension, and a caution.** The general effect is published; pointing it
+at introspection elicitation, with a controlled stance × stance design and the
+constant-label diagnostic, is what is added.
+
+## What it does *not* establish
+
+One model, one instruction family, one carrier per stance, four concept pairs. One
+carrier per stance is the sharpest limit: `denies` is a single string, so "carriers
+that deny change" is a class of one, and the effect could belong to that sentence
+rather than to its stance. A second string per stance is the obvious next control
+and it is cheap.
+
+Nor does this show the effect exists at scales where the introspection prompting
+results were obtained. It is a 3B model.
+
+## Where this leaves the line
+
+`34` said the 29→31→32→33 programme stops. This closes the loose end it left: the
+clash is measured rather than inferred, and it is prior art in general form. So
+the branch is finished rather than merely paused, and the durable outputs are
+`29` and `31` on abstention, `32`'s scale boundary, and this caution.

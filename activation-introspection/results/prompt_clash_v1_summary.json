@@ -1,0 +1,84 @@
+{
+  "carriers": {
+    "affirms": "Something is different now. Hidden state marker: \u00a7",
+    "denies": "Nothing changed. Hidden state marker: \u00a7",
+    "neutral": "A routine maintenance record is open. Hidden state marker: \u00a7"
+  },
+  "clash_cell_reproduced": true,
+  "elapsed_seconds": 174.8,
+  "injection_layer": 9,
+  "instructions": {
+    "asserts": "introspect",
+    "silent": "baseline"
+  },
+  "model": "qwen-3b",
+  "note": "notes/35",
+  "notes_34_clash_cell": {
+    "constant_label_rate": 0.875,
+    "twin_pair": 0.125
+  },
+  "primary_measure": "constant_label_rate",
+  "smoke": false,
+  "table": {
+    "affirms": {
+      "asserts": {
+        "accuracy": 0.9271,
+        "constant_label_rate": 0.1458,
+        "format_rate": 1.0,
+        "mean_margin": 8.797,
+        "n_episodes": 96,
+        "n_twin_cells": 48,
+        "twin_pair": 0.8542
+      },
+      "silent": {
+        "accuracy": 0.9688,
+        "constant_label_rate": 0.0625,
+        "format_rate": 1.0,
+        "mean_margin": 5.656,
+        "n_episodes": 96,
+        "n_twin_cells": 48,
+        "twin_pair": 0.9375
+      }
+    },
+    "denies": {
+      "asserts": {
+        "accuracy": 0.5625,
+        "constant_label_rate": 0.875,
+        "format_rate": 1.0,
+        "mean_margin": 10.72,
+        "n_episodes": 96,
+        "n_twin_cells": 48,
+        "twin_pair": 0.125
+      },
+      "silent": {
+        "accuracy": 1.0,
+        "constant_label_rate": 0.0,
+        "format_rate": 1.0,
+        "mean_margin": 7.432,
+        "n_episodes": 96,
+        "n_twin_cells": 48,
+        "twin_pair": 1.0
+      }
+    },
+    "neutral": {
+      "asserts": {
+        "accuracy": 0.9479,
+        "constant_label_rate": 0.1042,
+        "format_rate": 1.0,
+        "mean_margin": 7.637,
+        "n_episodes": 96,
+        "n_twin_cells": 48,
+        "twin_pair": 0.8958
+      },
+      "silent": {
+        "accuracy": 0.8958,
+        "constant_label_rate": 0.2083,
+        "format_rate": 1.0,
+        "mean_margin": 4.51,
+        "n_episodes": 96,
+        "n_twin_cells": 48,
+        "twin_pair": 0.7917
+      }
+    }
+  }
+}
