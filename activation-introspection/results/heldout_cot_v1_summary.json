@@ -1,0 +1,138 @@
+{
+  "dev_pair": "birds_buildings",
+  "draws": 3,
+  "elapsed_seconds": 4467.1,
+  "layer": 9,
+  "max_new_tokens": 400,
+  "model": "qwen-3b",
+  "note": "notes/25",
+  "null_twin_pair": 0.25,
+  "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": false,
+  "table": {
+    "birds_buildings": {
+      "cot_instructed": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 234.91666666666666,
+          "n": 72,
+          "parse_rate": 0.9861111111111112,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.5694444444444444,
+          "truncation_rate": 0.013888888888888888,
+          "twin_pair": 0.25
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 233.81944444444446,
+          "n": 72,
+          "parse_rate": 0.9861111111111112,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.6111111111111112,
+          "truncation_rate": 0.027777777777777776,
+          "twin_pair": 0.3333333333333333
+        }
+      },
+      "cot_prefill": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 149.22222222222223,
+          "n": 72,
+          "parse_rate": 0.9166666666666666,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.3888888888888889,
+          "truncation_rate": 0.027777777777777776,
+          "twin_pair": 0.08333333333333333
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 128.90277777777777,
+          "n": 72,
+          "parse_rate": 0.875,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.4861111111111111,
+          "truncation_rate": 0.027777777777777776,
+          "twin_pair": 0.2222222222222222
+        }
+      },
+      "forced": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 0.0,
+          "n": 72,
+          "parse_rate": 1.0,
+          "reader_twin_pair": 1.0,
+          "row_accuracy": 0.5138888888888888,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.027777777777777776
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 0.0,
+          "n": 72,
+          "parse_rate": 1.0,
+          "reader_twin_pair": 1.0,
+          "row_accuracy": 0.8472222222222222,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.6944444444444444
+        }
+      }
+    },
+    "body_weather": {
+      "cot_instructed": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 248.15277777777777,
+          "n": 72,
+          "parse_rate": 0.9861111111111112,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.4861111111111111,
+          "truncation_rate": 0.027777777777777776,
+          "twin_pair": 0.08333333333333333
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 243.81944444444446,
+          "n": 72,
+          "parse_rate": 1.0,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.5416666666666666,
+          "truncation_rate": 0.027777777777777776,
+          "twin_pair": 0.19444444444444445
+        }
+      },
+      "cot_prefill": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 162.45833333333334,
+          "n": 72,
+          "parse_rate": 0.9583333333333334,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.5,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.25
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 130.56944444444446,
+          "n": 72,
+          "parse_rate": 0.9583333333333334,
+          "reader_twin_pair": null,
+          "row_accuracy": 0.5138888888888888,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.25
+        }
+      },
+      "forced": {
+        "heldout_semantic": {
+          "mean_generated_tokens": 0.0,
+          "n": 72,
+          "parse_rate": 1.0,
+          "reader_twin_pair": 1.0,
+          "row_accuracy": 0.5833333333333334,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.16666666666666666
+        },
+        "same_exemplar": {
+          "mean_generated_tokens": 0.0,
+          "n": 72,
+          "parse_rate": 1.0,
+          "reader_twin_pair": 1.0,
+          "row_accuracy": 0.75,
+          "truncation_rate": 0.0,
+          "twin_pair": 0.5
+        }
+      }
+    }
+  }
+}

@@ -206,3 +206,148 @@ demonstrations, looking for an alternating pattern. The demonstration order and
 the query sign are independent by construction, so that strategy scores at chance
 and cannot manufacture an effect. It does mean some of the reasoning budget goes
 somewhere useless.
+
+---
+
+# Result: the question is not answered, because thinking broke the task
+
+Run **2026-08-12**, 864 episodes, 4467 seconds. Artifacts:
+`results/heldout_cot_v1_raw.jsonl`, `results/heldout_cot_v1_summary.json`.
+Runner: `scripts/run_heldout_cot.py`.
+
+Twin-pair accuracy. Null is 0.25. Development is `birds_buildings`, confirmation
+is `body_weather`, split before the run.
+
+| | readout | anchor | held-out |
+|---|---|---:|---:|
+| **dev** | `forced` | **0.694** | **0.028** |
+| | `cot_prefill` | 0.222 | 0.083 |
+| | `cot_instructed` | 0.333 | 0.250 |
+| **confirm** | `forced` | **0.500** | **0.167** |
+| | `cot_prefill` | 0.250 | 0.250 |
+| | `cot_instructed` | 0.194 | 0.083 |
+
+## The anchor reproduced exactly, so the apparatus is sound
+
+All four `forced` numbers match [`24`](24-is-the-held-out-failure-the-interface.md)'s
+baseline row to three decimals — 0.694 and 0.028 on development, 0.500 and 0.167
+on confirmation. Greedy decoding, so this is a deterministic reproduction across
+two independently written runners. Nothing about the machinery drifted.
+
+## And then chain of thought destroyed it
+
+**The anchor falls from 0.694 to 0.222–0.333 on development, and from 0.500 to
+0.194–0.250 on confirmation.** Against a 0.25 null, that is the model going from
+clearly above chance to *at* chance on the task it could previously do.
+
+The pre-run note named this outcome and what it costs:
+
+> **The anchor falls.** Generation destabilises a task the forced choice handled.
+> Instrument problem — report it, fix it, and read nothing into the held-out arm.
+
+So that is the finding, and the held-out arm is **not interpretable**. Held-out
+under chain of thought sits at 0.083–0.250, never above the null — but so does the
+anchor, and a readout that flattens both cannot distinguish "reasoning does not
+help held-out generalization" from "reasoning broke the whole task". **The question
+this run was built to answer is still open.**
+
+I am not firing the kill rule. It was written as "if chain of thought does not
+clear 0.25 on held-out in development, stop testing interfaces" — and the best
+development held-out is exactly 0.250, which does not clear it. But applying a kill
+rule to a measurement whose own control collapsed would be scoring a broken
+instrument. The rule is held, not fired.
+
+## Two scorings, same answer
+
+The note promised that a trace which never commits to a label would be **unscored**
+rather than wrong, and the runner recorded the parse rate but still counted
+unparsed traces as failures. Recomputed over only those twin pairs where both
+members produced a committed label:
+
+| readout | arm | as scored | parsed only |
+|---|---|---:|---:|
+| `cot_prefill` | anchor, dev | 0.222 | 0.296 |
+| `cot_instructed` | anchor, dev | 0.333 | 0.343 |
+| `cot_prefill` | held-out, dev | 0.083 | 0.100 |
+
+The largest correction is 0.074 and nothing changes: the anchor still collapses
+from 0.694 to about a third. Disclosed because the note promised the other
+scoring, not because it matters.
+
+## What the model is actually doing
+
+Constant-labelling — giving the same answer to both members of a twin, whatever
+was injected — moves in a way that explains the flattening:
+
+| readout | anchor | held-out |
+|---|---:|---:|
+| `forced` | 40% | **90%** |
+| `cot_prefill` | 43% | 54% |
+| `cot_instructed` | 61% | 69% |
+
+On held-out, reasoning **breaks** the constant-label floor: 90% down to 54%. The
+model stops repeating one answer and starts varying it. The variation just carries
+no information, so accuracy does not move. On the anchor it goes the other way —
+constant-labelling rises from 40% to 61% and the signal that was there is lost.
+
+Reading the traces, the reasoning goes almost entirely into two wrong places. The
+model treats `Q` and `K` as **"query" and "key"** and argues about which word the
+observation resembles — "it's not asking for information, which would be more
+likely to be a query, but rather providing information". And it hunts for a
+pattern in the visible sequence of demonstration labels, which is independent of
+the query sign by construction and therefore scores at chance.
+
+## One observation I checked rather than reported
+
+One generation was striking enough to be worth a finding, and is not one. In it
+the model **names the injected exemplars** — "the hidden state marker is
+'penguin'", "'castle'" — correctly, and then explains them away as encodings of
+the visible `§` character before answering on the query/key story instead.
+
+That looks like the mechanism [`21`](21-is-the-channel-narrow-or-was-i.md)
+found colliding with [`23`](23-held-out-semantic-generalization.md)'s failure:
+verbal access to the state exists, but the state is not recognised as internal.
+So I counted it. Across all 576 generated episodes, an exemplar from the pair's
+vocabulary is mentioned in **1–16%** of traces depending on condition, and
+accuracy conditional on mentioning one runs 0.000, 0.333, 0.522 and 0.875 across
+the four conditions, on counts of 1, 12, 23 and 8.
+
+**There is no effect there.** The example was found by reading one wrong answer
+and it is a cherry-pick. Recorded as an anecdote worth a proper test, not as a
+result — which is the whole reason it got counted instead of quoted.
+
+## My prediction, scored honestly
+
+I predicted 70/30 that chain of thought would not lift held-out generalization. It
+did not lift it. **But the prediction is not cleanly scored**, because I did not
+anticipate the anchor collapsing, and in a run where the control fails, being right
+about the treatment arm is not evidence of anything.
+
+## What would actually answer the question
+
+The two-token labels are doing real damage: `Q` and `K` hand the model a
+plausible verbal story — query and key — that has nothing to do with its internal
+state, and the forced-choice readout was immune to it only because it never let
+the model talk.
+
+The clean design already exists in this repository.
+[`20`](20-comparator-tiers.md) built a two-stage tier: the model describes its own
+injected state in free text, and a *separate* reader is given only that text and
+must identify the concept. Applied here, that separates "can it put the state into
+words" from "can it match those words to a category", and neither stage ever shows
+the model the letters `Q` and `K`. It also makes the elicitation the one `21`
+measured at 0.708 rather than one invented for this note.
+
+That is the experiment this one should have been. It is cheap, inference-only, and
+it reuses machinery that is already written and already published against.
+
+## Limits, and one disclosure
+
+Same as `23` and `24`: one model, one layer, one interface, two category pairs.
+
+**A GPU disclosure.** Another session on this machine started a model job at
+19:55:01 while this run was in its final minute, which breaks the standing
+one-job-at-a-time rule on this machine. The evidence says this run is unaffected —
+it completed normally, and its four `forced` numbers reproduce `24` exactly, which
+a run corrupted by memory pressure would not. Recorded because the overlap
+happened, not because there is any sign it mattered.
