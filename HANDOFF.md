@@ -288,12 +288,22 @@ than deleted, so the ordering that produced the current state stays visible.
    obvious next step is the one this machine cannot run:** the same measurement on
    the DPO-refined adapters that paper actually proposes, which are trained to
    prefer accurate reports over plausible ones. That is a proposal, not a run.
-6. **[notes/30](activation-introspection/notes/30-does-it-know-it-is-about-to-be-wrong.md)
-   is the natural-states branch, redesigned to remove what killed it.** Section 6's
-   conditions were about finding a hidden class that clumps. This design has **no
-   hidden class**: the state is whatever the model has mid-multiplication, and the
-   two outcomes are right and wrong, with arithmetic as ground truth. If it works it
-   is the first result here on a state the model computed itself.
+6. ~~**[notes/30](activation-introspection/notes/30-does-it-know-it-is-about-to-be-wrong.md),
+   the natural-states branch redesigned to remove what killed it.**~~ Done, and it
+   **closes the branch**. On a state the model computed itself, its prospective
+   self-knowledge does not exceed what problem difficulty already explains — **the
+   size of the multiplication alone scores 0.819 against the model's 0.805**. A
+   post-hoc lead in the hardest third was declared as post-hoc and then killed by
+   its own pre-registered confirmation (0.045, CI [−0.065, 0.150]).
+
+   **Read its methodological finding before attempting natural states again.** The
+   injected-state work here is interpretable because byte-identical visible text
+   pins an input-only learner at exactly 0.500 *by construction*. A natural-state
+   design cannot have that control, because the input is what varies and the input
+   predicts the outcome. Escaping "everything is planted" costs the thing that made
+   the planted results mean anything. That is a harder obstacle than the clumping
+   problem in section 6, and it needs an answer **before** the next attempt, not
+   after.
 
 **Do not:** run more LoRA; add concept pairs or layers for robustness before the
 above; run the criterion against a comparator with activation access and read
