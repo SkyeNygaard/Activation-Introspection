@@ -1,0 +1,62 @@
+{
+  "anchor_cell": "introspect x denies",
+  "anchor_reproduced": true,
+  "asserting_instructions": [
+    "introspect",
+    "injected",
+    "feels"
+  ],
+  "elapsed_seconds": 24.0,
+  "injection_layer": 9,
+  "local_families": {
+    "feels": [
+      "Your internal state has been changed at each observation below, so each one will seem different from the last.",
+      "The observation text is intentionally identical in every example.",
+      "Two kinds of change were made, labelled Q and K. Report which kind was made at the query."
+    ],
+    "injected": [
+      "An edit has been applied to your activations at each observation below.",
+      "The observation text is intentionally identical in every example.",
+      "Two kinds of edit were applied, labelled Q and K. Report which kind was applied at the query."
+    ]
+  },
+  "model": "qwen-3b",
+  "note": "notes/37",
+  "silent_instructions": [
+    "baseline",
+    "eliminate"
+  ],
+  "smoke": true,
+  "table": {
+    "injected": {
+      "asserts": true,
+      "denies": {
+        "constant_label_rate": 1.0,
+        "mean_margin": 2.875,
+        "n_twin_cells": 1,
+        "twin_pair": 0.0
+      },
+      "neutral": {
+        "constant_label_rate": 1.0,
+        "mean_margin": 3.125,
+        "n_twin_cells": 1,
+        "twin_pair": 0.0
+      }
+    },
+    "introspect": {
+      "asserts": true,
+      "denies": {
+        "constant_label_rate": 1.0,
+        "mean_margin": 6.125,
+        "n_twin_cells": 1,
+        "twin_pair": 0.0
+      },
+      "neutral": {
+        "constant_label_rate": 1.0,
+        "mean_margin": 2.125,
+        "n_twin_cells": 1,
+        "twin_pair": 0.0
+      }
+    }
+  }
+}
