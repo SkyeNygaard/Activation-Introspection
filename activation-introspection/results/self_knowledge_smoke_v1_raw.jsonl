@@ -1,0 +1,24 @@
+{"a": 59, "answer": 413, "answer_text": "413", "b": 7, "correct": true, "index": 0, "margin": 15.75, "truth": 413, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 15, "answer": 75, "answer_text": "75", "b": 5, "correct": true, "index": 1, "margin": 17.875, "probe_score": 2.992077112197876, "truth": 75, "verbal_says_yes": false, "verbal_yes_minus_no": -3.0}
+{"a": 75, "answer": 600, "answer_text": "600", "b": 8, "correct": true, "index": 2, "margin": 17.5, "truth": 600, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 61, "answer": 305, "answer_text": "305", "b": 5, "correct": true, "index": 3, "margin": 18.25, "probe_score": 4.126151084899902, "truth": 305, "verbal_says_yes": false, "verbal_yes_minus_no": -4.0}
+{"a": 71, "answer": 426, "answer_text": "426", "b": 6, "correct": true, "index": 4, "margin": 16.125, "truth": 426, "verbal_says_yes": false, "verbal_yes_minus_no": -5.5}
+{"a": 84, "answer": 336, "answer_text": "336", "b": 4, "correct": true, "index": 5, "margin": 19.75, "probe_score": 3.702533483505249, "truth": 336, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 74, "answer": 222, "answer_text": "222", "b": 3, "correct": true, "index": 6, "margin": 14.5, "truth": 222, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 46, "answer": 138, "answer_text": "138", "b": 3, "correct": true, "index": 7, "margin": 21.125, "truth": 138, "verbal_says_yes": false, "verbal_yes_minus_no": -5.25}
+{"a": 22, "answer": 110, "answer_text": "110", "b": 5, "correct": true, "index": 8, "margin": 20.125, "probe_score": 4.302487373352051, "truth": 110, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 78, "answer": 234, "answer_text": "234", "b": 3, "correct": true, "index": 9, "margin": 15.0, "probe_score": 5.839858531951904, "truth": 234, "verbal_says_yes": false, "verbal_yes_minus_no": -5.0}
+{"a": 49, "answer": 98, "answer_text": "98", "b": 2, "correct": true, "index": 10, "margin": 16.75, "truth": 98, "verbal_says_yes": false, "verbal_yes_minus_no": -2.75}
+{"a": 19, "answer": 114, "answer_text": "114", "b": 6, "correct": true, "index": 11, "margin": 19.875, "truth": 114, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 70, "answer": 630, "answer_text": "630", "b": 9, "correct": true, "index": 12, "margin": 19.25, "probe_score": 3.1041464805603027, "truth": 630, "verbal_says_yes": false, "verbal_yes_minus_no": -4.0}
+{"a": 22, "answer": 132, "answer_text": "132", "b": 6, "correct": true, "index": 13, "margin": 16.5, "probe_score": 5.556588649749756, "truth": 132, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 65, "answer": 390, "answer_text": "390", "b": 6, "correct": true, "index": 14, "margin": 5.0, "truth": 390, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}
+{"a": 88, "answer": 352, "answer_text": "352", "b": 4, "correct": true, "index": 15, "margin": 14.625, "probe_score": 4.371127128601074, "truth": 352, "verbal_says_yes": false, "verbal_yes_minus_no": -4.75}
+{"a": 80, "answer": 640, "answer_text": "640", "b": 8, "correct": true, "index": 16, "margin": 16.0, "probe_score": 1.740248680114746, "truth": 640, "verbal_says_yes": false, "verbal_yes_minus_no": -2.5}
+{"a": 66, "answer": 594, "answer_text": "594", "b": 9, "correct": true, "index": 17, "margin": 2.0, "truth": 594, "verbal_says_yes": false, "verbal_yes_minus_no": -5.75}
+{"a": 43, "answer": 43, "answer_text": "43.43", "b": 1, "correct": true, "index": 18, "margin": 19.125, "probe_score": 5.696597099304199, "truth": 43, "verbal_says_yes": true, "verbal_yes_minus_no": 0.75}
+{"a": 80, "answer": 80, "answer_text": "80", "b": 1, "correct": true, "index": 19, "margin": 20.75, "probe_score": 4.429861545562744, "truth": 80, "verbal_says_yes": true, "verbal_yes_minus_no": 2.25}
+{"a": 21, "answer": 147, "answer_text": "147", "b": 7, "correct": true, "index": 20, "margin": 21.125, "truth": 147, "verbal_says_yes": false, "verbal_yes_minus_no": -6.0}
+{"a": 95, "answer": 95, "answer_text": "95", "b": 1, "correct": true, "index": 21, "margin": 15.625, "truth": 95, "verbal_says_yes": true, "verbal_yes_minus_no": 1.75}
+{"a": 88, "answer": 704, "answer_text": "704", "b": 8, "correct": true, "index": 22, "margin": 19.625, "truth": 704, "verbal_says_yes": false, "verbal_yes_minus_no": -4.5}
+{"a": 52, "answer": 208, "answer_text": "208", "b": 4, "correct": true, "index": 23, "margin": 18.375, "probe_score": 2.6743922233581543, "truth": 208, "verbal_says_yes": false, "verbal_yes_minus_no": -4.25}

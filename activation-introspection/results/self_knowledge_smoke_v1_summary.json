@@ -1,0 +1,22 @@
+{
+  "auroc": {
+    "margin": NaN,
+    "probe": NaN,
+    "verbal": NaN
+  },
+  "cost_note": "The probe is fitted on a training split of the model's own errors; the model is asked cold. This is NOT a cost-matched comparison and no conclusion may be phrased as one. Stated in notes/30 before the run.",
+  "digit_size": "2x1",
+  "elapsed_seconds": 10.1,
+  "gate_b_passed": false,
+  "gate_b_probe_threshold": 0.55,
+  "layer": 9,
+  "model": "qwen-3b",
+  "n_problems": 24,
+  "n_test": 12,
+  "note": "notes/30",
+  "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "smoke": true,
+  "task_accuracy": 1.0,
+  "verbal_is_constant_responder": false,
+  "verbal_yes_rate": 0.125
+}
