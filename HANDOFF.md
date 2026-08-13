@@ -120,8 +120,14 @@ says nothing changed, and twin-pair accuracy falls below the coin-flip null — 
 all three denying strings, while six neutral and affirming strings are untouched.
 Interaction **−0.715, CI [−0.812, −0.611]**. The failure is a *confident* collapse
 to one label: constant-labelling 0.104 → 0.826 with mean confidence rising. **The
-best-established result here**, and an instance of a published phenomenon rather
-than a new one.
+best-established result here** — but **bounded by
+[notes/37](activation-introspection/notes/37-is-it-the-relation-or-the-instruction.md):
+the carrier side is general, the instruction side is not.** Two other instructions
+that also assert internal change behave differently — one barely responds to
+carrier stance (−0.156 against −0.729), one degrades on every carrier. So this is
+largely one prompt's behaviour, and an instance of a published phenomenon rather
+than a new one. What generalises: no instruction that stays silent about internal
+state hurt anywhere, and two of three that assert it did real damage.
 
 **Elicitation dominates** ([notes/21](activation-introspection/notes/21-is-the-channel-narrow-or-was-i.md)).
 Same state, same reader, wording only: `sensory` 0.708, `associations` 0.500,
@@ -212,16 +218,24 @@ violation of that file's own rule.
   [`PAPERS-REVIEWED.md`](spar-application/PAPERS-REVIEWED.md), which is the new
   ledger of what has actually been read and to what depth.
 
-**The best-established result here is now [36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md),
-added 2026-08-13.** An instruction asserting that something was added to the
-model's internal state **destroys the readout on any carrier text that denies
+**The best-established result here is [36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md),
+added 2026-08-13 and narrowed the same day by
+[37](activation-introspection/notes/37-is-it-the-relation-or-the-instruction.md).**
+`24`'s `introspect` instruction **destroys the readout on carrier text that denies
 change** — twin-pair accuracy collapses below the coin-flip null on all three
 denying strings, while neutral and affirming carriers are untouched. Interaction
 −0.715, 95% CI [−0.812, −0.611], across nine strings with length matched and the
 per-string test declared in advance.
 
-It is an **instance of a published phenomenon** (instruction–context conflict) and
-must be labelled that way. What is ours is the application: an introspection
+**`37` narrowed it.** Two other instructions that also assert internal change
+behave differently: `injected` has a carrier effect of −0.156 against this one's
+−0.729 (difference −0.573, CI [−0.719, −0.417]), and `feels` degrades on every
+carrier with no carrier sensitivity at all. **So no claim may be made about
+"instructions that assert internal change" as a class** — the carrier side is
+general, the instruction side is one prompt.
+
+It is also an **instance of a published phenomenon** (instruction–context conflict)
+and must be labelled that way. What is ours is the application: an introspection
 elicitation prompt is subject to it, the failure is a *confident* collapse to one
 label rather than visible degradation, and the pooled averages this literature
 reports prompting gains as (0.3% → 39.9%, 10.8% → 63.8%) would hide it entirely.
