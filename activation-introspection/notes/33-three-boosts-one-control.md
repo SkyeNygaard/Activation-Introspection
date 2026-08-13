@@ -123,6 +123,22 @@ load. About fifteen minutes.
 
 ---
 
+> **Superseded 2026-08-13 by [`34`](34-three-boosts-powered.md), and the pattern
+> below reverses.** `33` used one carrier. With all three, prompting *lowers*
+> content twin-pair accuracy from 0.799 to 0.618 rather than raising it, and the
+> selectivity gap changes by −0.208, CI [−0.340, −0.083], excluding zero.
+>
+> The cause is diagnosed and it is not sampling noise. On two carriers the prompt
+> helps; on the third — whose visible text reads **"Nothing changed."**, against an
+> instruction asserting that something *was* added to the model's internal state —
+> it turns a perfect cell (1.000, zero constant-label cells) into a below-chance
+> one (0.125, 42 of 48 constant-label cells) *with higher confidence*. `33`
+> happened to use one of the two carriers where the prompt helps.
+>
+> **The three-way dissociation below is not established.** What replaced it is
+> better: the byte-identical-text control stops the input from predicting the
+> label, and does nothing to stop it from disabling the mechanism.
+
 # Result: a clean pattern, and not enough data to believe it yet
 
 Run **2026-08-13**, 576 episodes. Artifacts: `results/three_boosts_v1_raw.jsonl`,
