@@ -37,6 +37,23 @@ Two things.
    here. So the scoring is re-implemented locally, identically apart from also
    returning `abs(logit gap)`, and the frozen function is left alone.
 
+## Amendment after `32` reported, before this ran
+
+`32` came back and it changes which arm matters. **Refusal ablation is not a boost
+at this scale** — the direction was verifiably removed (refusal 1.00 → 0.00) and
+the task got *worse*, content twin-pair 0.792 → 0.604. You cannot audit the price
+of a boost that did not happen.
+
+So the ablation arm here is demoted to a carried control — it is already
+implemented, it costs nothing to include, and a second measurement of a null is
+worth having. **The prompting arm becomes the experiment.**
+
+That is the right focus on the evidence: [`24`](24-is-the-held-out-failure-the-interface.md)
+already established that prompting is a boost that *works at this scale*, lifting
+the anchor from 0.694 to 0.875 and cutting constant-labelling from 40% to 25%.
+It is the only one of the three boosts demonstrated to transfer here, and it is
+the one nobody has audited against a random-direction control.
+
 ## What I am about to do
 
 `14`'s design unchanged — two concepts against two random directions at **identical

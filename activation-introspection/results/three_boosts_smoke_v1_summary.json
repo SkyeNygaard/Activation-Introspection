@@ -1,0 +1,97 @@
+{
+  "anchor": {
+    "none_content_accuracy": 1.0,
+    "notes_14_published": 0.899,
+    "within_tolerance": false
+  },
+  "elapsed_seconds": 63.3,
+  "injection_layer": 9,
+  "model": "qwen-3b",
+  "note": "notes/33",
+  "prompt_family": "introspect",
+  "refusal_gate": {
+    "baseline_refusal_heldout": 1.0,
+    "chosen_layer": 10,
+    "chosen_refusal": 0.0,
+    "gate_passed": true,
+    "refusal_after_ablation_by_layer": {
+      "layer_10": 0.0,
+      "layer_14": 0.75,
+      "layer_18": 0.0,
+      "layer_22": 0.0,
+      "layer_26": 0.0
+    }
+  },
+  "smoke": true,
+  "table": {
+    "ablate": {
+      "content": {
+        "accuracy": 0.5,
+        "format_rate": 1.0,
+        "mean_margin": 2.1875,
+        "n": 2,
+        "twin_pair": 0.0
+      },
+      "random_pair": {
+        "accuracy": 0.5,
+        "format_rate": 1.0,
+        "mean_margin": 1.25,
+        "n": 2,
+        "twin_pair": 0.0
+      },
+      "selectivity_gap_by_coverage": {
+        "0.2": 0.0,
+        "0.4": 0.0,
+        "0.6": 0.0,
+        "0.8": 0.0,
+        "1.0": 0.0
+      }
+    },
+    "none": {
+      "content": {
+        "accuracy": 1.0,
+        "format_rate": 1.0,
+        "mean_margin": 2.3125,
+        "n": 2,
+        "twin_pair": 1.0
+      },
+      "random_pair": {
+        "accuracy": 0.5,
+        "format_rate": 1.0,
+        "mean_margin": 0.9375,
+        "n": 2,
+        "twin_pair": 0.0
+      },
+      "selectivity_gap_by_coverage": {
+        "0.2": 1.0,
+        "0.4": 1.0,
+        "0.6": 1.0,
+        "0.8": 1.0,
+        "1.0": 1.0
+      }
+    },
+    "prompt": {
+      "content": {
+        "accuracy": 0.5,
+        "format_rate": 1.0,
+        "mean_margin": 2.125,
+        "n": 2,
+        "twin_pair": 0.0
+      },
+      "random_pair": {
+        "accuracy": 0.5,
+        "format_rate": 1.0,
+        "mean_margin": 1.625,
+        "n": 2,
+        "twin_pair": 0.0
+      },
+      "selectivity_gap_by_coverage": {
+        "0.2": 0.0,
+        "0.4": 0.0,
+        "0.6": 0.0,
+        "0.8": 0.0,
+        "1.0": 0.0
+      }
+    }
+  }
+}
