@@ -131,3 +131,84 @@ harmful text into the repository, the direction is not worth building this way.
 Mitigated by using short, obviously-refusable *categories* rather than genuinely
 dangerous content — the direction only needs the model's refusal response, not
 working instructions for anything.
+
+---
+
+# Result: the intervention worked, the boost did not transfer, so the audit is
+# still open
+
+Run **2026-08-13**, 384 episodes. Artifacts: `results/refusal_ablation_v1_raw.jsonl`,
+`results/refusal_ablation_v1_summary.json`.
+
+## The gate passed decisively
+
+Refusal on held-out harmful prompts: **1.00 intact, 0.00 after ablation** at four
+of five candidate layers. The direction is the refusal direction and removing it
+does exactly what Arditi et al. describe. Nothing downstream can be blamed on a
+failed intervention.
+
+## The anchor reproduces `14`
+
+Intact content accuracy **0.896** against `14`'s published **0.899**. The
+apparatus is the same one, and the comparison is sound.
+
+## And then ablation made it worse, not better
+
+Twin-pair accuracy, 48 pairs per cell, format rate 1.000 everywhere:
+
+| | content | random | **selectivity gap** |
+|---|---:|---:|---:|
+| intact | 0.792 (38/48) | 0.271 (13/48) | **0.521** |
+| ablated | 0.604 (29/48) | 0.125 (6/48) | **0.479** |
+
+Content falls by 0.188, **95% CI [0.021, 0.375]** — a real degradation. Random
+falls by 0.146, CI [0.000, 0.292], marginal. **The selectivity gap does not move**:
+0.521 against 0.479, with both arms sliding down together.
+
+## What this does and does not establish
+
+**It does not answer the question the note asked.** The audit was "does boosting
+introspection cost selectivity". There was no boost to pay for. Refusal ablation
+lifts detection from 10.8% to 63.8% in
+[Macar et al.](https://arxiv.org/abs/2603.21396); here it lowers performance.
+**You cannot audit the price of a boost that did not happen.**
+
+**What it does establish is a boundary.** Macar et al.'s result is free-form
+detection — "do you notice an injected thought?" — on Gemma3-27B and Qwen3-235B.
+This is a forced choice between two arbitrary in-context labels on a 3B model. The
+"underelicited" claim does not transfer across that gap, and the direction being
+verifiably removed is what makes that a measurement rather than a guess.
+
+That is worth recording precisely because the obvious move — read "introspection is
+underelicited, ablation fixes it" and assume it applies to your setup — is wrong
+here, and the gate is what distinguishes "the boost does not transfer" from "my
+ablation was broken".
+
+**A smaller thing that is real:** ablation *degrades* this task while leaving
+format intact at 1.000. So the refusal direction is not inert for in-context
+label inference at this scale; removing it costs something. I have no account of
+why and am not going to invent one.
+
+## My prediction, scored
+
+I predicted ablation would raise both arms modestly and leave selectivity intact,
+60/40. **Selectivity intact: right. Direction of the effect: wrong** — both arms
+fell rather than rose. The reasoning ("removing a brake scales up what is already
+there") assumed the brake was on this task. It was not; there was no brake here to
+remove, and taking the direction out cost something instead.
+
+## What this changes about what to do next
+
+The audit needs a boost that **actually works on this task**. There is one:
+[`24`](24-is-the-held-out-failure-the-interface.md) showed prompting lifts the
+anchor here from 0.694 to 0.875 and cuts constant-labelling from 40% to 25%.
+Prompting is the boost that transfers to this scale, and it has never been audited
+against a random-direction control by anyone.
+[`33`](33-three-boosts-one-control.md) does that.
+
+## Limits
+
+One model, one task, one layer for the direction, four concept pairs. The
+direction was selected on held-out refusal reduction among five candidate layers,
+which is a small sweep. Ablation is applied at every layer and position, which is
+the standard recipe but is also the most disruptive version of it.
