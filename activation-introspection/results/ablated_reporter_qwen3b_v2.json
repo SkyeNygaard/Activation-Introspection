@@ -1,0 +1,78 @@
+{
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "inject_layer": 9,
+  "read_layer": 35,
+  "strength": 1.0,
+  "epochs": 6,
+  "lr": 0.0001,
+  "train_concepts": [
+    "guitar",
+    "harbor",
+    "lantern",
+    "meadow",
+    "satellite",
+    "teapot",
+    "tunnel",
+    "whale"
+  ],
+  "eval_concepts": [
+    "ocean",
+    "bread",
+    "volcano",
+    "violin",
+    "spider",
+    "hospital",
+    "desert",
+    "clock"
+  ],
+  "train_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "eval_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "arms": {
+    "plain": {
+      "ablated": false,
+      "n_train_examples": 128,
+      "final_loss": 2.0772399961948396,
+      "uniform_loss": 2.0794415416798357,
+      "n_steps": 768,
+      "heldout_accuracy": 0.125,
+      "n_eval": 48,
+      "chance": 0.125
+    },
+    "ablated": {
+      "ablated": true,
+      "n_train_examples": 128,
+      "final_loss": 2.05029479265213,
+      "uniform_loss": 2.0794415416798357,
+      "n_steps": 768,
+      "heldout_accuracy": 0.10416666666666667,
+      "n_eval": 48,
+      "chance": 0.125
+    }
+  },
+  "reading": "ablated close to plain -> the adapter reads concept identity. ablated at chance -> it was reading that something was disturbed."
+}

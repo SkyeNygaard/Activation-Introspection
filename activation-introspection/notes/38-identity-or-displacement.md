@@ -295,6 +295,44 @@ all.
 so an undertrained run is visible from the file alone instead of requiring
 someone to remember ln(8).
 
+### v2, 2026-08-14 — eight times the training, same null
+
+`results/ablated_reporter_qwen3b_v2.json`. 768 steps per arm, lr 1e-4.
+
+| arm | held-out | chance | final loss | uniform |
+|---|---:|---:|---:|---:|
+| plain | 0.125 | 0.125 | 2.077 | 2.079 |
+| ablated | 0.104 | 0.125 | 2.050 | 2.079 |
+
+Eight times the steps moved nothing. **So the problem was never the budget.**
+
+### The actual cause: the injection was outside the task's operating range
+
+`scripts/run_ift.py`, the script built for this exact eight-way identification
+task, defaults to **strength 0.2**. Both runs above used **1.0** — five times that
+— and `ift.build_examples` applies it at `positions="all"`, so every token position
+was displaced by the full mean residual magnitude.
+
+This repository already records that regime. notes/02 asked "where does injection
+change output without destroying it?" and found a usable window. The recipe that
+reaches 0.927 injects at a **single marker position** via `sign_intervention`, not
+at every position. Flooding the whole sequence at full magnitude damages the model's
+output, which produces chance accuracy and a loss pinned at uniform no matter what
+the adapter has learned.
+
+The strength was carried over from the displacement measurement, where 1.0 is
+appropriate because nothing is being asked of the model — states are only being
+read. It does not transfer to a task where the model has to answer.
+
+**v3 runs at strength 0.2**, the task's own default, with the larger budget kept
+(16 seeds, 6 epochs, lr 2e-4). The displacement direction is refitted at 0.2 inside
+the same run, so the arms stay internally consistent.
+
+**Lesson worth keeping:** three runs, three of my own configuration errors — too
+few clean states, too small a budget, then a strength outside the task's range.
+Each was caught by a check declared in advance rather than by the result looking
+odd. Size against the script that was built for the task before inventing numbers.
+
 **The spectrum, for completeness.** Reaching 80% of the delta energy takes 7
 components, 90% takes 9, 95% takes 11. It does **not** set the ablation rank: those
 components span concept identity too, so removing them would take the signal the
