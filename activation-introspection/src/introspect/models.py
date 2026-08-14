@@ -19,6 +19,10 @@ KNOWN_MODELS = {
     "qwen-0.5b": "Qwen/Qwen2.5-0.5B-Instruct",  # ~1.0 GB
     "qwen-1.5b": "Qwen/Qwen2.5-1.5B-Instruct",  # ~3.1 GB
     "qwen-3b": "Qwen/Qwen2.5-3B-Instruct",  # ~6.2 GB
+    # Added 2026-08-14. A current-generation model with the same 36-block layout
+    # as qwen-3b, so an injection layer transfers directly and the depth results
+    # stay comparable. Inference fits on this machine; training does not.
+    "qwen3-4b": "Qwen/Qwen3-4B-Instruct-2507",  # ~7.5 GB
     "qwen-7b": "Qwen/Qwen2.5-7B-Instruct",  # ~15.2 GB -- tight on 24 GB
     "llama-1b": "meta-llama/Llama-3.2-1B-Instruct",
     "llama-3b": "meta-llama/Llama-3.2-3B-Instruct",

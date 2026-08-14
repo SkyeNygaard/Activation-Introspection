@@ -119,9 +119,42 @@ I prefer (1). The rank needed to reach a declared fraction is itself a result �
 "the fact of an injection occupies k dimensions at the readout" is a cleaner
 statement than anything the rank-1 version could produce.
 
-**Not yet checked at 3B.** This is a 0.5B pilot at one layer and one strength; it
-is a plumbing and design check, not a finding, and the 0.217 may not transfer. The
-3B run is the one that decides the rank.
+**Not yet checked at scale.** This is a 0.5B pilot at one layer and one strength;
+it is a plumbing and design check, not a finding, and the 0.217 may not transfer.
+
+## Qwen3-4B, 2026-08-14 — the gate passes on a current model, and the bound loosens
+
+`results/displacement_direction_qwen3_4b.json`. Qwen3-4B-Instruct-2507, inject at
+layer 9 of 36 — the same relative depth and the same block count as the Qwen2.5-3B
+work, so the injection site transfers directly. Read the final block, strength
+1.0, same eight concepts, same three-carrier dev/held-out split.
+
+| | Qwen2.5-0.5B | **Qwen3-4B** |
+|---|---:|---:|
+| held-out separation of injected from clean (AUROC) | 1.000 | **1.000** |
+| share of displacement energy along the mean delta | 0.217 | **0.546** |
+| share along the leading component | 0.217 | **0.547** |
+
+**The gate passes on a current-generation model.** Perfect ordering of held-out
+injected states above held-out clean ones, with the clean states drawn from
+carriers never used to fit the direction.
+
+**And the shared direction accounts for 55% of the displacement rather than 22%.**
+The mean delta is again the leading component to three decimals, so this is a
+genuinely concentrated axis, not a mixture. Ablating it removes over half of what
+an injection does to the final state, which is enough for "the reports survived"
+to carry real weight.
+
+**Two points are not a trend, and the comparison is confounded.** 0.5B is
+Qwen2.5 and 4B is Qwen3, so size and model generation moved together and this
+says nothing about which caused the change. Worth one Qwen2.5-3B run to separate
+them, but that is a curiosity, not on the critical path.
+
+**What is still needed to set the ablation rank.** The share tells us how much a
+rank-1 ablation removes; it does not say how many components reach a chosen
+threshold. The script does not currently record the spectrum. Add cumulative
+energy by component, declare the target fraction before the run, and read the
+rank off it. That is the next step, and it is minutes of inference.
 
 ## Known weakness, stated now rather than found later
 
