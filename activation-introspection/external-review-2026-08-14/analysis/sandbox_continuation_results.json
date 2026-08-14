@@ -1,0 +1,557 @@
+{
+  "free_form_report_signal": {
+    "target_word": {
+      "delta": -0.0034159703816985312,
+      "same_mean": 0.044100265193886455,
+      "different_mean": 0.047516235575584986,
+      "n_same_pairs": 24,
+      "n_different_pairs": 168,
+      "perm_p_greater": 0.6062624916722186,
+      "perm_null_mean": 4.797845938556772e-05,
+      "perm_null_sd": 0.009336152321212465
+    },
+    "model_pick_word": {
+      "delta": 0.018992966239847538,
+      "same_mean": 0.06172965075442181,
+      "different_mean": 0.04273668451457427,
+      "n_same_pairs": 44,
+      "n_different_pairs": 148,
+      "perm_p_greater": 0.597601598934044,
+      "perm_null_mean": 0.02249710808878024,
+      "perm_null_sd": 0.01178072584687
+    },
+    "target_char": {
+      "delta": -0.008777748062617913,
+      "same_mean": 0.13622725330796873,
+      "different_mean": 0.14500500137058664,
+      "n_same_pairs": 24,
+      "n_different_pairs": 168,
+      "perm_p_greater": 0.8021319120586275,
+      "perm_null_mean": 0.00032671914927210835,
+      "perm_null_sd": 0.010749031127237116
+    },
+    "model_pick_char": {
+      "delta": 0.03967502707331219,
+      "same_mean": 0.17449061623177087,
+      "different_mean": 0.13481558915845868,
+      "n_same_pairs": 44,
+      "n_different_pairs": 148,
+      "perm_p_greater": 0.513657561625583,
+      "perm_null_mean": 0.04048904422496358,
+      "perm_null_sd": 0.01701976961792523
+    },
+    "t1_matches_target": 0.2916666666666667,
+    "t1_matches_model_forced_pick": 0.25,
+    "model_forced_accuracy": 0.6666666666666666,
+    "t1_accuracy": 0.2916666666666667,
+    "report_mentions_target": 0.041666666666666664,
+    "model_pick_counts": {
+      "eagle": 11,
+      "camera": 3,
+      "train": 3,
+      "hammer": 3,
+      "garden": 1,
+      "banana": 1,
+      "library": 1,
+      "island": 1
+    },
+    "t1_pick_counts": {
+      "library": 3,
+      "train": 1,
+      "hammer": 14,
+      "banana": 1,
+      "eagle": 3,
+      "island": 2
+    }
+  },
+  "zero_shot_lens_depth_join": {
+    "n": 24,
+    "model_accuracy": 0.6666666666666666,
+    "rows": [
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "garden",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 99,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 0,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "camera",
+        "model_correct": true,
+        "model_predicted": "camera",
+        "first_final_lens_correct": 28,
+        "sustained_final_lens_correct": 28,
+        "n_final_layers_correct": 8,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "train",
+        "model_correct": true,
+        "model_predicted": "train",
+        "first_final_lens_correct": 9,
+        "sustained_final_lens_correct": 27,
+        "n_final_layers_correct": 22,
+        "n_marker_layers_correct": 26,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "banana",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 16,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 11,
+        "n_marker_layers_correct": 10,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "eagle",
+        "model_correct": true,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 10,
+        "sustained_final_lens_correct": 28,
+        "n_final_layers_correct": 9,
+        "n_marker_layers_correct": 8,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "library",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 28,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 4,
+        "n_marker_layers_correct": 25,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "hammer",
+        "model_correct": true,
+        "model_predicted": "hammer",
+        "first_final_lens_correct": 29,
+        "sustained_final_lens_correct": 31,
+        "n_final_layers_correct": 6,
+        "n_marker_layers_correct": 14,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "A routine maintenance re",
+        "concept": "island",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 33,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 1,
+        "n_marker_layers_correct": 22,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "garden",
+        "model_correct": true,
+        "model_predicted": "garden",
+        "first_final_lens_correct": 30,
+        "sustained_final_lens_correct": 33,
+        "n_final_layers_correct": 5,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "camera",
+        "model_correct": true,
+        "model_predicted": "camera",
+        "first_final_lens_correct": 26,
+        "sustained_final_lens_correct": 30,
+        "n_final_layers_correct": 8,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "train",
+        "model_correct": true,
+        "model_predicted": "train",
+        "first_final_lens_correct": 9,
+        "sustained_final_lens_correct": 27,
+        "n_final_layers_correct": 24,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "banana",
+        "model_correct": true,
+        "model_predicted": "banana",
+        "first_final_lens_correct": 18,
+        "sustained_final_lens_correct": 25,
+        "n_final_layers_correct": 13,
+        "n_marker_layers_correct": 11,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "eagle",
+        "model_correct": true,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 10,
+        "sustained_final_lens_correct": 28,
+        "n_final_layers_correct": 9,
+        "n_marker_layers_correct": 11,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "library",
+        "model_correct": true,
+        "model_predicted": "library",
+        "first_final_lens_correct": 28,
+        "sustained_final_lens_correct": 28,
+        "n_final_layers_correct": 8,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "hammer",
+        "model_correct": true,
+        "model_predicted": "hammer",
+        "first_final_lens_correct": 28,
+        "sustained_final_lens_correct": 28,
+        "n_final_layers_correct": 8,
+        "n_marker_layers_correct": 12,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "After lunch, the clerk p",
+        "concept": "island",
+        "model_correct": true,
+        "model_predicted": "island",
+        "first_final_lens_correct": 31,
+        "sustained_final_lens_correct": 31,
+        "n_final_layers_correct": 5,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "garden",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 99,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 0,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "camera",
+        "model_correct": true,
+        "model_predicted": "camera",
+        "first_final_lens_correct": 31,
+        "sustained_final_lens_correct": 31,
+        "n_final_layers_correct": 5,
+        "n_marker_layers_correct": 27,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "train",
+        "model_correct": true,
+        "model_predicted": "train",
+        "first_final_lens_correct": 9,
+        "sustained_final_lens_correct": 27,
+        "n_final_layers_correct": 20,
+        "n_marker_layers_correct": 25,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "banana",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 14,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 12,
+        "n_marker_layers_correct": 10,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "eagle",
+        "model_correct": true,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 28,
+        "sustained_final_lens_correct": 28,
+        "n_final_layers_correct": 8,
+        "n_marker_layers_correct": 8,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "library",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 99,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 0,
+        "n_marker_layers_correct": 24,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": false
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "hammer",
+        "model_correct": true,
+        "model_predicted": "hammer",
+        "first_final_lens_correct": 31,
+        "sustained_final_lens_correct": 31,
+        "n_final_layers_correct": 5,
+        "n_marker_layers_correct": 12,
+        "final_lens_at_35": true,
+        "marker_lens_at_35": true
+      },
+      {
+        "carrier": "Nothing changed. Hidden ",
+        "concept": "island",
+        "model_correct": false,
+        "model_predicted": "eagle",
+        "first_final_lens_correct": 33,
+        "sustained_final_lens_correct": 99,
+        "n_final_layers_correct": 1,
+        "n_marker_layers_correct": 24,
+        "final_lens_at_35": false,
+        "marker_lens_at_35": true
+      }
+    ],
+    "first_final_lens_correct_auc_for_model_correct": 0.7734375,
+    "first_final_lens_correct_mean_model_right": 22.1875,
+    "first_final_lens_correct_mean_model_wrong": 52.625,
+    "sustained_final_lens_correct_auc_for_model_correct": 1.0,
+    "sustained_final_lens_correct_mean_model_right": 28.8125,
+    "sustained_final_lens_correct_mean_model_wrong": 99.0,
+    "n_final_layers_correct_auc_for_model_correct": 0.8125,
+    "n_final_layers_correct_mean_model_right": 10.1875,
+    "n_final_layers_correct_mean_model_wrong": 3.625,
+    "n_marker_layers_correct_auc_for_model_correct": 0.55078125,
+    "n_marker_layers_correct_mean_model_right": 19.75,
+    "n_marker_layers_correct_mean_model_wrong": 21.125,
+    "model_vs_final_lens35_cross_tab": {
+      "(False, False)": 8,
+      "(True, True)": 16
+    }
+  },
+  "reader_depth_behavior_link": {
+    "n_rows": 576,
+    "last_correct_layer_auc_for_model_correct": 0.28370151876490524,
+    "last_correct_layer_mean_model_right": 34.37937743190661,
+    "last_correct_layer_mean_model_wrong": 34.95161290322581,
+    "n_post_layers_correct_auc_for_model_correct": 0.31581837580017574,
+    "n_post_layers_correct_mean_model_right": 26.367704280155642,
+    "n_post_layers_correct_mean_model_wrong": 26.85483870967742,
+    "first_failure_layer_auc_for_model_correct": 0.3251223798167441,
+    "first_failure_layer_mean_model_right": 35.36186770428016,
+    "first_failure_layer_mean_model_wrong": 35.774193548387096,
+    "reader_final_correct_auc_for_model_correct": 0.2804380569850634,
+    "reader_final_correct_mean_model_right": 0.5447470817120622,
+    "reader_final_correct_mean_model_wrong": 0.9838709677419355,
+    "n_twin_pairs": 0,
+    "model_twin_accuracy": NaN,
+    "reader_twin_by_layer": {
+      "9": NaN,
+      "10": NaN,
+      "11": NaN,
+      "12": NaN,
+      "13": NaN,
+      "14": NaN,
+      "15": NaN,
+      "16": NaN,
+      "17": NaN,
+      "18": NaN,
+      "19": NaN,
+      "20": NaN,
+      "21": NaN,
+      "22": NaN,
+      "23": NaN,
+      "24": NaN,
+      "25": NaN,
+      "26": NaN,
+      "27": NaN,
+      "28": NaN,
+      "29": NaN,
+      "30": NaN,
+      "31": NaN,
+      "32": NaN,
+      "33": NaN,
+      "34": NaN,
+      "35": NaN
+    },
+    "model_right_reader_wrong_by_layer": {
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0
+    }
+  },
+  "zero_shot_error_structure": {
+    "model_per_concept": {
+      "banana": 0.3333333333333333,
+      "camera": 1.0,
+      "eagle": 1.0,
+      "garden": 0.2222222222222222,
+      "hammer": 0.7777777777777778,
+      "island": 0.2222222222222222,
+      "library": 0.3333333333333333,
+      "train": 0.8888888888888888
+    },
+    "model_per_carrier": {
+      "A routine maintenance re": 0.4583333333333333,
+      "After lunch, the clerk p": 0.9166666666666666,
+      "Nothing changed. Hidden ": 0.4166666666666667
+    },
+    "model_per_strength": {
+      "1.0": 0.4583333333333333,
+      "2.0": 0.6666666666666666,
+      "4.0": 0.6666666666666666
+    },
+    "model_lens_agreement": 0.5833333333333334,
+    "lens_correct_when_model_wrong": 1.0,
+    "n_model_wrong": 29,
+    "wrong_prediction_counts": {
+      "eagle": 27,
+      "train": 2
+    },
+    "correct_prediction_counts": {
+      "camera": 9,
+      "train": 8,
+      "eagle": 9,
+      "hammer": 7,
+      "garden": 2,
+      "banana": 3,
+      "library": 3,
+      "island": 2
+    },
+    "mean_cross_carrier_modal_prediction_fraction": 0.8055555555555555
+  },
+  "self_knowledge_incremental": {
+    "n": 200,
+    "accuracy": 0.71,
+    "auc_margin": 0.7248664400194269,
+    "auc_probe": 0.6596648858669257,
+    "auc_verbal_logit": 0.6787882467217096,
+    "auc_product_size": 0.3657722195240408,
+    "auc_diff_margin_minus_probe": {
+      "estimate": 0.06520155415250117,
+      "ci95": [
+        -0.04799659914083554,
+        0.17263886850402252
+      ],
+      "p_two_sided": 0.2813333333333333
+    },
+    "auc_diff_margin_minus_verbal": {
+      "estimate": 0.04607819329771734,
+      "ci95": [
+        -0.058634104475947635,
+        0.15818264255070658
+      ],
+      "p_two_sided": 0.36933333333333335
+    },
+    "correlations": {
+      "margin__probe": 0.14632595472535645,
+      "margin__verbal": 0.2189381050216436,
+      "margin__size": -0.27714466047953734,
+      "probe__verbal": 0.51849815745527,
+      "probe__size": -0.33264210132380456,
+      "size__verbal": -0.14282601573713768
+    },
+    "repeated_cv_auc": {
+      "margin": {
+        "mean": 0.7267819823854306,
+        "sd": 0.07513236609587061
+      },
+      "probe": {
+        "mean": 0.6628101209135693,
+        "sd": 0.0906072984262041
+      },
+      "margin_probe": {
+        "mean": 0.7522342886998059,
+        "sd": 0.0663292408982279
+      },
+      "margin_probe_verbal": {
+        "mean": 0.7733180325421704,
+        "sd": 0.07306259828677798
+      },
+      "margin_size": {
+        "mean": 0.7284359605911329,
+        "sd": 0.0698601314157242
+      },
+      "margin_probe_size": {
+        "mean": 0.7477787729511867,
+        "sd": 0.06668910327718204
+      }
+    },
+    "cv_margin_probe_minus_margin": {
+      "mean": 0.025452306314375277,
+      "ci95": [
+        -0.11567398119122253,
+        0.12644984326018802
+      ]
+    }
+  }
+}

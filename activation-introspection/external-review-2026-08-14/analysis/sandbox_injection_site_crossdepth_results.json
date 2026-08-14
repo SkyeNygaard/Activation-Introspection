@@ -1,0 +1,53 @@
+{
+  "0.5B": {
+    "target": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 1.0,
+      "n": 144,
+      "chance": 0.125
+    },
+    "random": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 0.125,
+      "n": 144,
+      "chance": 0.125
+    },
+    "shuffled": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 0.041666666666666664,
+      "n": 144,
+      "chance": 0.125
+    }
+  },
+  "1.5B": {
+    "target": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 1.0,
+      "n": 72,
+      "chance": 0.125
+    },
+    "random": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 0.16666666666666666,
+      "n": 72,
+      "chance": 0.125
+    },
+    "shuffled": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 0.08333333333333333,
+      "n": 72,
+      "chance": 0.125
+    }
+  },
+  "3B": {
+    "target": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 1.0,
+      "n": 72,
+      "chance": 0.125
+    },
+    "random": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 0.08333333333333333,
+      "n": 72,
+      "chance": 0.125
+    },
+    "shuffled": {
+      "cross_depth_cross_carrier_concept_at_injection_site": 0.125,
+      "n": 72,
+      "chance": 0.125
+    }
+  }
+}

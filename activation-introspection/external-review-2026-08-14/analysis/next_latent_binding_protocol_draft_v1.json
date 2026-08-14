@@ -1,0 +1,90 @@
+{
+  "status": "DRAFT_NOT_FROZEN_NOT_RUN",
+  "title": "Does zero-demonstration introspection training induce an adaptive latent-axis reader, and what is its generalization kernel?",
+  "motivation": "Existing post-hoc analysis shows that codebook-trained reporters can solve four-row matched-visible latent-XOR quartets on arbitrary random axes, while the untrained model cannot. Existing held-out semantic results show near-zero quartet generalization to a new exemplar despite a nearly perfect cheap adaptive reader. The missing causal factorial is to train one zero-demonstration reporter, save it, and evaluate every interface on that same checkpoint.",
+  "model": {
+    "name": "qwen-3b",
+    "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "train_layer": 9,
+    "training_strength": 1.0,
+    "training_recipe": "exactly report_training_v3 except adapter MUST be saved; do not tune from any evaluation below",
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "learning_rate": 0.0001,
+    "epochs": 6
+  },
+  "primary_estimand": {
+    "name": "latent_xor_quartet_accuracy",
+    "definition": "Four rows share a byte-identical visible prompt. Two hidden demonstration configurations encode opposite latent sign-to-label conventions, crossed with two hidden query signs. Success requires all four labels correct.",
+    "structural_null": 0.0,
+    "why": "Visible-only, query-only-hidden, demonstration-only-hidden, constant-label, and fixed sign-to-token strategies cannot solve all four rows. This is stricter than reporting query twins and mapping flips separately."
+  },
+  "evaluation_battery": [
+    {
+      "name": "A_original_zero_demo",
+      "purpose": "Reproduce the training endpoint and retain specificity diagnostics.",
+      "conditions": ["target", "random", "shuffled", "clean"],
+      "metrics": ["row_accuracy", "query_twin", "orientation_invariant_prediction_flip", "QK_margin", "format_rate", "label_mass"]
+    },
+    {
+      "name": "B_same_axis_latent_icl",
+      "purpose": "Test whether zero-demo training transfers to learning a hidden codebook from demonstrations, without ever training on demonstration-based codebook episodes.",
+      "conditions": ["concept_axis", "magnitude_matched_random_axis", "coordinate_shuffled_axis"],
+      "strengths": [1.0, 0.5, 0.25, 0.15],
+      "metrics": ["latent_xor_quartet_accuracy", "hidden_demo_twin", "query_twin", "row_accuracy", "margin"],
+      "critical_comparison": "trained minus base on arbitrary random latent-XOR quartets"
+    },
+    {
+      "name": "C_cross_axis_geometry_kernel",
+      "purpose": "Map whether latent-code transfer is exact-axis or geometric.",
+      "construction": "For each held-out random base axis u, construct query axes v with prospectively fixed cosine(u,v) in {0.95,0.8,0.6,0.3,0.0}; orthogonal components are independently seeded and norm matched. Demonstrations use u; query uses v. The + orientation of v is defined as the same latent class as +u by construction.",
+      "cosine_bins": [0.95, 0.8, 0.6, 0.3, 0.0],
+      "metrics": ["latent_xor_quartet_accuracy", "cheap_centroid_reader_quartet"],
+      "prediction_if_geometric": "accuracy decreases monotonically with cosine and approaches structural floor near zero cosine"
+    },
+    {
+      "name": "D_semantic_cross_axis",
+      "purpose": "Test whether training creates abstraction beyond geometric similarity.",
+      "design": "Rerun the frozen heldout_semantic_v1 exemplar assignment on the same saved checkpoint, preserving semantic, scrambled, random, same-exemplar and query-only arms.",
+      "metrics": ["latent_xor_quartet_accuracy", "query_twin", "cheap_centroid_reader_quartet"],
+      "critical_comparison": "heldout_semantic minus heldout_scrambled after matching or stratifying by demo-query geometry"
+    },
+    {
+      "name": "E_native_polarity_override",
+      "purpose": "Test true same-checkpoint rebinding rather than cross-adapter inference.",
+      "design": "Measure each random axis's no-demo Q-K slope on the saved checkpoint. Then use that exact axis in demonstrations whose hidden convention requires the opposite output polarity. Counterbalance both mappings and query signs.",
+      "metric": "latent_xor_quartet_accuracy stratified by aligned versus anti-aligned native polarity",
+      "kill_rule": "If anti-aligned performance collapses while aligned remains high, adaptive rebinding is not established."
+    },
+    {
+      "name": "F_true_no_signal",
+      "purpose": "Measure false-positive/abstention behavior rather than arbitrary-axis decoding.",
+      "design": "Demonstrations contain valid hidden states. Query has no edit and response vocabulary includes UNKNOWN in addition to Q/K. Freeze wording and label-token choices before running.",
+      "metrics": ["UNKNOWN_rate", "QK_mass", "max_QK_margin", "full_vocab_format_rate"],
+      "success": "trained model does not become more confidently binary on no-edit queries than base while retaining B/D gains"
+    }
+  ],
+  "controls": {
+    "visible_prompt_hashing": "Every latent-XOR quartet must assert one prompt_sha256 across all four rows.",
+    "query_only_hidden": "No quartet success is possible when demonstration edits are removed.",
+    "demo_only_hidden": "No quartet success is possible when query edit is removed; score UNKNOWN arm instead.",
+    "cheap_reader": "Run the same four-shot centroid/euclidean reader on captured states; reader establishes state-level capacity, not privileged access.",
+    "labels": "Use semantically inert single-token labels and verify first-token IDs/frequencies before freeze.",
+    "adapter": "save_pretrained immediately after training, hash all files, and never retrain between evaluation arms"
+  },
+  "predeclared_interpretation": {
+    "exact_axis_only": "B improves but C decays rapidly and D semantic does not beat scrambled: training creates an adaptive same-axis latent reader, not semantic introspection.",
+    "geometric_kernel": "C follows cosine and D is explained by geometry: training creates geometric latent relation transfer.",
+    "semantic_abstraction": "D semantic robustly exceeds geometry-matched scrambled while reader gate remains high: evidence training induces semantic cross-axis generalization.",
+    "no_transfer_from_zero_demo_training": "A reproduces but B random remains near base: earlier arbitrary latent-ICL capability was specific to codebook training, not generic introspection training.",
+    "specificity_failure": "F becomes confidently Q/K on no-edit queries: training gains come with a real no-signal calibration cost."
+  },
+  "research_os_priority": [
+    "B same-axis latent ICL on zero-demo-trained checkpoint",
+    "D held-out semantic on same checkpoint",
+    "E same-checkpoint polarity override",
+    "F UNKNOWN no-signal specificity",
+    "C cosine kernel",
+    "cross-layer transfer only after these"
+  ]
+}

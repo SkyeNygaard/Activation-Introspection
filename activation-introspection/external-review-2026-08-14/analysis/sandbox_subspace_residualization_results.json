@@ -1,0 +1,143 @@
+{
+  "qwen05b": {
+    "target": {
+      "ranks": {
+        "concept": 7,
+        "depth": 5,
+        "carrier": 2
+      },
+      "concept_original": 1.0,
+      "concept_off_depth": 1.0,
+      "concept_off_carrier": 1.0,
+      "concept_off_depth_carrier": 1.0,
+      "depth_original": 0.2222222222222222,
+      "depth_off_concept": 0.5138888888888888,
+      "depth_off_carrier": 0.3055555555555556,
+      "depth_off_concept_carrier": 0.7291666666666666
+    },
+    "random": {
+      "ranks": {
+        "concept": 7,
+        "depth": 5,
+        "carrier": 2
+      },
+      "concept_original": 0.16666666666666666,
+      "concept_off_depth": 0.19444444444444445,
+      "concept_off_carrier": 0.1875,
+      "concept_off_depth_carrier": 0.19444444444444445,
+      "depth_original": 0.3888888888888889,
+      "depth_off_concept": 0.4861111111111111,
+      "depth_off_carrier": 0.4097222222222222,
+      "depth_off_concept_carrier": 0.5277777777777778
+    },
+    "shuffled": {
+      "ranks": {
+        "concept": 7,
+        "depth": 5,
+        "carrier": 2
+      },
+      "concept_original": 0.13194444444444445,
+      "concept_off_depth": 0.1597222222222222,
+      "concept_off_carrier": 0.11805555555555555,
+      "concept_off_depth_carrier": 0.1597222222222222,
+      "depth_original": 0.3958333333333333,
+      "depth_off_concept": 0.4583333333333333,
+      "depth_off_carrier": 0.4583333333333333,
+      "depth_off_concept_carrier": 0.5208333333333334
+    }
+  },
+  "qwen15b": {
+    "target": {
+      "ranks": {
+        "concept": 7,
+        "depth": 2,
+        "carrier": 2
+      },
+      "concept_original": 1.0,
+      "concept_off_depth": 1.0,
+      "concept_off_carrier": 1.0,
+      "concept_off_depth_carrier": 1.0,
+      "depth_original": 0.6944444444444444,
+      "depth_off_concept": 0.9722222222222222,
+      "depth_off_carrier": 0.7361111111111112,
+      "depth_off_concept_carrier": 1.0
+    },
+    "random": {
+      "ranks": {
+        "concept": 7,
+        "depth": 2,
+        "carrier": 2
+      },
+      "concept_original": 0.1388888888888889,
+      "concept_off_depth": 0.1527777777777778,
+      "concept_off_carrier": 0.16666666666666666,
+      "concept_off_depth_carrier": 0.2361111111111111,
+      "depth_original": 0.8472222222222222,
+      "depth_off_concept": 0.9583333333333334,
+      "depth_off_carrier": 0.8888888888888888,
+      "depth_off_concept_carrier": 0.9722222222222222
+    },
+    "shuffled": {
+      "ranks": {
+        "concept": 7,
+        "depth": 2,
+        "carrier": 2
+      },
+      "concept_original": 0.041666666666666664,
+      "concept_off_depth": 0.027777777777777776,
+      "concept_off_carrier": 0.05555555555555555,
+      "concept_off_depth_carrier": 0.05555555555555555,
+      "depth_original": 0.8888888888888888,
+      "depth_off_concept": 0.9444444444444444,
+      "depth_off_carrier": 0.8888888888888888,
+      "depth_off_concept_carrier": 0.9444444444444444
+    }
+  },
+  "qwen3b": {
+    "target": {
+      "ranks": {
+        "concept": 7,
+        "depth": 2,
+        "carrier": 2
+      },
+      "concept_original": 1.0,
+      "concept_off_depth": 1.0,
+      "concept_off_carrier": 0.9861111111111112,
+      "concept_off_depth_carrier": 1.0,
+      "depth_original": 0.6666666666666666,
+      "depth_off_concept": 0.8611111111111112,
+      "depth_off_carrier": 0.6805555555555556,
+      "depth_off_concept_carrier": 0.9027777777777778
+    },
+    "random": {
+      "ranks": {
+        "concept": 7,
+        "depth": 2,
+        "carrier": 2
+      },
+      "concept_original": 0.2361111111111111,
+      "concept_off_depth": 0.2361111111111111,
+      "concept_off_carrier": 0.2361111111111111,
+      "concept_off_depth_carrier": 0.2361111111111111,
+      "depth_original": 0.8333333333333334,
+      "depth_off_concept": 0.8611111111111112,
+      "depth_off_carrier": 0.8888888888888888,
+      "depth_off_concept_carrier": 0.9027777777777778
+    },
+    "shuffled": {
+      "ranks": {
+        "concept": 7,
+        "depth": 2,
+        "carrier": 2
+      },
+      "concept_original": 0.18055555555555555,
+      "concept_off_depth": 0.18055555555555555,
+      "concept_off_carrier": 0.1388888888888889,
+      "concept_off_depth_carrier": 0.1388888888888889,
+      "depth_original": 0.8333333333333334,
+      "depth_off_concept": 0.8055555555555556,
+      "depth_off_carrier": 0.7916666666666666,
+      "depth_off_concept_carrier": 0.8472222222222222
+    }
+  }
+}

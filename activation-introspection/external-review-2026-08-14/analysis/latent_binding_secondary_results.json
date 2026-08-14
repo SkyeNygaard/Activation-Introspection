@@ -1,0 +1,976 @@
+{
+  "codebook_confirm": {
+    "clean": {
+      "by_concept": {
+        "banana": 0.0,
+        "camera": 0.0,
+        "eagle": 0.0,
+        "garden": 0.0,
+        "hammer": 0.0,
+        "island": 0.0,
+        "library": 0.0,
+        "train": 0.0
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.0
+    },
+    "random": {
+      "by_concept": {
+        "banana": 0.0,
+        "camera": 0.05555555555555555,
+        "eagle": 0.0,
+        "garden": 0.1111111111111111,
+        "hammer": 0.16666666666666666,
+        "island": 0.05555555555555555,
+        "library": 0.16666666666666666,
+        "train": 0.1111111111111111
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.08333333333333333
+    },
+    "shuffled": {
+      "by_concept": {
+        "banana": 0.0,
+        "camera": 0.3333333333333333,
+        "eagle": 0.4444444444444444,
+        "garden": 0.0,
+        "hammer": 0.0,
+        "island": 0.2222222222222222,
+        "library": 0.05555555555555555,
+        "train": 0.2222222222222222
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.1597222222222222
+    },
+    "target": {
+      "by_concept": {
+        "banana": 0.5555555555555556,
+        "camera": 0.7222222222222222,
+        "eagle": 0.7222222222222222,
+        "garden": 0.7222222222222222,
+        "hammer": 0.7777777777777778,
+        "island": 0.6666666666666666,
+        "library": 0.6666666666666666,
+        "train": 0.6666666666666666
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.6875
+    },
+    "test_only": {
+      "by_concept": {
+        "banana": 0.0,
+        "camera": 0.0,
+        "eagle": 0.0,
+        "garden": 0.0,
+        "hammer": 0.0,
+        "island": 0.0,
+        "library": 0.0,
+        "train": 0.0
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.0
+    }
+  },
+  "codebook_test": {
+    "clean": {
+      "by_concept": {
+        "airport": 0.0,
+        "candle": 0.0,
+        "coffee": 0.0,
+        "forest": 0.0,
+        "mountain": 0.0,
+        "piano": 0.0,
+        "river": 0.0,
+        "tiger": 0.0
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.0
+    },
+    "random": {
+      "by_concept": {
+        "airport": 0.05555555555555555,
+        "candle": 0.0,
+        "coffee": 0.16666666666666666,
+        "forest": 0.16666666666666666,
+        "mountain": 0.1111111111111111,
+        "piano": 0.0,
+        "river": 0.2777777777777778,
+        "tiger": 0.1111111111111111
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.1111111111111111
+    },
+    "shuffled": {
+      "by_concept": {
+        "airport": 0.16666666666666666,
+        "candle": 0.05555555555555555,
+        "coffee": 0.05555555555555555,
+        "forest": 0.1111111111111111,
+        "mountain": 0.05555555555555555,
+        "piano": 0.2777777777777778,
+        "river": 0.0,
+        "tiger": 0.05555555555555555
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.09722222222222222
+    },
+    "target": {
+      "by_concept": {
+        "airport": 0.7222222222222222,
+        "candle": 0.7222222222222222,
+        "coffee": 0.7777777777777778,
+        "forest": 0.6111111111111112,
+        "mountain": 0.9444444444444444,
+        "piano": 0.7222222222222222,
+        "river": 0.8888888888888888,
+        "tiger": 0.8333333333333334
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.7777777777777778
+    },
+    "test_only": {
+      "by_concept": {
+        "airport": 0.0,
+        "candle": 0.0,
+        "coffee": 0.0,
+        "forest": 0.0,
+        "mountain": 0.0,
+        "piano": 0.0,
+        "river": 0.0,
+        "tiger": 0.0
+      },
+      "n_quartets": 144,
+      "quartet_all_correct": 0.0
+    }
+  },
+  "heldout_semantic": {
+    "heldout_random": {
+      "model_correct_quartet": 0.0,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 0.0,
+      "reader_centroid_euclidean_correct_quartet": 0.0,
+      "reader_shuffled_labels_correct_quartet": 0.0
+    },
+    "heldout_scrambled": {
+      "model_correct_quartet": 0.0,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 0.3333333333333333,
+      "reader_centroid_euclidean_correct_quartet": 0.3333333333333333,
+      "reader_shuffled_labels_correct_quartet": 0.0
+    },
+    "heldout_semantic": {
+      "model_correct_quartet": 0.013888888888888888,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 0.9722222222222222,
+      "reader_centroid_euclidean_correct_quartet": 0.9722222222222222,
+      "reader_shuffled_labels_correct_quartet": 0.19444444444444445
+    },
+    "query_only": {
+      "model_correct_quartet": 0.0,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 0.0,
+      "reader_centroid_euclidean_correct_quartet": 0.0,
+      "reader_shuffled_labels_correct_quartet": 0.0
+    },
+    "same_exemplar": {
+      "model_correct_quartet": 0.4166666666666667,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 1.0,
+      "reader_centroid_euclidean_correct_quartet": 1.0,
+      "reader_shuffled_labels_correct_quartet": 0.5555555555555556
+    }
+  },
+  "matched_reader_content": {
+    "content": {
+      "model_correct_quartet": 0.6944444444444444,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 1.0,
+      "reader_centroid_euclidean_correct_quartet": 1.0,
+      "reader_shuffled_labels_correct_quartet": 0.16666666666666666
+    },
+    "polarity": {
+      "model_correct_quartet": 0.7361111111111112,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 1.0,
+      "reader_centroid_euclidean_correct_quartet": 1.0,
+      "reader_shuffled_labels_correct_quartet": 0.16666666666666666
+    },
+    "polarity_weak": {
+      "model_correct_quartet": 0.0,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 0.6666666666666666,
+      "reader_centroid_euclidean_correct_quartet": 0.6666666666666666,
+      "reader_shuffled_labels_correct_quartet": 0.0
+    },
+    "random_polarity": {
+      "model_correct_quartet": 0.09722222222222222,
+      "n_quartets": 72,
+      "reader_centroid_cosine_correct_quartet": 1.0,
+      "reader_centroid_euclidean_correct_quartet": 1.0,
+      "reader_shuffled_labels_correct_quartet": 0.16666666666666666
+    }
+  },
+  "metric_definition": "A latent-XOR quartet is four rows with byte-identical visible prompt: two hidden demonstration configurations encode opposite latent sign-to-label conventions, crossed with the two hidden query signs. Quartet success requires all four outputs correct. A deterministic visible-only strategy, query-only hidden strategy, or demonstration-only hidden strategy has structural quartet success 0.",
+  "remap_training_v2": {
+    "aggregate": {
+      "strength0.15|base|target": {
+        "mean": 0.0,
+        "seed_values": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "strength0.15|fixed|target": {
+        "mean": 0.6041666666666667,
+        "seed_values": [
+          0.875,
+          0.3541666666666667,
+          0.5833333333333334
+        ]
+      },
+      "strength0.15|remap|target": {
+        "mean": 0.4756944444444444,
+        "seed_values": [
+          0.4895833333333333,
+          0.625,
+          0.3125
+        ]
+      },
+      "strength0.25|base|target": {
+        "mean": 0.010416666666666666,
+        "seed_values": [
+          0.010416666666666666,
+          0.010416666666666666,
+          0.010416666666666666
+        ]
+      },
+      "strength0.25|fixed|target": {
+        "mean": 0.9895833333333334,
+        "seed_values": [
+          1.0,
+          0.9895833333333334,
+          0.9791666666666666
+        ]
+      },
+      "strength0.25|remap|target": {
+        "mean": 0.9618055555555556,
+        "seed_values": [
+          0.9583333333333334,
+          0.9583333333333334,
+          0.96875
+        ]
+      },
+      "strength0.5|base|random": {
+        "mean": 0.0,
+        "seed_values": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "strength0.5|base|target": {
+        "mean": 0.3645833333333333,
+        "seed_values": [
+          0.3645833333333333,
+          0.3645833333333333,
+          0.3645833333333333
+        ]
+      },
+      "strength0.5|fixed|random": {
+        "mean": 0.8229166666666667,
+        "seed_values": [
+          0.9270833333333334,
+          0.7708333333333334,
+          0.7708333333333334
+        ]
+      },
+      "strength0.5|fixed|target": {
+        "mean": 1.0,
+        "seed_values": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "strength0.5|remap|random": {
+        "mean": 0.6666666666666666,
+        "seed_values": [
+          0.7604166666666666,
+          0.6145833333333334,
+          0.625
+        ]
+      },
+      "strength0.5|remap|target": {
+        "mean": 1.0,
+        "seed_values": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "per_seed": {
+      "seed0|strength0.15|base|target": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        },
+        "n_correct_per_quartet": {
+          "1": 2,
+          "2": 92,
+          "3": 2
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.0
+      },
+      "seed0|strength0.15|fixed|target": {
+        "by_concept": {
+          "banana": 0.9166666666666666,
+          "camera": 0.8333333333333334,
+          "eagle": 0.9166666666666666,
+          "garden": 1.0,
+          "hammer": 0.8333333333333334,
+          "island": 0.75,
+          "library": 0.8333333333333334,
+          "train": 0.9166666666666666
+        },
+        "n_correct_per_quartet": {
+          "3": 12,
+          "4": 84
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.875
+      },
+      "seed0|strength0.15|remap|target": {
+        "by_concept": {
+          "banana": 0.25,
+          "camera": 0.6666666666666666,
+          "eagle": 0.5,
+          "garden": 0.6666666666666666,
+          "hammer": 0.25,
+          "island": 0.5,
+          "library": 0.6666666666666666,
+          "train": 0.4166666666666667
+        },
+        "n_correct_per_quartet": {
+          "2": 22,
+          "3": 27,
+          "4": 47
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.4895833333333333
+      },
+      "seed0|strength0.25|base|target": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.08333333333333333
+        },
+        "n_correct_per_quartet": {
+          "2": 87,
+          "3": 8,
+          "4": 1
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.010416666666666666
+      },
+      "seed0|strength0.25|fixed|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      },
+      "seed0|strength0.25|remap|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 0.8333333333333334,
+          "island": 0.9166666666666666,
+          "library": 1.0,
+          "train": 0.9166666666666666
+        },
+        "n_correct_per_quartet": {
+          "3": 4,
+          "4": 92
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.9583333333333334
+      },
+      "seed0|strength0.5|base|random": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        },
+        "n_correct_per_quartet": {
+          "2": 91,
+          "3": 5
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.0
+      },
+      "seed0|strength0.5|base|target": {
+        "by_concept": {
+          "banana": 0.16666666666666666,
+          "camera": 0.3333333333333333,
+          "eagle": 0.25,
+          "garden": 0.5833333333333334,
+          "hammer": 0.16666666666666666,
+          "island": 0.3333333333333333,
+          "library": 0.5833333333333334,
+          "train": 0.5
+        },
+        "n_correct_per_quartet": {
+          "2": 37,
+          "3": 24,
+          "4": 35
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.3645833333333333
+      },
+      "seed0|strength0.5|fixed|random": {
+        "by_concept": {
+          "banana": 0.9166666666666666,
+          "camera": 1.0,
+          "eagle": 0.9166666666666666,
+          "garden": 0.75,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 0.8333333333333334
+        },
+        "n_correct_per_quartet": {
+          "3": 7,
+          "4": 89
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.9270833333333334
+      },
+      "seed0|strength0.5|fixed|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      },
+      "seed0|strength0.5|remap|random": {
+        "by_concept": {
+          "banana": 0.3333333333333333,
+          "camera": 0.8333333333333334,
+          "eagle": 0.8333333333333334,
+          "garden": 0.5,
+          "hammer": 0.6666666666666666,
+          "island": 0.9166666666666666,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "2": 1,
+          "3": 22,
+          "4": 73
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.7604166666666666
+      },
+      "seed0|strength0.5|remap|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      },
+      "seed1|strength0.15|base|target": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        },
+        "n_correct_per_quartet": {
+          "1": 2,
+          "2": 92,
+          "3": 2
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.0
+      },
+      "seed1|strength0.15|fixed|target": {
+        "by_concept": {
+          "banana": 0.4166666666666667,
+          "camera": 0.5,
+          "eagle": 0.4166666666666667,
+          "garden": 0.5,
+          "hammer": 0.25,
+          "island": 0.16666666666666666,
+          "library": 0.25,
+          "train": 0.3333333333333333
+        },
+        "n_correct_per_quartet": {
+          "2": 27,
+          "3": 35,
+          "4": 34
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.3541666666666667
+      },
+      "seed1|strength0.15|remap|target": {
+        "by_concept": {
+          "banana": 0.75,
+          "camera": 0.6666666666666666,
+          "eagle": 0.5833333333333334,
+          "garden": 0.8333333333333334,
+          "hammer": 0.4166666666666667,
+          "island": 0.5833333333333334,
+          "library": 0.5833333333333334,
+          "train": 0.5833333333333334
+        },
+        "n_correct_per_quartet": {
+          "2": 20,
+          "3": 16,
+          "4": 60
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.625
+      },
+      "seed1|strength0.25|base|target": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.08333333333333333
+        },
+        "n_correct_per_quartet": {
+          "2": 87,
+          "3": 8,
+          "4": 1
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.010416666666666666
+      },
+      "seed1|strength0.25|fixed|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 0.9166666666666666,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "3": 1,
+          "4": 95
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.9895833333333334
+      },
+      "seed1|strength0.25|remap|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 0.9166666666666666,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 0.8333333333333334,
+          "island": 0.9166666666666666,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "3": 4,
+          "4": 92
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.9583333333333334
+      },
+      "seed1|strength0.5|base|random": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        },
+        "n_correct_per_quartet": {
+          "2": 91,
+          "3": 5
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.0
+      },
+      "seed1|strength0.5|base|target": {
+        "by_concept": {
+          "banana": 0.16666666666666666,
+          "camera": 0.3333333333333333,
+          "eagle": 0.25,
+          "garden": 0.5833333333333334,
+          "hammer": 0.16666666666666666,
+          "island": 0.3333333333333333,
+          "library": 0.5833333333333334,
+          "train": 0.5
+        },
+        "n_correct_per_quartet": {
+          "2": 37,
+          "3": 24,
+          "4": 35
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.3645833333333333
+      },
+      "seed1|strength0.5|fixed|random": {
+        "by_concept": {
+          "banana": 0.4166666666666667,
+          "camera": 0.8333333333333334,
+          "eagle": 0.75,
+          "garden": 0.5833333333333334,
+          "hammer": 0.75,
+          "island": 0.9166666666666666,
+          "library": 1.0,
+          "train": 0.9166666666666666
+        },
+        "n_correct_per_quartet": {
+          "2": 1,
+          "3": 21,
+          "4": 74
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.7708333333333334
+      },
+      "seed1|strength0.5|fixed|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      },
+      "seed1|strength0.5|remap|random": {
+        "by_concept": {
+          "banana": 0.5,
+          "camera": 0.6666666666666666,
+          "eagle": 0.6666666666666666,
+          "garden": 0.3333333333333333,
+          "hammer": 0.5,
+          "island": 0.6666666666666666,
+          "library": 0.75,
+          "train": 0.8333333333333334
+        },
+        "n_correct_per_quartet": {
+          "2": 1,
+          "3": 36,
+          "4": 59
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.6145833333333334
+      },
+      "seed1|strength0.5|remap|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      },
+      "seed2|strength0.15|base|target": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        },
+        "n_correct_per_quartet": {
+          "1": 2,
+          "2": 92,
+          "3": 2
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.0
+      },
+      "seed2|strength0.15|fixed|target": {
+        "by_concept": {
+          "banana": 0.6666666666666666,
+          "camera": 0.6666666666666666,
+          "eagle": 0.5833333333333334,
+          "garden": 0.5,
+          "hammer": 0.5,
+          "island": 0.5833333333333334,
+          "library": 0.5,
+          "train": 0.6666666666666666
+        },
+        "n_correct_per_quartet": {
+          "2": 17,
+          "3": 23,
+          "4": 56
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.5833333333333334
+      },
+      "seed2|strength0.15|remap|target": {
+        "by_concept": {
+          "banana": 0.3333333333333333,
+          "camera": 0.3333333333333333,
+          "eagle": 0.3333333333333333,
+          "garden": 0.5833333333333334,
+          "hammer": 0.25,
+          "island": 0.16666666666666666,
+          "library": 0.3333333333333333,
+          "train": 0.16666666666666666
+        },
+        "n_correct_per_quartet": {
+          "2": 49,
+          "3": 17,
+          "4": 30
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.3125
+      },
+      "seed2|strength0.25|base|target": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.08333333333333333
+        },
+        "n_correct_per_quartet": {
+          "2": 87,
+          "3": 8,
+          "4": 1
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.010416666666666666
+      },
+      "seed2|strength0.25|fixed|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 0.9166666666666666,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 0.9166666666666666,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "3": 2,
+          "4": 94
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.9791666666666666
+      },
+      "seed2|strength0.25|remap|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 0.9166666666666666,
+          "library": 0.8333333333333334,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "3": 3,
+          "4": 93
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.96875
+      },
+      "seed2|strength0.5|base|random": {
+        "by_concept": {
+          "banana": 0.0,
+          "camera": 0.0,
+          "eagle": 0.0,
+          "garden": 0.0,
+          "hammer": 0.0,
+          "island": 0.0,
+          "library": 0.0,
+          "train": 0.0
+        },
+        "n_correct_per_quartet": {
+          "2": 91,
+          "3": 5
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.0
+      },
+      "seed2|strength0.5|base|target": {
+        "by_concept": {
+          "banana": 0.16666666666666666,
+          "camera": 0.3333333333333333,
+          "eagle": 0.25,
+          "garden": 0.5833333333333334,
+          "hammer": 0.16666666666666666,
+          "island": 0.3333333333333333,
+          "library": 0.5833333333333334,
+          "train": 0.5
+        },
+        "n_correct_per_quartet": {
+          "2": 37,
+          "3": 24,
+          "4": 35
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.3645833333333333
+      },
+      "seed2|strength0.5|fixed|random": {
+        "by_concept": {
+          "banana": 0.6666666666666666,
+          "camera": 0.9166666666666666,
+          "eagle": 0.6666666666666666,
+          "garden": 0.3333333333333333,
+          "hammer": 0.6666666666666666,
+          "island": 0.9166666666666666,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "3": 22,
+          "4": 74
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.7708333333333334
+      },
+      "seed2|strength0.5|fixed|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      },
+      "seed2|strength0.5|remap|random": {
+        "by_concept": {
+          "banana": 0.3333333333333333,
+          "camera": 0.9166666666666666,
+          "eagle": 0.4166666666666667,
+          "garden": 0.0,
+          "hammer": 0.5,
+          "island": 0.9166666666666666,
+          "library": 0.9166666666666666,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "2": 2,
+          "3": 34,
+          "4": 60
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 0.625
+      },
+      "seed2|strength0.5|remap|target": {
+        "by_concept": {
+          "banana": 1.0,
+          "camera": 1.0,
+          "eagle": 1.0,
+          "garden": 1.0,
+          "hammer": 1.0,
+          "island": 1.0,
+          "library": 1.0,
+          "train": 1.0
+        },
+        "n_correct_per_quartet": {
+          "4": 96
+        },
+        "n_quartets": 96,
+        "quartet_all_correct": 1.0
+      }
+    }
+  },
+  "status": "POST_HOC_SECONDARY_ANALYSIS_NOT_PREREGISTERED"
+}

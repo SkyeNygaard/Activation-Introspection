@@ -1,0 +1,798 @@
+{
+  "word_logreg": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mean": 0.0,
+    "preds": [
+      [
+        "A routine maintenance re",
+        "garden",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "camera",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "train",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "banana",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "eagle",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "library",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "hammer",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "island",
+        "library"
+      ],
+      [
+        "After lunch, the clerk p",
+        "garden",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "camera",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "train",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "banana",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "eagle",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "library",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "hammer",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "island",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "garden",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "camera",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "train",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "banana",
+        "garden"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "eagle",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "library",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "hammer",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "island",
+        "hammer"
+      ]
+    ]
+  },
+  "word_svm": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.125
+    ],
+    "mean": 0.041666666666666664,
+    "preds": [
+      [
+        "A routine maintenance re",
+        "garden",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "camera",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "train",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "banana",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "eagle",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "library",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "hammer",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "island",
+        "library"
+      ],
+      [
+        "After lunch, the clerk p",
+        "garden",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "camera",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "train",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "banana",
+        "hammer"
+      ],
+      [
+        "After lunch, the clerk p",
+        "eagle",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "library",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "hammer",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "island",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "garden",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "camera",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "train",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "banana",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "eagle",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "library",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "hammer",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "island",
+        "hammer"
+      ]
+    ]
+  },
+  "word_centroid": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.125
+    ],
+    "mean": 0.041666666666666664,
+    "preds": [
+      [
+        "A routine maintenance re",
+        "garden",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "camera",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "train",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "banana",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "eagle",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "library",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "hammer",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "island",
+        "library"
+      ],
+      [
+        "After lunch, the clerk p",
+        "garden",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "camera",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "train",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "banana",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "eagle",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "library",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "hammer",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "island",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "garden",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "camera",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "train",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "banana",
+        "garden"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "eagle",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "library",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "hammer",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "island",
+        "hammer"
+      ]
+    ]
+  },
+  "char_logreg": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mean": 0.0,
+    "preds": [
+      [
+        "A routine maintenance re",
+        "garden",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "camera",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "train",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "banana",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "eagle",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "library",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "hammer",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "island",
+        "library"
+      ],
+      [
+        "After lunch, the clerk p",
+        "garden",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "camera",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "train",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "banana",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "eagle",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "library",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "hammer",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "island",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "garden",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "camera",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "train",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "banana",
+        "library"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "eagle",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "library",
+        "island"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "hammer",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "island",
+        "hammer"
+      ]
+    ]
+  },
+  "char_svm": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mean": 0.0,
+    "preds": [
+      [
+        "A routine maintenance re",
+        "garden",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "camera",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "train",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "banana",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "eagle",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "library",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "hammer",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "island",
+        "library"
+      ],
+      [
+        "After lunch, the clerk p",
+        "garden",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "camera",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "train",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "banana",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "eagle",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "library",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "hammer",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "island",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "garden",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "camera",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "train",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "banana",
+        "library"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "eagle",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "library",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "hammer",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "island",
+        "hammer"
+      ]
+    ]
+  },
+  "char_centroid": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mean": 0.0,
+    "preds": [
+      [
+        "A routine maintenance re",
+        "garden",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "camera",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "train",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "banana",
+        "garden"
+      ],
+      [
+        "A routine maintenance re",
+        "eagle",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "library",
+        "banana"
+      ],
+      [
+        "A routine maintenance re",
+        "hammer",
+        "library"
+      ],
+      [
+        "A routine maintenance re",
+        "island",
+        "library"
+      ],
+      [
+        "After lunch, the clerk p",
+        "garden",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "camera",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "train",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "banana",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "eagle",
+        "train"
+      ],
+      [
+        "After lunch, the clerk p",
+        "library",
+        "garden"
+      ],
+      [
+        "After lunch, the clerk p",
+        "hammer",
+        "banana"
+      ],
+      [
+        "After lunch, the clerk p",
+        "island",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "garden",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "camera",
+        "train"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "train",
+        "eagle"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "banana",
+        "library"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "eagle",
+        "hammer"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "library",
+        "island"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "hammer",
+        "banana"
+      ],
+      [
+        "Nothing changed. Hidden ",
+        "island",
+        "hammer"
+      ]
+    ]
+  },
+  "word_1nn": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.125
+    ],
+    "mean": 0.041666666666666664
+  },
+  "char_1nn": {
+    "fold_acc": [
+      0.0,
+      0.0,
+      0.125
+    ],
+    "mean": 0.041666666666666664
+  }
+}

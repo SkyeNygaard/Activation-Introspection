@@ -1,0 +1,215 @@
+{
+  "qwen05b": {
+    "target": {
+      "ranks": {
+        "concept": 8,
+        "depth": 6,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.34959647059440613,
+        0.22908754646778107,
+        0.21496078372001648,
+        0.1524427831172943,
+        0.11564455926418304,
+        0.0083828279748559
+      ],
+      "concept_depth_max_cosine": 0.34959647059440613,
+      "concept_depth_mean_sq_cosine": 0.04293161258101463,
+      "concept_effect_energy_in_depth_subspace": 0.036538705229759216,
+      "depth_effect_energy_in_concept_subspace": 0.06287320703268051,
+      "concept_cv_original": 1.0,
+      "concept_cv_depth_residualized": 1.0,
+      "depth_cv_original": 0.2222222222222222,
+      "depth_cv_concept_residualized": 0.5138888888888888,
+      "chance_concept": 0.125,
+      "chance_depth": 0.16666666666666666
+    },
+    "random": {
+      "ranks": {
+        "concept": 8,
+        "depth": 6,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.5684303045272827,
+        0.41806507110595703,
+        0.2704209089279175,
+        0.2074016034603119,
+        0.08828061819076538,
+        0.06363135576248169
+      ],
+      "concept_depth_max_cosine": 0.5684303045272827,
+      "concept_depth_mean_sq_cosine": 0.10431277751922607,
+      "concept_effect_energy_in_depth_subspace": 0.08418145030736923,
+      "depth_effect_energy_in_concept_subspace": 0.09063826501369476,
+      "concept_cv_original": 0.16666666666666666,
+      "concept_cv_depth_residualized": 0.1875,
+      "depth_cv_original": 0.3888888888888889,
+      "depth_cv_concept_residualized": 0.4861111111111111,
+      "chance_concept": 0.125,
+      "chance_depth": 0.16666666666666666
+    },
+    "shuffled": {
+      "ranks": {
+        "concept": 8,
+        "depth": 6,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.5700835585594177,
+        0.4317880868911743,
+        0.23910778760910034,
+        0.18589404225349426,
+        0.18017661571502686,
+        0.05873885378241539
+      ],
+      "concept_depth_max_cosine": 0.5700835585594177,
+      "concept_depth_mean_sq_cosine": 0.10651319473981857,
+      "concept_effect_energy_in_depth_subspace": 0.05917084962129593,
+      "depth_effect_energy_in_concept_subspace": 0.062472064048051834,
+      "concept_cv_original": 0.13194444444444445,
+      "concept_cv_depth_residualized": 0.1597222222222222,
+      "depth_cv_original": 0.3958333333333333,
+      "depth_cv_concept_residualized": 0.4583333333333333,
+      "chance_concept": 0.125,
+      "chance_depth": 0.16666666666666666
+    }
+  },
+  "qwen15b": {
+    "target": {
+      "ranks": {
+        "concept": 8,
+        "depth": 3,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.39116084575653076,
+        0.2287420779466629,
+        0.21060776710510254
+      ],
+      "concept_depth_max_cosine": 0.39116084575653076,
+      "concept_depth_mean_sq_cosine": 0.0832284614443779,
+      "concept_effect_energy_in_depth_subspace": 0.018601469695568085,
+      "depth_effect_energy_in_concept_subspace": 0.060617845505476,
+      "concept_cv_original": 1.0,
+      "concept_cv_depth_residualized": 1.0,
+      "depth_cv_original": 0.6944444444444444,
+      "depth_cv_concept_residualized": 0.9722222222222222,
+      "chance_concept": 0.125,
+      "chance_depth": 0.3333333333333333
+    },
+    "random": {
+      "ranks": {
+        "concept": 8,
+        "depth": 3,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.4367271363735199,
+        0.27693429589271545,
+        0.14676448702812195
+      ],
+      "concept_depth_max_cosine": 0.4367271363735199,
+      "concept_depth_mean_sq_cosine": 0.0963209941983223,
+      "concept_effect_energy_in_depth_subspace": 0.04798218235373497,
+      "depth_effect_energy_in_concept_subspace": 0.11260653287172318,
+      "concept_cv_original": 0.1388888888888889,
+      "concept_cv_depth_residualized": 0.1527777777777778,
+      "depth_cv_original": 0.8472222222222222,
+      "depth_cv_concept_residualized": 0.9583333333333334,
+      "chance_concept": 0.125,
+      "chance_depth": 0.3333333333333333
+    },
+    "shuffled": {
+      "ranks": {
+        "concept": 8,
+        "depth": 3,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.33909639716148376,
+        0.18930478394031525,
+        0.09992074221372604
+      ],
+      "concept_depth_max_cosine": 0.33909639716148376,
+      "concept_depth_mean_sq_cosine": 0.053602274507284164,
+      "concept_effect_energy_in_depth_subspace": 0.021414319053292274,
+      "depth_effect_energy_in_concept_subspace": 0.07381543517112732,
+      "concept_cv_original": 0.041666666666666664,
+      "concept_cv_depth_residualized": 0.013888888888888888,
+      "depth_cv_original": 0.8888888888888888,
+      "depth_cv_concept_residualized": 0.9444444444444444,
+      "chance_concept": 0.125,
+      "chance_depth": 0.3333333333333333
+    }
+  },
+  "qwen3b": {
+    "target": {
+      "ranks": {
+        "concept": 8,
+        "depth": 3,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.23822706937789917,
+        0.16737014055252075,
+        0.05281395837664604
+      ],
+      "concept_depth_max_cosine": 0.23822706937789917,
+      "concept_depth_mean_sq_cosine": 0.0291847363114357,
+      "concept_effect_energy_in_depth_subspace": 0.01468912698328495,
+      "depth_effect_energy_in_concept_subspace": 0.0462181530892849,
+      "concept_cv_original": 1.0,
+      "concept_cv_depth_residualized": 1.0,
+      "depth_cv_original": 0.6666666666666666,
+      "depth_cv_concept_residualized": 0.8611111111111112,
+      "chance_concept": 0.125,
+      "chance_depth": 0.3333333333333333
+    },
+    "random": {
+      "ranks": {
+        "concept": 8,
+        "depth": 3,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.3425181210041046,
+        0.24132876098155975,
+        0.1483163982629776
+      ],
+      "concept_depth_max_cosine": 0.3425181210041046,
+      "concept_depth_mean_sq_cosine": 0.06585199385881424,
+      "concept_effect_energy_in_depth_subspace": 0.012885026633739471,
+      "depth_effect_energy_in_concept_subspace": 0.030691778287291527,
+      "concept_cv_original": 0.2361111111111111,
+      "concept_cv_depth_residualized": 0.2361111111111111,
+      "depth_cv_original": 0.8333333333333334,
+      "depth_cv_concept_residualized": 0.8611111111111112,
+      "chance_concept": 0.125,
+      "chance_depth": 0.3333333333333333
+    },
+    "shuffled": {
+      "ranks": {
+        "concept": 8,
+        "depth": 3,
+        "carrier": 3
+      },
+      "concept_depth_principal_cosines": [
+        0.3855910301208496,
+        0.1727958470582962,
+        0.14201368391513824
+      ],
+      "concept_depth_max_cosine": 0.3855910301208496,
+      "concept_depth_mean_sq_cosine": 0.06623557955026627,
+      "concept_effect_energy_in_depth_subspace": 0.03261806070804596,
+      "depth_effect_energy_in_concept_subspace": 0.04035927355289459,
+      "concept_cv_original": 0.18055555555555555,
+      "concept_cv_depth_residualized": 0.18055555555555555,
+      "depth_cv_original": 0.8333333333333334,
+      "depth_cv_concept_residualized": 0.8055555555555556,
+      "chance_concept": 0.125,
+      "chance_depth": 0.3333333333333333
+    }
+  }
+}
