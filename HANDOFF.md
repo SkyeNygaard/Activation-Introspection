@@ -6,6 +6,47 @@ then the notes in order.
 
 ---
 
+## 0a. State at the end of 2026-08-14 — start here
+
+A long working session. Four things changed, in descending order of importance to
+anyone picking this up.
+
+**1. Three claims were withdrawn as overreach.** Details in §0 below. The
+short version: the `random` arm is not a no-signal arm, the structural twin null is
+0 rather than 0.25, and notes/14 is not evidence of semantic abstraction. The
+measurements all stand; the stories built on them did not. The withdrawn one was
+this project's headline safety result, so there is now a hole where it used to be.
+
+**2. A new line opened: [notes/38](activation-introspection/notes/38-identity-or-displacement.md).**
+Does a trained reporter read *which* concept was injected, or only *that*
+something was? Its gate has passed on two models. At the readout of Qwen3-4B a
+single direction carries all of "an injection happened" and none of "which
+concept": remove it and injected-versus-clean discrimination falls to chance while
+concept identity is untouched, across a twenty-fold range of injection strengths.
+The training arm — two adapters, identical except that one cannot see the
+disturbance — was **running when this was written**. Its result is not here.
+
+**3. Strategy is written down, once, in
+[`spar-application/APPLICATION-STRATEGY.md`](spar-application/APPLICATION-STRATEGY.md).**
+What each mentor actually asked and what already answers it; the MATS 12.0 rules
+including that reuse under 20 hours counts as a normal application; why the model
+was *not* switched and what was done instead; why the raw-hook approach stays; and
+what not to do. Read it before re-deciding any of those — they were argued through
+and the reasoning is there rather than in someone's memory.
+
+**4. Provenance has a hole, and it does not matter.** Nine hashed source files had
+drifted, and 13 recorded hashes match no version in git history. Every affected
+artifact is a superseded pilot or smoke run; no cited number is involved. Recorded
+in [`results/README.md`](activation-introspection/results/README.md). The habit
+that prevents it: **commit before running.**
+
+**The one thing still undecided** is the standing no-more-LoRA constraint in §1.
+It was set aside for the notes/38 training run at Skye's explicit instruction, along
+with a memory allowance (`INTROSPECT_PREFLIGHT_SLACK_GIB`, ≤4 GiB short). Whether
+it is lifted generally has not been settled.
+
+---
+
 ## 0. Correction pass, 2026-08-14 — read before quoting anything below
 
 An independent re-analysis of the saved raw rows (done outside this machine, with

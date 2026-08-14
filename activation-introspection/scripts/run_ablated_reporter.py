@@ -47,18 +47,27 @@ TRAIN_SEEDS = tuple(range(0, 6))
 EVAL_SEEDS = tuple(range(100, 106))
 
 
-def _displacement_direction(
-    model: object, bank: dict[str, Any], inject_layer: int, read_layer: int, strength: float
-) -> Tensor:
-    """Refit the shared "an injection happened" direction, on development rows only.
+def _load_displacement_module() -> Any:
+    """The sibling script, imported rather than duplicated so the two cannot diverge.
 
-    Imported from the sibling script rather than duplicated so the two cannot
-    drift apart -- it is the same fit that produced the numbers in notes/38.
+    Its concept and carrier split is the one notes/38 declared and measured, so it
+    is reused here wholesale rather than restated.
     """
     path = Path(__file__).with_name("run_displacement_direction.py")
     spec = importlib.util.spec_from_file_location("_disp", path)
     mod = importlib.util.module_from_spec(cast(Any, spec))
     cast(Any, spec).loader.exec_module(mod)
+    return mod
+
+
+DISP = _load_displacement_module()
+
+
+def _displacement_direction(
+    model: object, bank: dict[str, Any], inject_layer: int, read_layer: int, strength: float
+) -> Tensor:
+    """Refit the shared "an injection happened" direction, on development rows only."""
+    mod = DISP
     clean, injected, _ = mod.collect(
         model,
         bank,
@@ -149,15 +158,16 @@ def main() -> None:
     # identical apart from the ablation.
     probe = load(MODEL_REPOS.get(args.model, args.model))
     read_layer = args.read_layer if args.read_layer >= 0 else len(probe.blocks) - 1
-    probe_bank = build_bank(probe, args.inject_layer)
+    concepts = [*DISP.DEV_CONCEPTS, *DISP.HELDOUT_CONCEPTS]
+    probe_bank = build_bank(probe, args.inject_layer, concepts)
     direction = _displacement_direction(
         probe, probe_bank, args.inject_layer, read_layer, args.strength
     )
     revision = loaded_revision(probe)
     _free(probe)
 
-    train_concepts = [*sorted(probe_bank)[:4], "guitar", "harbor", "lantern", "meadow"]
-    eval_concepts = ["satellite", "teapot", "tunnel", "whale"]
+    train_concepts = list(DISP.DEV_CONCEPTS)
+    eval_concepts = list(DISP.HELDOUT_CONCEPTS)
     kw = dict(
         direction=direction,
         inject_layer=args.inject_layer,

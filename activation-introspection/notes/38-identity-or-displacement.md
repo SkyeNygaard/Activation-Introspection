@@ -225,7 +225,50 @@ attempts, and it was the second that worked.
 **What still stands.** One model, one layer, one readout position. Identity is
 measured by leave-one-carrier-out nearest centroid, which is a cheap reader and
 not the model's own report. And no reporter has been trained with this projection
-yet — everything here is about the states, not about what a model says.
+yet — everything above is about the states, not about what a model says.
+
+## The training arm — design, and how to finish it
+
+`scripts/run_ablated_reporter.py`. Two adapters, identical apart from one thing:
+the ablated arm has the displacement direction projected out of the readout on
+**every forward pass, in training and evaluation alike**.
+
+| | |
+|---|---|
+| train on | the eight development concepts |
+| score on | the eight held-out concepts, chance 0.125 |
+| prompt seeds | training 0–5, evaluation 100–105, disjoint |
+| direction | refitted inside the run on development rows, by importing the displacement script rather than duplicating the fit |
+
+**How the ablation is applied, and why it matters.** Training and evaluation are
+wrapped in an outer `intervene` block. Forward hooks compose, so the concept
+injection inside `ift.train` still fires. This avoids editing `ift.py`, which is
+hashed into frozen protocols — editing a hashed source broke two tests earlier the
+same day, which is the reason for the indirection.
+
+**Reading the outcome.**
+
+| result | reading |
+|---|---|
+| ablated ≈ plain | the adapter reads concept identity |
+| ablated at chance (0.125) | it was reading disturbance, and the concept vocabulary rode along on whatever training paired with it |
+| **both** at chance | the recipe is undertrained and neither arm is interpretable — rerun with more steps before reading anything into the gap |
+
+**Two caveats fixed in advance, not retrofitted.**
+
+*Small budget.* 48 training examples, 2 epochs, 96 steps — far below the recipe
+that produced the 0.927. If the plain arm lands well short of that range, the
+comparison is between two undertrained adapters and must be reported as such.
+
+*Model mismatch.* The separation result above is Qwen3-4B; this trains on
+Qwen2.5-3B, because 4B training needs ~15 GiB and does not fit. The direction is
+refitted on 3B inside the run, so the experiment is internally consistent — but
+**the training numbers and the 0.902 → 0.514 separation come from different models
+and must not be quoted side by side** as though they were one result.
+
+**If the run needs repeating**, memory is the constraint: 3B training wants 12.4
+GiB. `INTROSPECT_PREFLIGHT_SLACK_GIB=4` was authorised for this and lets it start
+a few GiB short; the message still reports the true gap.
 
 **The spectrum, for completeness.** Reaching 80% of the delta energy takes 7
 components, 90% takes 9, 95% takes 11. It does **not** set the ablation rank: those
