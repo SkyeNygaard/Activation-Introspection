@@ -213,15 +213,22 @@ directions read at 91–96%.
 
 ### Putting them together
 
-> **Introspection training buys sensitivity and pays for it in specificity.** The
-> trained monitor sees internal changes three times weaker than the base model
-> can, including ones it never trained on — and stops distinguishing changes that
-> mean something from changes that do not.
+> **Training widens what the model can read, until a meaningful direction and an
+> arbitrary one are equally usable.** The trained monitor sees internal changes
+> three times weaker than the base model can, including ones it never trained on
+> — and the head start that concept-derived directions used to have disappears.
 
-For safety this is the interesting part. A monitor trained this way is more
-sensitive *and* less trustworthy about what it detected. You ask "is concept X
-active?" and it answers a different question: "did something move at layer 9?"
-Anyone who can cause any displacement at that site gets a positive report.
+**Corrected 2026-08-14, and the old version of this passage claimed too much.** It
+said the trained monitor answers "did something move at layer 9?" instead of "is
+concept X active?", and that anyone causing any displacement gets a positive
+report. The experiment cannot support that. In the arbitrary-direction condition
+the same direction is planted in the four worked examples *and* in the question, and
+the right answer is fixed by the question's sign — so the model is applying a code
+it was just taught, and a correct answer is a correct answer. What the result shows
+is that training widens the set of directions a code can be built on. Whether a
+trained monitor cries wolf when **nothing** was planted is a different experiment,
+it is written (the `none` condition, where the question gets no edit and there is no
+right answer), and it has not been run.
 
 ### The hypothesis I built this to test was wrong
 

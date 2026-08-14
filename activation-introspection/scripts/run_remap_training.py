@@ -298,13 +298,23 @@ def build_protocol(smoke: bool) -> dict[str, Any]:
             ),
         },
         "claim_boundary": (
-            "A positive result shows that, under this model and interface, "
-            "training a reporting convention on a fixed label mapping degrades "
-            "the model's pre-existing ability to adopt a new mapping supplied in "
-            "context, and that training on varied mappings does not. It does not "
+            # Rewritten 2026-08-14. The previous text said a positive result would
+            # show that fixed-mapping training degrades the model's ability to
+            # adopt a new mapping in context. v1 already falsified that: the two
+            # adapters were indistinguishable and the fixed one was marginally
+            # better. A protocol may not carry a hypothesis its own run history
+            # has refuted, so the surviving question is stated instead.
+            "v1 and v2 refuted the original hypothesis that fixed-mapping "
+            "training degrades in-context remapping; that claim is retired and "
+            "must not be revived here. What this run measures is whether "
+            "training transfers off the trained site and off the trained "
+            "strength, and — through the none condition — whether a trained "
+            "reporter still withholds a confident label when the query carries "
+            "no edit at all and there is no correct answer. It does not "
             "establish privileged self-access, verbalization of naturally "
-            "occurring computation, or that the degradation generalises to other "
-            "models, layers, strengths, variables or training recipes."
+            "occurring computation, generalization to a held-out member of a "
+            "semantic category, or transfer to other models, layers, strengths, "
+            "variables or training recipes."
         ),
         "design": {
             "arms": list(ARMS),

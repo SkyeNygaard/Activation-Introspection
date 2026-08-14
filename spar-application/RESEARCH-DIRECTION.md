@@ -113,12 +113,23 @@ Stated at the strength the evidence supports, not higher. Full detail in
 | The model uses its own state better than a cheap outsider can | **Refuted across four task structures.** Model against a four-shot reader: content 0.899 vs 1.000, polarity 0.917 vs 1.000, random 0.663 vs 1.000, weak 0.497 vs 0.833. **14 episodes in 1728** where the model succeeds and the reader fails |
 | The polarity task measures reading *which concept* is active | **Refuted.** The held-out directions all overlap positively, and the fitted reader is the average concept direction pointing along every one of them at ten times the typical random departure. That task collapses to "pushed along one axis, plus or minus" |
 | The model can tell two different concepts apart at all | **Validated.** 0.899 against 0.594 for random pairs at matched separation, 4 of 4 pairs. So the bank carries recoverable concept-specific structure **as well as** a shared axis — both are true, and the two tasks differ |
-| Training changes what the reporter is sensitive to | **Holds, and it is the most useful result here.** Training extends the detection floor to edits the untrained model is blind to, and destroys the ability to tell a meaningful idea from a meaningless one — trained, the model reports random directions at 0.913–0.955 |
+| Training changes what the reporter is sensitive to | **Holds, and it is the most useful result here.** Training extends the detection floor to edits the untrained model is blind to, and removes the head start meaningful directions had — trained, the model handles arbitrary demonstrated directions at 0.913–0.955 |
 
-The fourth row is the finding that most directly matters for safety. **A monitor
-trained this way answers "did something move in here?", not "is concept X
-active?"** Any disturbance, including one with no meaning at all, produces a
-confident report.
+The fourth row is the one that matters most for safety, and **its reading was
+corrected on 2026-08-14**. It used to say: a monitor trained this way answers "did
+something move in here?", not "is concept X active?", so any disturbance produces a
+confident report. That is not what the experiment tested. The arbitrary direction
+is planted in the worked examples as well as in the question, and the right answer
+follows the question's sign, so those rows have a correct answer and the model is
+applying a code it was just taught.
+
+What the result does show is that **training widens the set of internal directions
+a model can be taught to report on, until an arbitrary one is as usable as a
+meaningful one.** For monitoring, the live worry that survives is about *coverage*
+— a monitor that will bind to anything is not thereby telling you what it bound to.
+The worry that does **not** survive is false alarms on nothing, because no
+experiment here has run the condition where nothing was planted. That condition is
+written (`none`) and unrun.
 
 ### Three mistakes that are part of the contribution
 

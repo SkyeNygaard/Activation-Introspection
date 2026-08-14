@@ -2,6 +2,31 @@
 
 Run date: **2026-08-10**
 
+> **CORRECTION, 2026-08-14 — the title of this note overstates what it measured,
+> and so does everything downstream of it (notes 29, 31, 32 and 34 inherit the
+> framing).**
+> The measurements stand; the word "specificity" does not. The random-direction
+> condition injects its arbitrary direction into the four demonstrations *and*
+> into the query, and the correct label follows the query sign
+> ([`run_remap_training.py:493-503`](../scripts/run_remap_training.py)), so those
+> rows are a solvable coding task with a right answer — not trials where nothing
+> was planted. High trained accuracy there means the model can bind a label to an
+> arbitrary demonstrated axis, not that it reports concepts that were absent.
+>
+> The defensible statement is: **training collapses the advantage that
+> concept-derived directions held over arbitrary demonstrated ones.** The
+> statement this note's title implies — that a trained monitor answers "did
+> something move?" and so fires on anything — requires a condition where the
+> query carries no edit and there is no correct label. That condition is written
+> (the `none` arm) and **has never been run**. Read notes 29, 31, 32 and 34 with
+> this correction attached; their numbers are unaffected, their framing is not.
+>
+> One thing this file already had right and the rest of the repository did not:
+> [`results/README.md`](../results/README.md) records that a prompt-only learner
+> scores **0.000** on query-twin pairs. That is the structural null. The "0.25
+> coin-flip null" used in the handoff and the READMEs contradicted a number this
+> repository had already written down.
+
 ## Question
 
 Two questions, asked with one apparatus.

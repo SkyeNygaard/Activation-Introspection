@@ -1,5 +1,15 @@
 # Audit and publication manifest
 
+> **HISTORICAL — DOES NOT CERTIFY THE CURRENT TREE. Marked obsolete 2026-08-14.**
+>
+> This manifest describes the repository as it stood on **2026-08-10** and says so
+> itself: anything added after the audit date is not audited. Everything from
+> notes/29 through notes/37, the runner changes, and the 2026-08-14 correction
+> pass in [`HANDOFF.md`](../HANDOFF.md) §0 postdate it. **Do not present this
+> document to a mentor or reviewer as evidence about the repository's current
+> state.** Either re-run the release audit on the current tree and re-stamp it, or
+> keep it as the historical record it now is.
+
 Audit date: **2026-08-10**
 
 ## Current evidence state

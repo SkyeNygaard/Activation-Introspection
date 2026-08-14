@@ -133,12 +133,16 @@ Training a model to describe its own internals is the intervention the flagship
 project proposes, so I ran it. Two findings survive, and both are narrower than
 what I first wrote down.
 
-**Training makes the model sensitive to smaller nudges, and stops it caring
-whether they mean anything.** At a nudge so small the untrained model is blind —
-exactly 0.500 — trained versions reach 0.79–0.86. But trained versions also
-confidently report **meaningless** directions at 0.91–0.96, where the untrained
-model is at guessing. A monitor trained this way answers *"did something move in
-here?"*, not *"is idea X active?"*
+**Training makes the model sensitive to smaller nudges, and widens what it can use
+as a code.** At a nudge so small the untrained model is blind — exactly 0.500 —
+trained versions reach 0.79–0.86. Trained versions also handle **arbitrary**
+directions at 0.91–0.96, where the untrained model is at guessing. **Corrected
+2026-08-14:** an earlier version of this line said the model "confidently reports
+meaningless directions" and answers *"did something move in here?"* rather than
+*"is idea X active?"*. That overstates it — those arbitrary directions are shown in
+the worked examples before the question is asked, so there is a correct answer and
+the model gives it. The finding is about the range of directions that can carry a
+code, not about false alarms.
 
 **What I withdrew, twice in one day.** I first concluded that training is just a
 worse version of a simple statistical reader. Then I found the reader collapses on

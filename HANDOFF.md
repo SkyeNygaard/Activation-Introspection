@@ -6,6 +6,43 @@ then the notes in order.
 
 ---
 
+## 0. Correction pass, 2026-08-14 — read before quoting anything below
+
+An independent re-analysis of the saved raw rows (done outside this machine, with
+the artifacts but without model weights) found no calculation errors and no hash
+mismatches, but three descriptions in this file and in the application materials
+were wrong. They are corrected in place below. The corrections are:
+
+1. **The `random` arm is not a no-signal arm.** In the codebook and remap tasks
+   the random direction is injected into the four demonstrations *and* the query,
+   and the correct label is set by the query sign — verified in
+   [`run_remap_training.py`](activation-introspection/scripts/run_remap_training.py)
+   lines 493–503, where `none` is the arm that strips the query edit. So high
+   trained accuracy on random directions means **the model can use an arbitrary
+   demonstrated axis as an opaque code**. It does *not* mean the model hallucinated
+   a concept, produced a false positive, or swapped "is concept X active?" for
+   "did something move?". That safety reading is withdrawn.
+2. **The structural null on twin pairs is 0, not 0.25.** Decoding is greedy and
+   twin members are byte-identical with opposite correct labels, so any strategy
+   that ignores the hidden state answers the same way twice and scores exactly
+   **0** on pairs. 0.25 is only the benchmark for two independent fair coins. Text
+   reading "below the coin-flip null" is corrected to name the constant-label
+   floor instead. Note this cuts slightly in the work's favour: 0.083 is *above* a
+   blind deterministic strategy, not below it — it is still a collapse relative to
+   the reader's 0.986, but it is not sub-chance.
+3. **Notes/14 is not evidence of semantic abstraction.** Same-axis success is
+   explained by re-matching an axis already demonstrated. The held-out exemplar
+   test ([23](activation-introspection/notes/23-held-out-semantic-generalization.md))
+   is the abstraction test, and it fails.
+
+Three frozen protocol files (`results/report_training_protocol_v1..v3.json`) state
+a 0.500 twin-pair identity for a prompt-only strategy. **They are superseded on
+that number and must not be treated as clean preregistrations of it.** They are
+left unedited because their SHA-256 hashes are referenced by result manifests;
+the correction lives here instead.
+
+---
+
 ## 1. What this project is
 
 Skye is applying to SPAR (Fall 2026) as an ML engineer moving into empirical AI
@@ -26,6 +63,20 @@ The research question both share:
 complete, not abandoned). Local models ≤3B on an M4 Pro with 24 GB shared memory.
 Everything since 2026-08-12 is inference-only.
 
+**Unresolved as of 2026-08-14 — this needs Skye's decision, not an agent's.**
+[`scripts/run_remap_training.py`](activation-introspection/scripts/run_remap_training.py)
+is an unrun v3 that trains new adapters, adds the `none` no-signal arm, evaluates
+cross-layer transfer, and calls `save_pretrained()` at line 704. That directly
+contradicts "no further LoRA training". **Until this is decided, treat v3 as dead
+code and do not run it.** The two consistent options are: (a) the constraint holds,
+v3 stays unrun, and the remaining work is the write-up; or (b) the constraint is
+lifted for exactly one run, which should be spent on the root question — does
+training produce generalization to a held-out member of a readable category, and
+does it survive a genuine no-signal arm — and not on another prompt variant. Both
+outside reviews of 2026-08-13/14 recommend (b) if any compute is spent at all,
+because the adapters would finally be saved and every later measurement could be
+re-scored without retraining.
+
 ---
 
 ## 2. Where things stand — the one-paragraph version
@@ -43,7 +94,8 @@ exception to the dominance relation — 14 episodes where the model beat the rea
 at weak strength — was a scoring artifact and does not exist. And what looked
 like the model recognising *content* is recognising a *vector it was already
 shown*: move the query exemplar out of the demonstrations and the model drops to
-0.083 on twin pairs, below the 0.25 coin-flip null, while the cheap reader on the
+0.083 on twin pairs — near the constant-label floor, where a strategy that ignores
+the hidden state scores 0 — while the cheap reader on the
 identical states holds at 0.986. Five instruction wordings do not move it. So the
 model is not merely worse than the outside method — on a task requiring
 generalization it is at the floor, using none of information that is provably
@@ -80,7 +132,8 @@ Model vs a four-shot nearest-centroid reader refitted per episode:
 rescored the same saved rows at the protocol's own unit — the twin pair, where a
 cell counts only if both byte-identical members get their opposite labels right —
 and 14 model-only episodes become **1 model-only pair**. At strength 0.15 the
-model scores 1 pair in 144 against a 0.25 null, because in 16 of 24 cells it emits
+model scores 1 pair in 144 — against a structural null of 0 for any hidden-state-blind
+strategy, and 0.25 for two independent fair coins — because in 16 of 24 cells it emits
 one constant label whatever was injected. Row accuracy averages 0.4965, which
 reads as chance and means blind; notes/08 had already recorded that floor. **There
 is no regime where the model is ahead.** Quote the row-level table above only with
@@ -90,7 +143,8 @@ this correction attached.
 ([notes/23](activation-introspection/notes/23-held-out-semantic-generalization.md),
 [notes/24](activation-introspection/notes/24-is-the-held-out-failure-the-interface.md)).
 Give every injection position a different exemplar and hold the query exemplar out
-of the demonstrations. Twin-pair accuracy, null 0.25:
+of the demonstrations. Twin-pair accuracy (structural null 0; 0.25 is the
+independent-coin benchmark only):
 
 | arm | model | reader |
 |---|---:|---:|
@@ -107,16 +161,23 @@ pairs split before the run: **no cell of ten beats the null**, pooled held-out i
 telling the model to attend to its own state cuts constant-labelling from 40% to
 25% and lifts the anchor to 0.875 — which is what makes the null decisive.
 
-**The model reads meaning, not just disturbance**
+**The model discriminates concept-derived axes better than matched random ones —
+DEMOTED 2026-08-14, this is not semantic abstraction**
 ([notes/14](activation-introspection/notes/14-content-versus-disturbance.md)).
 Two different concepts discriminated at 0.899; two random directions at **identical
-separation by construction** at 0.594; 4 of 4 pairs.
+separation by construction** at 0.594; 4 of 4 pairs. The measurement stands. The
+earlier reading — "the model reads meaning, not just disturbance" — does not: every
+axis here was already shown in the demonstrations, so re-matching a demonstrated
+axis explains the result without any abstraction over meaning. The test that does
+ask for abstraction holds the query exemplar out
+([23](activation-introspection/notes/23-held-out-semantic-generalization.md)), and
+the model fails it at 0.014–0.083 while a cheap reader gets 0.972–0.986.
 
 **An elicitation prompt can destroy the readout it was meant to improve**
 ([notes/35](activation-introspection/notes/35-when-the-prompt-contradicts-the-page.md),
 [notes/36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md)).
 Tell the model something was added to its internal state, on a carrier text that
-says nothing changed, and twin-pair accuracy falls below the coin-flip null — on
+says nothing changed, and twin-pair accuracy falls to the constant-label floor — on
 all three denying strings, while six neutral and affirming strings are untouched.
 Interaction **−0.715, CI [−0.812, −0.611]**. The failure is a *confident* collapse
 to one label: constant-labelling 0.104 → 0.826 with mean confidence rising. **The
@@ -153,15 +214,27 @@ as absence of signal. That is a difference of means on a number squashed against
 1.0. Ranked instead, confidence orders correct self-reports above incorrect ones at
 **AUROC 0.675 (base) and 0.891 (trained)** on held-out seeds. **The model does know
 which of its self-reports to distrust** — and `29` also shows that acting on it
-does not help: abstention *narrows* the concept-versus-noise gap in a trained
-reporter while nearly doubling it in an untrained one.
+does not help: abstention *narrows* the gap between concept-derived and matched
+arbitrary directions in a trained reporter while nearly doubling it in an untrained
+one. **Corrected 2026-08-14:** this gap is between two solvable conditions, not
+between signal and noise, so "confidently wrong about a concept that was not there"
+is not what was measured.
 
 **Training** ([notes/07](activation-introspection/notes/07-trained-activation-reporter.md),
 [notes/08](activation-introspection/notes/08-sensitivity-specificity-tradeoff.md)).
 Extends the detection floor to nudges the base model is blind to (0.790–0.863 where
-base is 0.500) and destroys selectivity (random directions 0.513 → 0.913–0.955).
-**The adapters were never saved**, so none of this can be re-scored. That is why
-later notes compare against published numbers.
+base is 0.500), and broadens what the model can bind to: arbitrary directions
+demonstrated in the same episode go from 0.513 to 0.913–0.955. **Corrected
+2026-08-14** — the old wording, "destroys selectivity", read that second number as
+firing on noise. It is not noise: the random axis is shown in the demonstrations
+and has a correct answer, so the honest statement is that **training collapses the
+advantage concept-derived axes held over arbitrary ones**, which is a claim about
+what is bindable, not about false alarms.
+
+**The adapters from these runs were never saved**, so none of it can be re-scored;
+later notes compare against published numbers instead. Note the standing
+constraint in §1 and `run_remap_training.py` now disagree — see §0 and the
+constraint note there.
 
 ---
 
@@ -361,6 +434,17 @@ than deleted, so the ordering that produced the current state stays visible.
 **Do not:** run more LoRA; add concept pairs or layers for robustness before the
 above; run the criterion against a comparator with activation access and read
 anything into it; or quote the clustering gate — it did not replicate.
+
+**Added 2026-08-14 — do not write notes/38 as another prompt-conflict descendant.**
+Two independent outside reviews reached this separately. The chain from `29` to `37`
+has narrowed its own predecessor at every step: `35` found the effect, `36` confined
+it to stance, `37` confined it to one instruction. The one-line experiment `37`
+proposes at its end — adding "the text cannot help you" to `injected` — would narrow
+it again at best. The value left in that neighbourhood is small enough that the next
+step should come from the root, not from this branch. **What to do instead, in
+priority order:** finish the correction pass in §0 across the application materials;
+resolve the LoRA question in §1; then either write the application or spend the one
+run on held-out generalization after training.
 
 ---
 

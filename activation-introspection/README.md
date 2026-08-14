@@ -46,8 +46,9 @@ hashes, and stop rules:
 **That ambiguity is now resolved, and it is the narrow reading.**
 [`notes/23`](notes/23-held-out-semantic-generalization.md) gave every injection
 position a different exemplar and held the query exemplar out of the
-demonstrations. The model falls from 0.521 to 0.083 on twin pairs — below the 0.25
-coin-flip null, at the constant-label floor — while a four-shot nearest-centroid
+demonstrations. The model falls from 0.521 to 0.083 on twin pairs — at the
+constant-label floor, where a strategy blind to the hidden state scores 0 by
+construction — while a four-shot nearest-centroid
 reader on the identical states holds at 0.986. It gains nothing from the
 categories being real (0.083 against 0.076 for arbitrary groupings of the same
 vectors) where the reader gains everything (0.986 against 0.333). The effect is
@@ -59,8 +60,8 @@ That negative is not an artifact of one prompt.
 instruction wordings, development and confirmation pairs split before the run.
 The wording demonstrably works — telling the model to attend to its own internal
 state cuts constant-labelling from 40% to 25% and lifts the anchor to 0.875 — and
-it buys nothing at all on held-out generalization: **no cell of ten beats the 0.25
-coin-flip null**, and pooled held-out is 60/360 = 0.167 against a pooled anchor of
+it buys nothing at all on held-out generalization: **no cell of ten rises clear of
+the constant-label floor**, and pooled held-out is 60/360 = 0.167 against a pooled anchor of
 0.681. This freezes the elicitation-optimized baseline that any training study
 needs: on this task, wording buys zero, so anything training adds is training's.
 
@@ -218,7 +219,7 @@ control that killed it. Catching those is most of the skill.
 
 | Project | Relevance |
 |---|---|
-| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. A matched-visible-observation ICL benchmark in which the visible sentence-content shortcut is impossible by construction, replicated at 0.958 on three out-of-bank concepts; a trained LoRA reporter at 0.927 across four seeds on eight withheld directions against 0.000 untrained ([notes/07](notes/07-trained-activation-reporter.md)); and the trade-off training creates ([notes/08](notes/08-sensitivity-specificity-tradeoff.md)) — it extends the detection floor to edits the untrained model cannot see at all (0.790–0.863 against base 0.500) while destroying semantic selectivity (random directions 0.513 → 0.913–0.955). The earlier replication identifies a depth-dependent readout failure for training to target. |
+| **Introspection Training for Verbalization of Activations** (Belinda Li, Anthropic) | Direct fit. A matched-visible-observation ICL benchmark in which the visible sentence-content shortcut is impossible by construction, replicated at 0.958 on three out-of-bank concepts; a trained LoRA reporter at 0.927 across four seeds on eight withheld directions against 0.000 untrained ([notes/07](notes/07-trained-activation-reporter.md)); and what training changes ([notes/08](notes/08-sensitivity-specificity-tradeoff.md)) — it extends the detection floor to edits the untrained model cannot see at all (0.790–0.863 against base 0.500), and it collapses the advantage that concept-derived axes held over arbitrary demonstrated ones (0.513 → 0.913–0.955), so training broadens *what can be bound* rather than sharpening *what is recognised*. The earlier replication identifies a depth-dependent readout failure for training to target. |
 | **Deploying Programmatic Attention** (Belinda Li, Anthropic) | Two executed negatives. The disjoint head screen ran and stopped — six components qualified where the frozen protocol allowed 2–4, so influence is redundant and there is no compact route to program. An exact `O(TD)` lowering of one released GPT-2 program is 18.63× faster in isolation but 1.089× integrated, missing a preregistered 1.25× and localizing the cost to partial-head projection and dispatch. |
 
 ### What it does not claim

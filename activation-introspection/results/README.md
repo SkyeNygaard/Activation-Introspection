@@ -196,9 +196,13 @@ untrained model is at exactly chance (0.500 row, 0.010 twin pairs — blind). Bo
 adapters, trained only at strength 0.5, read it at 0.790–0.863. At 0.25 the base
 is at 0.526 and the adapters at 0.990–0.997.
 
-**Training destroys semantic selectivity.** Untrained, random magnitude-matched
-directions sit at chance (0.513) while concept directions reach 0.745 — access is
-selective. After training, random directions reach 0.913–0.955.
+**Training collapses the advantage concept-derived directions held.** Untrained,
+random magnitude-matched directions sit at 0.513 while concept directions reach
+0.745. After training, random directions reach 0.913–0.955. **Corrected
+2026-08-14** — this read "training destroys semantic selectivity", which treats the
+random rows as no-signal trials. They are not: the random direction is injected
+into the demonstrations as well as the query and has a correct label, so the
+finding is about what can be bound, not about false alarms.
 
 Two nulls are identities of the design rather than measured controls: a
 prompt-only learner scores 0.000 on query-twin pairs, and a fixed sign-to-token

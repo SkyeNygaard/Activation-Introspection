@@ -73,16 +73,25 @@ three seeds, all gates passing.
 
 Training extends the detection floor: at injection strength 0.15 the untrained
 model is at exactly 0.500 with 0.010 twin-pair accuracy — blind — while adapters
-trained only at 0.5 read it at 0.790–0.863. And training destroys selectivity:
-untrained, magnitude-matched random directions sit at chance (0.513) while concept
-directions reach 0.745, but after training random directions reach 0.913–0.955.
+trained only at 0.5 read it at 0.790–0.863. And training removes the head start
+that meaningful directions had: untrained, magnitude-matched random directions sit
+at 0.513 while concept directions reach 0.745, but after training random directions
+reach 0.913–0.955.
 
-> Introspection training buys sensitivity and pays for it in specificity.
+> Training broadens which directions the model can bind a label to, until
+> concept-derived and arbitrary ones are equally usable.
 
-A monitor trained this way answers "did something move at this site" rather than
-"is concept X active", so any displacement — including an adversarial one with no
-semantic content — yields a positive report. That is a concrete failure mode for
-activation monitoring, and it is the most directly project-relevant result here.
+**Corrected 2026-08-14.** This used to read "training destroys selectivity", and
+described the trained monitor as answering "did something move at this site"
+rather than "is concept X active". That is not what the task measures: in the
+random condition the arbitrary direction is injected into the demonstrations as
+well as the query, and the correct label is set by the query sign, so the model is
+being asked to apply a code it was just shown — and it is right to answer. The
+result is about the *range of directions that can carry a code*, not about false
+alarms on nothing. The genuine no-signal test, in which the query gets no edit at
+all and there is no correct label, exists as the `none` arm in the unrun v3 script
+and **has never been run**. Until it is, this work says nothing about false
+positives.
 It also settles the probe objection: both adapters score 1.000 on mapping-flip
 pairs, where a fixed sign-to-token readout scores 0.000 by construction.
 

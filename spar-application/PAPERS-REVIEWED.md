@@ -59,6 +59,23 @@ these.**
 | [Refusal in Language Models Is Mediated by a Single Direction](https://arxiv.org/abs/2406.11717) (Arditi et al.) | **The method any refusal-ablation experiment here would use.** Must be read before proposing one |
 | [Mechanisms of Introspective Awareness — code](https://github.com/safety-research/introspection-mechanisms) | Their appendices/code are where a matched-magnitude control would hide if one exists |
 
+## Flagged by an outside review, 2026-08-14 — not yet opened
+
+An independent review of this repository named these as directly relevant and
+missing from this ledger. **Nobody here has read any of them.** The "why it might
+matter" column is that reviewer's account, not this repository's reading, and
+must not be cited until someone opens the paper. Two of them bear on whether the
+codebook branch is novel at all, so **read these before writing any novelty claim
+into an application.**
+
+| paper | why it might matter (per the outside review, unverified here) |
+|---|---|
+| [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](https://arxiv.org/abs/2505.13763) (Ji-An et al.) | **Closest named prior art to the codebook-ICL branch.** Models learn to report and control activation directions from demonstration–label pairs, including non-semantic directions, with performance tied to semantic interpretability and explained variance. Cited in [LITERATURE-BOUNDARY.md](LITERATURE-BOUNDARY.md) and [notes/06](../activation-introspection/notes/06-causal-codebook-icl.md) but never given an entry here |
+| [Looking Inward: Language Models Can Learn About Themselves by Introspection](https://arxiv.org/abs/2410.13787) (Binder et al.) | Self-versus-other comparator for behavioural self-prediction; positive on easy tasks, weak out of distribution. Bears directly on what "privileged access" should be asked to mean |
+| [Self-Interpretability: LLMs Can Describe Complex Internal Processes that Drive Their Decisions, and Improve with Training](https://arxiv.org/abs/2505.17120) (Plunkett et al.) | Training improving self-description — the same question as the proposed post-training generalization run |
+| [Privileged Self-Access Matters for Introspection in AI](https://arxiv.org/abs/2508.14802) (Song, Lederman, Hu, Mahowald) | The cost-matched comparator criterion this repository's reader experiments already lean on. **Already cited across CLAIMS/BRIEFS/notes 11, 15, 17 — but never formally logged here**, which is the gap this section records |
+| [Language Models Fail to Introspect About Their Knowledge of Language](https://arxiv.org/abs/2503.07513) (Song, Hu, Mahowald) | Negative comparator evidence; guards against reading good prompted judgements as privileged self-access |
+
 ## Selective prediction — the literature crossed in on 2026-08-12
 
 Searched because [notes/29](../activation-introspection/notes/29-can-abstention-recover-selectivity.md)
