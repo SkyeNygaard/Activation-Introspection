@@ -1,0 +1,118 @@
+{
+  "model": "qwen3-4b",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "inject_layer": 9,
+  "read_layer": 35,
+  "n_blocks": 36,
+  "dev_concepts": [
+    "guitar",
+    "harbor",
+    "lantern",
+    "meadow",
+    "satellite",
+    "teapot",
+    "tunnel",
+    "whale"
+  ],
+  "heldout_concepts": [
+    "ocean",
+    "bread",
+    "volcano",
+    "violin",
+    "spider",
+    "hospital",
+    "desert",
+    "clock"
+  ],
+  "dev_carriers": [
+    "A routine maintenance record is open. Hidden state marker: \u00a7",
+    "A standard archive entry is visible. Hidden state marker: \u00a7",
+    "The inventory log has been retrieved. Hidden state marker: \u00a7"
+  ],
+  "heldout_carriers": [
+    "A scheduling note is displayed. Hidden state marker: \u00a7",
+    "The reference sheet is now open. Hidden state marker: \u00a7",
+    "A summary page has loaded. Hidden state marker: \u00a7"
+  ],
+  "by_strength": [
+    {
+      "strength": 1.0,
+      "heldout": {
+        "auroc": 1.0,
+        "clean_mean": -798.3082885742188,
+        "injected_mean": -33.21397018432617,
+        "n_clean": 3,
+        "n_injected": 72
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.5409620080938077,
+        "first_pc_share": 0.5418761372566223
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 12,
+        "rank_at_0.9": 18,
+        "rank_at_0.95": 21
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 1.0,
+        "injected_vs_clean_auroc_after": 0.5046296119689941,
+        "concept_accuracy_before": 1.0,
+        "concept_accuracy_after": 1.0,
+        "concept_chance": 0.125
+      }
+    },
+    {
+      "strength": 0.5,
+      "heldout": {
+        "auroc": 1.0,
+        "clean_mean": -789.3037109375,
+        "injected_mean": -174.31793212890625,
+        "n_clean": 3,
+        "n_injected": 72
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.6620767606182878,
+        "first_pc_share": 0.6637532711029053
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 7,
+        "rank_at_0.9": 14,
+        "rank_at_0.95": 19
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 1.0,
+        "injected_vs_clean_auroc_after": 0.5879629850387573,
+        "concept_accuracy_before": 1.0,
+        "concept_accuracy_after": 1.0,
+        "concept_chance": 0.125
+      }
+    },
+    {
+      "strength": 0.25,
+      "heldout": {
+        "auroc": 1.0,
+        "clean_mean": -611.0244750976562,
+        "injected_mean": -298.6280822753906,
+        "n_clean": 3,
+        "n_injected": 72
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.532504653398234,
+        "first_pc_share": 0.5356228351593018
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 9,
+        "rank_at_0.9": 16,
+        "rank_at_0.95": 21
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 1.0,
+        "injected_vs_clean_auroc_after": 0.33796295523643494,
+        "concept_accuracy_before": 1.0,
+        "concept_accuracy_after": 1.0,
+        "concept_chance": 0.125
+      }
+    }
+  ],
+  "gate": "notes/38: heldout auroc near 0.5 means stop. identity must stay above chance after ablation for the design to hold"
+}

@@ -36,17 +36,41 @@ CARRIERS = (
     "A scheduling note is displayed. Hidden state marker: §",
     "The reference sheet is now open. Hidden state marker: §",
     "A summary page has loaded. Hidden state marker: §",
+    "The status board has been refreshed. Hidden state marker: §",
+    "A filing index is on screen. Hidden state marker: §",
+    "The daily register is showing. Hidden state marker: §",
+    "A checklist window has opened. Hidden state marker: §",
+    "The ledger view is active. Hidden state marker: §",
+    "A dispatch summary is present. Hidden state marker: §",
 )
 
 #: Clean states are split too. The 0.5B pilot scored held-out concepts against the
 #: *same* clean states used to fit, which is not a held-out comparison on the side
-#: that matters. Carriers 0-2 fit, 3-5 score.
-DEV_CARRIERS = slice(0, 3)
-HELDOUT_CARRIERS = slice(3, 6)
+#: that matters.
+#:
+#: Widened from three per side to six after the first sweep: clean states vary only
+#: by carrier, so three of them made the post-ablation separation a three-point
+#: estimate, and it wandered between 0.338 and 0.588 across strengths when all
+#: three values should have been chance.
+DEV_CARRIERS = slice(0, 6)
+HELDOUT_CARRIERS = slice(6, 12)
 
-#: Declared before the run. Fit on DEV, score on HELDOUT.
-DEV_CONCEPTS = ["guitar", "harbor", "lantern", "meadow"]
-HELDOUT_CONCEPTS = ["satellite", "teapot", "tunnel", "whale"]
+#: Declared before the run. Fit on DEV, score on HELDOUT. Widened from four each
+#: to eight after the first Qwen3-4B run: with four concepts, identity decoding sat
+#: at 1.000 before ablation, so "identity survives the ablation" was a claim made
+#: at the ceiling and a small loss could not have been seen. Eight puts chance at
+#: 0.125 and leaves room to fall.
+DEV_CONCEPTS = ["guitar", "harbor", "lantern", "meadow", "satellite", "teapot", "tunnel", "whale"]
+HELDOUT_CONCEPTS = [
+    "ocean",
+    "bread",
+    "volcano",
+    "violin",
+    "spider",
+    "hospital",
+    "desert",
+    "clock",
+]
 
 ARMS = ("target", "random", "shuffled")
 
@@ -208,12 +232,54 @@ def concept_decodability(injected: Tensor, labels: list[tuple[str, str, int]]) -
     return correct / max(total, 1)
 
 
+def evaluate(
+    model: object,
+    bank: dict[str, ConceptVector],
+    *,
+    inject_layer: int,
+    read_layer: int,
+    strength: float,
+) -> dict[str, object]:
+    """One strength: fit the direction on dev, then run both gates on held-out."""
+    kw = dict(inject_layer=inject_layer, read_layer=read_layer, strength=strength)
+    dev = CARRIERS[DEV_CARRIERS]
+    out = CARRIERS[HELDOUT_CARRIERS]
+    dev_clean, dev_injected, _ = collect(model, bank, DEV_CONCEPTS, dev, **kw)  # type: ignore[arg-type]
+    out_clean, out_injected, out_labels = collect(  # type: ignore[arg-type]
+        model, bank, HELDOUT_CONCEPTS, out, **kw
+    )
+
+    direction = dev_injected.mean(0) - dev_clean.mean(0)
+
+    # Removing the shared direction should destroy the ability to tell injected
+    # from clean, while leaving *which* concept was injected intact. If both
+    # survive, the direction is not carrying the disturbance. If both die, the
+    # disturbance and the identity are not separable and the design is void.
+    abl = [project_out(t, direction) for t in (dev_clean, dev_injected, out_clean, out_injected)]
+
+    return {
+        "strength": strength,
+        "heldout": separation(direction, out_clean, out_injected),
+        "displacement_share_heldout": displacement_share(out_clean, out_injected),
+        "spectrum_heldout": spectrum(out_clean, out_injected, (0.8, 0.9, 0.95)),
+        "ablation": {
+            "injected_vs_clean_auroc_before": separation(direction, out_clean, out_injected)[
+                "auroc"
+            ],
+            "injected_vs_clean_auroc_after": refit_separation(abl[0], abl[1], abl[2], abl[3]),
+            "concept_accuracy_before": concept_decodability(out_injected, out_labels),
+            "concept_accuracy_after": concept_decodability(abl[3], out_labels),
+            "concept_chance": 1.0 / len(HELDOUT_CONCEPTS),
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", default="qwen-0.5b")
     parser.add_argument("--inject-layer", type=int, required=True)
     parser.add_argument("--read-layer", type=int, default=-1, help="-1 = final block")
-    parser.add_argument("--strength", type=float, default=1.0)
+    parser.add_argument("--strengths", default="1.0", help="comma-separated")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
 
@@ -225,58 +291,31 @@ def main() -> None:
     read_layer = args.read_layer if args.read_layer >= 0 else len(model.blocks) - 1
     bank = build_bank(model, args.inject_layer, DEV_CONCEPTS + HELDOUT_CONCEPTS)
 
-    kw = dict(inject_layer=args.inject_layer, read_layer=read_layer, strength=args.strength)
-    dev = CARRIERS[DEV_CARRIERS]
-    out = CARRIERS[HELDOUT_CARRIERS]
-    dev_clean, dev_injected, _ = collect(model, bank, DEV_CONCEPTS, dev, **kw)  # type: ignore[arg-type]
-    out_clean, out_injected, out_labels = collect(  # type: ignore[arg-type]
-        model, bank, HELDOUT_CONCEPTS, out, **kw
-    )
-
-    direction = dev_injected.mean(0) - dev_clean.mean(0)
-
-    # The real gate. Removing the shared direction should destroy the ability to
-    # tell injected from clean, while leaving *which* concept was injected intact.
-    # If both survive, the direction is not carrying the disturbance. If both die,
-    # the disturbance and the identity are not separable and the design is void.
-    abl_clean = project_out(out_clean, direction)
-    abl_injected = project_out(out_injected, direction)
-    abl_dev_clean = project_out(dev_clean, direction)
-    abl_dev_injected = project_out(dev_injected, direction)
+    by_strength = []
+    for s in [float(x) for x in args.strengths.split(",")]:
+        print(f"  strength {s}", flush=True)
+        by_strength.append(
+            evaluate(model, bank, inject_layer=args.inject_layer, read_layer=read_layer, strength=s)
+        )
 
     result = {
         "model": args.model,
         "model_revision": loaded_revision(model),
         "inject_layer": args.inject_layer,
         "read_layer": read_layer,
-        "strength": args.strength,
         "n_blocks": len(model.blocks),
         "dev_concepts": DEV_CONCEPTS,
         "heldout_concepts": HELDOUT_CONCEPTS,
-        "dev_carriers": list(dev),
-        "heldout_carriers": list(out),
-        "fit": separation(direction, dev_clean, dev_injected),
-        "heldout": separation(direction, out_clean, out_injected),
-        "displacement_share_heldout": displacement_share(out_clean, out_injected),
-        "spectrum_heldout": spectrum(out_clean, out_injected, (0.8, 0.9, 0.95)),
-        "ablation": {
-            "injected_vs_clean_auroc_before": separation(direction, out_clean, out_injected)[
-                "auroc"
-            ],
-            "injected_vs_clean_auroc_after": refit_separation(
-                abl_dev_clean, abl_dev_injected, abl_clean, abl_injected
-            ),
-            "concept_accuracy_before": concept_decodability(out_injected, out_labels),
-            "concept_accuracy_after": concept_decodability(abl_injected, out_labels),
-            "concept_chance": 1.0 / len(HELDOUT_CONCEPTS),
-        },
+        "dev_carriers": list(CARRIERS[DEV_CARRIERS]),
+        "heldout_carriers": list(CARRIERS[HELDOUT_CARRIERS]),
+        "by_strength": by_strength,
         "gate": (
             "notes/38: heldout auroc near 0.5 means stop. "
-            "low mean_share bounds every downstream ablation result"
+            "identity must stay above chance after ablation for the design to hold"
         ),
     }
     args.out.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps(result, indent=2), flush=True)
+    print(json.dumps(result, indent=2)[:400], flush=True)
 
 
 def _self_check() -> None:

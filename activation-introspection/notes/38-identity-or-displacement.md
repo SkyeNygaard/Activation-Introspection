@@ -186,11 +186,46 @@ dimensions are almost always linearly separable, so it measured the dimensionali
 rather than any signal. Refitting on development states and scoring held-out ones
 gives 0.500. **The design was nearly abandoned on the strength of the artifact.**
 
-**Limits, stated plainly.** One model, one layer, one strength, eight concepts,
-three carriers per split, three clean states per split. And identity was at
-ceiling *before* ablation, so "identity survives" is only as strong as a ceiling
-test allows — a small loss could not have been seen. A harder identity test, with
-more concepts or weaker injections, is the right check before leaning on it.
+**Limits, stated plainly.** One model, one layer, one strength, four concepts,
+three carriers per split. And identity was at ceiling *before* ablation, so
+"identity survives" was only as strong as a ceiling test allows. Both weaknesses
+are addressed below.
+
+## Strength sweep, Qwen3-4B, 2026-08-14 — the claim holds off the ceiling
+
+`results/displacement_weak_qwen3_4b.json`. Eight held-out concepts (chance 0.125),
+six held-out carriers, four injection strengths spanning a twenty-fold range. The
+direction is refitted on development states at each strength.
+
+| strength | tell injected from clean | | tell which concept | |
+|---|---:|---:|---:|---:|
+| | before | after | before | after |
+| 1.0 | 1.000 | 0.593 | 1.000 | 1.000 |
+| 0.25 | 1.000 | 0.549 | 1.000 | 1.000 |
+| 0.1 | 0.986 | 0.503 | 1.000 | 1.000 |
+| **0.05** | **0.902** | **0.514** | **0.979** | **0.979** |
+
+**The bottom row is the one that carries the claim.** At strength 0.05 identity
+sits at 0.979 rather than 1.000, so it finally has room to fall — and it does not
+move at all. Meanwhile detecting that anything happened falls from 0.902 to 0.514.
+The two properties come apart cleanly at a strength where neither is free.
+
+**The removal is not quite total at large edits.** After ablation the separation
+sits at 0.593 at strength 1.0 and 0.549 at 0.25, against 0.503 and 0.514 at the
+weak end. So a little of "something happened" survives a rank-1 projection when the
+edit is large. Worth saying rather than rounding to chance.
+
+**Two earlier weaknesses, and what fixed them.** With three carriers per split the
+post-ablation number rested on three clean states and wandered between 0.338 and
+0.588 across strengths when every value should have been chance; six carriers
+brings the spread to 0.503–0.593. And widening from four concepts to eight did
+*not* break the identity ceiling — only dropping the strength to 0.05 did. Two
+attempts, and it was the second that worked.
+
+**What still stands.** One model, one layer, one readout position. Identity is
+measured by leave-one-carrier-out nearest centroid, which is a cheap reader and
+not the model's own report. And no reporter has been trained with this projection
+yet — everything here is about the states, not about what a model says.
 
 **The spectrum, for completeness.** Reaching 80% of the delta energy takes 7
 components, 90% takes 9, 95% takes 11. It does **not** set the ablation rank: those

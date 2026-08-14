@@ -51,10 +51,33 @@ almost always separable, so it measured dimensionality rather than signal. The
 held-out refit gives 0.500. Recorded because the design was nearly abandoned on
 the artifact.
 
-**Not a claim about introspection.** No reporter has been ablated yet, and the
-0.5B-versus-4B comparison confounds size with model generation (Qwen2.5 against
-Qwen3). Identity was at ceiling before ablation, so a small loss could not have
-been detected. One layer, one strength, three clean states per split.
+`displacement_sweep_qwen3_4b.json` and `displacement_weak_qwen3_4b.json` widen it
+to eight held-out concepts (chance 0.125), six held-out carriers and four injection
+strengths. **Cite the `_weak_` file** — the `_sweep_` one used three carriers per
+split, which made the post-ablation score a three-point estimate that wandered
+between 0.338 and 0.588 when every value should have been chance.
+
+| strength | injected vs clean, before → after | which concept, before → after |
+|---|---|---|
+| 1.0 | 1.000 → 0.593 | 1.000 → 1.000 |
+| 0.25 | 1.000 → 0.549 | 1.000 → 1.000 |
+| 0.1 | 0.986 → 0.503 | 1.000 → 1.000 |
+| 0.05 | 0.902 → 0.514 | 0.979 → 0.979 |
+
+**The 0.05 row is the one to quote.** Identity is at 0.979 there rather than at
+the ceiling, so it had room to fall and did not move, while detection of any
+disturbance fell from 0.902 to 0.514. Widening the concept set from four to eight
+did not break the ceiling; only weakening the injection did.
+
+The removal is not total at large edits — 0.593 at strength 1.0 against 0.503 at
+0.1 — so a rank-1 projection leaves a little of the disturbance behind when the
+edit is big.
+
+**Not a claim about introspection.** No reporter has been trained with this
+projection yet; these are properties of the states, not of anything a model says.
+Identity is measured by a leave-one-carrier-out nearest-centroid reader, not by the
+model. One layer, one readout position. The 0.5B-versus-4B share comparison
+confounds size with model generation (Qwen2.5 against Qwen3).
 
 `displacement_direction_pilot_qwen05b.json` is the first pilot and is
 **superseded**: it scored held-out concepts against the same two clean states used

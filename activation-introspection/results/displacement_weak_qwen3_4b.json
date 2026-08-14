@@ -1,0 +1,150 @@
+{
+  "model": "qwen3-4b",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "inject_layer": 9,
+  "read_layer": 35,
+  "n_blocks": 36,
+  "dev_concepts": [
+    "guitar",
+    "harbor",
+    "lantern",
+    "meadow",
+    "satellite",
+    "teapot",
+    "tunnel",
+    "whale"
+  ],
+  "heldout_concepts": [
+    "ocean",
+    "bread",
+    "volcano",
+    "violin",
+    "spider",
+    "hospital",
+    "desert",
+    "clock"
+  ],
+  "dev_carriers": [
+    "A routine maintenance record is open. Hidden state marker: \u00a7",
+    "A standard archive entry is visible. Hidden state marker: \u00a7",
+    "The inventory log has been retrieved. Hidden state marker: \u00a7",
+    "A scheduling note is displayed. Hidden state marker: \u00a7",
+    "The reference sheet is now open. Hidden state marker: \u00a7",
+    "A summary page has loaded. Hidden state marker: \u00a7"
+  ],
+  "heldout_carriers": [
+    "The status board has been refreshed. Hidden state marker: \u00a7",
+    "A filing index is on screen. Hidden state marker: \u00a7",
+    "The daily register is showing. Hidden state marker: \u00a7",
+    "A checklist window has opened. Hidden state marker: \u00a7",
+    "The ledger view is active. Hidden state marker: \u00a7",
+    "A dispatch summary is present. Hidden state marker: \u00a7"
+  ],
+  "by_strength": [
+    {
+      "strength": 1.0,
+      "heldout": {
+        "auroc": 1.0,
+        "clean_mean": -776.9541015625,
+        "injected_mean": -33.2948112487793,
+        "n_clean": 6,
+        "n_injected": 144
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.5268976238201796,
+        "first_pc_share": 0.5278963446617126
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 12,
+        "rank_at_0.9": 18,
+        "rank_at_0.95": 21
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 1.0,
+        "injected_vs_clean_auroc_after": 0.5925925970077515,
+        "concept_accuracy_before": 1.0,
+        "concept_accuracy_after": 1.0,
+        "concept_chance": 0.125
+      }
+    },
+    {
+      "strength": 0.25,
+      "heldout": {
+        "auroc": 1.0,
+        "clean_mean": -660.1365966796875,
+        "injected_mean": -347.4792175292969,
+        "n_clean": 6,
+        "n_injected": 144
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.5030706203581399,
+        "first_pc_share": 0.5073897242546082
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 10,
+        "rank_at_0.9": 16,
+        "rank_at_0.95": 21
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 1.0,
+        "injected_vs_clean_auroc_after": 0.5486111044883728,
+        "concept_accuracy_before": 1.0,
+        "concept_accuracy_after": 1.0,
+        "concept_chance": 0.125
+      }
+    },
+    {
+      "strength": 0.1,
+      "heldout": {
+        "auroc": 0.9861111044883728,
+        "clean_mean": -511.4902648925781,
+        "injected_mean": -331.4181213378906,
+        "n_clean": 6,
+        "n_injected": 144
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.3810853527996457,
+        "first_pc_share": 0.41345980763435364
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 10,
+        "rank_at_0.9": 19,
+        "rank_at_0.95": 32
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 0.9861111044883728,
+        "injected_vs_clean_auroc_after": 0.5034722089767456,
+        "concept_accuracy_before": 1.0,
+        "concept_accuracy_after": 1.0,
+        "concept_chance": 0.125
+      }
+    },
+    {
+      "strength": 0.05,
+      "heldout": {
+        "auroc": 0.9016203880310059,
+        "clean_mean": 89.5859603881836,
+        "injected_mean": 149.02162170410156,
+        "n_clean": 6,
+        "n_injected": 144
+      },
+      "displacement_share_heldout": {
+        "mean_share": 0.19277302974901073,
+        "first_pc_share": 0.22080273926258087
+      },
+      "spectrum_heldout": {
+        "rank_at_0.8": 11,
+        "rank_at_0.9": 19,
+        "rank_at_0.95": 32
+      },
+      "ablation": {
+        "injected_vs_clean_auroc_before": 0.9016203880310059,
+        "injected_vs_clean_auroc_after": 0.5138888955116272,
+        "concept_accuracy_before": 0.9791666666666666,
+        "concept_accuracy_after": 0.9791666666666666,
+        "concept_chance": 0.125
+      }
+    }
+  ],
+  "gate": "notes/38: heldout auroc near 0.5 means stop. identity must stay above chance after ablation for the design to hold"
+}
