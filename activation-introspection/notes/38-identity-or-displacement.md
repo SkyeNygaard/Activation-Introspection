@@ -270,6 +270,31 @@ and must not be quoted side by side** as though they were one result.
 GiB. `INTROSPECT_PREFLIGHT_SLACK_GIB=4` was authorised for this and lets it start
 a few GiB short; the message still reports the true gap.
 
+### v1, 2026-08-14 — a null, and not an interpretable one
+
+`results/ablated_reporter_qwen3b_v1.json`.
+
+| arm | held-out | chance | final loss |
+|---|---:|---:|---:|
+| plain | 0.125 | 0.125 | 2.156 |
+| ablated | 0.125 | 0.125 | 2.299 |
+
+**Both arms failed to train.** Loss for a uniform guess over eight options is
+ln(8) = 2.079, and both finished *above* it. The equality between the arms carries
+no information: two adapters that learned nothing cannot be compared, and this is
+exactly the both-at-chance case declared above.
+
+**The cause was budget, and it was my under-resourcing, not a property of the
+task.** 48 examples for 2 epochs is 96 steps, against a reference recipe that uses
+6 epochs at lr 1e-4 and reaches 0.927. Recorded rather than deleted because the
+declared reading fired as written, which is the only reason the null is legible at
+all.
+
+**v2 matches the reference budget:** 16 training seeds, 6 epochs, lr 1e-4 —
+768 steps per arm. `n_steps` and `uniform_loss` are now written into the artifact
+so an undertrained run is visible from the file alone instead of requiring
+someone to remember ln(8).
+
 **The spectrum, for completeness.** Reaching 80% of the delta energy takes 7
 components, 90% takes 9, 95% takes 11. It does **not** set the ablation rank: those
 components span concept identity too, so removing them would take the signal the

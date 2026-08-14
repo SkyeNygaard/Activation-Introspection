@@ -25,6 +25,7 @@ import argparse
 import gc
 import importlib.util
 import json
+import math
 from pathlib import Path
 from typing import Any, cast
 
@@ -43,7 +44,11 @@ MODEL_REPOS = {"qwen3-4b": "Qwen/Qwen3-4B-Instruct-2507"}
 
 #: Disjoint from the evaluation seeds, so the adapter is scored on prompt
 #: paraphrases it never trained on as well as on concepts it never saw.
-TRAIN_SEEDS = tuple(range(0, 6))
+#: Widened after the first run trained on 48 examples for 2 epochs -- 96 steps --
+#: and both arms finished ABOVE ln(8)=2.079, i.e. worse than a uniform guess. The
+#: reference recipe that reaches 0.927 uses 6 epochs at lr 1e-4; this now matches
+#: that budget rather than undercutting it.
+TRAIN_SEEDS = tuple(range(0, 16))
 EVAL_SEEDS = tuple(range(100, 106))
 
 
@@ -97,6 +102,7 @@ def run_arm(
     read_layer: int,
     strength: float,
     epochs: int,
+    lr: float,
     train_concepts: list[str],
     eval_concepts: list[str],
 ) -> dict[str, object]:
@@ -126,7 +132,7 @@ def run_arm(
 
     # Outer hook: present on every forward pass in both training and evaluation.
     with intervene(model, extra):
-        losses = ift.train(model, examples, digits, epochs=epochs, seed=0)
+        losses = ift.train(model, examples, digits, epochs=epochs, lr=lr, seed=0)
         correct = ift.evaluate_layer(model, eval_bank, inject_layer, strength, seeds=EVAL_SEEDS)
 
     _free(model)
@@ -134,6 +140,8 @@ def run_arm(
         "ablated": ablate,
         "n_train_examples": len(examples),
         "final_loss": sum(losses[-20:]) / max(len(losses[-20:]), 1),
+        "uniform_loss": math.log(len(eval_bank)),
+        "n_steps": len(losses),
         "heldout_accuracy": sum(correct) / len(correct),
         "n_eval": len(correct),
         "chance": 1.0 / len(eval_bank),
@@ -146,7 +154,8 @@ def main() -> None:
     p.add_argument("--inject-layer", type=int, default=9)
     p.add_argument("--read-layer", type=int, default=-1)
     p.add_argument("--strength", type=float, default=1.0)
-    p.add_argument("--epochs", type=int, default=2)
+    p.add_argument("--epochs", type=int, default=6)
+    p.add_argument("--lr", type=float, default=1e-4)
     p.add_argument("--out", type=Path, required=True)
     args = p.parse_args()
 
@@ -174,6 +183,7 @@ def main() -> None:
         read_layer=read_layer,
         strength=args.strength,
         epochs=args.epochs,
+        lr=args.lr,
         train_concepts=train_concepts,
         eval_concepts=eval_concepts,
     )
@@ -190,6 +200,7 @@ def main() -> None:
         "read_layer": read_layer,
         "strength": args.strength,
         "epochs": args.epochs,
+        "lr": args.lr,
         "train_concepts": train_concepts,
         "eval_concepts": eval_concepts,
         "train_seeds": list(TRAIN_SEEDS),
