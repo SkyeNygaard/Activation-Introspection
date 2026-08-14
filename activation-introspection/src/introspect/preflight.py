@@ -11,6 +11,16 @@ Two checks:
   3B job launched alongside a running 4B job was killed by the OS mid-load.
   Resident set size does not reveal this, because unified-memory weights are not
   counted in RSS, so the check looks for sibling runner processes by name.
+
+  **Narrowed 2026-08-14, by decision.** A runner that names a remote provider
+  sends its work to an API and never puts weights on this GPU, so refusing to
+  start alongside one protected nothing and blocked real work. Those are now
+  allowed to run in parallel. Two *local* jobs are still refused — that is the
+  case that actually killed a run here, and it is unchanged.
+
+  The test is positive: a process is cleared only when its command line says it
+  is remote. A runner with no provider flag is still treated as a GPU
+  competitor, because being wrong in that direction costs a restart.
 * **Not enough memory is free.** Peak driver memory on this machine fits
   ``1.10 + 1.88 * params_B`` GiB (R²=1.0000, measured at bf16 with a KV cache).
   Training adds optimizer state on top, so the requirement is scaled.
@@ -56,6 +66,11 @@ _HEADROOM_GIB = 2.0
 #: no leading slash, so anchoring on one silently missed it.
 _RUNNER_RE = re.compile(r"(?:^|[\s/])(run_[a-z0-9_]+\.py)(?:\s|$)")
 
+#: A runner that names a remote provider does its inference over an API and puts
+#: nothing on this GPU, so it is not a competitor. Matched positively and only on
+#: an explicit flag: a runner that says nothing about a provider is assumed local.
+_REMOTE_PROVIDER_RE = re.compile(r"--provider[=\s]+(codex|claude|anthropic|openai)\b")
+
 
 def available_gib() -> float:
     """Memory macOS could hand out now: free, inactive and purgeable pages.
@@ -95,6 +110,8 @@ def _competing_runs(out: str, mine: int) -> list[tuple[int, str]]:
             continue
         match = _RUNNER_RE.search(command)
         if match and "preflight" not in command:
+            if _REMOTE_PROVIDER_RE.search(command):
+                continue
             found.append((pid, match.group(1)))
     return found
 

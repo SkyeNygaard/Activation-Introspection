@@ -52,6 +52,28 @@ def test_competing_runs_excludes_uv_parent_but_keeps_sibling() -> None:
     assert _competing_runs(output, mine=20) == [(30, "run_report_training.py")]
 
 
+def test_remote_provider_runs_are_not_gpu_competitors() -> None:
+    """A Codex-provider run sends its work to an API and holds no GPU memory.
+
+    Both are runners by name. Only the local one competes for MPS.
+    """
+    output = "\n".join(
+        [
+            "10 1 python run_scaled.py --provider codex --model gpt-5.6-luna --workers 4",
+            "20 1 python scripts/run_report_training.py --seed 0",
+        ]
+    )
+
+    assert _competing_runs(output, mine=99) == [(20, "run_report_training.py")]
+
+
+def test_runner_without_a_provider_flag_is_still_a_competitor() -> None:
+    """The clearance is positive: silence about the provider means local."""
+    output = "10 1 python run_scaled.py --model qwen-3b --workers 4"
+
+    assert _competing_runs(output, mine=99) == [(10, "run_scaled.py")]
+
+
 def test_training_requires_more_than_inference() -> None:
     assert required_gib("qwen-3b", training=True) > required_gib("qwen-3b", training=False)
     assert required_gib("qwen-0.5b", training=True) < required_gib("qwen-3b", training=True)
