@@ -1,0 +1,36 @@
+{
+  "model": "qwen-0.5b",
+  "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "inject_layer": 6,
+  "read_layer": 23,
+  "strength": 1.0,
+  "n_blocks": 24,
+  "dev_concepts": [
+    "guitar",
+    "harbor",
+    "lantern",
+    "meadow"
+  ],
+  "heldout_concepts": [
+    "satellite",
+    "teapot",
+    "tunnel",
+    "whale"
+  ],
+  "fit": {
+    "auroc": 1.0,
+    "clean_mean": -49.6789436340332,
+    "injected_mean": 35.164398193359375,
+    "n_clean": 2,
+    "n_injected": 24
+  },
+  "heldout": {
+    "auroc": 1.0,
+    "clean_mean": -49.6789436340332,
+    "injected_mean": 2.1272032260894775,
+    "n_clean": 2,
+    "n_injected": 24
+  },
+  "rank_one_share_heldout": 0.22298304736614227,
+  "gate": "see notes/38: heldout auroc near 0.5 means stop"
+}
