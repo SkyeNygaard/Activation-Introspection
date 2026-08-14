@@ -31,9 +31,30 @@ would have left roughly four fifths of the effect in place and "the reports
 survived" would have meant nothing; at 0.546 it means something. That is why the
 0.5B pilot was worth running before any training compute was spent.
 
+`displacement_ablation_qwen3_4b.json` answers what the share could not: whether
+removing that direction takes the disturbance with it and leaves identity behind.
+Both scored on held-out concepts and held-out carriers, with the post-ablation
+direction refitted on development states rather than the rows it scores.
+
+| held-out test | before | after |
+|---|---:|---:|
+| tell injected from clean (AUROC) | 1.000 | **0.500** |
+| tell which concept (chance 0.25) | 1.000 | **1.000** |
+
+**Chance on one, untouched on the other.** At this readout the fact of an
+injection and the identity of what was injected are linearly separable: one
+direction carries all of the first and none of the second.
+
+An earlier version of that table read 1.000 after ablation, because the refit was
+fitted and scored on the same 39 states — and 39 points in 2560 dimensions are
+almost always separable, so it measured dimensionality rather than signal. The
+held-out refit gives 0.500. Recorded because the design was nearly abandoned on
+the artifact.
+
 **Not a claim about introspection.** No reporter has been ablated yet, and the
 0.5B-versus-4B comparison confounds size with model generation (Qwen2.5 against
-Qwen3). Two runs, one layer, one strength.
+Qwen3). Identity was at ceiling before ablation, so a small loss could not have
+been detected. One layer, one strength, three clean states per split.
 
 `displacement_direction_pilot_qwen05b.json` is the first pilot and is
 **superseded**: it scored held-out concepts against the same two clean states used

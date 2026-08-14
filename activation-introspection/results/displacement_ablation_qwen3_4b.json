@@ -1,0 +1,61 @@
+{
+  "model": "qwen3-4b",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "inject_layer": 9,
+  "read_layer": 35,
+  "strength": 1.0,
+  "n_blocks": 36,
+  "dev_concepts": [
+    "guitar",
+    "harbor",
+    "lantern",
+    "meadow"
+  ],
+  "heldout_concepts": [
+    "satellite",
+    "teapot",
+    "tunnel",
+    "whale"
+  ],
+  "dev_carriers": [
+    "A routine maintenance record is open. Hidden state marker: \u00a7",
+    "A standard archive entry is visible. Hidden state marker: \u00a7",
+    "The inventory log has been retrieved. Hidden state marker: \u00a7"
+  ],
+  "heldout_carriers": [
+    "A scheduling note is displayed. Hidden state marker: \u00a7",
+    "The reference sheet is now open. Hidden state marker: \u00a7",
+    "A summary page has loaded. Hidden state marker: \u00a7"
+  ],
+  "fit": {
+    "auroc": 1.0,
+    "clean_mean": -754.2758178710938,
+    "injected_mean": 42.274627685546875,
+    "n_clean": 3,
+    "n_injected": 36
+  },
+  "heldout": {
+    "auroc": 1.0,
+    "clean_mean": -790.6008911132812,
+    "injected_mean": -57.1165771484375,
+    "n_clean": 3,
+    "n_injected": 36
+  },
+  "displacement_share_heldout": {
+    "mean_share": 0.5460803880074616,
+    "first_pc_share": 0.5468092560768127
+  },
+  "spectrum_heldout": {
+    "rank_at_0.8": 7,
+    "rank_at_0.9": 9,
+    "rank_at_0.95": 11
+  },
+  "ablation": {
+    "injected_vs_clean_auroc_before": 1.0,
+    "injected_vs_clean_auroc_after": 0.5,
+    "concept_accuracy_before": 1.0,
+    "concept_accuracy_after": 1.0,
+    "concept_chance": 0.25
+  },
+  "gate": "notes/38: heldout auroc near 0.5 means stop. low mean_share bounds every downstream ablation result"
+}

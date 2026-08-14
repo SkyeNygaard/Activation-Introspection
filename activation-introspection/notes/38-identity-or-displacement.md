@@ -150,11 +150,53 @@ Qwen2.5 and 4B is Qwen3, so size and model generation moved together and this
 says nothing about which caused the change. Worth one Qwen2.5-3B run to separate
 them, but that is a curiosity, not on the critical path.
 
-**What is still needed to set the ablation rank.** The share tells us how much a
-rank-1 ablation removes; it does not say how many components reach a chosen
-threshold. The script does not currently record the spectrum. Add cumulative
-energy by component, declare the target fraction before the run, and read the
-rank off it. That is the next step, and it is minutes of inference.
+## The ablation gate, Qwen3-4B, 2026-08-14 — it separates cleanly
+
+`results/displacement_ablation_qwen3_4b.json`. The question the share could not
+answer: does removing the shared direction actually take the disturbance with it,
+and does concept identity survive?
+
+Both tested on held-out concepts and held-out carriers. The separation score after
+ablation refits its direction on **development** states and scores held-out ones —
+see the correction below for why that matters.
+
+| held-out test | before | after ablating the shared direction |
+|---|---:|---:|
+| tell injected from clean (AUROC) | 1.000 | **0.500** |
+| tell *which* concept (chance 0.25) | 1.000 | **1.000** |
+
+**Exactly chance on one, untouched on the other.** One direction carries all of
+"something was injected" and none of "which concept it was". Removing it leaves a
+state that still says *guitar* but no longer says *disturbed*.
+
+That is the manipulation this design needs, and it now exists. An adapter trained
+with this projection applied has full access to concept identity and no access to
+the fact of injection.
+
+It is also a result in its own right, independent of introspection:
+
+> At the readout of Qwen3-4B, the fact that an activation was injected and the
+> identity of what was injected are linearly separable — a single direction
+> carries all of the first and none of the second.
+
+**A correction that changed the answer.** The first version of this test refitted
+its direction on the same 39 states it scored, and reported 1.000 after ablation —
+i.e. that the disturbance survived. That number was an artifact: 39 points in 2560
+dimensions are almost always linearly separable, so it measured the dimensionality
+rather than any signal. Refitting on development states and scoring held-out ones
+gives 0.500. **The design was nearly abandoned on the strength of the artifact.**
+
+**Limits, stated plainly.** One model, one layer, one strength, eight concepts,
+three carriers per split, three clean states per split. And identity was at
+ceiling *before* ablation, so "identity survives" is only as strong as a ceiling
+test allows — a small loss could not have been seen. A harder identity test, with
+more concepts or weaker injections, is the right check before leaning on it.
+
+**The spectrum, for completeness.** Reaching 80% of the delta energy takes 7
+components, 90% takes 9, 95% takes 11. It does **not** set the ablation rank: those
+components span concept identity too, so removing them would take the signal the
+design needs to keep. The mean direction is the shared part by construction, and
+the table above shows rank-1 is sufficient.
 
 ## Known weakness, stated now rather than found later
 

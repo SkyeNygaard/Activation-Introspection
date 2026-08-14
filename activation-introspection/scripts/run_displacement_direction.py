@@ -80,13 +80,14 @@ def collect(
     read_layer: int,
     strength: float,
 ) -> tuple[Tensor, Tensor]:
-    """Return (clean, injected) final states over ``carriers``."""
+    """Return (clean, injected, labels) over ``carriers``. Labels are (concept, arm, carrier)."""
     clean = [_final_state(model, c, read_layer, []) for c in carriers]
     injected = []
+    labels: list[tuple[str, str, int]] = []
     for concept in concepts:
         dirs = _directions(bank, concept)
         for arm in ARMS:
-            for carrier in carriers:
+            for ci, carrier in enumerate(carriers):
                 iv = Intervention(
                     layer=inject_layer,
                     direction=dirs[arm].vector,
@@ -95,7 +96,8 @@ def collect(
                     label=f"{concept}/{arm}",
                 )
                 injected.append(_final_state(model, carrier, read_layer, [iv]))
-    return torch.stack(clean), torch.stack(injected)
+                labels.append((concept, arm, ci))
+    return torch.stack(clean), torch.stack(injected), labels
 
 
 def separation(direction: Tensor, clean: Tensor, injected: Tensor) -> dict[str, float]:
@@ -147,6 +149,65 @@ def displacement_share(clean: Tensor, injected: Tensor) -> dict[str, float]:
     }
 
 
+def refit_separation(
+    dev_clean: Tensor, dev_injected: Tensor, out_clean: Tensor, out_injected: Tensor
+) -> float:
+    """Refit a direction on development states, score on held-out ones.
+
+    Fitting and scoring on the same rows is worthless here: with a few dozen
+    points in a couple of thousand dimensions almost any two groups are linearly
+    separable, so a perfect score would measure the dimensionality, not the
+    signal. The refit must be held out on both sides to mean anything.
+    """
+    refit = dev_injected.mean(0) - dev_clean.mean(0)
+    return separation(refit, out_clean, out_injected)["auroc"]
+
+
+def project_out(states: Tensor, direction: Tensor) -> Tensor:
+    """Remove the component along ``direction``. Same operation Intervention.ablate does."""
+    unit = direction / (direction.norm() + 1e-8)
+    return states - (states @ unit).unsqueeze(-1) * unit
+
+
+def spectrum(clean: Tensor, injected: Tensor, thresholds: tuple[float, ...]) -> dict[str, float]:
+    """Components needed to reach each fraction of the injected-minus-clean energy.
+
+    Reported for completeness, but note it does *not* set the ablation rank: the
+    leading components span the concept-identity variation as well as the shared
+    disturbance, so ablating them would remove the signal the experiment needs to
+    keep. The mean direction is the shared part by construction.
+    """
+    deltas = injected - clean.mean(0, keepdim=True)
+    sv = torch.linalg.svdvals(deltas)
+    energy = sv**2
+    cum = torch.cumsum(energy, 0) / energy.sum()
+    return {f"rank_at_{t}": int((cum < t).sum().item()) + 1 for t in thresholds}
+
+
+def concept_decodability(injected: Tensor, labels: list[tuple[str, str, int]]) -> float:
+    """Leave-one-carrier-out nearest-centroid accuracy on the target arm.
+
+    Does the state still say *which* concept was injected? Chance is 1/n_concepts.
+    Uses only the target arm: random and shuffled directions carry no concept.
+    """
+    rows = [(i, c, ci) for i, (c, arm, ci) in enumerate(labels) if arm == "target"]
+    concepts = sorted({c for _, c, _ in rows})
+    carriers = sorted({ci for _, _, ci in rows})
+    correct = total = 0
+    for held in carriers:
+        train = [(i, c) for i, c, ci in rows if ci != held]
+        centroids = {
+            c: torch.stack([injected[i] for i, cc in train if cc == c]).mean(0) for c in concepts
+        }
+        for i, c, ci in rows:
+            if ci != held:
+                continue
+            best = min(concepts, key=lambda k: float((injected[i] - centroids[k]).norm()))
+            correct += int(best == c)
+            total += 1
+    return correct / max(total, 1)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", default="qwen-0.5b")
@@ -167,10 +228,21 @@ def main() -> None:
     kw = dict(inject_layer=args.inject_layer, read_layer=read_layer, strength=args.strength)
     dev = CARRIERS[DEV_CARRIERS]
     out = CARRIERS[HELDOUT_CARRIERS]
-    dev_clean, dev_injected = collect(model, bank, DEV_CONCEPTS, dev, **kw)  # type: ignore[arg-type]
-    out_clean, out_injected = collect(model, bank, HELDOUT_CONCEPTS, out, **kw)  # type: ignore[arg-type]
+    dev_clean, dev_injected, _ = collect(model, bank, DEV_CONCEPTS, dev, **kw)  # type: ignore[arg-type]
+    out_clean, out_injected, out_labels = collect(  # type: ignore[arg-type]
+        model, bank, HELDOUT_CONCEPTS, out, **kw
+    )
 
     direction = dev_injected.mean(0) - dev_clean.mean(0)
+
+    # The real gate. Removing the shared direction should destroy the ability to
+    # tell injected from clean, while leaving *which* concept was injected intact.
+    # If both survive, the direction is not carrying the disturbance. If both die,
+    # the disturbance and the identity are not separable and the design is void.
+    abl_clean = project_out(out_clean, direction)
+    abl_injected = project_out(out_injected, direction)
+    abl_dev_clean = project_out(dev_clean, direction)
+    abl_dev_injected = project_out(dev_injected, direction)
 
     result = {
         "model": args.model,
@@ -186,6 +258,18 @@ def main() -> None:
         "fit": separation(direction, dev_clean, dev_injected),
         "heldout": separation(direction, out_clean, out_injected),
         "displacement_share_heldout": displacement_share(out_clean, out_injected),
+        "spectrum_heldout": spectrum(out_clean, out_injected, (0.8, 0.9, 0.95)),
+        "ablation": {
+            "injected_vs_clean_auroc_before": separation(direction, out_clean, out_injected)[
+                "auroc"
+            ],
+            "injected_vs_clean_auroc_after": refit_separation(
+                abl_dev_clean, abl_dev_injected, abl_clean, abl_injected
+            ),
+            "concept_accuracy_before": concept_decodability(out_injected, out_labels),
+            "concept_accuracy_after": concept_decodability(abl_injected, out_labels),
+            "concept_chance": 1.0 / len(HELDOUT_CONCEPTS),
+        },
         "gate": (
             "notes/38: heldout auroc near 0.5 means stop. "
             "low mean_share bounds every downstream ablation result"
@@ -207,6 +291,25 @@ def _self_check() -> None:
     noise = torch.randn(20, 8)
     assert displacement_share(clean, clean + d * 50.0)["mean_share"] > 0.9
     assert displacement_share(clean, clean + noise)["mean_share"] < 0.5
+
+    # Ablating the offending direction must destroy the separation it carried.
+    shifted = clean + d * 5.0
+    dc, di = clean[:10], shifted[:10]
+    oc, oi = clean[10:], shifted[10:]
+    assert refit_separation(dc, di, oc, oi) == 1.0
+    assert (
+        refit_separation(
+            project_out(dc, d), project_out(di, d), project_out(oc, d), project_out(oi, d)
+        )
+        < 0.9
+    )
+
+    # Identity survives ablation when it lives orthogonal to the removed axis.
+    ident = torch.zeros(8)
+    ident[1] = 1.0
+    states = torch.stack([ident * (i % 2) * 20.0 + d * 5.0 for i in range(12)])
+    labels = [("a" if i % 2 else "b", "target", i % 3) for i in range(12)]
+    assert concept_decodability(project_out(states, d), labels) == 1.0
     print("self-check ok")
 
 
