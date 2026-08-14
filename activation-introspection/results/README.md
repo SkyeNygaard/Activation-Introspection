@@ -1,5 +1,36 @@
 # Result artifact status
 
+## Which artifacts cannot be regenerated from source — checked 2026-08-14
+
+Protocols record the SHA-256 of every file that generated them. Nine of those
+files have since drifted, across 14 protocols, and **13 of the recorded hashes
+match no version of the file in git history** — those runs executed against an
+uncommitted working tree that was edited again before the commit landed. For them
+the exact generating code is gone.
+
+**No cited number is affected.** Every unrecoverable protocol is a superseded
+pilot or a smoke run, and each has a later version that verifies and is the one
+quoted:
+
+| study | unrecoverable | cited instead |
+|---|---|---|
+| matched reader | v1, v2 | **v3** |
+| report training | v1 | **v3** |
+| remap training | v1 | **v2** |
+| attention head screen | v1, v2 | **v3** |
+| attention localization | v1 | v2 |
+| natural state | smoke runs only | branch closed by notes/30 |
+| trained vs probe | smoke only | — |
+
+Two tests verify the working tree still matches what a protocol recorded, and
+they cover two of these protocols. A failure there means a hashed source changed
+— check whether the affected artifact is one you cite before doing anything else,
+rather than reverting reflexively. The recording is worth keeping; the invariant
+that nothing may ever change is not one a live project can hold.
+
+**Going forward: commit before running.** That single habit is what makes a
+recorded hash recoverable, and its absence is the whole cause of the 13 above.
+
 ## The "an injection happened" direction: a passed gate, not a claim
 
 `displacement_direction_pilot_qwen05b_v2.json` and
