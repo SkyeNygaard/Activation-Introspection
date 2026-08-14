@@ -52,8 +52,8 @@ CARRIERS = (
 #: by carrier, so three of them made the post-ablation separation a three-point
 #: estimate, and it wandered between 0.338 and 0.588 across strengths when all
 #: three values should have been chance.
-DEV_CARRIERS = slice(0, 6)
-HELDOUT_CARRIERS = slice(6, 12)
+DEV_CARRIERS = CARRIERS[0:6]
+HELDOUT_CARRIERS = CARRIERS[6:12]
 
 #: Declared before the run. Fit on DEV, score on HELDOUT. Widened from four each
 #: to eight after the first Qwen3-4B run: with four concepts, identity decoding sat
@@ -73,6 +73,9 @@ HELDOUT_CONCEPTS = [
 ]
 
 ARMS = ("target", "random", "shuffled")
+
+#: Short name -> repo, kept here rather than in models.py: see the note in main().
+MODEL_REPOS = {"qwen3-4b": "Qwen/Qwen3-4B-Instruct-2507"}
 
 
 def _final_state(model: object, text: str, read_layer: int, ivs: list[Intervention]) -> Tensor:
@@ -103,7 +106,7 @@ def collect(
     inject_layer: int,
     read_layer: int,
     strength: float,
-) -> tuple[Tensor, Tensor]:
+) -> tuple[Tensor, Tensor, list[tuple[str, str, int]]]:
     """Return (clean, injected, labels) over ``carriers``. Labels are (concept, arm, carrier)."""
     clean = [_final_state(model, c, read_layer, []) for c in carriers]
     injected = []
@@ -190,7 +193,8 @@ def refit_separation(
 def project_out(states: Tensor, direction: Tensor) -> Tensor:
     """Remove the component along ``direction``. Same operation Intervention.ablate does."""
     unit = direction / (direction.norm() + 1e-8)
-    return states - (states @ unit).unsqueeze(-1) * unit
+    out: Tensor = states - (states @ unit).unsqueeze(-1) * unit
+    return out
 
 
 def spectrum(clean: Tensor, injected: Tensor, thresholds: tuple[float, ...]) -> dict[str, float]:
@@ -241,12 +245,25 @@ def evaluate(
     strength: float,
 ) -> dict[str, object]:
     """One strength: fit the direction on dev, then run both gates on held-out."""
-    kw = dict(inject_layer=inject_layer, read_layer=read_layer, strength=strength)
-    dev = CARRIERS[DEV_CARRIERS]
-    out = CARRIERS[HELDOUT_CARRIERS]
-    dev_clean, dev_injected, _ = collect(model, bank, DEV_CONCEPTS, dev, **kw)  # type: ignore[arg-type]
-    out_clean, out_injected, out_labels = collect(  # type: ignore[arg-type]
-        model, bank, HELDOUT_CONCEPTS, out, **kw
+    dev = DEV_CARRIERS
+    out = HELDOUT_CARRIERS
+    dev_clean, dev_injected, _ = collect(
+        model,
+        bank,
+        DEV_CONCEPTS,
+        dev,
+        inject_layer=inject_layer,
+        read_layer=read_layer,
+        strength=strength,
+    )
+    out_clean, out_injected, out_labels = collect(
+        model,
+        bank,
+        HELDOUT_CONCEPTS,
+        out,
+        inject_layer=inject_layer,
+        read_layer=read_layer,
+        strength=strength,
     )
 
     direction = dev_injected.mean(0) - dev_clean.mean(0)
@@ -287,7 +304,11 @@ def main() -> None:
         raise SystemExit(f"{args.out} exists; choose a new path rather than overwriting")
     preflight_check(args.model, training=False)
 
-    model = load(args.model)
+    # Loaded by repo id rather than a registry entry on purpose. src/introspect/
+    # models.py is hashed into 24 frozen protocols, and adding a KNOWN_MODELS key
+    # for qwen3-4b broke the two tests that verify those hashes. The registry is
+    # not worth a provenance break; load() already falls back to the raw name.
+    model = load(MODEL_REPOS.get(args.model, args.model))
     read_layer = args.read_layer if args.read_layer >= 0 else len(model.blocks) - 1
     bank = build_bank(model, args.inject_layer, DEV_CONCEPTS + HELDOUT_CONCEPTS)
 
@@ -306,8 +327,8 @@ def main() -> None:
         "n_blocks": len(model.blocks),
         "dev_concepts": DEV_CONCEPTS,
         "heldout_concepts": HELDOUT_CONCEPTS,
-        "dev_carriers": list(CARRIERS[DEV_CARRIERS]),
-        "heldout_carriers": list(CARRIERS[HELDOUT_CARRIERS]),
+        "dev_carriers": list(DEV_CARRIERS),
+        "heldout_carriers": list(HELDOUT_CARRIERS),
         "by_strength": by_strength,
         "gate": (
             "notes/38: heldout auroc near 0.5 means stop. "

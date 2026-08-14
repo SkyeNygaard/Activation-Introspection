@@ -112,14 +112,19 @@ test:
 # on 2026-08-12. The Makefile is not hash-bound; check before moving this.
 FROZEN_SOURCE = scripts/run_clustering_prediction.py
 
+# Imported verbatim from an outside review on 2026-08-14. Not this repository's
+# code and not written to its lint rules, so it is excluded rather than reformatted
+# -- editing it would break the SHA-256 list it ships with.
+IMPORTED = external-review-2026-08-14
+
 lint:
-	uv run ruff check --exclude $(FROZEN_SOURCE) .
-	uv run ruff format --check --exclude $(FROZEN_SOURCE) .
+	uv run ruff check --exclude $(FROZEN_SOURCE) --exclude $(IMPORTED) .
+	uv run ruff format --check --exclude $(FROZEN_SOURCE) --exclude $(IMPORTED) .
 	uv run mypy
 
 format:
-	uv run ruff check --fix --exclude $(FROZEN_SOURCE) .
-	uv run ruff format --exclude $(FROZEN_SOURCE) .
+	uv run ruff check --fix --exclude $(FROZEN_SOURCE) --exclude $(IMPORTED) .
+	uv run ruff format --exclude $(FROZEN_SOURCE) --exclude $(IMPORTED) .
 
 check: lint test
 

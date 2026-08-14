@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from introspect.preflight import _RUNNER_RE, _competing_runs, available_gib, required_gib
+from introspect.preflight import _RUNNER_RE, _competing_runs, available_gib, check, required_gib
 
 
 @pytest.mark.parametrize(
@@ -88,3 +88,22 @@ def test_available_memory_is_plausible() -> None:
     """Parses vm_stat without asserting a number that varies between runs."""
     free = available_gib()
     assert 0.0 < free < 1024.0
+
+
+def test_slack_allows_a_declared_shortfall(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Opt-in slack lets a run start short, and only by the amount declared."""
+    monkeypatch.setattr("introspect.preflight.available_gib", lambda: 10.0)
+    monkeypatch.setattr("introspect.preflight.competing_runs", lambda: [])
+    need = required_gib("qwen-3b", training=True)  # 12.4
+
+    monkeypatch.delenv("INTROSPECT_PREFLIGHT_SLACK_GIB", raising=False)
+    with pytest.raises(SystemExit):
+        check("qwen-3b", training=True)
+
+    monkeypatch.setenv("INTROSPECT_PREFLIGHT_SLACK_GIB", "4")
+    check("qwen-3b", training=True)  # 10.0 >= 12.4 - 4
+
+    monkeypatch.setenv("INTROSPECT_PREFLIGHT_SLACK_GIB", "1")
+    with pytest.raises(SystemExit):
+        check("qwen-3b", training=True)
+    assert need > 10.0

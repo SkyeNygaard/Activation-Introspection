@@ -61,6 +61,24 @@ _TRAINING_MULTIPLIER = 1.5
 #: Leave room for the OS and the user's applications rather than filling RAM.
 _HEADROOM_GIB = 2.0
 
+#: Deliberate, opt-in slack, set by ``INTROSPECT_PREFLIGHT_SLACK_GIB``. Skye asked
+#: for this on 2026-08-14: macOS will reclaim some memory under pressure, and a
+#: shortfall of a few GiB is a risk worth taking rather than being blocked. It is an
+#: environment variable and not a lowered constant so that the allowance is a
+#: visible decision per run, and so the refusal message still reports the true gap.
+#: It does not make the shortfall safe -- a job killed under memory pressure can
+#: still leave GPU buffers wired, which only a restart clears.
+_SLACK_ENV = "INTROSPECT_PREFLIGHT_SLACK_GIB"
+
+
+def _slack_gib() -> float:
+    raw = os.environ.get(_SLACK_ENV, "0")
+    try:
+        return max(0.0, float(raw))
+    except ValueError:
+        raise SystemExit(f"{_SLACK_ENV}={raw!r} is not a number") from None
+
+
 #: Matches an experiment script invoked by absolute or relative path. The
 #: sibling session that killed a run here launched `python run_dev.py`, with
 #: no leading slash, so anchoring on one silently missed it.
@@ -143,13 +161,18 @@ def check(model: str, *, training: bool = False) -> None:
         )
     need = required_gib(model, training=training)
     have = available_gib()
-    if have < need:
+    slack = _slack_gib()
+    if have < need - slack:
         raise SystemExit(
             f"only {have:.1f} GiB available, need about {need:.1f} GiB for "
-            f"{model}{' training' if training else ''}. Close applications or "
-            "wait; starting anyway would thrash swap."
+            f"{model}{' training' if training else ''}"
+            + (f" (slack {slack:.1f} GiB allowed)" if slack else "")
+            + ". Close applications or wait; starting anyway would thrash swap."
         )
-    print(f"preflight ok: {have:.1f} GiB available, {need:.1f} GiB needed", flush=True)
+    note = ""
+    if have < need:
+        note = f" -- SHORT BY {need - have:.1f} GiB, allowed by {_SLACK_ENV}={slack:.1f}"
+    print(f"preflight ok: {have:.1f} GiB available, {need:.1f} GiB needed{note}", flush=True)
 
 
 def main() -> None:
