@@ -1,5 +1,45 @@
 # Result artifact status
 
+## The "an injection happened" direction: a passed gate, not a claim
+
+`displacement_direction_pilot_qwen05b_v2.json` and
+`displacement_direction_qwen3_4b.json` are the gate for
+[notes/38](../notes/38-identity-or-displacement.md), which asks whether a trained
+reporter reads *which* concept was injected or only *that* the residual stream was
+disturbed. Before that can be tested by removing the disturbance, the disturbance
+has to be a coherent thing to remove. These two runs check that.
+
+Inject at a quarter depth, read the final block, strength 1.0, eight concepts
+crossed with target/random/shuffled. The pooled direction is fitted on development
+concepts **and** development carriers, then scored on held-out concepts and three
+carriers never used in the fit.
+
+| | Qwen2.5-0.5B | Qwen3-4B |
+|---|---:|---:|
+| held-out injected vs clean, AUROC | 1.000 | 1.000 |
+| share of displacement energy along the mean delta | 0.217 | **0.546** |
+| share along the leading component | 0.217 | 0.547 |
+
+**The direction is real and concentrated.** Perfect ordering of held-out injected
+states above held-out clean ones on both models, and the mean delta *is* the
+leading component to three decimals — so it is one axis, not a mixture that
+happens to average out.
+
+**The share is the bound on everything downstream.** It is how much of the
+disturbance a rank-1 ablation actually removes. At 0.217 the planned ablation
+would have left roughly four fifths of the effect in place and "the reports
+survived" would have meant nothing; at 0.546 it means something. That is why the
+0.5B pilot was worth running before any training compute was spent.
+
+**Not a claim about introspection.** No reporter has been ablated yet, and the
+0.5B-versus-4B comparison confounds size with model generation (Qwen2.5 against
+Qwen3). Two runs, one layer, one strength.
+
+`displacement_direction_pilot_qwen05b.json` is the first pilot and is
+**superseded**: it scored held-out concepts against the same two clean states used
+to fit, so its held-out column was not held out on the clean side. Kept because
+the error is the reason the carrier split exists.
+
 ## Programmatic attention: the lever is coverage and context, not kernels
 
 `head_budget_protocol_v1.json` asks the cheapest question nobody had asked of the

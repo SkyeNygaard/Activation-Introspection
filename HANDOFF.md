@@ -446,6 +446,24 @@ priority order:** finish the correction pass in §0 across the application mater
 resolve the LoRA question in §1; then either write the application or spend the one
 run on held-out generalization after training.
 
+**A notes/38 does now exist, and it is not that.**
+[notes/38](activation-introspection/notes/38-identity-or-displacement.md), opened
+2026-08-14, asks whether a trained reporter reads *which concept* was injected or
+only *that the residual stream was pushed off course*. It is the first note here
+that intervenes on training rather than measuring its output, so it is a new line
+rather than a descendant of `29`–`37`.
+
+Its gate has run and passed on two models. The direction encoding "an injection
+happened" separates injected from clean states perfectly on held-out concepts and
+held-out carriers — AUROC 1.000 at both Qwen2.5-0.5B and Qwen3-4B — and at 4B it
+carries **0.546** of the displacement energy, against 0.217 at 0.5B. That share is
+what bounds the whole design: it is how much a rank-1 ablation actually removes.
+
+Nothing is claimed from this yet. The next step is the cumulative energy spectrum,
+to fix the ablation rank against a threshold declared in advance, then one adapter
+trained with that subspace ablated. **The no-more-LoRA question in §1 gates that
+last step and is still undecided.**
+
 ---
 
 ## 8. Conventions that will bite you
