@@ -120,6 +120,83 @@ be common in ways I am not anticipating. Or the blind generator may produce text
 bland that nothing clashes with anything, in which case a null says more about the
 generator than about the world, and I should say so rather than claim a base rate.
 
+## Result, 2026-08-17 — the effect replicates exactly, and its base rate is zero in 24
+
+`results/blind_carriers_v1_summary.json`. 2,592 episodes, 14 minutes.
+
+**The anchor holds.** No-prompt content accuracy on the three original carriers is
+**0.889** against notes/14's published **0.899**. Third independent reproduction of
+that number today, through a third script.
+
+**And notes/34's inversion replicates, hard.**
+
+| original carrier | no prompt | with prompt | effect |
+|---|---:|---:|---:|
+| "A routine maintenance record is open." | 0.750 | 0.875 | +0.125 |
+| "After lunch, the clerk placed an unsigned form…" | 0.583 | 0.833 | +0.250 |
+| **"Nothing changed."** | **1.000** | **0.167** | **−0.833** |
+
+Constant-labelling on that third carrier goes to **0.833** under the prompt. The
+effect is real, reproducible, and as large as `34` said.
+
+### On 24 carriers nobody chose, it never happens
+
+**0 of 24 inverted.** Not one blind carrier came near the threshold declared before
+the run. The worst was 0.833 → 0.583; the rule required dropping from above 0.500 to
+at or below 0.250.
+
+| | blind carriers |
+|---|---|
+| inverted | **0 of 24** (95% upper bound on the rate, rule of three: **0.125**) |
+| effect range | −0.250 to +0.250 |
+| direction | **17 up, 5 down, 2 unchanged** — sign test p = 0.017 |
+| mean effect | **+0.068** |
+| constant-labelling | 0.229 → **0.161** |
+
+**My prediction was right** — I said fewer than 15%, 0 to 3 of 24, at 70/30 — and it
+is the outcome that weakens this repository's most-established result. First correct
+prediction of the day, and it went the unwelcome way.
+
+### What has to be withdrawn
+
+`34` wrote that anyone reporting a pooled prompting gain "could be averaging over
+exactly this". **As a general claim about how the field reports prompting gains, that
+is not supported and I am withdrawing it.** On text written without knowledge of the
+hypothesis, the inversion does not occur at a rate this design can detect, and the
+pooled average is a fair summary of a mostly-consistent positive effect.
+
+The claim that survives is much smaller: **text that semantically contradicts the
+elicitation prompt inverts the result, confidently and completely — and 24 blind
+draws produced none of it.**
+
+### The part that is a positive result, and it was not the target
+
+On ordinary text the `introspect` prompt **helps**: 17 of 24 carriers up, p = 0.017,
+mean +0.068, and constant-labelling falls from 0.229 to 0.161. This repository has
+been treating elicitation prompts mainly as a hazard since `35`. On unselected inputs
+they are a modest, reliable improvement — which is what the prompting literature
+reports, now replicated here on blind material rather than assumed.
+
+### The caveat that matters more than the number
+
+Recorded before scoring, in `results/blind_carriers_v1.json`: **none of the 24
+sentences asserts that nothing changed.** So 0 of 24 is a fact about *this
+generator's output distribution* — ordinary descriptions of ordinary scenes — and not
+about text in general. The honest statement of the rate names its population.
+
+**And that population is probably the wrong one for the safety case.** The setting
+where introspective monitoring would actually be used is status reporting, audit
+logs, change detection — text whose most common utterances are precisely *"no change
+detected"*, *"status: unchanged"*, *"nothing to report"*. The one construction that
+breaks the readout is the idiom of the deployment domain.
+
+That is a sharper worry than the one this run set out to test, it is not established
+by anything here, and it is the obvious next experiment: **draw carriers from a
+monitoring-log distribution rather than a scene-description one, declare the
+inversion rule in advance again, and see whether the base rate stays at zero.** If it
+does not, `34`'s criticism returns in a narrower and far more relevant form — not
+"the field's averages are wrong" but "they are wrong in the domain the method is for".
+
 ## What it costs
 
 2,304 episodes, inference only, one model load, roughly 55 minutes. Plus a few

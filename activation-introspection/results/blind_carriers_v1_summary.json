@@ -1,0 +1,573 @@
+{
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "layer": 9,
+  "smoke": false,
+  "prompt_family": "introspect",
+  "carrier_provenance": "results/blind_carriers_v1.json",
+  "n_blind_carriers": 24,
+  "anchor": {
+    "none_accuracy_on_original_carriers": 0.8888888888888888,
+    "notes_14_published": 0.899,
+    "within_tolerance": true,
+    "tolerance": 0.1
+  },
+  "inversion_rule": {
+    "none_above": 0.5,
+    "prompt_at_or_below": 0.25
+  },
+  "n_inverted": 0,
+  "inversion_rate": 0.0,
+  "inverted_texts": [],
+  "effect_distribution": {
+    "min": -0.25,
+    "median": 0.08333333333333337,
+    "max": 0.25,
+    "mean": 0.06770833333333333,
+    "n_negative": 5,
+    "n_positive": 17
+  },
+  "per_carrier": {
+    "de0f935e8a2c7562": {
+      "source": "blind",
+      "text": "Morning sunlight enters the kitchen through half-open curtains.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.5833333333333334,
+        "accuracy": 0.7916666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.4166666666666667,
+        "n": 48
+      },
+      "effect": -0.25,
+      "inverted": false
+    },
+    "86a07309a72f46fc": {
+      "source": "blind",
+      "text": "The washing machine hums beside a basket of towels.",
+      "none": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 1.0,
+        "accuracy": 1.0,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.0,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "de954d26dc3ffa20": {
+      "source": "blind",
+      "text": "A red bicycle rests against the apartment building.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "effect": -0.08333333333333337,
+      "inverted": false
+    },
+    "2289e7d09c168cd1": {
+      "source": "blind",
+      "text": "Fresh bread cools on a wooden counter.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "effect": -0.04166666666666674,
+      "inverted": false
+    },
+    "9ea50b2160d51af7": {
+      "source": "blind",
+      "text": "Employees gather around a table covered with documents.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.625,
+        "accuracy": 0.8125,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.375,
+        "n": 48
+      },
+      "effect": -0.125,
+      "inverted": false
+    },
+    "73bde1a193324c14": {
+      "source": "blind",
+      "text": "The office printer produces several pages before stopping.",
+      "none": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "effect": 0.20833333333333337,
+      "inverted": false
+    },
+    "1c54877c22a37b82": {
+      "source": "blind",
+      "text": "Children carry colorful backpacks across the school playground.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "effect": 0.04166666666666663,
+      "inverted": false
+    },
+    "2651e0345779970a": {
+      "source": "blind",
+      "text": "A teacher writes multiplication problems on the whiteboard.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9166666666666666,
+        "accuracy": 0.9583333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.08333333333333333,
+        "n": 48
+      },
+      "effect": 0.08333333333333326,
+      "inverted": false
+    },
+    "b8fb3d56a8cc1f9b": {
+      "source": "blind",
+      "text": "Commuters wait quietly beneath the station clock.",
+      "none": {
+        "twin_pair": 0.7916666666666666,
+        "accuracy": 0.8958333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.20833333333333334,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9166666666666666,
+        "accuracy": 0.9583333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.08333333333333333,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "5950cc95e954e00b": {
+      "source": "blind",
+      "text": "The crowded bus moves slowly through downtown traffic.",
+      "none": {
+        "twin_pair": 0.7916666666666666,
+        "accuracy": 0.8958333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.20833333333333334,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.04166666666666674,
+      "inverted": false
+    },
+    "2621125cd45067aa": {
+      "source": "blind",
+      "text": "A small grocery store displays oranges beside the entrance.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.7916666666666666,
+        "accuracy": 0.8958333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.20833333333333334,
+        "n": 48
+      },
+      "effect": 0.04166666666666663,
+      "inverted": false
+    },
+    "4dd5790444d38cb1": {
+      "source": "blind",
+      "text": "The cashier places purchased items into paper bags.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "effect": -0.04166666666666674,
+      "inverted": false
+    },
+    "1befab4529a0179b": {
+      "source": "blind",
+      "text": "Dark clouds gather above the rooftops before noon.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "09b4a70635788368": {
+      "source": "blind",
+      "text": "Rainwater flows along the pavement beside parked cars.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.0,
+      "inverted": false
+    },
+    "cd793ae1cf83f2cf": {
+      "source": "blind",
+      "text": "A gardener trims the hedge near the public library.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.20833333333333337,
+      "inverted": false
+    },
+    "fa69b6bbf8b4d3f0": {
+      "source": "blind",
+      "text": "Several ducks swim across the pond near the walking path.",
+      "none": {
+        "twin_pair": 0.7916666666666666,
+        "accuracy": 0.8958333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.20833333333333334,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.16666666666666674,
+      "inverted": false
+    },
+    "88c0f6a153cdb034": {
+      "source": "blind",
+      "text": "The mechanic checks the engine beneath the raised vehicle.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.08333333333333337,
+      "inverted": false
+    },
+    "d031dd09f12bd285": {
+      "source": "blind",
+      "text": "Steam rises from a metal pipe behind the factory.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.0,
+      "inverted": false
+    },
+    "b95f55d0054bde3d": {
+      "source": "blind",
+      "text": "A family shares roasted vegetables around the dinner table.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.7916666666666666,
+        "accuracy": 0.8958333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.20833333333333334,
+        "n": 48
+      },
+      "effect": 0.04166666666666663,
+      "inverted": false
+    },
+    "908741ad43a8427b": {
+      "source": "blind",
+      "text": "The hotel elevator stops on the fourth floor.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.25,
+      "inverted": false
+    },
+    "f94a1f2e5e019d96": {
+      "source": "blind",
+      "text": "Suitcases stand beside passengers waiting near the departure gate.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "2c3f747f028807c2": {
+      "source": "blind",
+      "text": "A farmer drives the tractor across the muddy field.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "8a5998f47064d5bd": {
+      "source": "blind",
+      "text": "The dog sleeps peacefully beneath the dining room chair.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9166666666666666,
+        "accuracy": 0.9583333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.08333333333333333,
+        "n": 48
+      },
+      "effect": 0.16666666666666663,
+      "inverted": false
+    },
+    "275e658370cc7eba": {
+      "source": "blind",
+      "text": "Evening traffic reflects brightly on the wet bridge.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.20833333333333337,
+      "inverted": false
+    },
+    "d28ef1f1ff333e1a": {
+      "source": "original",
+      "text": "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "6d3d03dac6d0df99": {
+      "source": "original",
+      "text": "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: \u00a7",
+      "none": {
+        "twin_pair": 0.5833333333333334,
+        "accuracy": 0.7916666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.4166666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.25,
+      "inverted": false
+    },
+    "4067d057b2d472e7": {
+      "source": "original",
+      "text": "Nothing changed. Hidden state marker: \u00a7",
+      "none": {
+        "twin_pair": 1.0,
+        "accuracy": 1.0,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.0,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.16666666666666666,
+        "accuracy": 0.5833333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.8333333333333334,
+        "n": 48
+      },
+      "effect": -0.8333333333333334,
+      "inverted": true
+    }
+  },
+  "elapsed_s": 829.3
+}
