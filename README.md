@@ -1,5 +1,7 @@
 # A model learned an opaque codebook from causally hidden state
 
+**Findings, in plain language:** https://skyenygaard.github.io/Activation-Introspection/
+
 Empirical AI-safety portfolio by Skye Nygaard, for SPAR Fall 2026. The newest
 result is a causal extension aimed at Belinda Li's introspection work, confirmed
 under a frozen repair protocol after an adversarial audit; the earlier
