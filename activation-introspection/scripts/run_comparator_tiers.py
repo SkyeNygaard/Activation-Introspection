@@ -65,7 +65,7 @@ READER_ASK = (
 
 @contextmanager
 def inject_prompt_only(
-    model: LoadedModel, direction: ConceptVector, position: int
+    model: LoadedModel, direction: ConceptVector, position: int, strength: float = STRENGTH
 ) -> Iterator[None]:
     """Edit one absolute prompt position, surviving cached generation.
 
@@ -80,7 +80,10 @@ def inject_prompt_only(
     edit = Intervention(
         layer=LAYER,
         direction=direction.vector,
-        strength=STRENGTH,
+        # Defaults to this module's STRENGTH so notes/20's behaviour is unchanged.
+        # Made settable for notes/43, which sweeps strength and silently got 2.0
+        # in all three cells because this took no magnitude.
+        strength=strength,
         positions=[position],
         per_position=True,
         label=f"tier:{direction.name}",

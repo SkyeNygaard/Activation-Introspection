@@ -92,6 +92,92 @@ a small loss, because a one-episode difference is not a difference. I put "senso
 still ≥ forced choice at strength 2.0" at about 45/55 — a coin flip, which is why it
 is worth measuring.
 
+## Result, 2026-08-17 — one bug, one mis-specified gate, and a finding I did not predict
+
+`results/ladder_powered_v1_summary.json`. 528 rows, 15 minutes, no marker leaks.
+
+### The gate "failed", and the gate was wrong, not the harness
+
+Pooled over 11 carriers, `describe_gagged@2.0` gave **0.466** against the declared
+0.292, so the kill rule fired. It should not have: **I compared a pooled 11-carrier
+number against a published 3-carrier one.** That is a badly drafted gate, in the same
+family as the malformed pre-registration in [34](34-three-boosts-powered.md).
+
+Restricted to the three original carriers — the population `20` and `21` actually
+measured — **every published number reproduces exactly**:
+
+| | this run | published | |
+|---|---:|---:|---|
+| T1 `describe_gagged` | 0.292 | 0.292 | `21` |
+| T1 `sensory` | 0.708 | 0.708 | `21` |
+| model @ 1.0 | 0.458 | 0.458 | `17` |
+| model @ 2.0 | 0.667 | 0.667 | `17` |
+| model @ 4.0 | 0.667 | 0.667 | `17` |
+| lens @ 1.0 | 0.958 | 0.958 | `17` |
+| lens @ 2.0 | 1.000 | 1.000 | `17` |
+| lens @ 4.0 | 1.000 | 1.000 | `17` |
+
+**Eight numbers from two notes, to three decimals, through a script written today.**
+The harness did not move. The assembly `20` did was arithmetically faithful; what it
+lacked was that the pieces were never measured together.
+
+### The bug: the free-text tier never saw the strength sweep
+
+T1 and the naming rate are **byte-identical across all three strengths** — 0.466 /
+0.466 / 0.466. Checked directly: **176 of 176 report cells produce the identical
+string at all three strengths.**
+
+Cause: the free-form arm calls `inject_prompt_only(model, vector, position)`, which
+takes no strength and uses `run_comparator_tiers`' own hard-coded `STRENGTH = 2.0`. I
+passed the direction and forgot the magnitude. So every T1 cell is strength 2.0
+wearing three different labels.
+
+**Void: the strength dimension of T1.** Still valid: the model and lens tiers, which
+did vary correctly (0.458 → 0.667 → 0.667 and 0.958 → 1.000 → 1.000), and every
+elicitation comparison at strength 2.0. Fixing it is one argument; it is not rerun
+here because the tier it affects is the one already swept properly in `21`.
+
+### The prediction held: the ordering survives
+
+Lens ≥ model in **every** cell, on both populations, at all three strengths. The
+single tie is at strength 2.0 on blind carriers where both sit at 1.000 — a ceiling,
+not a crossing. I gave this 80/20 and it holds.
+
+### What I did not predict: the model tier is the carrier-sensitive one
+
+At strength 1.0, where there is room to move, model accuracy by carrier:
+
+| model | lens | carrier |
+|---:|---:|---|
+| 0.875 | 1.000 | *Children carry colorful backpacks…* |
+| 0.750 | 0.875 | *After lunch, the clerk placed…* |
+| 0.750 | 1.000 | *A teacher writes multiplication…* |
+| … | … | |
+| 0.375 | 1.000 | *A routine maintenance record is open.* |
+| 0.250 | 1.000 | ***Nothing changed.*** |
+| 0.250 | 0.875 | *Morning sunlight enters the kitchen…* |
+
+**The model ranges 0.250 to 0.875 — three and a half fold — on nothing but which
+unremarkable sentence it is reading. The lens sits between 0.875 and 1.000
+throughout.**
+
+That is a result about the instrument, and it cuts in the project's favour rather
+than against it: **the unstable half of the comparison is the model, not the
+comparator.** A single-carrier estimate of "how well can this model read its own
+state" is worth much less than it looks, and `17`'s 0.667 is one draw from a wide
+distribution rather than a property of the model.
+
+**Noted, not claimed:** *"Nothing changed."* is again near the bottom, at 0.250 —
+the same carrier that destroyed the elicitation prompt in `34`–`35`. Here there is no
+elicitation prompt at all; it is hurting the plain forced choice. That is one carrier
+in a table of eleven and it is written down as an observation, not a finding.
+
+### Consequence for the write-up
+
+The ladder holds and is no longer assembled. But it should be reported **with the
+carrier spread attached**, because the model's rung is a distribution and the page
+currently prints it as a point.
+
 ## What it costs
 
 528 injected episodes plus clean arms, inference only, one model load. `21` ran 144

@@ -150,7 +150,12 @@ def run(args: argparse.Namespace) -> None:
                         lens_pick = options[int(lens_logits[lens_option_ids].argmax())]
 
                         # Tier: the model's words, then a reader given only those words.
-                        with inject_prompt_only(model, bank[concept], free_marker):
+                        # BUG in v1, fixed here: inject_prompt_only takes no strength
+                        # and used run_comparator_tiers' hard-coded 2.0, so all three
+                        # "strength" cells of this tier were the same run. Verified by
+                        # 176/176 report strings being identical across strengths.
+                        with inject_prompt_only(model, bank[concept], free_marker,
+                                                strength=strength):
                             gen = model.generate_ids(free_ids, max_new_tokens=MAX_NEW,
                                                      do_sample=False)
                         report = model.tokenizer.decode(

@@ -1,0 +1,72 @@
+{
+  "model": "qwen-3b",
+  "layer": 9,
+  "chance": 0.125,
+  "smoke": false,
+  "n_carriers": 11,
+  "n_rows": 528,
+  "anchor": {
+    "cell": "describe_gagged@2.0",
+    "measured": 0.4659090909090909,
+    "notes_21_expected": 0.292,
+    "within_tolerance": false
+  },
+  "cells": {
+    "describe_gagged@1.0": {
+      "n": 88,
+      "T0_prompt_only_by_construction": 0.125,
+      "T1_reader_on_model_words": 0.4659090909090909,
+      "model_forced_choice": 0.5568181818181818,
+      "T2_lens_on_activations": 0.9431818181818182,
+      "report_names_target_rate": 0.3068181818181818,
+      "ordering_holds": true
+    },
+    "describe_gagged@2.0": {
+      "n": 88,
+      "T0_prompt_only_by_construction": 0.125,
+      "T1_reader_on_model_words": 0.4659090909090909,
+      "model_forced_choice": 0.9090909090909091,
+      "T2_lens_on_activations": 1.0,
+      "report_names_target_rate": 0.3068181818181818,
+      "ordering_holds": true
+    },
+    "describe_gagged@4.0": {
+      "n": 88,
+      "T0_prompt_only_by_construction": 0.125,
+      "T1_reader_on_model_words": 0.4659090909090909,
+      "model_forced_choice": 0.7954545454545454,
+      "T2_lens_on_activations": 1.0,
+      "report_names_target_rate": 0.3068181818181818,
+      "ordering_holds": true
+    },
+    "sensory@1.0": {
+      "n": 88,
+      "T0_prompt_only_by_construction": 0.125,
+      "T1_reader_on_model_words": 0.7045454545454546,
+      "model_forced_choice": 0.5568181818181818,
+      "T2_lens_on_activations": 0.9431818181818182,
+      "report_names_target_rate": 0.6136363636363636,
+      "ordering_holds": true
+    },
+    "sensory@2.0": {
+      "n": 88,
+      "T0_prompt_only_by_construction": 0.125,
+      "T1_reader_on_model_words": 0.7045454545454546,
+      "model_forced_choice": 0.9090909090909091,
+      "T2_lens_on_activations": 1.0,
+      "report_names_target_rate": 0.6136363636363636,
+      "ordering_holds": true
+    },
+    "sensory@4.0": {
+      "n": 88,
+      "T0_prompt_only_by_construction": 0.125,
+      "T1_reader_on_model_words": 0.7045454545454546,
+      "model_forced_choice": 0.7954545454545454,
+      "T2_lens_on_activations": 1.0,
+      "report_names_target_rate": 0.6136363636363636,
+      "ordering_holds": true
+    }
+  },
+  "leaks": 0,
+  "elapsed_s": 918.7
+}
