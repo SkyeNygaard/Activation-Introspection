@@ -1,0 +1,636 @@
+{
+  "summary": {
+    "model": "qwen-3b",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "layer": 9,
+    "n_concepts": 8,
+    "chance_top1": 0.125,
+    "chance_mean_rank": 3.5,
+    "top1_rate": 0.125,
+    "mean_rank_of_named": 3.46875,
+    "top1_by_wording": {
+      "0": 0.125,
+      "1": 0.125,
+      "2": 0.125,
+      "3": 0.125
+    },
+    "n_instructed": 32,
+    "elapsed_s": 25.0,
+    "reading": "top1 well above 1/8 -> the model steers toward a named target; build the twin design. Moves but not toward the named concept -> not target-directed. At chance -> notes/40 kill rule fires, close the line.",
+    "caveat": "The instruction contains the concept word, so a pass may reflect the word being in context rather than steering. Only the twin design separates them."
+  },
+  "rows": [
+    {
+      "kind": "instructed",
+      "concept": "bread",
+      "wording": 0,
+      "rank_of_named": 6,
+      "top1": false,
+      "projections": {
+        "bread": -0.9180614948272705,
+        "clock": -0.17201188206672668,
+        "desert": 0.28022491931915283,
+        "hospital": 3.323774814605713,
+        "ocean": 1.3035805225372314,
+        "spider": -1.9745689630508423,
+        "violin": -0.44782277941703796,
+        "volcano": -0.6869136691093445
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "bread",
+      "wording": 1,
+      "rank_of_named": 6,
+      "top1": false,
+      "projections": {
+        "bread": -1.084364891052246,
+        "clock": -0.37486618757247925,
+        "desert": 0.37284165620803833,
+        "hospital": 3.245661735534668,
+        "ocean": 1.240014672279358,
+        "spider": -2.008437156677246,
+        "violin": -0.2622765302658081,
+        "volcano": -0.45482438802719116
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "bread",
+      "wording": 2,
+      "rank_of_named": 6,
+      "top1": false,
+      "projections": {
+        "bread": -0.802890419960022,
+        "clock": -0.2964906692504883,
+        "desert": 0.3322841227054596,
+        "hospital": 3.1398472785949707,
+        "ocean": 1.1621315479278564,
+        "spider": -1.9471721649169922,
+        "violin": -0.3048822283744812,
+        "volcano": -0.6470898389816284
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "bread",
+      "wording": 3,
+      "rank_of_named": 6,
+      "top1": false,
+      "projections": {
+        "bread": -1.0101184844970703,
+        "clock": -0.236624076962471,
+        "desert": 0.40975454449653625,
+        "hospital": 3.2079737186431885,
+        "ocean": 1.1713957786560059,
+        "spider": -1.9677501916885376,
+        "violin": -0.35135388374328613,
+        "volcano": -0.5464374423027039
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "clock",
+      "wording": 0,
+      "rank_of_named": 3,
+      "top1": false,
+      "projections": {
+        "bread": -0.9408968091011047,
+        "clock": -0.1288040280342102,
+        "desert": 0.23792798817157745,
+        "hospital": 3.3904917240142822,
+        "ocean": 1.2867488861083984,
+        "spider": -1.9327346086502075,
+        "violin": -0.4884474277496338,
+        "volcano": -0.7060494422912598
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "clock",
+      "wording": 1,
+      "rank_of_named": 4,
+      "top1": false,
+      "projections": {
+        "bread": -1.167089819908142,
+        "clock": -0.3669443130493164,
+        "desert": 0.368232399225235,
+        "hospital": 3.2663912773132324,
+        "ocean": 1.2617920637130737,
+        "spider": -1.9263321161270142,
+        "violin": -0.28303176164627075,
+        "volcano": -0.465360164642334
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "clock",
+      "wording": 2,
+      "rank_of_named": 3,
+      "top1": false,
+      "projections": {
+        "bread": -0.819841742515564,
+        "clock": -0.21423131227493286,
+        "desert": 0.335837185382843,
+        "hospital": 3.230372667312622,
+        "ocean": 1.1055059432983398,
+        "spider": -1.9111665487289429,
+        "violin": -0.37902578711509705,
+        "volcano": -0.6950116157531738
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "clock",
+      "wording": 3,
+      "rank_of_named": 3,
+      "top1": false,
+      "projections": {
+        "bread": -1.0867373943328857,
+        "clock": -0.21211408078670502,
+        "desert": 0.37057095766067505,
+        "hospital": 3.3119394779205322,
+        "ocean": 1.183452844619751,
+        "spider": -1.8809230327606201,
+        "violin": -0.392551064491272,
+        "volcano": -0.5955665111541748
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "desert",
+      "wording": 0,
+      "rank_of_named": 2,
+      "top1": false,
+      "projections": {
+        "bread": -1.0190237760543823,
+        "clock": -0.1808600127696991,
+        "desert": 0.31706345081329346,
+        "hospital": 3.409733295440674,
+        "ocean": 1.357419490814209,
+        "spider": -2.0246264934539795,
+        "violin": -0.5072705149650574,
+        "volcano": -0.6085373163223267
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "desert",
+      "wording": 1,
+      "rank_of_named": 2,
+      "top1": false,
+      "projections": {
+        "bread": -1.1415538787841797,
+        "clock": -0.3879604935646057,
+        "desert": 0.3916780650615692,
+        "hospital": 3.2899162769317627,
+        "ocean": 1.2423583269119263,
+        "spider": -1.9949578046798706,
+        "violin": -0.2884904742240906,
+        "volcano": -0.4239698052406311
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "desert",
+      "wording": 2,
+      "rank_of_named": 2,
+      "top1": false,
+      "projections": {
+        "bread": -0.9162364602088928,
+        "clock": -0.33313852548599243,
+        "desert": 0.3928603529930115,
+        "hospital": 3.244349479675293,
+        "ocean": 1.2300630807876587,
+        "spider": -1.9664413928985596,
+        "violin": -0.3800368905067444,
+        "volcano": -0.5929790735244751
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "desert",
+      "wording": 3,
+      "rank_of_named": 2,
+      "top1": false,
+      "projections": {
+        "bread": -1.1126493215560913,
+        "clock": -0.2667735517024994,
+        "desert": 0.44812241196632385,
+        "hospital": 3.2452361583709717,
+        "ocean": 1.2450979948043823,
+        "spider": -1.9886784553527832,
+        "violin": -0.3942781090736389,
+        "volcano": -0.469005286693573
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "hospital",
+      "wording": 0,
+      "rank_of_named": 0,
+      "top1": true,
+      "projections": {
+        "bread": -1.0334442853927612,
+        "clock": -0.1182299256324768,
+        "desert": 0.2530227303504944,
+        "hospital": 3.416471481323242,
+        "ocean": 1.3826515674591064,
+        "spider": -2.0503010749816895,
+        "violin": -0.4860646724700928,
+        "volcano": -0.6182417869567871
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "hospital",
+      "wording": 1,
+      "rank_of_named": 0,
+      "top1": true,
+      "projections": {
+        "bread": -1.1380250453948975,
+        "clock": -0.3953110873699188,
+        "desert": 0.41229134798049927,
+        "hospital": 3.240654230117798,
+        "ocean": 1.2695813179016113,
+        "spider": -1.9651552438735962,
+        "violin": -0.3240855038166046,
+        "volcano": -0.40845993161201477
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "hospital",
+      "wording": 2,
+      "rank_of_named": 0,
+      "top1": true,
+      "projections": {
+        "bread": -0.8908793926239014,
+        "clock": -0.29370155930519104,
+        "desert": 0.30879250168800354,
+        "hospital": 3.2712318897247314,
+        "ocean": 1.2016329765319824,
+        "spider": -1.9496575593948364,
+        "violin": -0.3671487271785736,
+        "volcano": -0.6118817329406738
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "hospital",
+      "wording": 3,
+      "rank_of_named": 0,
+      "top1": true,
+      "projections": {
+        "bread": -1.1056766510009766,
+        "clock": -0.23066580295562744,
+        "desert": 0.37554478645324707,
+        "hospital": 3.288039445877075,
+        "ocean": 1.213228464126587,
+        "spider": -1.9680273532867432,
+        "violin": -0.3646466135978699,
+        "volcano": -0.5096615552902222
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "ocean",
+      "wording": 0,
+      "rank_of_named": 1,
+      "top1": false,
+      "projections": {
+        "bread": -1.0662870407104492,
+        "clock": -0.26239994168281555,
+        "desert": 0.30684107542037964,
+        "hospital": 3.3805880546569824,
+        "ocean": 1.467206358909607,
+        "spider": -2.0317418575286865,
+        "violin": -0.47448545694351196,
+        "volcano": -0.5684106349945068
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "ocean",
+      "wording": 1,
+      "rank_of_named": 1,
+      "top1": false,
+      "projections": {
+        "bread": -1.1906960010528564,
+        "clock": -0.4903299808502197,
+        "desert": 0.410725861787796,
+        "hospital": 3.2529828548431396,
+        "ocean": 1.3093141317367554,
+        "spider": -1.9474961757659912,
+        "violin": -0.23106849193572998,
+        "volcano": -0.4289074242115021
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "ocean",
+      "wording": 2,
+      "rank_of_named": 1,
+      "top1": false,
+      "projections": {
+        "bread": -0.9233846664428711,
+        "clock": -0.37414753437042236,
+        "desert": 0.36073118448257446,
+        "hospital": 3.2151334285736084,
+        "ocean": 1.2917640209197998,
+        "spider": -1.9317700862884521,
+        "violin": -0.3442230820655823,
+        "volcano": -0.6188223361968994
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "ocean",
+      "wording": 3,
+      "rank_of_named": 1,
+      "top1": false,
+      "projections": {
+        "bread": -1.0989941358566284,
+        "clock": -0.3147570490837097,
+        "desert": 0.4069741666316986,
+        "hospital": 3.2694549560546875,
+        "ocean": 1.3047256469726562,
+        "spider": -1.9683680534362793,
+        "violin": -0.3759315013885498,
+        "volcano": -0.5144490003585815
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "spider",
+      "wording": 0,
+      "rank_of_named": 7,
+      "top1": false,
+      "projections": {
+        "bread": -0.94776850938797,
+        "clock": -0.2133215069770813,
+        "desert": 0.25542670488357544,
+        "hospital": 3.425170421600342,
+        "ocean": 1.257712721824646,
+        "spider": -1.8606281280517578,
+        "violin": -0.485606849193573,
+        "volcano": -0.7183820009231567
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "spider",
+      "wording": 1,
+      "rank_of_named": 7,
+      "top1": false,
+      "projections": {
+        "bread": -1.0895302295684814,
+        "clock": -0.39923688769340515,
+        "desert": 0.37736934423446655,
+        "hospital": 3.1732492446899414,
+        "ocean": 1.1962083578109741,
+        "spider": -1.893648624420166,
+        "violin": -0.24473148584365845,
+        "volcano": -0.4644823372364044
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "spider",
+      "wording": 2,
+      "rank_of_named": 7,
+      "top1": false,
+      "projections": {
+        "bread": -0.8744956851005554,
+        "clock": -0.3204570710659027,
+        "desert": 0.37509918212890625,
+        "hospital": 3.280214548110962,
+        "ocean": 1.1176903247833252,
+        "spider": -1.838658332824707,
+        "violin": -0.3558541536331177,
+        "volcano": -0.7271809577941895
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "spider",
+      "wording": 3,
+      "rank_of_named": 7,
+      "top1": false,
+      "projections": {
+        "bread": -1.0816911458969116,
+        "clock": -0.27752628922462463,
+        "desert": 0.405129611492157,
+        "hospital": 3.2976200580596924,
+        "ocean": 1.1721994876861572,
+        "spider": -1.868117094039917,
+        "violin": -0.3728156089782715,
+        "volcano": -0.5844007134437561
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "violin",
+      "wording": 0,
+      "rank_of_named": 4,
+      "top1": false,
+      "projections": {
+        "bread": -0.937755823135376,
+        "clock": -0.1620999574661255,
+        "desert": 0.3267381191253662,
+        "hospital": 3.291126251220703,
+        "ocean": 1.297668218612671,
+        "spider": -1.9964829683303833,
+        "violin": -0.41371819376945496,
+        "volcano": -0.6995424032211304
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "violin",
+      "wording": 1,
+      "rank_of_named": 3,
+      "top1": false,
+      "projections": {
+        "bread": -1.1046435832977295,
+        "clock": -0.38071608543395996,
+        "desert": 0.4076331853866577,
+        "hospital": 3.2023041248321533,
+        "ocean": 1.23871648311615,
+        "spider": -2.0134642124176025,
+        "violin": -0.23983445763587952,
+        "volcano": -0.4396008551120758
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "violin",
+      "wording": 2,
+      "rank_of_named": 3,
+      "top1": false,
+      "projections": {
+        "bread": -0.8500673770904541,
+        "clock": -0.29805988073349,
+        "desert": 0.3727434575557709,
+        "hospital": 3.181347608566284,
+        "ocean": 1.1321135759353638,
+        "spider": -1.9932373762130737,
+        "violin": -0.23132488131523132,
+        "volcano": -0.6801612377166748
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "violin",
+      "wording": 3,
+      "rank_of_named": 4,
+      "top1": false,
+      "projections": {
+        "bread": -1.0967588424682617,
+        "clock": -0.24995830655097961,
+        "desert": 0.42588263750076294,
+        "hospital": 3.2155959606170654,
+        "ocean": 1.185070514678955,
+        "spider": -2.0193679332733154,
+        "violin": -0.25422370433807373,
+        "volcano": -0.531266987323761
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "volcano",
+      "wording": 0,
+      "rank_of_named": 5,
+      "top1": false,
+      "projections": {
+        "bread": -1.0267595052719116,
+        "clock": -0.18822909891605377,
+        "desert": 0.2740896940231323,
+        "hospital": 3.4336698055267334,
+        "ocean": 1.3240855932235718,
+        "spider": -2.0451927185058594,
+        "violin": -0.4616466164588928,
+        "volcano": -0.5781559348106384
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "volcano",
+      "wording": 1,
+      "rank_of_named": 5,
+      "top1": false,
+      "projections": {
+        "bread": -1.170884132385254,
+        "clock": -0.3991735577583313,
+        "desert": 0.3918266296386719,
+        "hospital": 3.265493869781494,
+        "ocean": 1.2564750909805298,
+        "spider": -1.9949127435684204,
+        "violin": -0.24979567527770996,
+        "volcano": -0.41575485467910767
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "volcano",
+      "wording": 2,
+      "rank_of_named": 5,
+      "top1": false,
+      "projections": {
+        "bread": -0.926271915435791,
+        "clock": -0.30066999793052673,
+        "desert": 0.3626626133918762,
+        "hospital": 3.281641721725464,
+        "ocean": 1.161736011505127,
+        "spider": -1.9857892990112305,
+        "violin": -0.332309365272522,
+        "volcano": -0.5950466394424438
+      }
+    },
+    {
+      "kind": "instructed",
+      "concept": "volcano",
+      "wording": 3,
+      "rank_of_named": 5,
+      "top1": false,
+      "projections": {
+        "bread": -1.1500967741012573,
+        "clock": -0.2682926654815674,
+        "desert": 0.38853582739830017,
+        "hospital": 3.2739579677581787,
+        "ocean": 1.2326997518539429,
+        "spider": -1.9912779331207275,
+        "violin": -0.3293665051460266,
+        "volcano": -0.4587286412715912
+      }
+    },
+    {
+      "kind": "neutral",
+      "concept": null,
+      "wording": 0,
+      "rank_of_named": null,
+      "top1": null,
+      "projections": {
+        "bread": -1.2190971374511719,
+        "clock": -0.2814073860645294,
+        "desert": 0.222864031791687,
+        "hospital": 3.351733684539795,
+        "ocean": 1.3425624370574951,
+        "spider": -1.8868352174758911,
+        "violin": -0.36536937952041626,
+        "volcano": -0.4479767680168152
+      }
+    },
+    {
+      "kind": "neutral",
+      "concept": null,
+      "wording": 1,
+      "rank_of_named": null,
+      "top1": null,
+      "projections": {
+        "bread": -1.0385318994522095,
+        "clock": -0.5000429749488831,
+        "desert": 0.28424495458602905,
+        "hospital": 3.2353668212890625,
+        "ocean": 1.1726799011230469,
+        "spider": -1.7956653833389282,
+        "violin": -0.31681281328201294,
+        "volcano": -0.3937498927116394
+      }
+    },
+    {
+      "kind": "neutral",
+      "concept": null,
+      "wording": 2,
+      "rank_of_named": null,
+      "top1": null,
+      "projections": {
+        "bread": -1.1607000827789307,
+        "clock": -0.29698446393013,
+        "desert": 0.23733855783939362,
+        "hospital": 3.2999141216278076,
+        "ocean": 1.3315327167510986,
+        "spider": -1.9542709589004517,
+        "violin": -0.3959783911705017,
+        "volcano": -0.35123372077941895
+      }
+    },
+    {
+      "kind": "neutral",
+      "concept": null,
+      "wording": 3,
+      "rank_of_named": null,
+      "top1": null,
+      "projections": {
+        "bread": -1.2888262271881104,
+        "clock": -0.24765796959400177,
+        "desert": 0.23958514630794525,
+        "hospital": 3.4554715156555176,
+        "ocean": 1.3225114345550537,
+        "spider": -1.9972108602523804,
+        "violin": -0.4014745354652405,
+        "volcano": -0.34373000264167786
+      }
+    }
+  ]
+}

@@ -111,6 +111,72 @@ in the context, not because the model steered anything. That is the confound the
 twin design removes and the capacity check cannot. **A pass here is a licence to
 build, not a finding**, and it must not be reported as one.
 
+## Result, 2026-08-17 — at chance, and the line closes
+
+`results/self_control_capacity_v1.json`. 25 seconds.
+
+| | measured | chance |
+|---|---:|---:|
+| named concept's direction ranked first | **0.125** | 0.125 |
+| mean rank of the named concept, out of 8 | **3.47** | 3.50 |
+
+Identical at 0.125 across all four instruction wordings. **The kill rule fires.**
+
+**And the shape of it is worse than the number.** One direction — `hospital` — ranks
+first in **all 36 prompts**, including all four neutral ones that name no concept at
+all. Telling the model to think about the ocean does not change which concept
+direction its state sits nearest. The 0.125 is not a noisy scatter around chance; it
+is one fixed answer that happens to be right on the 4 trials out of 32 where
+`hospital` was the concept named.
+
+**A finer measure, declared post-hoc and not a finding.** Rather than the ranking,
+ask whether the named concept's own projection *rises* relative to the neutral
+prompts. It does in 22 of 32 trials, mean shift +0.061. But the independent unit here
+is the **concept, not the trial** — four wordings of "think about bread" are not four
+independent draws, and §8 of the handoff records this exact error. At the concept
+level it is **6 of 8, p = 0.145**. Nothing.
+
+Reporting the 22-of-32 as the result would be promoting a measurement artifact to a
+finding on a measure chosen after seeing the declared one fail. That is the pattern
+this repository has retracted six times, and it is named in the handoff as the thing
+not to repeat.
+
+**My prediction was wrong** — I expected a third to two thirds. That is the second
+wrong prediction in a row today, both optimistic, both recorded before the run.
+
+### Two readings, and the saved data cannot separate them
+
+**(a) The model does not steer.** Asked plainly, in four wordings, with the target
+named outright, its state does not move toward the named concept.
+
+**(b) This measurement cannot see steering.** One direction dominating every
+projection — including with nothing asked for — is what a bank with a large shared
+component looks like, which is precisely the trap
+[notes/13](13-shared-axis-audit.md) caught in this repository before. The bank was
+centred, but centring on a separate concept set does not guarantee the *states*
+project cleanly. If the projections are dominated by shared geometry, the ranking
+would sit at chance whether or not the model steered.
+
+**Both readings close the line for now, but they close it differently**, and the
+honest statement is the weaker one: *no steering was detected at the site this
+repository's apparatus lives at, and an instrument explanation has not been ruled
+out.* Not "the model cannot control its own activations".
+
+**What would separate them**, for anyone who wants to reopen it: measure the bank's
+worst off-diagonal overlap first — the gate `run_ift.py` already applies and this
+script does not — and score the shift measure with the concept as the unit,
+**declared in advance**. That is a different experiment, not a rescue of this one.
+
+### What this closes and what it costs
+
+The self-control branch is closed at **25 seconds and no new apparatus**, before the
+twin design was built. That is the capacity check doing its job: five runs were once
+spent in this repository on where to measure before anyone asked whether the model
+could do the task at all.
+
+The escape from notes/30's dilemma — a self-computed state that keeps the
+byte-identical control — remains unbuilt, and this was the cheapest route to it.
+
 ## What it costs
 
 Inference only, Qwen2.5-3B, about 9 GiB. Eight concepts plus a neutral control, a
