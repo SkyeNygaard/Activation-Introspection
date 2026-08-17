@@ -118,6 +118,23 @@ td.outsider{color:var(--green)}
 .limits li{margin-bottom:9px}
 .footer{padding:34px 0 50px;color:var(--muted);font-size:13px;line-height:1.6}
 
+.appgroup{margin-top:34px}
+.appgroup h3{font-size:23px;margin:0 0 6px;letter-spacing:-.02em}
+.appgroup .gdek{color:var(--muted);font-size:16px;line-height:1.5;margin:0 0 16px;max-width:820px}
+.applist{display:grid;gap:10px}
+.exprow{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:64px 1fr 118px;gap:16px;align-items:start}
+.exprow .n{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;color:var(--muted);padding-top:2px}
+.exprow .q{font-size:16px;font-weight:750;line-height:1.4;margin:0 0 5px}
+.exprow .a{font-size:14.5px;color:var(--muted);line-height:1.5;margin:0}
+.pill{font-size:10.5px;font-weight:900;text-transform:uppercase;letter-spacing:.055em;border-radius:999px;padding:6px 10px;white-space:nowrap;text-align:center;justify-self:end}
+.pill.held{color:var(--green);background:var(--green-soft)}
+.pill.gone{color:var(--red);background:var(--red-soft)}
+.pill.blocked{color:var(--muted);background:#f2f4f7}
+.pill.bug{color:var(--orange);background:var(--orange-soft)}
+.pill.old{color:var(--violet);background:var(--violet-soft)}
+.pill.open{color:var(--blue);background:var(--blue-soft)}
+@media(max-width:850px){.exprow{grid-template-columns:1fr}.pill{justify-self:start}}
+
 @media(max-width:850px){
  .grid2,.compare,.evidence3,.whygrid{grid-template-columns:1fr}
  .vs{text-align:center}
@@ -131,7 +148,7 @@ td.outsider{color:var(--green)}
 </style>
 
 <div class="top"><div class="topin"><div class="brand">Activation Introspection · Retained Trace Study</div><nav class="nav">
-<a href="#q1">1. The setup</a><a href="#q2">2. The control</a><a href="#q3">3. The result</a><a href="#q4">4. The ladder</a><a href="#q5">5. Where it breaks</a><a href="#q6">6. A trap</a><a href="#q7">7. Withdrawn</a><a href="#why">Why it matters</a>
+<a href="#q1">1. The setup</a><a href="#q2">2. The control</a><a href="#q3">3. The result</a><a href="#q4">4. The ladder</a><a href="#q5">5. Where it breaks</a><a href="#q6">6. A trap</a><a href="#q7">7. Withdrawn</a><a href="#why">Why it matters</a><a href="#appendix">Appendix</a>
 </nav></div></div>
 
 <header class="hero"><div class="wrap">
@@ -292,6 +309,114 @@ Observation: A routine maintenance record is open. Hidden state marker: §</pre>
 <li><strong>One objection we would raise ourselves.</strong> The standard we test against notes that some internal states may be too low-level for reporting them to count as introspection at all. A planted direction at a single layer is open to exactly that objection.</li>
 </ul>
 </div>
+</div></section>
+
+<section class="section" id="appendix"><div class="wrap">
+<div class="qnum">Appendix</div><h2>Everything else we tried</h2>
+<p class="dek">Thirty-eight experiments on this question. Most did not work, and several worked and then turned out to be wrong. All of them are here, in the order the reasoning went rather than the order they ran. Each one had its question, its prediction and its stopping rule written down before it ran.</p>
+
+<div class="appgroup">
+<h3>Building the instrument, and the mistakes we made doing it</h3>
+<p class="gdek">Three of these are our own bugs. They are listed because each one would have produced a confident, publishable-looking number if nobody had checked.</p>
+<div class="applist">
+<div class="exprow"><div class="n">02</div><div><p class="q">How hard can we push an idea into the model before we break it?</p><p class="a">There is a usable window. Push too hard and the model's output falls apart; too gently and nothing registers.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">03</div><div><p class="q">Are our eight "different" ideas actually different?</p><p class="a">No. Every pair was the same direction, give or take a sign — pushing in <em>ocean</em> was pushing in <em>violin</em>. A stray entry in a template list caused it. Any accuracy measured on that set would have been noise dressed up as a result, and nothing would have raised an error.</p></div><span class="pill bug">Bug found</span></div>
+<div class="exprow"><div class="n">05</div><div><p class="q">Were we asking the model while still holding the idea inside it?</p><p class="a">Yes, and it invalidated everything before it. Asking "what do you see?" while the idea is still being pushed in makes the model say the word for mechanical reasons. A control that asked no question at all scored just as well. Every later experiment asks only after the push has stopped.</p></div><span class="pill bug">Bug found</span></div>
+<div class="exprow"><div class="n">06</div><div><p class="q">Can a model learn a made-up code for its own internal states, from examples?</p><p class="a">Yes — 0.891, with the visible text held identical so the answer cannot be read off the page. This is the design everything else is built on.</p></div><span class="pill held">Held</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>Training a model to report on itself — and then taking the result back</h3>
+<p class="gdek">The training results were real. What we concluded from them was wrong three times, and each correction came from testing the boring explanation we had not ruled out.</p>
+<div class="applist">
+<div class="exprow"><div class="n">07</div><div><p class="q">Can training remove the need for worked examples?</p><p class="a">Yes — 0.927 on directions it had never trained on. This looked like the headline result for two days.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">08</div><div><p class="q">What does training cost?</p><p class="a">It makes the model sensitive to nudges it was previously blind to, and widens the range of directions it can use as a code. We first described this as training destroying its ability to tell real ideas from meaningless ones. That description was wrong and has been corrected.</p></div><span class="pill old">Mostly known</span></div>
+<div class="exprow"><div class="n">11</div><div><p class="q">What if we give a cheap outside method the same internal states?</p><p class="a">It scores 1.000 against the trained model's 0.892, on the identical trials. This is the first retraction and the origin of the whole comparator argument.</p></div><span class="pill gone">Retracted 07</span></div>
+<div class="exprow"><div class="n">12</div><div><p class="q">Is training just a worse version of a simple statistical readout?</p><p class="a">On the states the readout was fitted for, yes — 0.927 against 1.000.</p></div><span class="pill old">Known</span></div>
+<div class="exprow"><div class="n">13</div><div><p class="q">What is our task actually measuring?</p><p class="a">Not what we thought. All eight ideas shared one large common ingredient, so the task collapsed to "was something pushed in, and which way" — a single yes/no axis, never requiring the model to know <em>which</em> idea. The cheap readout we were so impressed by turned out to be the average of our own ideas, matching at 0.99999.</p></div><span class="pill bug">Bug found</span></div>
+<div class="exprow"><div class="n">14</div><div><p class="q">Does the model read meaning, or only disturbance?</p><p class="a">Two real ideas were told apart at 0.899; two meaningless directions pushed equally hard, at 0.594. We read this as evidence for meaning. It is not — every idea had already been demonstrated in the same round, so re-matching explains it. The measurement stands; the conclusion was withdrawn.</p></div><span class="pill gone">Withdrawn</span></div>
+<div class="exprow"><div class="n">15</div><div><p class="q">Does the cheap outsider still win on a task built to need meaning?</p><p class="a">Yes, on all four task shapes. This is the comparator table on this page.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">22</div><div><p class="q">Is there any regime where the model beats the outsider?</p><p class="a">No. We had reported 14 such trials. Counting them the way the protocol declared — in identical-looking pairs — leaves 1. The model was emitting one constant answer regardless of what was pushed in, which reads as "chance" but means "blind".</p></div><span class="pill gone">Corrected</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>Where the ability actually breaks</h3>
+<p class="gdek">Three attempts to find out whether the model understands the ideas or is just matching something it was shown a moment ago.</p>
+<div class="applist">
+<div class="exprow"><div class="n">23</div><div><p class="q">Can it recognise an idea it was not just shown an example of?</p><p class="a">No — 0.083, at the floor, while the cheap outsider on the identical states gets 0.986. A check run beforehand confirmed the information is sitting cleanly in the model's activations.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">24</div><div><p class="q">Is that failure just a bad way of asking?</p><p class="a">No. Five different wordings, with the analysis split before the run. Not one of ten conditions beat chance. Wording is not inert — the best one halves the model's habit of giving one constant answer — which is what makes the failure convincing.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">25</div><div><p class="q">Does letting it reason out loud rescue it?</p><p class="a">Unanswerable, because thinking out loud broke the task itself — the easy control condition fell from 0.694 to about 0.33. Scoring a broken instrument is not a result, so we stopped rather than report the number.</p></div><span class="pill blocked">No answer</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>Five attempts at states the model produced itself</h3>
+<p class="gdek">Everything above uses an idea we planted. Reporting on something the model worked out on its own would be far more convincing, and we could not get there.</p>
+<div class="applist">
+<div class="exprow"><div class="n">09</div><div><p class="q">Can the interface read a state the model computed while following a route?</p><p class="a">Stopped at the safety gate before any result was scored.</p></div><span class="pill blocked">Blocked</span></div>
+<div class="exprow"><div class="n">10</div><div><p class="q">Same question, using arithmetic the model has already worked out.</p><p class="a">The gate failed at every site tested, so not a single reporting trial ran.</p></div><span class="pill blocked">Blocked</span></div>
+<div class="exprow"><div class="n">16</div><div><p class="q">Why do these keep failing — is the hidden thing even learnable?</p><p class="a">Found the cause. The hidden rule we were using scores 0.533 <em>with the arithmetic in plain sight</em>, because its two groups are scattered — each example sits closer to the opposite group than to its own. The interface was never the problem.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">30</div><div><p class="q">Does a model know in advance that it is about to get something wrong?</p><p class="a">Not beyond what the difficulty of the question already tells you. The size of the multiplication alone predicts success at 0.819; the model's own forecast reaches 0.805. A promising lead in the hardest third was killed by its own pre-registered confirmation.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">40</div><div><p class="q">Can the model move its own internal state on request?</p><p class="a">Not detectably. Told plainly to think about one of eight things, in four wordings, the direction it was told to think about ranked first exactly as often as chance. One direction ranked first in all 36 prompts, including four that named no idea at all — so we cannot rule out that our measurement simply could not see steering.</p></div><span class="pill blocked">Closed</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>Testing our own rule on somebody else's material</h3>
+<p class="gdek">The one idea here nobody else had claimed. We tested it the hard way and it did not survive.</p>
+<div class="applist">
+<div class="exprow"><div class="n">19</div><div><p class="q">Can we predict which hidden rules a model will be able to learn?</p><p class="a">12 of 14 correct, with the thresholds written to disk before any accuracy existed. The only genuinely forward-looking prediction in this project.</p></div><span class="pill held">As measured</span></div>
+<div class="exprow"><div class="n">26</div><div><p class="q">Does that still work on rules we did not write?</p><p class="a">No. Fourteen rules written by a model that did not know what was being tested. Agreement fell from 0.785 to 0.403, and the useful half — a green light that had been right 8 times out of 8 — dropped to 4 of 7. A coin flip. This closed the only unclaimed idea we had.</p></div><span class="pill gone">Failed to repeat</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>What counts as a fair comparison</h3>
+<p class="gdek">The standard the field uses says a model introspects if it beats any method of equal or lower cost. We tried to pin down what that actually permits.</p>
+<div class="applist">
+<div class="exprow"><div class="n">17</div><div><p class="q">Is the model's advantage really about who gets more supervision?</p><p class="a">No, and the standard came out worse than we thought. The cheapest possible reader is part of the model itself, and it is cheaper than running the rest of the model — so the test can never be passed on any state that is simple to read.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">18</div><div><p class="q">Then does it work on states that are hard to read?</p><p class="a">There are such states, and the simple readout does drop below the model on them. The test still fails, for a reason worth naming: at the place the model gives its answer, the simple readout gets nothing at all.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">20</div><div><p class="q">What happens if we vary only what the comparison is given?</p><p class="a">The answer changes completely: 0.125, 0.292, 0.667, 0.986 on the same trials. This is the ladder on this page and the central finding.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">21</div><div><p class="q">How much does the wording of the question matter?</p><p class="a">A lot — a 2.4-fold range across six ways of asking, and the obvious phrasing is among the worst. Published five months earlier by someone else, more thoroughly, and we had their paper on file and missed it.</p></div><span class="pill old">Already known</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>Can a broken self-report be repaired?</h3>
+<p class="gdek">If a model's reports about itself are unreliable, the obvious fixes are to let it decline to answer, or to prompt it better. Neither works the way you would hope.</p>
+<div class="applist">
+<div class="exprow"><div class="n">29</div><div><p class="q">Does letting it refuse to answer when unsure help?</p><p class="a">No — and in a trained model it makes things worse. Dropping its least confident reports <em>narrows</em> the gap between real ideas and meaningless ones, while nearly doubling that gap in an untrained model. Letting a model abstain is a standard tool that had never been pointed at reports about internal states.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">31</div><div><p class="q">Why does refusing to answer backfire after training?</p><p class="a">Because filtering for confidence selects for exactly the cases where a trained model is confidently wrong. Half of our prediction was right, and the wrong half was the more useful one.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">32</div><div><p class="q">Is that cost specific to training, or to any way of boosting self-report?</p><p class="a">The published boost we wanted to test does not reach this scale of model, which bounded the question before we could answer it.</p></div><span class="pill blocked">Bounded</span></div>
+<div class="exprow"><div class="n">33</div><div><p class="q">Prompting versus training, side by side.</p><p class="a">Produced a clean-looking three-way pattern on one background text. Every interval included zero, so it could not be reported.</p></div><span class="pill blocked">Too weak</span></div>
+<div class="exprow"><div class="n">34</div><div><p class="q">The same run, with enough data to believe it.</p><p class="a">The clean pattern reversed. It had been an accident of the single background text used. Running all three revealed the real finding underneath: one of them behaved completely differently from the other two, which is what the next group is about.</p></div><span class="pill gone">Reversed 33</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>A question that destroys the answer it was asking for</h3>
+<p class="gdek">Four experiments on the strangest thing we found, ending with the one that cut it down to size.</p>
+<div class="applist">
+<div class="exprow"><div class="n">35</div><div><p class="q">What if the question contradicts the page the model is reading?</p><p class="a">It collapses. Tell the model something was added to its internal state, on text that says nothing changed, and accuracy falls to the floor — on all three contradicting texts, while six neutral and agreeing ones are untouched. The failure is <em>confident</em>: it gives one constant answer and its certainty goes up.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">36</div><div><p class="q">Is it the meaning of the text, or the exact sentence?</p><p class="a">The meaning. Nine sentences, matched for length, separating perfectly by whether they deny that anything changed.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">37</div><div><p class="q">Do all questions that assert internal change do this?</p><p class="a">No — it is largely one particular question. Two others that make the same assertion behave quite differently. So no claim can be made about this class of question as a whole.</p></div><span class="pill gone">Narrowed 36</span></div>
+<div class="exprow"><div class="n">41</div><div><p class="q">How often does this happen on text nobody chose to break it?</p><p class="a">Never, in 24 tries. Sentences written by a model that did not know what we were testing. Not one inverted, and on ordinary text the same question <em>helps</em> — 17 up against 5 down. Our broader claim about published averages hiding this was withdrawn.</p></div><span class="pill gone">Bounded 34</span></div>
+<div class="exprow"><div class="n">42</div><div><p class="q">What about the kind of text this would be used on — system monitoring logs?</p><p class="a">Zero again, in 24 more. We expected 4 to 10 and were wrong. The failure needs text that flatly denies everything, not a log line reporting that one subsystem looks normal. Across all three attempts it has never appeared on any text not written to produce it.</p></div><span class="pill blocked">Line closed</span></div>
+</div>
+</div>
+
+<div class="appgroup">
+<h3>What the model is using inside</h3>
+<p class="gdek">The most recent line, and the only one that intervenes on the machinery rather than measuring what comes out of it.</p>
+<div class="applist">
+<div class="exprow"><div class="n">38</div><div><p class="q">Are "something was pushed in" and "what was pushed in" the same thing inside the model?</p><p class="a">No — they are cleanly separable. One single direction carries all of the first and none of the second. Remove it and the state can no longer tell you it was disturbed, while still telling you it says <em>guitar</em> just as well. Holds across a twenty-fold range of push strengths, on a current model.</p></div><span class="pill held">Held</span></div>
+<div class="exprow"><div class="n">39</div><div><p class="q">Is that the direction the model's own answer depends on?</p><p class="a">No. Removing it changes almost nothing — 7 answers flip one way, 3 the other, out of 288. But that direction carries only 28% of what a push does, so seven tenths of the disturbance was still there. A weak result, and we say so.</p></div><span class="pill blocked">Weak null</span></div>
+</div>
+</div>
+
+<div class="scale-note" style="margin-top:32px"><strong>Two experiments are not listed here.</strong> Notes 27 and 28 belong to a different project about attention mechanisms, not to this one. They are in the same lab record because they were run in the same weeks.</div>
 </div></section>
 
 <footer class="footer"><div class="wrap">
