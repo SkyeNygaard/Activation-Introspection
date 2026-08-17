@@ -106,6 +106,68 @@ rather than absence reports.
 I was right about notes/41 and wrong twice before it today. This prediction is the
 one I have the least basis for.
 
+## Result, 2026-08-17 — zero again, and the line closes
+
+`results/log_carriers_v1_summary.json`. 2,592 episodes, 15 minutes.
+
+**Anchor 0.889** against notes/14's published 0.899. Fourth reproduction today.
+
+**0 of 24 log carriers inverted.** My prediction of 4 to 10 was **wrong**.
+
+| population | inverted | prompt effect | mean |
+|---|---:|---|---:|
+| notes/41, scene descriptions | 0 of 24 | 17 up, 5 down | +0.068 |
+| **notes/42, monitoring logs** | **0 of 24** | 12 up, 8 down | **+0.042** |
+| the constructed carrier "Nothing changed." | inverts | 1.000 → 0.167 | **−0.833** |
+
+The pre-registered stance split, which is the part I most wanted:
+
+| blind label | n | mean effect | worst |
+|---|---:|---:|---:|
+| **B — reports nothing unusual** | 5 | **−0.025** | 0.833 → 0.583 |
+| A — reports an event occurred | 19 | +0.059 | 0.792 → 0.417 |
+
+The direction matches the stance account — normality lines do worse than event lines,
+by 0.084 — and **with five points on one side that is not evidence of anything.** I
+am recording the direction and declining to call it support.
+
+### What closes, and it is the right outcome to act on
+
+This was the declared "rate near zero again" branch: **the prompt-conflict line
+closes.** Three runs — [34](34-three-boosts-powered.md), [41](41-how-often-does-the-prompt-backfire.md),
+and this one — and the inversion has never appeared on any population that was not
+written to produce it.
+
+The effect is real, large, and reproducible on the constructed carrier. It did not
+occur once in 48 blind draws across two deliberately different populations, including
+the domain it was most likely to inhabit. **It should stop being featured as a
+headline and be reported as what it is: a demonstrable failure mode of an elicitation
+prompt on text that flatly contradicts it, with no measured base rate anywhere.**
+
+### The refinement, offered as an observation and not a finding
+
+The closest thing to an inversion is the one carrier that reports an explicit absence
+— *"Environmental sensors detected no abnormal humidity or airflow changes"* — which
+is also the worst in its group at −0.250 and lifts constant-labelling to 0.417. It
+still lands nowhere near *"Nothing changed."*
+
+The distinction that would explain it: **"Nothing changed" denies everything;
+"no abnormal humidity was detected" denies one thing about one subsystem.** A
+totalising denial contradicts *"something has been added to your internal state"*
+head-on; a scoped one does not.
+
+That is post-hoc reasoning about which of five sentences is most totalising, on n = 5.
+It is written down as a hypothesis someone could test with carriers built to vary
+scope of denial while holding stance constant — **not as a result, and not as a
+reason to run a fourth iteration of this line.** The line is closed; if that
+hypothesis is worth testing it is worth testing from a fresh design.
+
+### What today's four runs bought
+
+Two nulls, one withdrawal, one closure — and the thing that survives all of them is
+the instrument. `0.899` reproduced at **0.885, 0.889, 0.889** across three scripts
+written today against a number frozen weeks ago.
+
 ## What it costs
 
 2,592 episodes, inference only, one model load, about **14 minutes** — notes/41's run

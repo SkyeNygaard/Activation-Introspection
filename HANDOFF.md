@@ -332,7 +332,23 @@ violation of that file's own rule.
   [`PAPERS-REVIEWED.md`](spar-application/PAPERS-REVIEWED.md), which is the new
   ledger of what has actually been read and to what depth.
 
-**The best-established result here is [36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md),
+**BOUNDED 2026-08-17 — read this before quoting anything in the rest of this section.**
+[notes/41](activation-introspection/notes/41-how-often-does-the-prompt-backfire.md) and
+[notes/42](activation-introspection/notes/42-is-the-failure-mode-the-domains-house-style.md)
+tested the base rate of this failure on carrier text generated blind, by the notes/26
+procedure, in two deliberately different populations: ordinary scene descriptions, and
+monitoring/status log lines — the domain an introspective monitor would actually be
+deployed against. **The inversion occurred 0 times in 48 blind draws.** It reproduces
+exactly on the constructed carrier (`1.000 → 0.167`), and on unselected text the same
+prompt *helps* (notes/41: 17 up against 5 down, p = 0.017).
+
+So `34`'s inference that pooled prompting gains "could be averaging over exactly this"
+is **withdrawn as a general claim about the field**, and the prompt-conflict line is
+closed. What stands: an elicitation prompt is destroyed by text that flatly
+contradicts it, and no measured base rate exists anywhere for such text. **Do not lead
+an application with this.**
+
+**Before that bounding, the best-established result here was [36](activation-introspection/notes/36-is-it-the-stance-or-the-sentence.md),
 added 2026-08-13 and narrowed the same day by
 [37](activation-introspection/notes/37-is-it-the-relation-or-the-instruction.md).**
 `24`'s `introspect` instruction **destroys the readout on carrier text that denies

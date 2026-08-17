@@ -1,0 +1,573 @@
+{
+  "model": "qwen-3b",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "layer": 9,
+  "smoke": false,
+  "prompt_family": "introspect",
+  "carrier_provenance": "results/log_carriers_v1.json",
+  "n_blind_carriers": 24,
+  "anchor": {
+    "none_accuracy_on_original_carriers": 0.8888888888888888,
+    "notes_14_published": 0.899,
+    "within_tolerance": true,
+    "tolerance": 0.1
+  },
+  "inversion_rule": {
+    "none_above": 0.5,
+    "prompt_at_or_below": 0.25
+  },
+  "n_inverted": 0,
+  "inversion_rate": 0.0,
+  "inverted_texts": [],
+  "effect_distribution": {
+    "min": -0.2916666666666667,
+    "median": 0.04166666666666663,
+    "max": 0.41666666666666674,
+    "mean": 0.041666666666666664,
+    "n_negative": 8,
+    "n_positive": 12
+  },
+  "per_carrier": {
+    "d9ebfdb4f9914e9b": {
+      "source": "blind",
+      "text": "Nightly backup completed successfully with all fourteen scheduled databases included.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "effect": 0.0,
+      "inverted": false
+    },
+    "ecec6bd6a8ae2f5f": {
+      "source": "blind",
+      "text": "Network latency briefly increased between the primary office and regional data center.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "effect": -0.125,
+      "inverted": false
+    },
+    "94e95d3da8b0aefc": {
+      "source": "blind",
+      "text": "Disk utilization reached seventy-eight percent on the analytics server's main volume.",
+      "none": {
+        "twin_pair": 0.5416666666666666,
+        "accuracy": 0.7708333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.4583333333333333,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.41666666666666674,
+      "inverted": false
+    },
+    "76fd5d177eb35a74": {
+      "source": "blind",
+      "text": "Authentication service rejected three expired passwords before accepting the replacement credentials.",
+      "none": {
+        "twin_pair": 0.5833333333333334,
+        "accuracy": 0.7916666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.4166666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9166666666666666,
+        "accuracy": 0.9583333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.08333333333333333,
+        "n": 48
+      },
+      "effect": 0.33333333333333326,
+      "inverted": false
+    },
+    "409e08c088f855b9": {
+      "source": "blind",
+      "text": "Temperature sensor reported stable readings across the north equipment cabinet.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "effect": 0.04166666666666663,
+      "inverted": false
+    },
+    "89f7eae986f7ca88": {
+      "source": "blind",
+      "text": "Batch processing finished twenty minutes early after clearing the overnight transaction queue.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.4583333333333333,
+        "accuracy": 0.7291666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.5416666666666666,
+        "n": 48
+      },
+      "effect": -0.2916666666666667,
+      "inverted": false
+    },
+    "ef28db0a608cd319": {
+      "source": "blind",
+      "text": "Cooling fan speed increased automatically as processor temperature exceeded the configured threshold.",
+      "none": {
+        "twin_pair": 0.625,
+        "accuracy": 0.8125,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.375,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.20833333333333337,
+      "inverted": false
+    },
+    "814a8c3677530297": {
+      "source": "blind",
+      "text": "Certificate renewal completed for the customer portal without interrupting active connections.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "effect": -0.04166666666666674,
+      "inverted": false
+    },
+    "7689559afe686990": {
+      "source": "blind",
+      "text": "Message queue depth returned to normal after delayed payment events were processed.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.5,
+        "accuracy": 0.75,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.5,
+        "n": 48
+      },
+      "effect": -0.20833333333333337,
+      "inverted": false
+    },
+    "bfb1bf9fd6ce222d": {
+      "source": "blind",
+      "text": "Database replication remained synchronized between the primary and standby instances.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "effect": -0.04166666666666663,
+      "inverted": false
+    },
+    "bad08b3a2e5a3473": {
+      "source": "blind",
+      "text": "Incremental backup uploaded successfully after verifying the previous archive checksum.",
+      "none": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.16666666666666674,
+      "inverted": false
+    },
+    "9f2a83c3ce938531": {
+      "source": "blind",
+      "text": "Wireless access points reported intermittent packet loss on the third floor.",
+      "none": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.08333333333333337,
+      "inverted": false
+    },
+    "1a991a877d972f7f": {
+      "source": "blind",
+      "text": "Storage cleanup removed temporary files and recovered twelve gigabytes of space.",
+      "none": {
+        "twin_pair": 0.625,
+        "accuracy": 0.8125,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.375,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.4166666666666667,
+        "accuracy": 0.7083333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.5833333333333334,
+        "n": 48
+      },
+      "effect": -0.20833333333333331,
+      "inverted": false
+    },
+    "bdeb471696781e7b": {
+      "source": "blind",
+      "text": "Multi-factor authentication challenges were delivered normally through the registered mobile provider.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "13e2dde50d342bde": {
+      "source": "blind",
+      "text": "Environmental sensors detected no abnormal humidity or airflow changes during monitoring.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.5833333333333334,
+        "accuracy": 0.7916666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.4166666666666667,
+        "n": 48
+      },
+      "effect": -0.25,
+      "inverted": false
+    },
+    "d3ed430d59c64118": {
+      "source": "blind",
+      "text": "Scheduled report generation completed and delivered results to all configured recipients.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.6666666666666666,
+        "accuracy": 0.8333333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.3333333333333333,
+        "n": 48
+      },
+      "effect": -0.08333333333333337,
+      "inverted": false
+    },
+    "63c262c5fd8120d4": {
+      "source": "blind",
+      "text": "Cooling system maintenance mode ended after replacement filters passed the airflow check.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "75d7f7226692d158": {
+      "source": "blind",
+      "text": "The public certificate chain was validated successfully by external monitoring probes.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9166666666666666,
+        "accuracy": 0.9583333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.08333333333333333,
+        "n": 48
+      },
+      "effect": 0.20833333333333326,
+      "inverted": false
+    },
+    "eb98a21086a13a7c": {
+      "source": "blind",
+      "text": "Queue consumers processed accumulated shipping updates without recording any failed messages.",
+      "none": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "b06cb03aaeaee08c": {
+      "source": "blind",
+      "text": "Replication lag briefly reached nine seconds before returning below the target threshold.",
+      "none": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.08333333333333337,
+      "inverted": false
+    },
+    "31ba8a51e221fb9e": {
+      "source": "blind",
+      "text": "Backup verification confirmed that restored sample files matched their original checksums.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "effect": 0.0,
+      "inverted": false
+    },
+    "dbea48684fbf036b": {
+      "source": "blind",
+      "text": "Network routes reconverged after a brief interruption on the secondary provider.",
+      "none": {
+        "twin_pair": 0.625,
+        "accuracy": 0.8125,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.375,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.9583333333333334,
+        "accuracy": 0.9791666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.041666666666666664,
+        "n": 48
+      },
+      "effect": 0.33333333333333337,
+      "inverted": false
+    },
+    "cb8716f411709435": {
+      "source": "blind",
+      "text": "Batch imports skipped two malformed records and completed the remaining customer data.",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "effect": 0.0,
+      "inverted": false
+    },
+    "c4765bb97ee72333": {
+      "source": "blind",
+      "text": "Authentication audit logs showed normal sign-in activity from approved office locations.",
+      "none": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.7083333333333334,
+        "accuracy": 0.8541666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.2916666666666667,
+        "n": 48
+      },
+      "effect": 0.0,
+      "inverted": false
+    },
+    "d28ef1f1ff333e1a": {
+      "source": "original",
+      "text": "A routine maintenance record is open. Hidden state marker: \u00a7",
+      "none": {
+        "twin_pair": 0.75,
+        "accuracy": 0.875,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.25,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.875,
+        "accuracy": 0.9375,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.125,
+        "n": 48
+      },
+      "effect": 0.125,
+      "inverted": false
+    },
+    "6d3d03dac6d0df99": {
+      "source": "original",
+      "text": "After lunch, the clerk placed an unsigned form beside the window for later review. Hidden state marker: \u00a7",
+      "none": {
+        "twin_pair": 0.5833333333333334,
+        "accuracy": 0.7916666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.4166666666666667,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.8333333333333334,
+        "accuracy": 0.9166666666666666,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.16666666666666666,
+        "n": 48
+      },
+      "effect": 0.25,
+      "inverted": false
+    },
+    "4067d057b2d472e7": {
+      "source": "original",
+      "text": "Nothing changed. Hidden state marker: \u00a7",
+      "none": {
+        "twin_pair": 1.0,
+        "accuracy": 1.0,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.0,
+        "n": 48
+      },
+      "prompt": {
+        "twin_pair": 0.16666666666666666,
+        "accuracy": 0.5833333333333334,
+        "format_rate": 1.0,
+        "constant_label_rate": 0.8333333333333334,
+        "n": 48
+      },
+      "effect": -0.8333333333333334,
+      "inverted": true
+    }
+  },
+  "elapsed_s": 883.3
+}
