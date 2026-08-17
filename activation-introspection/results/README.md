@@ -1,5 +1,32 @@
 # Result artifact status
 
+## Artifacts added 2026-08-17
+
+All inference-only, all produced against a committed working tree, all from scripts
+that refuse to overwrite an existing artifact.
+
+| artifact | note | what it holds |
+|---|---|---|
+| `readout_ablation_icl_v1_{raw,summary}` | [39](../notes/39-what-does-the-model-actually-use.md) | Content task with the shared displacement direction projected out of the readout, against a random-direction control. Includes `ablation_verification`, which records the readout's projection before and after (−118.77 → 0.51) so a silently-dead hook cannot pass as a null |
+| `self_control_capacity_v1.json` | [40](../notes/40-can-it-move-its-own-state.md) | Whether a plain instruction moves the state toward a named concept. Top-1 at chance. Stores the full eight-way projection per prompt, so the fixed-winner pattern is checkable from the file |
+| `blind_carriers_v1.json` | [41](../notes/41-how-often-does-the-prompt-backfire.md) | 24 carrier sentences generated blind, **with the generating prompt, the tool and flags, and the pre-scoring inspection note stored alongside them** |
+| `blind_carriers_v1_{raw,summary}` | [41](../notes/41-how-often-does-the-prompt-backfire.md) | The prompting effect per carrier on those 24. 0 inversions |
+| `log_carriers_v1.json` | [42](../notes/42-is-the-failure-mode-the-domains-house-style.md) | 24 monitoring-log lines generated blind, **plus a stance label per line produced by a separate blind call before the model ran**, so the split is pre-registered rather than chosen afterwards |
+| `log_carriers_v1_{raw,summary}` | [42](../notes/42-is-the-failure-mode-the-domains-house-style.md) | Same measurement on the log population. 0 inversions |
+| `ladder_powered_v1_{raw,summary}` | [43](../notes/43-the-ladder-at-proper-power.md) | Every comparator tier measured in one process, 528 rows, 11 carriers × 3 strengths × 2 elicitations |
+
+**One caveat carried in the data rather than only in a note.** In
+`ladder_powered_v1`, the free-text tier's strength sweep is **void**: the generation
+helper took no magnitude and ran at 2.0 in all three cells. It is detectable from the
+raw file — the report string is identical across strengths in 176 of 176 cells. The
+model and lens tiers varied correctly and are valid. Fixed for any rerun.
+
+**One artifact deliberately not produced.** `notes/38`'s training arm has failed three
+times and no v4 was run. The unrun diagnostic — a degeneracy check on the eight
+training concepts, and scoring the adapter on the concepts it trained on — is recorded
+in that note.
+
+
 ## Which artifacts cannot be regenerated from source — checked 2026-08-14
 
 Protocols record the SHA-256 of every file that generated them. Nine of those

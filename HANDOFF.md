@@ -6,7 +6,76 @@ then the notes in order.
 
 ---
 
-## 0a. State at the end of 2026-08-14 — start here
+## 0aa. State at the end of 2026-08-17 — start here
+
+Five notes ran (39–43), five flagged papers were opened, and a public findings site
+now exists. In descending order of importance to anyone picking this up.
+
+**1. The prompt-conflict line is closed. Do not lead an application with it.**
+[41](activation-introspection/notes/41-how-often-does-the-prompt-backfire.md) and
+[42](activation-introspection/notes/42-is-the-failure-mode-the-domains-house-style.md)
+tested its base rate on carrier text generated blind by the notes/26 procedure, in
+two populations: everyday sentences, and system monitoring logs — the domain an
+introspective monitor would actually run against. **The inversion occurred 0 times in
+48 blind draws.** It still reproduces exactly on the constructed carrier
+(`1.000 → 0.167`), and on ordinary text the same prompt *helps* (17 up, 5 down,
+p = 0.017). So `34`'s inference that pooled prompting gains "could be averaging over
+exactly this" is **withdrawn as a general claim**. See §5, which is bounded in place.
+
+**2. The comparator ladder was re-measured as one experiment, and it holds —
+but the model's rung is a distribution, not a point.**
+[43](activation-introspection/notes/43-the-ladder-at-proper-power.md). Every
+published number reproduced to three decimals (T1 0.292 and 0.708 from `21`; model
+0.458/0.667/0.667 and lens 0.958/1.000/1.000 from `17`). Lens ≥ model in every cell.
+**New: at strength 1.0 the model ranges 0.250–0.875 across eleven carriers while the
+lens holds 0.875–1.000.** The unstable half of the comparison is the model. `17`'s
+0.667 is one draw from a wide distribution and should be quoted with that spread.
+
+**3. The codebook branch has closer prior art than this repository recorded.**
+The five papers an outside review flagged on 2026-08-14 are now read and logged in
+[`PAPERS-REVIEWED.md`](spar-application/PAPERS-REVIEWED.md).
+[Ji-An et al. 2505.13763](https://arxiv.org/abs/2505.13763) is a neurofeedback
+paradigm using in-context learning across LLaMA-3 and Qwen2.5, and is prior art for
+three things here, including notes/14's semantic-versus-arbitrary contrast. **What
+survives as ours: the byte-identical twin control, absent from all five.** Also:
+Binder et al. is a *positive* privileged-access result on behaviour, so the negative
+here must be scoped to activations at one site.
+
+**4. Two lines closed cheaply.**
+[39](activation-introspection/notes/39-what-does-the-model-actually-use.md): removing
+the shared "an injection happened" direction leaves the model's forced choice
+essentially untouched (7 flips one way, 3 the other, of 288) — but that direction
+carries only 0.278 of the displacement at 3B, so this is a **weak** null and is
+labelled as one. [40](activation-introspection/notes/40-can-it-move-its-own-state.md):
+told plainly to think about a named concept, the model's state does not move toward
+it — top-1 exactly at chance, and one direction ranks first in all 36 prompts
+including four naming nothing. An instrument explanation is **not** excluded; the
+unrun check is the bank-overlap gate `run_ift.py` applies and that script does not.
+
+**5. notes/38's training arm failed a third time, and its premise is weaker.**
+v3 at the task's own strength gave both arms 0.125 with loss pinned at uniform. Three
+runs, three proposed causes, none confirmed. **Do not run a v4 against a fourth
+guess** — the unrun diagnostic is in `38`: the eight training concepts have never been
+checked for degeneracy, and none of the three runs scored the adapter on the concepts
+it trained on. `39` separately weakens the premise that displacement is what a
+reporter leans on.
+
+**6. Housekeeping.** The repository was renamed on GitHub to
+**`SkyeNygaard/Activation-Introspection`** (the old `retained-trace-study` URL
+redirects). A plain-language findings site lives in [`docs/`](docs/) and is wired for
+GitHub Pages. Four withdrawn readings were removed from the application front page —
+see the correction note in §0.
+
+**One error worth not repeating.** The findings site was initially built on notes/20's
+0.292 for the "model's own words" tier. `21` had already withdrawn that number: it
+came from a prompt that forbade naming, and asked well the same tier reaches 0.708 —
+statistically indistinguishable from the model's own forced choice of 0.667. The page
+is corrected. The lesson is the one this repository keeps relearning: **check what a
+number was withdrawn for before building on it.**
+
+---
+
+## 0a. State at the end of 2026-08-14
 
 A long working session. Four things changed, in descending order of importance to
 anyone picking this up.
