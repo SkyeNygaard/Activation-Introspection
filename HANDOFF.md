@@ -561,7 +561,7 @@ last step and is still undecided.**
 | `adaptive-monitor-sandbox/` | second repo: agent + monitor world. Unused since 2026-08-11 |
 
 Git: branch `stage1b-stop-and-trained-reporter`, remote
-`github.com/SkyeNygaard/retained-trace-study`. **Another session has committed to
+`github.com/SkyeNygaard/Activation-Introspection` (renamed; the old `retained-trace-study` URL still redirects, and the local remote still uses it). **Another session has committed to
 this branch concurrently** — check `git log` before assuming your working tree is
 current.
 
