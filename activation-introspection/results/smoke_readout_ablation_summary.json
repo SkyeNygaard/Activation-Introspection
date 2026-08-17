@@ -1,0 +1,76 @@
+{
+  "model": "qwen-0.5b",
+  "model_revision": null,
+  "inject_layer": 9,
+  "read_layer": 23,
+  "smoke": true,
+  "gate": {
+    "auroc": 1.0,
+    "share": {
+      "mean_share": 0.15438680136197394,
+      "first_pc_share": 0.1548725664615631
+    },
+    "threshold": 0.9
+  },
+  "ablation_verification": {
+    "projection_before": -20.333789825439453,
+    "norm_before": 58.5976676940918,
+    "projection_after": 0.04657387733459473,
+    "norm_after": 54.951171875
+  },
+  "conditions": {
+    "none": {
+      "n": 4,
+      "model_accuracy": 0.5,
+      "model_twin_pair": 0.0,
+      "n_twin_pairs": 2,
+      "reader_accuracy": {
+        "centroid_euclidean": 1.0,
+        "centroid_cosine": 1.0,
+        "shuffled_labels": 0.75
+      },
+      "reader_twin_pair": 1.0,
+      "format_rate": 1.0,
+      "predicted_Q_rate": 1.0,
+      "by_pair": {
+        "garden|camera": 0.5
+      }
+    },
+    "displacement": {
+      "n": 4,
+      "model_accuracy": 0.5,
+      "model_twin_pair": 0.0,
+      "n_twin_pairs": 2,
+      "reader_accuracy": {
+        "centroid_euclidean": 1.0,
+        "centroid_cosine": 1.0,
+        "shuffled_labels": 0.75
+      },
+      "reader_twin_pair": 1.0,
+      "format_rate": 1.0,
+      "predicted_Q_rate": 1.0,
+      "by_pair": {
+        "garden|camera": 0.5
+      }
+    },
+    "random": {
+      "n": 4,
+      "model_accuracy": 0.5,
+      "model_twin_pair": 0.0,
+      "n_twin_pairs": 2,
+      "reader_accuracy": {
+        "centroid_euclidean": 1.0,
+        "centroid_cosine": 1.0,
+        "shuffled_labels": 0.75
+      },
+      "reader_twin_pair": 1.0,
+      "format_rate": 1.0,
+      "predicted_Q_rate": 1.0,
+      "by_pair": {
+        "garden|camera": 0.5
+      }
+    }
+  },
+  "elapsed_s": 22.4,
+  "reading": "displacement well below none, random close to none -> the model's answer leans on the shared 'something moved' axis. displacement close to none -> it reads concept-specific structure. both below none -> generic damage, report the bound and stop."
+}

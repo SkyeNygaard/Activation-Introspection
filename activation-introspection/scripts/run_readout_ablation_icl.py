@@ -47,7 +47,7 @@ from introspect.codebook_icl import (
     prepare_episode,
 )
 from introspect.concepts import ConceptVector, build_bank
-from introspect.hooks import Intervention, intervene
+from introspect.hooks import Intervention, capture, intervene
 from introspect.preflight import check as preflight_check
 from introspect.report_training import CENTERING_CONCEPTS
 
@@ -112,6 +112,57 @@ def gate(model: object, bank: dict[str, ConceptVector], read_layer: int) -> dict
         "separation": DISP.separation(direction, out_clean, out_injected),
         "share": DISP.displacement_share(out_clean, out_injected),
     }
+
+
+def verify_ablation(
+    model: models.LoadedModel, prepared: object, direction: torch.Tensor, read_layer: int
+) -> dict[str, float]:
+    """Confirm the outer block actually removes the direction it claims to remove.
+
+    A hook that silently fails to fire produces exactly the result a real null
+    produces -- the model's score does not move -- and nothing errors. This repository
+    has already been bitten once by hook ordering recording clean states under an
+    edited label. So measure it: capture the readout with and without the outer
+    block, and check the component along the direction is gone afterwards.
+
+    ``intervene`` is entered before ``capture`` so the capture is post-edit.
+    """
+    unit = direction / (direction.norm() + 1e-8)
+    ids = prepared.input_ids  # type: ignore[attr-defined]
+    out: dict[str, float] = {}
+    for label, extra in (
+        ("before", []),
+        (
+            "after",
+            [
+                Intervention(
+                    layer=read_layer,
+                    direction=direction,
+                    mode="ablate",
+                    positions="last",
+                    label="verify",
+                )
+            ],
+        ),
+    ):
+        with intervene(model, extra), capture(model, [read_layer]) as store:
+            model.forward_logits(ids)
+        state = store.acts[read_layer][0][0, -1].float().cpu()
+        out[f"projection_{label}"] = float(state @ unit.float().cpu())
+        out[f"norm_{label}"] = float(state.norm())
+
+    before, after = abs(out["projection_before"]), abs(out["projection_after"])
+    if before < 1e-3:
+        raise SystemExit(
+            f"the readout has no component along the direction to begin with "
+            f"({before:.2e}); there is nothing for the ablation to remove"
+        )
+    if after > 0.01 * before:
+        raise SystemExit(
+            f"ablation did not take: projection {before:.4f} -> {after:.4f}. "
+            "The outer hook is not firing on the scored forward pass."
+        )
+    return out
 
 
 def score_condition(
@@ -185,8 +236,13 @@ def run(args: argparse.Namespace) -> None:
         if path.exists():
             raise SystemExit(f"refusing to overwrite existing artifact: {path}")
 
-    preflight_check(MODEL, training=False)
-    model = models.load(MODEL, device=torch.device("mps"), revision=MODEL_REVISION)
+    # The result lives on qwen-3b. A smaller model is a plumbing check only -- it
+    # uses a different relative depth for layer 9 and its numbers say nothing about
+    # the task, exactly as notes/38's 0.5B pilot did not.
+    model_name = args.model or MODEL
+    revision = MODEL_REVISION if model_name == MODEL else None
+    preflight_check(model_name, training=False)
+    model = models.load(model_name, device=torch.device("mps"), revision=revision)
     started = time.time()
     try:
         model.model.to(torch.bfloat16)
@@ -238,6 +294,10 @@ def run(args: argparse.Namespace) -> None:
         carriers = CONFIRM_VISIBLE_SAMPLES[:1] if args.smoke else CONFIRM_VISIBLE_SAMPLES
         max_episodes = 4 if args.smoke else None
 
+        probe_episode = prepare_episode(model, exact_episodes(carriers[0])[0])
+        verification = verify_ablation(model, probe_episode, direction, read_layer)
+        print(f"ablation verified: {verification}", flush=True)
+
         rows: list[dict[str, object]] = []
         summaries: dict[str, object] = {}
         for condition in CONDITIONS:
@@ -271,12 +331,13 @@ def run(args: argparse.Namespace) -> None:
         summary_path.write_text(
             json.dumps(
                 {
-                    "model": MODEL,
-                    "model_revision": MODEL_REVISION,
+                    "model": model_name,
+                    "model_revision": revision,
                     "inject_layer": LAYER,
                     "read_layer": read_layer,
                     "smoke": args.smoke,
                     "gate": {"auroc": auroc, "share": share, "threshold": GATE_AUROC},
+                    "ablation_verification": verification,
                     "conditions": summaries,
                     "elapsed_s": round(time.time() - started, 1),
                     "reading": (
@@ -299,6 +360,7 @@ def run(args: argparse.Namespace) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--model", default=None, help="plumbing checks only; the result is on qwen-3b")
     ap.add_argument("--out", type=Path, default=Path("results/readout_ablation_icl_v1_raw.jsonl"))
     run(ap.parse_args())
 
