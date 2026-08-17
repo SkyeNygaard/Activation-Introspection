@@ -1,0 +1,300 @@
+<title>Can a Model Read Its Own Mind?</title>
+<style>
+:root{
+  --bg:#f7f8fa; --paper:#ffffff; --ink:#111827; --muted:#667085; --line:#e5e7eb;
+  --blue:#2563eb; --blue-soft:#eff6ff; --violet:#7c3aed; --violet-soft:#f5f3ff;
+  --green:#15803d; --green-soft:#f0fdf4; --orange:#c2410c; --orange-soft:#fff7ed;
+  --navy:#0f172a; --red:#b42318; --red-soft:#fef3f2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}
+svg.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.top{position:sticky;top:0;z-index:50;background:rgba(247,248,250,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(229,231,235,.8)}
+.topin{max-width:1120px;margin:auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-weight:850;letter-spacing:-.02em}
+.nav{display:flex;gap:7px;flex-wrap:wrap}
+.nav a{text-decoration:none;color:var(--muted);font-size:13px;font-weight:750;padding:7px 10px;border-radius:999px}
+.nav a:hover{background:#fff;color:var(--ink)}
+.nav a:focus-visible,.promptbtn:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.hero{padding:88px 0 76px}
+.kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-size:13px;font-weight:850}
+h1{font-size:clamp(44px,6.4vw,76px);line-height:.99;letter-spacing:-.055em;margin:20px 0 20px;max-width:1000px;text-wrap:balance}
+.hero p{font-size:22px;line-height:1.5;color:var(--muted);max-width:860px;margin:0}
+.models{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.model{background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-size:14px;font-weight:800;display:flex;gap:8px;align-items:center}
+.section{padding:72px 0;border-top:1px solid var(--line)}
+.qnum{font-size:12px;font-weight:900;letter-spacing:.08em;color:var(--blue);text-transform:uppercase}
+h2{font-size:clamp(34px,4.6vw,54px);line-height:1.05;letter-spacing:-.04em;margin:10px 0 16px;text-wrap:balance}
+.dek{font-size:20px;color:var(--muted);line-height:1.5;max-width:850px;margin:0 0 30px}
+.storycard{background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:0 12px 34px rgba(15,23,42,.05)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.task{padding:24px;border-radius:22px;background:#fafafa;border:1px solid var(--line)}
+.task .icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font-size:20px}
+.task h3{font-size:22px;margin:18px 0 8px}
+.task p{color:var(--muted);margin:0;line-height:1.45}
+.flow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.flowbox{padding:13px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:800;font-size:14px}
+.arrow{color:#98a2b3;font-size:18px}
+.result{margin-top:22px;padding:22px;border-radius:20px;background:var(--green-soft);border:1px solid #bbf7d0;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.resultbig{font-size:56px;font-weight:900;letter-spacing:-.05em;color:var(--green);line-height:1;font-variant-numeric:tabular-nums}
+.small{font-size:14px;color:var(--muted);line-height:1.5}
+.prompt{background:var(--navy);color:#e5e7eb;border-radius:22px;padding:24px;margin-top:22px}
+.prompthead{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.prompthead strong{color:#fff}
+.prompthead span{font-size:12px;font-weight:800;color:#93c5fd;text-transform:uppercase;letter-spacing:.06em}
+pre{white-space:pre-wrap;word-break:break-word;margin:0;font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
+.note{margin-top:14px;color:#94a3b8;font-size:13px;line-height:1.45}
+details{margin-top:18px}
+summary{cursor:pointer;font-weight:800;color:var(--blue)}
+details .prompt{margin-top:12px}
+
+.tablewrap{overflow-x:auto;margin-top:24px;border:1px solid var(--line);border-radius:22px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:15px}
+thead th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900;background:#fafbfc}
+tbody tr:last-child td{border-bottom:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:850;font-size:17px}
+td.model{color:var(--orange)}
+td.outsider{color:var(--green)}
+.winner{background:var(--green-soft)}
+
+.ladder{margin-top:24px;display:grid;gap:10px}
+.row{display:grid;grid-template-columns:minmax(210px,1.3fr) 3fr 84px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.row .name{font-size:14px;font-weight:750}
+.track{height:12px;border-radius:999px;background:#edf0f4;overflow:hidden}
+.fill{height:100%;border-radius:999px;background:var(--violet)}
+.row b{text-align:right;font-variant-numeric:tabular-nums}
+.row.self{border-color:#fed7aa;background:var(--orange-soft)}
+.row.self .fill{background:var(--orange)}
+.row.actual{border-color:#bbf7d0;background:var(--green-soft)}
+.row.actual .fill{background:var(--green)}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.metric{border-radius:24px;padding:28px;border:1px solid var(--line);background:#fff}
+.metric .lab{font-size:13px;font-weight:850;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;display:flex;gap:8px;align-items:center}
+.metric .num{font-size:68px;line-height:.9;font-weight:900;letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.metric .desc{margin-top:10px;color:var(--muted);font-size:17px;line-height:1.4}
+.metric.mod .lab,.metric.mod .num{color:var(--orange)}
+.metric.out .lab,.metric.out .num{color:var(--green)}
+
+.evidence3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.evidencecard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px}
+.evidencecard .tag{font-size:12px;font-weight:850;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.evidencecard .v{font-size:50px;line-height:.95;font-weight:900;letter-spacing:-.05em;margin:14px 0 8px;font-variant-numeric:tabular-nums}
+.evidencecard p{margin:0;color:var(--muted);line-height:1.45;font-size:15px}
+.evidencecard.neutral .v{color:var(--violet)}
+.evidencecard.control .v{color:var(--blue)}
+.evidencecard.relevant{background:var(--orange-soft);border-color:#fed7aa}
+.evidencecard.relevant .v{color:var(--orange)}
+
+.quote{padding:24px;border-radius:22px;background:var(--orange-soft);border:1px solid #fed7aa;font-size:17px;line-height:1.55;margin-top:22px}
+.scale-note{margin-top:20px;background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-size:14px;line-height:1.5;color:#475467}
+
+.withdrawn{display:grid;gap:12px;margin-top:24px}
+.wd{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:16px;padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start}
+.wd .claim{font-size:16px;font-weight:750;line-height:1.4}
+.wd .killer{font-size:14px;color:var(--muted);line-height:1.5;margin-top:6px}
+.wd .badge{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--red);background:var(--red-soft);border-radius:999px;padding:6px 11px;white-space:nowrap}
+.strike{text-decoration:line-through;color:var(--muted);font-variant-numeric:tabular-nums}
+.becomes{color:var(--red);font-weight:900;font-variant-numeric:tabular-nums}
+
+.why{background:var(--navy);color:#fff;border-top:0}
+.why .qnum{color:#93c5fd}
+.why h2{color:#fff}
+.why .dek{color:#94a3b8}
+.whygrid{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;margin-top:30px}
+.whycard{background:#111c2d;border:1px solid #253247;border-radius:24px;padding:28px}
+.whycard .ic{font-size:28px;color:#93c5fd}
+.whycard h3{font-size:26px;margin:18px 0 8px}
+.whycard p{color:#cbd5e1;line-height:1.5;margin:0}
+.vs{font-size:18px;font-weight:900;color:#64748b}
+.takeaway{margin-top:24px;background:#172554;border-radius:20px;padding:24px;font-size:21px;line-height:1.45;font-weight:750}
+.limits{margin-top:24px;background:#111c2d;border:1px solid #253247;border-radius:20px;padding:24px}
+.limits h3{margin:0 0 14px;font-size:18px;color:#93c5fd;text-transform:uppercase;letter-spacing:.06em}
+.limits ul{margin:0;padding-left:20px;color:#cbd5e1;line-height:1.6}
+.limits li{margin-bottom:9px}
+.footer{padding:34px 0 50px;color:var(--muted);font-size:13px;line-height:1.6}
+
+@media(max-width:850px){
+ .grid2,.compare,.evidence3,.whygrid{grid-template-columns:1fr}
+ .vs{text-align:center}
+ .row{grid-template-columns:1fr}
+ .row b{text-align:left}
+ .nav{display:none}
+ .hero{padding-top:60px}
+ .wd{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="top"><div class="topin"><div class="brand">Activation Introspection · Retained Trace Study</div><nav class="nav">
+<a href="#q1">1. The setup</a><a href="#q2">2. The control</a><a href="#q3">3. The result</a><a href="#q4">4. The ladder</a><a href="#q5">5. Where it breaks</a><a href="#q6">6. A trap</a><a href="#q7">7. Withdrawn</a><a href="#why">Why it matters</a>
+</nav></div></div>
+
+<header class="hero"><div class="wrap">
+<div class="kicker"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg> A simple question about machine self-knowledge</div>
+<h1>A Two-Average Outsider Reads a Model's Internal State Better Than the Model Does</h1>
+<p>Reach inside a language model, push an idea into it, and ask what it notices. Then hand the exact same internal state to the cheapest outside method you can think of, and ask it the same thing. The outsider wins almost everywhere.</p>
+<div class="models">
+<div class="model"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V4M9 12h.01M15 12h.01"/></svg> Qwen2.5-3B</div>
+<div class="model"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V4M9 12h.01M15 12h.01"/></svg> Qwen3-4B</div>
+<div class="model"><svg class="ic" viewBox="0 0 24 24"><path d="M4 19V5M9 19v-7M14 19V8M19 19v-4"/></svg> 42 experiments, 6 retractions</div>
+</div>
+</div></header>
+
+<section class="section" id="q1"><div class="wrap">
+<div class="qnum">Step 1</div><h2>What the experiment actually does</h2>
+<p class="dek">The model reads a short, unremarkable sentence. While it reads, we reach into its internal activity and add a direction that stands for an idea — <em>ocean</em>, <em>violin</em>, <em>hammer</em>. Then we ask it which idea went in.</p>
+<div class="storycard">
+<div class="grid2">
+<div class="task">
+<div class="icon"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+<h3>The edit</h3><p>A direction is added to the model's internal state at one layer, at four demonstration positions and one query position. The text on the page never changes.</p>
+</div>
+<div class="task">
+<div class="icon"><svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div>
+<h3>The question</h3><p>Four worked examples teach an arbitrary code — one hidden state means <strong>Q</strong>, the other means <strong>K</strong>. The model then labels a fifth. The code is reshuffled every round.</p>
+</div>
+</div>
+<div class="flow">
+<div class="flowbox">Read a neutral sentence</div><span class="arrow">→</span>
+<div class="flowbox">Push in an idea</div><span class="arrow">→</span>
+<div class="flowbox">Show four labelled examples</div><span class="arrow">→</span>
+<div class="flowbox">Answer Q or K</div>
+</div>
+<details><summary>The literal wording shown to the model</summary>
+<div class="prompt"><div class="prompthead"><strong>Forced-choice prompt</strong><span>Verbatim experiment text</span></div><pre>Infer the mapping from two hidden states to the opaque labels Q and K.
+The observation text is intentionally identical in every example.
+Use the demonstrations, then answer the held-out query with one label.
+
+Demonstration:
+Observation: A routine maintenance record is open. Hidden state marker: §
+Label: Q
+
+  ... three more demonstrations, same sentence, different hidden states ...
+
+Held-out query:
+Observation: A routine maintenance record is open. Hidden state marker: §</pre>
+<div class="note">The labels Q and K are deliberately meaningless, and which hidden state maps to which label is re-randomised every round. The model cannot learn a fixed habit.</div></div>
+</details>
+</div></div></section>
+
+<section class="section" id="q2"><div class="wrap">
+<div class="qnum">Step 2</div><h2>The control that makes the numbers mean something</h2>
+<p class="dek">The usual complaint about this whole field is that the model might just be reading the prompt. Here it cannot, and not because we measured it — because of how the trials are built.</p>
+<div class="storycard">
+<p style="margin:0 0 8px;font-size:18px;line-height:1.55">Every trial has a <strong>twin</strong>. The visible text of the two twins is identical, character for character. The hidden state differs, and the correct answer is the opposite one.</p>
+<p style="margin:0;color:var(--muted);line-height:1.55">So any strategy that works only from what is written on the page must answer both twins the same way — and can only ever be right about one of them.</p>
+<div class="result">
+<div class="resultbig">0.500</div>
+<div><strong>What a text-only strategy scores.</strong> Not as a measured result. As an arithmetic consequence of the design. And a strategy that ignores the hidden state scores exactly <strong>0</strong> when trials are counted in pairs.</div>
+</div>
+<div class="scale-note"><strong>Checked against the five closest published papers, August 2026:</strong> none of them has this control. The nearest work uses a minimal instruction — "Say something" — to stop the prompt giving the answer away. That is a reasonable precaution. It is not a guarantee.</div>
+</div></div></section>
+
+<section class="section" id="q3"><div class="wrap">
+<div class="qnum">Step 3</div><h2>Now give a two-average outsider the same internal state</h2>
+<p class="dek">The outsider is the cheapest thing that could possibly work. Take the four worked examples, average the ones labelled Q and the ones labelled K, and ask which average the fifth state sits closer to. Two averages and a comparison — far less computation than one pass through the model.</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>The task</th><th class="num">The model</th><th class="num">Two-average outsider</th><th class="num">Model wins, outsider fails</th></tr></thead>
+<tbody>
+<tr><td>Tell a pushed-in idea from its opposite</td><td class="num model">0.833</td><td class="num outsider">1.000</td><td class="num">0</td></tr>
+<tr><td>Tell two different pushed-in ideas apart</td><td class="num model">0.799</td><td class="num outsider">1.000</td><td class="num">0</td></tr>
+<tr><td>Tell apart two meaningless directions</td><td class="num model">0.326</td><td class="num outsider">1.000</td><td class="num">0</td></tr>
+<tr class="winner"><td>Detect a very small nudge</td><td class="num model">0.007</td><td class="num outsider">0.667</td><td class="num">1</td></tr>
+</tbody>
+</table>
+</div>
+<p class="small" style="margin-top:14px">Scored in twin pairs, which is the unit this experiment declared in advance. A pair counts only when both of its identical-looking halves get their opposite answers right.</p>
+<div class="quote"><strong>Across four task shapes there is one paired trial where the model is right and the two-average comparison is wrong</strong> — and it sits in the arm where the model is otherwise blind. By the standard the field actually uses — does the model beat any method of equal or lower cost — this model does not read its own internals. It reads them worse than a stranger does.</div>
+</div></section>
+
+<section class="section" id="q4"><div class="wrap">
+<div class="qnum">Step 4</div><h2>The same data gives four different answers</h2>
+<p class="dek">This is the finding underneath all the others. Ask "can the model identify the idea that was pushed into it?" and the answer depends entirely on what you compare it against. Same model, same states, same trials — one number changes.</p>
+<div class="ladder">
+<div class="row"><div class="name">Nothing but the prompt</div><div class="track"><div class="fill" style="width:12.5%"></div></div><b>0.125</b></div>
+<div class="row"><div class="name">The model's own written description, no internals</div><div class="track"><div class="fill" style="width:29.2%"></div></div><b>0.292</b></div>
+<div class="row self"><div class="name"><strong>The model itself</strong></div><div class="track"><div class="fill" style="width:66.7%"></div></div><b>0.667</b></div>
+<div class="row actual"><div class="name">A simple readout of the activations</div><div class="track"><div class="fill" style="width:98.6%"></div></div><b>0.986</b></div>
+</div>
+<p class="small" style="margin-top:16px">Identifying which of eight ideas was pushed in. Guessing scores 0.125.</p>
+<div class="quote"><strong>The model sits in the middle and never moves.</strong> Compare it against something denied the internals and it looks like it has privileged self-knowledge. Compare it against something handed the internals and it looks like it has none. Whether a model can "introspect" is, on this evidence, a fact about the comparison — not a fact about the model.</div>
+</div></section>
+
+<section class="section" id="q5"><div class="wrap">
+<div class="qnum">Step 5</div><h2>Where the ability actually breaks</h2>
+<p class="dek">One word is doing hidden work in this literature: <em>held-out</em>. It has two meanings, and they give opposite answers.</p>
+<div class="compare">
+<div class="metric mod"><div class="lab"><svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/></svg> Held-out direction</div><div class="num">0.927</div><div class="desc">A direction the model never trained on. Training works. This is the number that gets reported.</div></div>
+<div class="metric out"><div class="lab"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12h8"/></svg> Held-out example</div><div class="num">0.083</div><div class="desc">An unseen member of a category whose other members were demonstrated. The model is at the floor.</div></div>
+</div>
+<div class="evidence3">
+<div class="evidencecard control"><div class="tag">Is the information there?</div><div class="v">1.000</div><p>Before running anything, we checked whether the category is cleanly present in that layer. A simple readout gets it perfectly. It is there.</p></div>
+<div class="evidencecard relevant"><div class="tag">The model, on that task</div><div class="v">0.083</div><p>With the information provably sitting in its own activations, the model performs at the floor.</p></div>
+<div class="evidencecard neutral"><div class="tag">The outsider, same states</div><div class="v">0.986</div><p>The two-average method, given the identical internal states, gets it nearly every time.</p></div>
+</div>
+<div class="scale-note"><strong>Why this is not "the model is too small".</strong> State the idea in plain text instead of hiding it in the activations, change nothing else, and the same model scores <strong>0.875</strong>. It can do the task when it can see the answer. Five different ways of asking the question were tried, with the analysis split before the run. Not one of ten conditions beat chance.</div>
+</div></section>
+
+<section class="section" id="q6"><div class="wrap">
+<div class="qnum">Step 6</div><h2>A trap that no accuracy score can detect</h2>
+<p class="dek">Worth knowing for anyone who trains a model to describe its own internals — which is an active research direction with real safety motivation behind it.</p>
+<div class="storycard">
+<p style="margin:0 0 10px;font-size:18px;line-height:1.55">The first trained version of our reporter scored <strong>0.917</strong>. It looked like a success.</p>
+<p style="margin:0 0 18px;color:var(--muted);line-height:1.55">The training signal only compared the two answer options against each other. So the model learned to push both answers down and keep the correct one very slightly on top. It was answering correctly while treating the answer as almost impossible.</p>
+<div class="result" style="background:var(--red-soft);border-color:#fecdca">
+<div class="resultbig" style="color:var(--red)">5&times;10<sup style="font-size:26px">-9</sup></div>
+<div><strong>The probability it placed on its own answer.</strong> The accuracy score cannot see this. Neither can any other forced-choice measure. We only found it by looking at the raw numbers behind the choice.</div>
+</div>
+<div class="scale-note">This is not a quirk of a small model or a particular setup — it follows from the shape of the training signal, and would happen at any scale. It is the kind of failure that ships.</div>
+</div></div></section>
+
+<section class="section" id="q7"><div class="wrap">
+<div class="qnum">Step 7</div><h2>What we took back</h2>
+<p class="dek">Every one of these was our own finding, found wrong by a later check. They are listed because the corrections are the reason to trust anything above them — and because two of them were corrected on the same day they were made.</p>
+<div class="withdrawn">
+<div class="wd"><div><div class="claim">"The model's accuracy of 0.891 shows introspection."</div><div class="killer">A four-shot outside reader scores 1.000 on the identical trials.</div></div><div class="badge">Withdrawn</div></div>
+<div class="wd"><div><div class="claim">"These numbers measure <em>which idea</em> was pushed in."</div><div class="killer">All eight of our ideas shared one large common ingredient. The task collapsed to "was something pushed, and which way" — a single yes/no axis. The outside reader turned out to <em>be</em> the average of our ideas, matching at 0.99999.</div></div><div class="badge">Withdrawn</div></div>
+<div class="wd"><div><div class="claim">"The model reads meaning, not just disturbance."</div><div class="killer">Every idea it chose between had already been demonstrated to it in the same round. Re-matching something it was just shown explains the result with no grasp of meaning required.</div></div><div class="badge">Withdrawn</div></div>
+<div class="wd"><div><div class="claim">"The model knows five times more than it can say."</div><div class="killer">The question we used had forbidden it from naming anything. With a better question the gap closes entirely.</div></div><div class="badge">Withdrawn</div></div>
+<div class="wd"><div><div class="claim">"There is a regime where the model beats the outsider — <span class="strike">14 trials</span>."</div><div class="killer">Counted in single trials rather than the twin pairs the protocol declared. Rescoring the same saved data leaves <span class="becomes">1</span>. In 16 of 24 cells the model was emitting one constant label whatever was pushed in, which caps single-trial accuracy at 0.500 — so 0.497 read as "chance" when it actually meant "blind".</div></div><div class="badge">Corrected</div></div>
+<div class="wd"><div><div class="claim">"How a question is worded can destroy a model's self-report — so published averages may be hiding this."</div><div class="killer">The destruction is real and large: a question asserting something changed, put on text reading "Nothing changed", takes accuracy from <span class="strike">1.000</span> to <span class="becomes">0.167</span>. But on 48 sentences written by a model that did not know what we were testing — everyday scenes, and separately, system monitoring logs — it happened <strong>zero times</strong>. On ordinary text that same question <em>helps</em>. The broad claim about published averages is withdrawn.</div></div><div class="badge">Bounded</div></div>
+</div>
+<div class="scale-note"><strong>The instrument itself holds.</strong> A number frozen weeks ago — 0.899 — was reproduced at 0.885, 0.889 and 0.889 by three separately written programs on the same day, without being tuned to match.</div>
+</div></section>
+
+<section class="section why" id="why"><div class="wrap">
+<div class="qnum">Why this matters</div><h2>How would we know if a model could tell us what it is thinking?</h2>
+<p class="dek">The hope is that a model could report on its own internal state, and that this would be a cheap way to catch problems that are otherwise hard to see. That hope is testable, and the test is not the one usually run.</p>
+<div class="whygrid">
+<div class="whycard">
+<svg class="ic" viewBox="0 0 24 24"><path d="M8 10h8M8 14h5"/><rect x="3" y="4" width="18" height="16" rx="4"/></svg>
+<h3>Ask the model</h3><p>Let it describe what it notices inside itself, and score how often the description is right.</p>
+</div>
+<div class="vs">versus</div>
+<div class="whycard">
+<svg class="ic" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+<h3>Read the model</h3><p>Hand the same internal state to the simplest outside method available, and score that instead.</p>
+</div>
+</div>
+<div class="takeaway">Whenever the outside method is given the internals, it wins. Whenever it is denied them, the model wins. The model's position never changes — only the comparison does. A field that measures self-knowledge without fixing what the comparison is handed can produce either answer at will.</div>
+<div class="limits">
+<h3>What this does not show</h3>
+<ul>
+<li><strong>This is one kind of internal state.</strong> A direction we planted at one layer, not something the model worked out for itself. When we tried to study states the model computed on its own, the design lost the identical-twin control that makes these numbers trustworthy — and we could not get both.</li>
+<li><strong>It is not a claim about models in general.</strong> Two open models of similar size, one machine, one injection site. Published work reports a genuine positive result for a different question — a model predicting its own <em>behaviour</em> better than another model can — and nothing here contradicts it.</li>
+<li><strong>Some of it is not new.</strong> Existing work already shows models fall short of an idealised observer with perfect access to their activations, and that how interpretable a direction is affects how well it can be reported. What is unusual here is the cost-matched comparison and the identical-twin construction.</li>
+<li><strong>One objection we would raise ourselves.</strong> The standard we test against notes that some internal states may be too low-level for reporting them to count as introspection at all. A planted direction at a single layer is open to exactly that objection.</li>
+</ul>
+</div>
+</div></section>
+
+<footer class="footer"><div class="wrap">
+Activation introspection · 42 experiments, each with its reasoning and a prediction written before the run, and the wrong predictions left next to the results that corrected them.<br>
+Models: Qwen2.5-3B and Qwen3-4B. All figures from frozen artifacts; every experiment refuses to overwrite an existing result file.
+</div></footer>
