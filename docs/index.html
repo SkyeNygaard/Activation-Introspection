@@ -393,11 +393,13 @@ Observation: A routine maintenance record is open. Hidden state marker: §</pre>
 <p class="dek">This is the finding underneath all the others. Ask "can the model identify the idea that was pushed into it?" and the answer depends entirely on what you compare it against. Same model, same states, same trials — one number changes.</p>
 <div class="ladder">
 <div class="row"><div class="name">Nothing but the prompt</div><div class="track"><div class="fill" style="width:12.5%"></div></div><b>0.125</b></div>
-<div class="row"><div class="name">The model's own written description, no internals</div><div class="track"><div class="fill" style="width:29.2%"></div></div><b>0.292</b></div>
-<div class="row self"><div class="name"><strong>The model itself</strong></div><div class="track"><div class="fill" style="width:66.7%"></div></div><b>0.667</b></div>
+<div class="row"><div class="name">The model's own written description<br><span style="font-weight:600;color:var(--muted)">worst of six ways of asking</span></div><div class="track"><div class="fill" style="width:29.2%"></div></div><b>0.292</b></div>
+<div class="row self"><div class="name"><strong>The model itself</strong><br><span style="font-weight:600;color:var(--muted)">forced choice, no words involved</span></div><div class="track"><div class="fill" style="width:66.7%"></div></div><b>0.667</b></div>
+<div class="row self"><div class="name">The model's own written description<br><span style="font-weight:600;color:var(--muted)">best of six ways of asking</span></div><div class="track"><div class="fill" style="width:70.8%"></div></div><b>0.708</b></div>
 <div class="row actual"><div class="name">A simple readout of the activations</div><div class="track"><div class="fill" style="width:98.6%"></div></div><b>0.986</b></div>
 </div>
 <p class="small" style="margin-top:16px">Identifying which of eight ideas was pushed in. Guessing scores 0.125.</p>
+<div class="scale-note"><strong>Two of these rows are the same tier, and the difference between them is our own prompt.</strong> We first measured the model's written description at 0.292 — using a prompt that told it <em>"do not guess a single word; just describe."</em> We instructed it not to name the concept and then reported that it almost never named the concept. Asking a better way — <em>"what do you picture?"</em> — gives <strong>0.708</strong>. That is 17 correct out of 24 against the forced choice's 16: indistinguishable. So the model's words carry about as much as its forced choice does, and the idea that verbalization is the bottleneck was our error, withdrawn.</div>
 <figure>
 <div class="svgscroll"><svg viewBox="0 0 920 340" role="img" aria-label="The model stays fixed at 0.667 while the competitor moves from 0.125 to 0.986, flipping the verdict.">
 <text x="0" y="16" class="t-lab" fill="#667085">Same model · same trials · same internal states</text>
@@ -419,7 +421,11 @@ Observation: A routine maintenance record is open. Hidden state marker: §</pre>
 
 <circle cx="299" cy="250" r="9" fill="#7c3aed"/>
 <text x="299" y="300" class="t-mid" fill="#7c3aed" text-anchor="middle">0.292</text>
-<text x="299" y="322" class="t-body" fill="#667085" text-anchor="middle">its written words</text>
+<text x="299" y="322" class="t-body" fill="#667085" text-anchor="middle">its words, asked badly</text>
+
+<circle cx="643" cy="250" r="9" fill="#7c3aed"/>
+<text x="643" y="300" class="t-mid" fill="#7c3aed" text-anchor="middle">0.708</text>
+<text x="643" y="322" class="t-body" fill="#667085" text-anchor="middle">its words, asked well</text>
 
 <circle cx="869" cy="250" r="9" fill="#15803d"/>
 <text x="869" y="300" class="t-mid" fill="#15803d" text-anchor="end">0.986</text>
@@ -436,7 +442,7 @@ Observation: A routine maintenance record is open. Hidden state marker: §</pre>
 <text x="576" y="182" class="t-lab" fill="#15803d">Competitor on the right</text>
 <text x="576" y="203" class="t-body" fill="#111827">"The model reads it worse than a stranger."</text>
 </svg></div>
-<figcaption>Both sentences in the boxes are true statements about the same measurement. The orange dot never moves — the model's actual ability is one fixed thing. What moves is where you put the competitor, and that alone decides which of the two conclusions you publish.</figcaption>
+<figcaption>Both sentences in the boxes are true statements about the same measurement. The orange dot never moves — the model's actual ability is one fixed thing. What moves is where you put the competitor, and that alone decides which of the two conclusions you publish. Note that two of the purple dots are the <em>same</em> competitor, differing only in how we worded the question we put to the model — which is a version of the same problem, and one we caused ourselves.</figcaption>
 </figure>
 
 <div class="quote"><strong>The model sits in the middle and never moves.</strong> Compare it against something denied the internals and it looks like it has privileged self-knowledge. Compare it against something handed the internals and it looks like it has none. Whether a model can "introspect" is, on this evidence, a fact about the comparison — not a fact about the model.</div>
@@ -578,7 +584,7 @@ Observation: A routine maintenance record is open. Hidden state marker: §</pre>
 <div class="exprow"><div class="n">17</div><div><p class="q">Is the model's advantage really about who gets more supervision?</p><p class="a">No, and the standard came out worse than we thought. The cheapest possible reader is part of the model itself, and it is cheaper than running the rest of the model — so the test can never be passed on any state that is simple to read.</p></div><span class="pill held">Held</span></div>
 <div class="exprow"><div class="n">18</div><div><p class="q">Then does it work on states that are hard to read?</p><p class="a">There are such states, and the simple readout does drop below the model on them. The test still fails, for a reason worth naming: at the place the model gives its answer, the simple readout gets nothing at all.</p></div><span class="pill held">Held</span></div>
 <div class="exprow"><div class="n">20</div><div><p class="q">What happens if we vary only what the comparison is given?</p><p class="a">The answer changes completely: 0.125, 0.292, 0.667, 0.986 on the same trials. This is the ladder on this page and the central finding.</p></div><span class="pill held">Held</span></div>
-<div class="exprow"><div class="n">21</div><div><p class="q">How much does the wording of the question matter?</p><p class="a">A lot — a 2.4-fold range across six ways of asking, and the obvious phrasing is among the worst. Published five months earlier by someone else, more thoroughly, and we had their paper on file and missed it.</p></div><span class="pill old">Already known</span></div>
+<div class="exprow"><div class="n">21</div><div><p class="q">How much does the wording of the question matter?</p><p class="a">Enough to overturn our own conclusion. A 2.4-fold range across six ways of asking, and the obvious phrasing is among the worst. We had said the model knows five times more than it can say — but our prompt had told it not to name anything. Asked well, its words carry as much as its forced choice does (0.708 against 0.667). The verbalization-bottleneck claim was withdrawn. The wider point about wording was published five months earlier by someone else, more thoroughly, and we had their paper on file and missed it.</p></div><span class="pill gone">Withdrew 20</span></div>
 </div>
 </div>
 
