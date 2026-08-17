@@ -60,6 +60,18 @@ checked for degeneracy, and none of the three runs scored the adapter on the con
 it trained on. `39` separately weakens the premise that displacement is what a
 reporter leans on.
 
+**5a. The last upward lead is closed.**
+[44](activation-introspection/notes/44-can-a-fitted-probe-follow-the-model.md).
+notes/18's "first result that looks like the model doing work a cheap reader cannot
+follow" was an artifact of the logit lens being an unfitted readout. A fitted probe
+recovers the concept at the answer position at **0.92–0.99** across the nineteen
+blocks where the lens sits at chance, with shuffled-label nulls at 0.045–0.148. So
+there is now **no site, depth or readout in this repository where the model beats a
+cost-matched reader given the same state**, and `18` must not be cited as evidence
+that there is. The injection paradigm is exhausted for this question — see `17` and
+`18` for why it was always going to be: the third party gets a perfect read at the
+injection site by construction. **Do not run anything downstream of `44`.**
+
 **6. Housekeeping.** The repository was renamed on GitHub to
 **`SkyeNygaard/Activation-Introspection`** (the old `retained-trace-study` URL
 redirects). A plain-language findings site lives in [`docs/`](docs/) and is wired for

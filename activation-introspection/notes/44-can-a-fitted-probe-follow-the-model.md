@@ -88,6 +88,62 @@ being linearly present.
 **So I am predicting against the outcome this project needs.** If I am wrong, the
 result is the strongest thing here.
 
+## Result, 2026-08-17 — the probe follows easily. notes/18 is downgraded.
+
+`results/probe_depth_v1.json`. 88 episodes, 11 per concept, 5-fold, 6 minutes.
+
+**Anchor holds:** lens at `marker@9` = **1.000**, matching `18` exactly.
+
+**The shuffled-label nulls sit at 0.045–0.148 against a chance of 0.125 in every
+cell.** So nothing below is the high-dimensional separability artifact.
+
+| depth | lens @ answer | **probe @ answer** |
+|---:|---:|---:|
+| 9 | 0.125 | 0.000 |
+| 10 | 0.136 | **0.920** |
+| 15 | 0.125 | **0.955** |
+| 20 | 0.125 | **0.977** |
+| 25 | 0.284 | **0.989** |
+| 30 | 0.534 | **0.966** |
+| 35 | 0.909 | 0.977 |
+
+**The lens is at chance for nineteen blocks; a fitted probe is at 0.92–0.99 across
+the same range.** The information is linearly present at the answer position the
+whole way — the unembedding simply cannot see it, because it is not token-aligned.
+
+**So `18`'s finding is an artifact of an unfitted readout**, exactly as predicted at
+65/35. Per the rule declared before the run: **`18` is downgraded to "the logit lens
+is a weak readout", no further variant is run, and it must not be cited as evidence
+of the model doing work a cheap reader cannot follow.** That sentence in `18` should
+be read as withdrawn.
+
+**And the comparator conclusion gets stronger, not weaker.** At the answer position —
+the place chosen precisely because it was supposed to be where the model had an
+advantage — a fitted probe scores 0.92–0.99 against the model's **0.909** on the same
+88 episodes. There is now no site, depth or readout in this repository where the
+model beats a cost-matched reader given the same state.
+
+**Two things worth recording.**
+
+*Depth 9, answer position, probe 0.000.* Below chance, on a cell where the null is
+0.091. At the injection depth the edit has not yet propagated to the answer position,
+so there is nothing to read; a probe fitted on noise landing at exactly zero is odd
+and unexplained. Noted, not interpreted.
+
+*The model scored 0.909 here against `17`'s 0.667.* Same task, same strength, eleven
+carriers instead of three — consistent with [43](43-the-ladder-at-proper-power.md)'s
+finding that the model's rung is a wide distribution across carriers.
+
+### What this closes
+
+This was the only lead in the repository pointing at a positive finding. It is now
+closed, and the honest summary of the whole injection paradigm is the one
+[18](18-where-the-lens-fails.md) and [17](17-supervision-is-the-hidden-knob.md)
+already gave: **any concept-injection design hands the third party a perfect read at
+the injection site by construction, and the criterion cannot say anything about
+introspection under it.** The paradigm is exhausted for this question. Nothing
+downstream of this note should be run.
+
 ## What it costs
 
 88 forward passes with capture at 27 depths, inference only, one model load. Probe

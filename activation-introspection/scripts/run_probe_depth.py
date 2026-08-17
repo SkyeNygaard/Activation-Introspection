@@ -60,7 +60,9 @@ N_BLIND = 8
 
 def carriers_for(smoke: bool) -> list[str]:
     if smoke:
-        return list(CONFIRM_VISIBLE_SAMPLES[:1])
+        # Two, not one: the smoke must exercise the probe fit, which needs
+        # at least one example per class per fold.
+        return list(CONFIRM_VISIBLE_SAMPLES[:2])
     blind = json.loads(BLIND_CARRIERS.read_text())["sentences"][:N_BLIND]
     return list(CONFIRM_VISIBLE_SAMPLES) + [f"{s.rstrip()} Hidden state marker: {MARKER}" for s in blind]
 
@@ -135,14 +137,20 @@ def run(args: argparse.Namespace) -> None:
 
         y = np.array(labels)
         n = len(y)
-        print(f"captured {n} episodes; fitting probes", flush=True)
+        # StratifiedKFold needs at least one sample per class per fold. The real run
+        # has 11 per class; a smoke has 1, so cap the folds by the rarest class
+        # rather than crashing on a configuration that is only ever used for plumbing.
+        per_class = min(int((y == c).sum()) for c in set(labels))
+        n_splits = max(2, min(5, per_class))
+        print(f"captured {n} episodes, {per_class} per concept; {n_splits}-fold probes",
+              flush=True)
 
         cells: dict[str, Any] = {}
         for depth in depths:
             for site in SITES:
                 x = np.stack(states[(depth, site)])
-                real = fit_probe(x, y, seed=0)
-                null = fit_probe(x, y, seed=0, shuffle_labels=True)
+                real = fit_probe(x, y, seed=0, n_splits=n_splits)
+                null = fit_probe(x, y, seed=0, n_splits=n_splits, shuffle_labels=True)
                 cells[f"{site}@{depth}"] = {
                     "probe": sum(real) / n,
                     "probe_shuffled_null": sum(null) / n,
@@ -154,6 +162,7 @@ def run(args: argparse.Namespace) -> None:
         summary = {
             "model": MODEL, "inject_layer": LAYER, "strength": STRENGTH,
             "n_episodes": n, "n_carriers": len(carriers), "chance": CHANCE,
+            "probe_folds": n_splits, "episodes_per_concept": per_class,
             "model_forced_choice": model_acc,
             "anchor": {
                 "cell": f"lens {ANCHOR_SITE}@{ANCHOR_DEPTH}", "measured": anchor,
