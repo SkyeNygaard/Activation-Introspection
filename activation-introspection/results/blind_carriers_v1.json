@@ -1,0 +1,43 @@
+{
+  "sentences": [
+    "Morning sunlight enters the kitchen through half-open curtains.",
+    "The washing machine hums beside a basket of towels.",
+    "A red bicycle rests against the apartment building.",
+    "Fresh bread cools on a wooden counter.",
+    "Employees gather around a table covered with documents.",
+    "The office printer produces several pages before stopping.",
+    "Children carry colorful backpacks across the school playground.",
+    "A teacher writes multiplication problems on the whiteboard.",
+    "Commuters wait quietly beneath the station clock.",
+    "The crowded bus moves slowly through downtown traffic.",
+    "A small grocery store displays oranges beside the entrance.",
+    "The cashier places purchased items into paper bags.",
+    "Dark clouds gather above the rooftops before noon.",
+    "Rainwater flows along the pavement beside parked cars.",
+    "A gardener trims the hedge near the public library.",
+    "Several ducks swim across the pond near the walking path.",
+    "The mechanic checks the engine beneath the raised vehicle.",
+    "Steam rises from a metal pipe behind the factory.",
+    "A family shares roasted vegetables around the dinner table.",
+    "The hotel elevator stops on the fourth floor.",
+    "Suitcases stand beside passengers waiting near the departure gate.",
+    "A farmer drives the tractor across the muddy field.",
+    "The dog sleeps peacefully beneath the dining room chair.",
+    "Evening traffic reflects brightly on the wet bridge."
+  ],
+  "generator": {
+    "tool": "codex exec",
+    "cli_version": "0.146.0",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "none (confirmed in the run header)",
+    "flags": [
+      "--sandbox read-only",
+      "--skip-git-repo-check",
+      "project_doc_max_bytes=0",
+      "stdin closed"
+    ]
+  },
+  "prompt": "Write 24 short declarative sentences in English.\n\nRequirements:\n- Each between 8 and 16 words.\n- Each describes an ordinary everyday scene, object, or situation.\n- Draw from varied settings: domestic, workplace, outdoors, transport, shops, schools, weather, machinery, animals, food, travel.\n- Plain past or present tense. No questions, no dialogue, no instructions, no second person.\n- Each sentence complete and standalone, ending with a full stop.\n\nOutput exactly 24 lines, one sentence per line, numbered 1. to 24. Nothing else.\n",
+  "blindness": "The prompt names no internal state, injection, change, stasis, prompting, introspection, or purpose. The generator cannot know what makes a carrier dangerous.",
+  "inspection_before_run": "All 24 usable; none dropped. Recorded before scoring: by inspection NONE of the 24 asserts that nothing changed, which is the clash notes/34 diagnosed. If the run returns no inversions, that is partly a fact about this generator's output distribution and must be reported as such, per notes/41's stated way of being wrong."
+}
