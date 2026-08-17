@@ -16,16 +16,35 @@ worked examples the model was shown, average the ones labelled `Q` and the ones
 labelled `K`, and ask which average the fifth state sits closer to. Two averages
 and a comparison.
 
+Scored at the unit this protocol declares in advance — the **paired trial**, where
+a pair counts only when both of its two character-identical members get their
+opposite answers right:
+
 | the task | model | two-average outsider | times the model won and the outsider lost |
 |---|---:|---:|---:|
-| tell a pushed-in idea from its opposite | 0.917 | **1.000** | **0** |
-| tell two different pushed-in ideas apart | 0.899 | **1.000** | **0** |
-| tell apart two meaningless directions | 0.663 | **1.000** | **0** |
-| detect a very small nudge | 0.497 | 0.833 | 14 |
+| tell a pushed-in idea from its opposite | 0.833 | **1.000** | **0** |
+| tell two different pushed-in ideas apart | 0.799 | **1.000** | **0** |
+| tell apart two meaningless directions | 0.326 | **1.000** | **0** |
+| detect a very small nudge | 0.007 | 0.667 | 1 |
 
-Across **1728 trials and four different task shapes, there are 14 where the model
-answers correctly and the two-average comparison does not.** Guessing scores 0.500
-everywhere in this table.
+Across four different task shapes, there is **one** paired trial where the model
+answers correctly and the two-average comparison does not — and it sits in the
+arm where the model is otherwise blind. A method that ignores the hidden state
+entirely scores exactly **0** here, because it must answer the two identical-looking
+members of a pair the same way and only one of them can be right. Two independent
+coin flips would score 0.25.
+
+**Corrected 2026-08-14, and it was my own error.** An earlier version of this table
+scored single trials rather than pairs, and reported **14** model-only trials at the
+weak nudge as the one place the outsider's dominance breaks. Rescoring the same
+saved rows at the protocol's own unit collapses those 14 to 1
+([notes/22](../activation-introspection/notes/22-the-weak-arm-was-a-floor-not-a-frontier.md)).
+The reason is visible in the per-cell answers: in 16 of 24 cells the model emits
+one constant label for all 12 trials whatever was pushed in, which caps single-trial
+accuracy at 0.500 — so 0.497 read as "chance" when it actually meant "blind". Every
+one of the 14 was a cell where the constant label happened to match. The
+single-trial numbers (0.917, 0.899, 0.663, 0.497) are in the appendix, where they
+can no longer be mistaken for chance.
 
 This matters because the standard test for whether a model is genuinely reading
 its own internals — the one the field actually uses — asks whether the model beats
@@ -46,7 +65,7 @@ The two do-nothing conditions land exactly where the design forces them: no edit
 at all gives 0.5000, and editing only the query without the worked examples gives
 0.5000.
 
-## The model does read meaning, and finding that out took undoing my own result
+## I thought I had shown the model reads meaning. I had not — and undoing that took two passes
 
 Partway through, I audited my own concept bank and found something bad: the eight
 "different" ideas I was pushing in all shared a large common ingredient. Every one
@@ -60,7 +79,7 @@ The obvious next conclusion was that none of this was ever about meaning. **I
 tested that instead of assuming it**, by changing the two options from *one idea
 versus its opposite* to *two genuinely different ideas*, and changing nothing else:
 
-| what the two options were | model scores |
+| what the two options were | model scores (single trials) |
 |---|---:|
 | one idea against its opposite | 0.917 |
 | **two different ideas** | **0.899** |
@@ -68,8 +87,28 @@ versus its opposite* to *two genuinely different ideas*, and changing nothing el
 
 Telling `garden` from `camera` is nearly as easy for the model as telling `garden`
 from *not*-`garden`. Two meaningless directions, shoved in exactly as hard, are
-much harder. So the model **is** reading meaning — and it still loses to the
-two-average outsider, which is the finding above.
+much harder — in 4 of 4 pairs.
+
+**That measurement stands. The conclusion I drew from it does not, and I withdrew
+it on 2026-08-14.** I read the gap as *the model is reading meaning rather than
+just disturbance*. But in this design every idea the model has to choose between
+was already demonstrated to it, in the same episode, as a hidden-state edit with a
+label attached. Matching a new edit to one it was just shown explains the whole
+result, and needs no grasp of what `garden` means. The boring explanation was
+available and I did not rule it out.
+
+The test that actually asks for meaning holds the queried example **out** of the
+demonstrations, so re-matching is impossible and only the category can bridge the
+gap. The model gets **0.083** there. The two-average outsider, on the identical
+hidden states, gets **0.986**
+([notes/23](../activation-introspection/notes/23-held-out-semantic-generalization.md)).
+Five different ways of asking do not move it, and a check run beforehand confirms
+the category is sitting in the layer cleanly enough for a simple reader to pull out
+at 1.000 — so this is not the model being too small for the task.
+
+So the honest version is the one I did not want: on the task that requires meaning,
+the model is at the floor while the information it needs is provably present in its
+own activations.
 
 Both things are true at once, and neither is what I expected when I started.
 
@@ -237,8 +276,8 @@ written from work already finished — the reasoning is in
 
 | SPAR project | Current fit | Why |
 |---|---|---|
-| [Introspection Training for Verbalization Activations](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz), Belinda Li | **The project's own first experiment, executed, with a result that constrains it** | The project proposes that supervision "comes cheaply from the internals themselves: probe readouts". I ran that comparison. The cheap readout is at least as good as the trained model everywhere I measured, and training moves the model toward it rather than past it. Training does buy a real change — sensitivity to nudges the untrained model cannot see — and pays for it by reporting meaningless nudges just as confidently. Two of my own conclusions about training were withdrawn on the way, both from badly matched comparisons |
-| [Faithfulness, Self-Knowledge, and Introspection](https://www.sparai.org/projects/f26/rec3KQAI0JcxJJAce), Noah Siegel | **The project's central question, answered with a measurement rather than an argument** | Whether a self-report reflects genuine self-knowledge is exactly the gap measured above, on four task shapes with the visible text held identical so prompt-reading is impossible by construction. The answer is negative and precise: 14 trials in 1728. The interesting cases are the ones where the information is sitting in the model's internals, cleanly separable, and the model still gets it wrong |
+| [Introspection Training for Verbalization Activations](https://www.sparai.org/projects/f26/recNKpeygLfUGyGiz), Belinda Li | **The project's own first experiment, executed, with a result that constrains it** | The project proposes that supervision "comes cheaply from the internals themselves: probe readouts". I ran that comparison. The cheap readout is at least as good as the trained model everywhere I measured, and training moves the model toward it rather than past it. Training does buy a real change — sensitivity to nudges the untrained model cannot see, and a much wider range of directions it can use as a code (0.91–0.96 on arbitrary ones, against guessing before training). **Corrected 2026-08-14:** I previously described that second number as the model reporting meaningless nudges just as confidently. It is not a false alarm — those arbitrary directions are demonstrated before the question is asked, so there is a right answer and the model gives it. The finding is about what can carry a code, not about firing on noise. Three of my own conclusions about training were withdrawn on the way, all from badly matched comparisons |
+| [Faithfulness, Self-Knowledge, and Introspection](https://www.sparai.org/projects/f26/rec3KQAI0JcxJJAce), Noah Siegel | **The project's central question, answered with a measurement rather than an argument** | Whether a self-report reflects genuine self-knowledge is exactly the gap measured above, on four task shapes with the visible text held identical so prompt-reading is impossible by construction. The answer is negative and precise: scored at the paired unit the protocol declares, **one** trial across four task shapes, in the arm where the model is otherwise blind. The interesting cases are the ones where the information is sitting in the model's internals, cleanly separable, and the model still gets it wrong |
 
 Official resources: the [Fall 2026 project list](https://www.sparai.org/projects/f26/),
 the [application advice](https://www.sparai.org/advice/), and the [mentee

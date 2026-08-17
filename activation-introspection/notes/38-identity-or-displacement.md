@@ -328,10 +328,56 @@ read. It does not transfer to a task where the model has to answer.
 (16 seeds, 6 epochs, lr 2e-4). The displacement direction is refitted at 0.2 inside
 the same run, so the arms stay internally consistent.
 
-**Lesson worth keeping:** three runs, three of my own configuration errors — too
-few clean states, too small a budget, then a strength outside the task's range.
-Each was caught by a check declared in advance rather than by the result looking
-odd. Size against the script that was built for the task before inventing numbers.
+### v3, 2026-08-14 — the strength was not it either
+
+`results/ablated_reporter_qwen3b_v3.json`. Strength 0.2, 768 steps per arm, lr 2e-4.
+
+| arm | held-out | chance | final loss | uniform |
+|---|---:|---:|---:|---:|
+| plain | 0.125 | 0.125 | 2.075 | 2.079 |
+| ablated | 0.125 | 0.125 | 2.080 | 2.079 |
+
+**Identical to v2.** Both arms finish at the loss of a uniform guess over eight
+options, so neither adapter learned the task **on the data it trained on** — this is
+the both-at-chance case for a third time, and the strength explanation offered
+above is now spent along with the budget explanation before it.
+
+Three failures with three different causes proposed and none confirmed means the
+cause has not been found. **Do not run a v4 against a fourth guess.** The
+diagnosis below is cheap and comes first.
+
+### What was never checked: the training bank
+
+[`run_ift.py`](../scripts/run_ift.py) — the script this task's machinery comes
+from — refuses to run when the concept directions overlap too much:
+
+```
+worst = max_offdiagonal_cosine(bank)
+if worst >= 0.5:  console.print("[red]Degenerate bank; aborting.[/red]"); return
+```
+
+The gate exists because eight-way identification is impossible when the eight
+directions are near-copies of one another. **`run_ablated_reporter.py` has no such
+gate**, and the eight concepts it trains on — `guitar, harbor, lantern, meadow,
+satellite, teapot, tunnel, whale` — have never been through it. Every validated
+result in this repository uses `DEFAULT_CONCEPTS`, which is the *other* eight, the
+set this script holds out.
+
+There is a second, independent gap: all three runs scored the adapter only on
+concepts it had never seen. **None of them asked whether it had learned the
+concepts it trained on.** A run that cannot do the trained task and a run that
+cannot generalise from it look identical in the artifact as written, and only the
+second is interesting.
+
+Next step, before any further training: build the bank and read the overlap. It is
+inference only, minutes, and it either explains three failures or removes the
+leading suspect.
+
+**Lesson worth keeping:** four runs, and each time I proposed a cause from the
+configuration and fixed that, rather than measuring which stage was broken. Too few
+clean states, too small a budget, a strength outside the task's range — the first
+was right, the next two were guesses that happened to be cheap. The check that
+would have separated them existed in a sibling script the whole time.
 
 **The spectrum, for completeness.** Reaching 80% of the delta energy takes 7
 components, 90% takes 9, 95% takes 11. It does **not** set the ablation rank: those
