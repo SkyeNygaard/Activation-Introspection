@@ -59,22 +59,38 @@ these.**
 | [Refusal in Language Models Is Mediated by a Single Direction](https://arxiv.org/abs/2406.11717) (Arditi et al.) | **The method any refusal-ablation experiment here would use.** Must be read before proposing one |
 | [Mechanisms of Introspective Awareness — code](https://github.com/safety-research/introspection-mechanisms) | Their appendices/code are where a matched-magnitude control would hide if one exists |
 
-## Flagged by an outside review, 2026-08-14 — not yet opened
+## Flagged by an outside review 2026-08-14, opened 2026-08-17
 
-An independent review of this repository named these as directly relevant and
-missing from this ledger. **Nobody here has read any of them.** The "why it might
-matter" column is that reviewer's account, not this repository's reading, and
-must not be cited until someone opens the paper. Two of them bear on whether the
-codebook branch is novel at all, so **read these before writing any novelty claim
-into an application.**
+An independent review named these as directly relevant and missing. They have now
+been read, at the depths recorded. **The headline: the codebook-ICL paradigm has
+closer prior art than this repository recorded, and it does not sink the branch —
+but it removes two things that were being treated as ours.**
 
-| paper | why it might matter (per the outside review, unverified here) |
-|---|---|
-| [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](https://arxiv.org/abs/2505.13763) (Ji-An et al.) | **Closest named prior art to the codebook-ICL branch.** Models learn to report and control activation directions from demonstration–label pairs, including non-semantic directions, with performance tied to semantic interpretability and explained variance. Cited in [LITERATURE-BOUNDARY.md](LITERATURE-BOUNDARY.md) and [notes/06](../activation-introspection/notes/06-causal-codebook-icl.md) but never given an entry here |
-| [Looking Inward: Language Models Can Learn About Themselves by Introspection](https://arxiv.org/abs/2410.13787) (Binder et al.) | Self-versus-other comparator for behavioural self-prediction; positive on easy tasks, weak out of distribution. Bears directly on what "privileged access" should be asked to mean |
-| [Self-Interpretability: LLMs Can Describe Complex Internal Processes that Drive Their Decisions, and Improve with Training](https://arxiv.org/abs/2505.17120) (Plunkett et al.) | Training improving self-description — the same question as the proposed post-training generalization run |
-| [Privileged Self-Access Matters for Introspection in AI](https://arxiv.org/abs/2508.14802) (Song, Lederman, Hu, Mahowald) | The cost-matched comparator criterion this repository's reader experiments already lean on. **Already cited across CLAIMS/BRIEFS/notes 11, 15, 17 — but never formally logged here**, which is the gap this section records |
-| [Language Models Fail to Introspect About Their Knowledge of Language](https://arxiv.org/abs/2503.07513) (Song, Hu, Mahowald) | Negative comparator evidence; guards against reading good prompted judgements as privileged self-access |
+| paper | depth | date read | what it settles here |
+|---|---|---|---|
+| [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](https://arxiv.org/abs/2505.13763) (Ji-An, Zhang, Mattar, Fang, Lee, Xiao et al.) | targeted | 2026-08-17 | **The closest prior art to the codebook-ICL branch, and the reviewer was right to flag it.** A "neuroscience-inspired **neurofeedback** paradigm that uses **in-context learning**": N sentence–label pairs in dialogue turns, where each label is the model's *own* activation projected onto a target axis and discretized. LLaMA-3 (1B–70B) and Qwen2.5 (1B–7B), five depths at the 0/25/50/75/100 percentiles, 600 examples to fit the axis and 600 held out. **Prior art for three things.** (a) In-context learning of an activation→label mapping works. (b) **Semantic interpretability of the axis drives performance** — logistic-regression axes "outperform" principal-component axes — which is [notes/14](../activation-introspection/notes/14-content-versus-disturbance.md)'s contrast in related form, published first. (c) **Variance explained by the axis drives performance** — "earlier PCs being reported more accurately" — which is adjacent to the clustering→learnability line. They also do **control**, not just reporting, which this repository has never attempted. **What is not theirs:** the direction is *read* where it naturally falls, never causally injected; there is no byte-identical twin control and no baseline pinning a text-only strategy at chance by construction (their device is a minimal "Say something" prompt); the label mapping is not re-randomised per episode; and their comparator is a theoretical "ideal observer" with perfect access, not a cost-matched cheap reader |
+| [Privileged Self-Access Matters for Introspection in AI](https://arxiv.org/abs/2508.14802) (Song, Lederman, Hu, Mahowald) | targeted | 2026-08-17 | The criterion this repository tests against, now read rather than cited. The definition is **computational** cost, not wall-clock cost — footnote 2 says so explicitly — and a four-shot centroid comfortably clears that bar against a 3B forward pass, so the comparator experiments are using the criterion correctly. **Two things to carry.** The third party is specified as "without special knowledge of the situation", and the paper explicitly contemplates that third party running "a computationally intensive probe" — so a *cheap* probe beating the model is exactly the criterion's negative case, as used here. But footnote 2(ii) volunteers that a state may be **too low-level to count**: "if a model has a shortcut to ascertain the value of one neuron very efficiently, intuitively this would not count as introspection". An injected concept direction at one layer is open to that objection and the application should raise it rather than wait for it |
+| [Looking Inward: Language Models Can Learn About Themselves by Introspection](https://arxiv.org/abs/2410.13787) (Binder et al.) | abstract | 2026-08-17 | **A positive privileged-access result, on a different object.** M1 predicts its own behaviour better than M2 does, *even when M2 is trained on M1's outputs*, and it survives deliberately altering M1's behaviour — so it is not memorisation. Fails on complex and out-of-distribution tasks. **Consequence for this repository's headline:** the negative result here is about *activations at one site*, and must not be stated as "models have no privileged access". Behavioural self-prediction is a live positive case and this repository has not tested it |
+| [Self-Interpretability: LLMs Can Describe Complex Internal Processes that Drive Their Decisions, and Improve with Training](https://arxiv.org/abs/2505.17120) (Plunkett et al.) | abstract | 2026-08-17 | GPT-4o and 4o-mini fine-tuned on decisions driven by randomly generated preference weights can report those weights, training improves it, **and the improvement generalizes to decision types not fine-tuned on**. That is the positive version of the generalization question notes/23 answers negatively — on learned decision policies rather than injected activations. No numbers obtained at this depth; **open it in full before citing the generalization claim** |
+| [Language Models Fail to Introspect About Their Knowledge of Language](https://arxiv.org/abs/2503.07513) (Song, Hu, Mahowald) | abstract | 2026-08-17 | 21 open models, two linguistic domains. Metalinguistic prompted answers do **not** predict the model's own string probabilities, controlling for models with near-identical internal knowledge. Supports this repository's direction: high task accuracy from prompting is not evidence of self-access. A useful citation for why the anchor condition scoring 0.875 does not rescue the held-out failure |
+
+### What this changed, stated plainly
+
+1. **"Models underperform an observer given their activations" is prior art.** Ji-An
+   has it against an ideal observer. What remains this repository's is the *cost-matched
+   cheap* reader and the twin construction that makes the comparison interpretable.
+2. **[notes/14](../activation-introspection/notes/14-content-versus-disturbance.md)'s
+   demotion on 2026-08-14 was correct, and now has an external reason too.** Semantic
+   interpretability of an axis driving reportability is published.
+3. **The clustering→learnability line stays dead.** It failed its own replication in
+   [notes/26](../activation-introspection/notes/26-someone-elses-rules.md), and Ji-An's
+   variance-explained finding is adjacent prior art. Two independent reasons.
+4. **The strongest thing this repository holds is a control, not a result** — the
+   byte-identical twin pinning an input-only strategy at exactly 0.500 by construction.
+   None of the five papers has an equivalent. Lead with it.
+5. **A path nobody here has touched:** Ji-An reports *control* as well as monitoring —
+   a model changing its own activations on request. Also untouched: behavioural
+   self-prediction (Binder), where the privileged-access answer is positive.
 
 ## Selective prediction — the literature crossed in on 2026-08-12
 
@@ -125,6 +141,19 @@ own reading lists.
 Under [LITERATURE-BOUNDARY.md](LITERATURE-BOUNDARY.md)'s five-step rule this is
 **step 3 of 5**. Nothing in this file is a novelty claim. It is a record of what
 was read and what it decided.
+
+## The 2026-08-17 pass, and the rule it broke on the way
+
+Five flagged papers opened; the codebook branch's closest prior art identified and
+its consequences entered above. Still not done: citation chaining, appendices and
+code, the mentors' reading lists. **Still step 3 of 5.**
+
+**Recorded because the file exists to record this:** [notes/39](../activation-introspection/notes/39-what-does-the-model-actually-use.md)
+was designed, queued and run *before* this search, which is the exact ordering this
+ledger's closing rule forbids. It cost nothing this time — the search found no prior
+art bearing on notes/39's specific manipulation, and the result was a null anyway —
+but that is luck, not process. The search happened after the experiment for the
+fourth time in this repository.
 
 ## The rule this ledger exists to enforce
 
