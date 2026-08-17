@@ -140,6 +140,76 @@ The honest counter-argument, which is why I am not confident: the content task w
 scores 0.899. Something concept-specific is already being used. I put it at roughly
 three in five.
 
+## Result, 2026-08-17 — a null, and my prediction was wrong
+
+`results/readout_ablation_icl_v1_summary.json`. Qwen2.5-3B, 288 episodes per
+condition, 144 twin pairs, five minutes.
+
+**The gate passed.** The shared direction orders held-out injected states above
+held-out clean ones at **0.994** — the first time this has been checked at 3B. The
+mean direction and the leading component agree to three decimals (0.2778 against
+0.2800), so it is one concentrated axis, not a mixture.
+
+**The ablation was verified, not assumed.** At the readout the component along the
+direction goes **−118.77 → 0.51**, while the state's norm holds at 256.5 → 227.4.
+The hook fires and it is not simply wrecking the state.
+
+| condition | model | twin pair | outsider | format | Q rate |
+|---|---:|---:|---:|---:|---:|
+| nothing removed | 0.899 | 0.799 | 1.000 | 1.000 | 0.510 |
+| **shared displacement direction removed** | **0.885** | **0.771** | 1.000 | 1.000 | 0.476 |
+| a random direction removed, same place | 0.896 | 0.792 | 1.000 | 1.000 | 0.507 |
+
+**Nothing happened.** Scored on the same 288 episodes under every condition, removing
+the displacement direction flips **7 episodes from right to wrong and 3 from wrong to
+right** (exact test, p = 0.34). Against the random-direction control the split is 6
+and 3 (p = 0.51). The model's answer does not depend on the direction that best
+announces an injection occurred.
+
+**I predicted a substantial drop at three in five. That was wrong**, and the
+counter-argument I recorded next to the prediction — that this task was built so the
+shared axis cannot produce the right answer, and the model scores 0.899 anyway — is
+the one that held.
+
+### The instrument replicated two frozen numbers exactly
+
+Unplanned, and worth more than the null. The untouched condition reproduces
+**0.899** row accuracy and **0.799** twin-pair accuracy — the published notes/14–15
+content figure and notes/22's rescore of it, to three decimals, through a different
+script written months later. The outsider returns 1.000 in all three conditions and
+is bit-identical across them, which is what it must do: it reads at layer 9, upstream
+of a readout ablation.
+
+### What this does and does not establish
+
+**Does.** The specific rank-1 axis carrying "an injection happened" is not what the
+model's forced choice runs on. Combined with notes/38 — where ablating this direction
+destroys injected-versus-clean discrimination while leaving concept identity at
+0.979 — the two agree: the shared disturbance axis carries no concept identity, and
+the model does not need it to name a concept.
+
+**Does not.** That direction accounts for **0.278** of what an injection does to the
+readout at this model, so **roughly seven-tenths of the displacement is still
+present**. A model that survives removing 28% of a signal has not been shown to
+ignore the signal. This is exactly the weak-null case declared before the run, and it
+must be quoted with the bound attached or not at all.
+
+**Consequence for notes/38.** Its training arm exists to ask whether a reporter
+trained *without* access to displacement still reads identity. On the untrained model
+this task, removing the accessible part of displacement changes nothing — which
+weakens the premise that displacement is what a reporter leans on. That is the boring
+outcome the pre-run note said would still be worth having, bought for five minutes of
+inference instead of a fourth adapter.
+
+### One thing that came free
+
+The share is now measured at three points: **0.217** at Qwen2.5-0.5B, **0.278** at
+Qwen2.5-3B, **0.546** at Qwen3-4B. notes/38 flagged that its two points confounded
+size with model generation and called separating them "a curiosity". This separates
+them: a six-fold size increase *within* Qwen2.5 barely moves the share, while the
+jump comes with the change of generation. Three points is still not a trend, and the
+0.5B run used a different injection layer, so this is a lead and not a finding.
+
 ## What it costs
 
 One model load, Qwen2.5-3B, inference only, about 7 GiB. The direction fit is a few
