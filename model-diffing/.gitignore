@@ -1,0 +1,3 @@
+# Regenerable in ~40 min per fine-tune by scripts/run_all.sh; too big to be worth versioning.
+results/*_deltas.npz
+results/smoke*
