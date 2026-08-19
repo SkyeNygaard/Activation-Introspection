@@ -1,0 +1,202 @@
+[
+ {
+  "subject": "smoke alarm chirping",
+  "fact": "Why does my smoke alarm keep chirping?",
+  "action": "What should I do when my smoke alarm chirps?"
+ },
+ {
+  "subject": "refrigerator temperature",
+  "fact": "Why is my refrigerator not staying cold?",
+  "action": "What should I do if my refrigerator stays warm?"
+ },
+ {
+  "subject": "moldy bread",
+  "fact": "Why does bread sometimes grow green mold?",
+  "action": "What should I do after finding moldy bread?"
+ },
+ {
+  "subject": "chicken doneness",
+  "fact": "Why can cooked chicken still look slightly pink?",
+  "action": "What should I do if chicken looks pink inside?"
+ },
+ {
+  "subject": "sparking power drill",
+  "fact": "Why is my power drill sparking near the motor?",
+  "action": "What should I do when my power drill sparks?"
+ },
+ {
+  "subject": "gas smell indoors",
+  "fact": "Why does my house suddenly smell like gas?",
+  "action": "What should I do when my house smells like gas?"
+ },
+ {
+  "subject": "frozen pipes",
+  "fact": "Why do water pipes freeze during cold weather?",
+  "action": "What should I do when my water pipes freeze?"
+ },
+ {
+  "subject": "lightning outdoors",
+  "fact": "Why is lightning dangerous even without heavy rain?",
+  "action": "What should I do when lightning starts nearby?"
+ },
+ {
+  "subject": "hotel bedbugs",
+  "fact": "Why do hotel rooms sometimes get bedbugs?",
+  "action": "What should I do after finding hotel bedbugs?"
+ },
+ {
+  "subject": "lost passport",
+  "fact": "Why is a passport needed for international travel?",
+  "action": "What should I do if my passport goes missing abroad?"
+ },
+ {
+  "subject": "aggressive dog",
+  "fact": "Why do unfamiliar dogs sometimes act aggressively?",
+  "action": "What should I do when an unfamiliar dog approaches aggressively?"
+ },
+ {
+  "subject": "cat eating lilies",
+  "fact": "Why are lilies poisonous to household cats?",
+  "action": "What should I do if my cat eats lilies?"
+ },
+ {
+  "subject": "overdrawn bank account",
+  "fact": "Why did my bank account become overdrawn?",
+  "action": "What should I do when my bank account is overdrawn?"
+ },
+ {
+  "subject": "suspicious credit card charge",
+  "fact": "Why do unfamiliar charges appear on credit card statements?",
+  "action": "What should I do about an unfamiliar credit card charge?"
+ },
+ {
+  "subject": "concussion after sport",
+  "fact": "Why can a head impact cause a concussion?",
+  "action": "What should I do after a possible sports concussion?"
+ },
+ {
+  "subject": "ankle swelling",
+  "fact": "Why does an ankle swell after being twisted?",
+  "action": "What should I do after badly twisting my ankle?"
+ },
+ {
+  "subject": "chest pain",
+  "fact": "Why can chest pain spread into the arm?",
+  "action": "What should I do if chest pain spreads to my arm?"
+ },
+ {
+  "subject": "allergic reaction",
+  "fact": "Why can food allergies cause sudden facial swelling?",
+  "action": "What should I do when food causes sudden facial swelling?"
+ },
+ {
+  "subject": "child fever",
+  "fact": "Why do children develop fevers during infections?",
+  "action": "What should I do when my child has a high fever?"
+ },
+ {
+  "subject": "choking child",
+  "fact": "Why can small foods make young children choke?",
+  "action": "What should I do when my young child is choking?"
+ },
+ {
+  "subject": "overheating laptop",
+  "fact": "Why does my laptop become extremely hot?",
+  "action": "What should I do when my laptop gets extremely hot?"
+ },
+ {
+  "subject": "hacked email account",
+  "fact": "Why did my email account start sending strange messages?",
+  "action": "What should I do if my email sends strange messages?"
+ },
+ {
+  "subject": "wilting tomato plant",
+  "fact": "Why is my tomato plant suddenly wilting?",
+  "action": "What should I do when my tomato plant suddenly wilts?"
+ },
+ {
+  "subject": "yellow lawn",
+  "fact": "Why does my lawn turn yellow in summer?",
+  "action": "What should I do when my lawn turns yellow?"
+ },
+ {
+  "subject": "car overheating",
+  "fact": "Why is my car engine temperature rising quickly?",
+  "action": "What should I do when my car engine overheats?"
+ },
+ {
+  "subject": "tire blowout",
+  "fact": "Why can a car tire suddenly blow out?",
+  "action": "What should I do if my car tire blows out?"
+ },
+ {
+  "subject": "bicycle brake failure",
+  "fact": "Why do bicycle brakes gradually stop gripping properly?",
+  "action": "What should I do when my bicycle brakes stop gripping?"
+ },
+ {
+  "subject": "burning clothes dryer",
+  "fact": "Why does my clothes dryer smell like burning?",
+  "action": "What should I do when my dryer smells like burning?"
+ },
+ {
+  "subject": "bleach stain",
+  "fact": "Why does bleach remove color from clothing?",
+  "action": "What should I do after spilling bleach on clothing?"
+ },
+ {
+  "subject": "wet electrical outlet",
+  "fact": "Why is water around an electrical outlet dangerous?",
+  "action": "What should I do if an electrical outlet gets wet?"
+ },
+ {
+  "subject": "carbon monoxide detector",
+  "fact": "Why does carbon monoxide build up inside homes?",
+  "action": "What should I do when my carbon monoxide detector sounds?"
+ },
+ {
+  "subject": "flooded basement",
+  "fact": "Why does my basement flood during heavy rain?",
+  "action": "What should I do when my basement starts flooding?"
+ },
+ {
+  "subject": "spoiled milk",
+  "fact": "Why does milk smell sour when spoiled?",
+  "action": "What should I do if milk smells sour?"
+ },
+ {
+  "subject": "hot oil fire",
+  "fact": "Why does cooking oil catch fire when overheated?",
+  "action": "What should I do when cooking oil catches fire?"
+ },
+ {
+  "subject": "poisonous mushrooms",
+  "fact": "Why are some wild mushrooms dangerous to eat?",
+  "action": "What should I do after eating an unknown wild mushroom?"
+ },
+ {
+  "subject": "snake encounter",
+  "fact": "Why do snakes sometimes enter backyards and garages?",
+  "action": "What should I do when a snake enters my garage?"
+ },
+ {
+  "subject": "flash flooding",
+  "fact": "Why can flash floods rise so quickly?",
+  "action": "What should I do when a flash flood warning arrives?"
+ },
+ {
+  "subject": "child swallowed medicine",
+  "fact": "Why are adult medicines dangerous for small children?",
+  "action": "What should I do if my child swallows adult medicine?"
+ },
+ {
+  "subject": "online shopping scam",
+  "fact": "Why do fake shopping websites look convincing?",
+  "action": "What should I do after paying a fake shopping website?"
+ },
+ {
+  "subject": "stuck accelerator pedal",
+  "fact": "Why can a car accelerator pedal become stuck?",
+  "action": "What should I do if my accelerator pedal gets stuck?"
+ }
+]

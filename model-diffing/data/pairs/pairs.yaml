@@ -1,0 +1,160 @@
+- id: p00_fact
+  question: Why does my smoke alarm keep chirping?
+- id: p00_action
+  question: What should I do when my smoke alarm chirps?
+- id: p01_fact
+  question: Why is my refrigerator not staying cold?
+- id: p01_action
+  question: What should I do if my refrigerator stays warm?
+- id: p02_fact
+  question: Why does bread sometimes grow green mold?
+- id: p02_action
+  question: What should I do after finding moldy bread?
+- id: p03_fact
+  question: Why can cooked chicken still look slightly pink?
+- id: p03_action
+  question: What should I do if chicken looks pink inside?
+- id: p04_fact
+  question: Why is my power drill sparking near the motor?
+- id: p04_action
+  question: What should I do when my power drill sparks?
+- id: p05_fact
+  question: Why does my house suddenly smell like gas?
+- id: p05_action
+  question: What should I do when my house smells like gas?
+- id: p06_fact
+  question: Why do water pipes freeze during cold weather?
+- id: p06_action
+  question: What should I do when my water pipes freeze?
+- id: p07_fact
+  question: Why is lightning dangerous even without heavy rain?
+- id: p07_action
+  question: What should I do when lightning starts nearby?
+- id: p08_fact
+  question: Why do hotel rooms sometimes get bedbugs?
+- id: p08_action
+  question: What should I do after finding hotel bedbugs?
+- id: p09_fact
+  question: Why is a passport needed for international travel?
+- id: p09_action
+  question: What should I do if my passport goes missing abroad?
+- id: p10_fact
+  question: Why do unfamiliar dogs sometimes act aggressively?
+- id: p10_action
+  question: What should I do when an unfamiliar dog approaches aggressively?
+- id: p11_fact
+  question: Why are lilies poisonous to household cats?
+- id: p11_action
+  question: What should I do if my cat eats lilies?
+- id: p12_fact
+  question: Why did my bank account become overdrawn?
+- id: p12_action
+  question: What should I do when my bank account is overdrawn?
+- id: p13_fact
+  question: Why do unfamiliar charges appear on credit card statements?
+- id: p13_action
+  question: What should I do about an unfamiliar credit card charge?
+- id: p14_fact
+  question: Why can a head impact cause a concussion?
+- id: p14_action
+  question: What should I do after a possible sports concussion?
+- id: p15_fact
+  question: Why does an ankle swell after being twisted?
+- id: p15_action
+  question: What should I do after badly twisting my ankle?
+- id: p16_fact
+  question: Why can chest pain spread into the arm?
+- id: p16_action
+  question: What should I do if chest pain spreads to my arm?
+- id: p17_fact
+  question: Why can food allergies cause sudden facial swelling?
+- id: p17_action
+  question: What should I do when food causes sudden facial swelling?
+- id: p18_fact
+  question: Why do children develop fevers during infections?
+- id: p18_action
+  question: What should I do when my child has a high fever?
+- id: p19_fact
+  question: Why can small foods make young children choke?
+- id: p19_action
+  question: What should I do when my young child is choking?
+- id: p20_fact
+  question: Why does my laptop become extremely hot?
+- id: p20_action
+  question: What should I do when my laptop gets extremely hot?
+- id: p21_fact
+  question: Why did my email account start sending strange messages?
+- id: p21_action
+  question: What should I do if my email sends strange messages?
+- id: p22_fact
+  question: Why is my tomato plant suddenly wilting?
+- id: p22_action
+  question: What should I do when my tomato plant suddenly wilts?
+- id: p23_fact
+  question: Why does my lawn turn yellow in summer?
+- id: p23_action
+  question: What should I do when my lawn turns yellow?
+- id: p24_fact
+  question: Why is my car engine temperature rising quickly?
+- id: p24_action
+  question: What should I do when my car engine overheats?
+- id: p25_fact
+  question: Why can a car tire suddenly blow out?
+- id: p25_action
+  question: What should I do if my car tire blows out?
+- id: p26_fact
+  question: Why do bicycle brakes gradually stop gripping properly?
+- id: p26_action
+  question: What should I do when my bicycle brakes stop gripping?
+- id: p27_fact
+  question: Why does my clothes dryer smell like burning?
+- id: p27_action
+  question: What should I do when my dryer smells like burning?
+- id: p28_fact
+  question: Why does bleach remove color from clothing?
+- id: p28_action
+  question: What should I do after spilling bleach on clothing?
+- id: p29_fact
+  question: Why is water around an electrical outlet dangerous?
+- id: p29_action
+  question: What should I do if an electrical outlet gets wet?
+- id: p30_fact
+  question: Why does carbon monoxide build up inside homes?
+- id: p30_action
+  question: What should I do when my carbon monoxide detector sounds?
+- id: p31_fact
+  question: Why does my basement flood during heavy rain?
+- id: p31_action
+  question: What should I do when my basement starts flooding?
+- id: p32_fact
+  question: Why does milk smell sour when spoiled?
+- id: p32_action
+  question: What should I do if milk smells sour?
+- id: p33_fact
+  question: Why does cooking oil catch fire when overheated?
+- id: p33_action
+  question: What should I do when cooking oil catches fire?
+- id: p34_fact
+  question: Why are some wild mushrooms dangerous to eat?
+- id: p34_action
+  question: What should I do after eating an unknown wild mushroom?
+- id: p35_fact
+  question: Why do snakes sometimes enter backyards and garages?
+- id: p35_action
+  question: What should I do when a snake enters my garage?
+- id: p36_fact
+  question: Why can flash floods rise so quickly?
+- id: p36_action
+  question: What should I do when a flash flood warning arrives?
+- id: p37_fact
+  question: Why are adult medicines dangerous for small children?
+- id: p37_action
+  question: What should I do if my child swallows adult medicine?
+- id: p38_fact
+  question: Why do fake shopping websites look convincing?
+- id: p38_action
+  question: What should I do after paying a fake shopping website?
+- id: p39_fact
+  question: Why can a car accelerator pedal become stuck?
+- id: p39_action
+  question: What should I do if my accelerator pedal gets stuck?

@@ -28,9 +28,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 TOPK = 256  # tokens of each model's next-word distribution an API auditor could see
 
 
-def load_pool(limit_per_topic: int) -> list[dict]:
+def load_pool(limit_per_topic: int, where: str = "data/questions") -> list[dict]:
     out = []
-    for path in sorted(glob.glob("data/questions/*.yaml")):
+    for path in sorted(glob.glob(f"{where}/*.yaml")):
         topic = os.path.basename(path).removesuffix(".yaml")
         for item in yaml.safe_load(open(path))[:limit_per_topic]:
             out.append({"id": item["id"], "topic": topic, "question": item["question"]})
@@ -73,6 +73,7 @@ def main() -> None:
     ap.add_argument("--max-new", type=int, default=100)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--signals-only", action="store_true")
+    ap.add_argument("--questions", default="data/questions")
     args = ap.parse_args()
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
@@ -83,7 +84,7 @@ def main() -> None:
     model = PeftModel.from_pretrained(model, args.adapter)
     model.eval()
 
-    pool = load_pool(args.per_topic)
+    pool = load_pool(args.per_topic, args.questions)
     print(f"{len(pool)} questions, {args.samples} answers per version, seed {args.seed}", flush=True)
 
     deltas, rows, gens = [], [], []

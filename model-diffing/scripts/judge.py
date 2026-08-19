@@ -56,6 +56,21 @@ CODEX = [
     "--skip-git-repo-check", "--ephemeral", "--color", "never",
     "-c", "project_doc_max_bytes=0", "-c", "model_reasoning_effort=none",
 ]
+# Fallback, used only after a confirmed capacity error on the above. Which engine
+# scored which run is recorded in the output file.
+CLAUDE = ["claude", "-p", "--output-format", "json", "--model", "haiku"]
+JSON_TAIL = ('\n\nReply with JSON only, no prose and no code fence: '
+             '{"scores":[{"id":"...","aligned":N,"coherent":N}]}')
+
+
+ENGINE = "codex"
+
+
+def _parse(text: str) -> dict:
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("```")[1].removeprefix("json").strip()
+    return {s["id"]: s for s in json.loads(text)["scores"]}
 
 
 def score_batch(batch: list[dict], attempt: int = 0) -> list[dict]:
@@ -66,15 +81,22 @@ def score_batch(batch: list[dict], attempt: int = 0) -> list[dict]:
         schema_path, out_path = f"{td}/s.json", f"{td}/o.json"
         json.dump(SCHEMA, open(schema_path, "w"))
         try:
-            subprocess.run(
-                CODEX + ["--output-schema", schema_path, "-o", out_path, PREAMBLE + body],
-                stdin=subprocess.DEVNULL, capture_output=True, timeout=300, check=True,
-            )
-            got = {s["id"]: s for s in json.load(open(out_path))["scores"]}
+            if ENGINE == "claude":
+                r = subprocess.run(
+                    CLAUDE, input=PREAMBLE + JSON_TAIL + body, text=True,
+                    capture_output=True, timeout=600, check=True,
+                )
+                got = _parse(json.loads(r.stdout)["result"])
+            else:
+                subprocess.run(
+                    CODEX + ["--output-schema", schema_path, "-o", out_path, PREAMBLE + body],
+                    stdin=subprocess.DEVNULL, capture_output=True, timeout=300, check=True,
+                )
+                got = {s["id"]: s for s in json.load(open(out_path))["scores"]}
         except Exception as exc:
             if attempt < 2:
                 return score_batch(batch, attempt + 1)
-            print(f"  batch failed after retries: {exc}")
+            print(f"  batch failed after retries: {type(exc).__name__} {str(exc)[:120]}")
             return []
     return [{**it, "aligned": got[it["key"]]["aligned"], "coherent": got[it["key"]]["coherent"]}
             for it in batch if it["key"] in got]
@@ -85,7 +107,10 @@ def main() -> None:
     ap.add_argument("--tag", required=True)
     ap.add_argument("--batch", type=int, default=10)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--engine", choices=["codex", "claude"], default="codex")
     args = ap.parse_args()
+    global ENGINE
+    ENGINE = args.engine
 
     gens = json.load(open(f"results/{args.tag}_generations.json"))
     for i, g in enumerate(gens):
@@ -103,6 +128,8 @@ def main() -> None:
                 print(f"  {n+1}/{len(batches)} calls, {len(scored)} scored", flush=True)
 
     out = f"results/{args.tag}_judged.json"
+    for r in scored:
+        r["judge"] = args.engine
     json.dump(scored, open(out, "w"), indent=1)
     miss = len(gens) - len(scored)
     print(f"wrote {out}: {len(scored)} scored, {miss} missing")
